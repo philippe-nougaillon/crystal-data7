@@ -1,113 +1,59 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title><%= @sitename %></title>
+  <head>
+    <title><%= @sitename %></title>
 
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-		<link rel="manifest" href="/manifest.json">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
 
-		<meta name="msapplication-TileColor" content="#ffffff">
-		<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-		<meta name="theme-color" content="#ffffff">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
-		<meta name="author" content="Philippe NOUGAILLON" />
-		<meta name="description" content="Crystal-data base de données en ligne"/>
+    <meta name="author" content="Philippe NOUGAILLON" />
+    <meta name="description" content="Crystal-data base de données en ligne"/>
 
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-		<!-- jQuery library -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-		<!-- Latest compiled JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-		
-		<%= csrf_meta_tags %>
-	</head>
-<body>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 
-<div class="panel-body">
-	<div id="main-container" class="container">
-		<div class="row">
-			<ul class="nav nav-pills" role="tablist">
-				<% if @current_user %>
-					<li class=<%= (controller_name == 'tables' && !params[:id]) ? 'active' : '' %>>
-						<%= link_to tables_path, class: "text-muted" do %>				               
-							<span class="fa fa-database"></span>	
-							Tables	
-						<% end %>
-
-					</li>
-					<% @current_user.tables.each do |table| %>
-						<li class=<%= (controller_name == 'tables' && params[:id]== table.slug) ? 'active' : '' %>>
-							<%= link_to table do %>
-								<span class="fa fa-table"></span>
-								<%= table.name.humanize %>
-							<% end %>
-						</li>
-					<% end %>
-					<ul class="nav navbar-nav navbar-right">					
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<i class="glyphicon glyphicon-user"></i>
-								<%= @current_user.name.humanize %><b class="caret"></b>
-							</a>
-							<ul class="dropdown-menu">
-							<li><%= link_to "Profil", @current_user %></li>
-							<li class="divider"></li>
-							<li><%= link_to "Créer un compte", signup_path %></li>
-							<li class="divider"></li>
-							<li>
-								<%= link_to "Se déconnecter", '/logout' %>
-							</li>
-							</ul>
-						</li>
-					</ul>
-				<% else %>
-					<li>
-					    <li class="dropdown">
-				            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<%= image_tag("icons/data_shared16.png") %>		 
-				               	Crystal-data<b class="caret"></b>
-				            </a>
-
-				            <ul class="dropdown-menu">
-				              <li><%= link_to "A propos de Crystal-data", '/about' %></li>
-  				              <li class="divider"></li>
-				              <li><%= link_to "Créer un compte", signup_path %></li>
-				              <li class="divider"></li>
-				              <li><%= link_to "Se connecter", '/login' %></li>
-				            </ul>
-				          </li>
-					</li>
-				<% end %>
-			</ul>
-			<hr>
-			<% if notice || alert %>
-			    <div class="alert <%= notice ? "alert-success" : "" %><%= alert ? "alert-danger" : "" %> alert-dismissible" role="alert">
-			        <button type="button" class="close" data-dismiss="alert">
-			            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-			        <div>
-			            <% if notice %>
-			                <%= notice %>
-			            <% elsif alert %>
-			                <%= alert %>
-			            <% end %>
-			        </div>
-			    </div>
-			<% end %>
-
-			<%= yield %>
-
-		</div>
-	</div>
-</div>
-
-</body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <main class="d-flex min-vh-100">
+      <nav class="nav flex-column bg-secondary gap-5 py-4 position-absolute top-0 start-0 overflow-hidden h-100" style="width: 80px;">
+        <li class="nav-item flex-fill mx-auto mt-2">
+          <%= link_to root_path do %>
+            <i class="fa-solid fa-house fa-2xl text-white"></i>
+          <% end %>
+        </li>
+        <li class="nav-item mx-auto">
+          <%= link_to @current_user do %>
+            <i class="fa-solid fa-user fa-2xl text-white"></i>
+          <% end %>
+        </li>
+        <li class="nav-item mx-auto">
+          <%= link_to root_path do %>
+            <i class="fa-solid fa-gear fa-2xl text-white"></i>
+          <% end %>
+        </li>
+      </nav>
+      <div class="flex-fill px-5 py-4" style="margin-left: 80px;">
+        <%# render "partials/navbar" %>
+        <%= render "partials/notification" %>
+        <%= yield %>
+      </div>
+    </main>
+  </body>
 </html>

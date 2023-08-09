@@ -1,0 +1,82 @@
+<nav class="navbar">
+  <div class="container-fluid">
+    <%= link_to "CrystalData", root_path, class: "navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <% if @current_user %>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <%= link_to tables_path, class: "text-muted" do %>
+              <span class="fa fa-database"></span>
+              Tables  
+            <% end %>
+          <li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="glyphicon glyphicon-user"></i>
+              <%= @current_user.name.humanize %><b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li><%= link_to "Profil", @current_user %></li>
+            <li class="divider"></li>
+            <li><%= link_to "Créer un compte", signup_path %></li>
+            <li class="divider"></li>
+            <li>
+              <%= link_to "Se déconnecter", '/logout' %>
+            </li>
+            </ul>
+          </li>
+        </ul>
+      <% else %>
+        <ul>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <%= image_tag("icons/data_shared16.png") %>
+              Crystal-data<b class="caret"></b>
+            </a>
+
+            <ul class="dropdown-menu">
+              <li><%= link_to "A propos de Crystal-data", '/about' %></li>
+                <li class="divider"></li>
+              <li><%= link_to "Créer un compte", signup_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Se connecter", '/login' %></li>
+            </ul>
+          </li>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</nav>
+<ul class="nav nav-tabs" role="tablist">
+  <% if @current_user %>
+    <% @current_user.tables.each do |table| %>
+      <li class=<%= (controller_name == 'tables' && params[:id]== table.slug) ? 'active' : '' %>>
+        <%= link_to table do %>
+          <span class="fa fa-table"></span>
+          <%= table.name.humanize %>
+        <% end %>
+      </li>
+    <% end %>
+  <% else %>
+    <li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <%= image_tag("icons/data_shared16.png") %>
+          Crystal-data<b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to "A propos de Crystal-data", '/about' %></li>
+            <li class="divider"></li>
+          <li><%= link_to "Créer un compte", signup_path %></li>
+          <li class="divider"></li>
+          <li><%= link_to "Se connecter", '/login' %></li>
+        </ul>
+      </li>
+    </li>
+  <% end %>
+</ul>

@@ -1,17 +1,17 @@
 <div class="page-header">
-	<div class="btn-group pull-right">
-	    <%= link_to fill_url(@table.slug), class: 'btn btn-success' do %>
-			<i class="glyphicon glyphicon-plus"></i> Ajouter
-		<% end %>
-    </div>
 
 	<h1>
-    	<span class="fa fa-table"></span>
-    	<%= @table.name.humanize %>
+    <i class="fa-solid fa-database"></i>
+    <%= @table.name.humanize %>
 	</h1>
+	<div class="btn-group">
+	    <%= link_to fill_url(@table.slug), class: 'btn btn-outline-success' do %>
+			<i class="glyphicon glyphicon-plus"></i> Ajouter
+		<% end %>
+	</div>
 
 	<% if @table.is_owner?(@current_user) %>
-		<small>
+		<small class="float-end">
 			<%= link_to 'Modifier', show_attrs_path(id:@table), title:"Modifier les colonnes", data: { no_turbolink: true } %> 
 			|
 			<%= link_to "Partager", partages_path(@table), title:"Voir les utilisateurs qui partagent cette table" %>
@@ -40,7 +40,7 @@
 										field.values.records_at(@records).where.not(data: nil).pluck(:data).uniq.sort,
 										default_value), 
 									include_blank: true, 
-									class: "form-control", 
+									class: "form-select", 
 									onchange: 'this.form.submit()' %>
 					</div>
 				<% end %>

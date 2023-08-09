@@ -26,7 +26,7 @@ class UsersController < ApplicationController
 	    if @user.save
         UserMailer.notification_nouveau_compte(@user).deliver_later
         session[:user_id] = @user.id
-        redirect_to tables_path, notice:"Bienvenue '#{@user.name}' !. Votre compte a bien été '#{@user.name}' créé et vous avez été notifié par mail."
+        redirect_to tables_path, notice:"Bienvenue '#{@user.name}' !. Votre compte a bien été créé et vous avez été notifié par mail."
 	    else
 		    render :new	
 	    end

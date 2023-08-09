@@ -11,10 +11,10 @@
 
   <div class="field">
     <%= label :date_debut, "Exporter les données modifiées entre le " %>
-    <%= text_field_tag :debut, params[:debut], class: 'datepicker' %>
+    <%= text_field_tag :debut, params[:debut], type: 'date' %>
 
     <%= label :date_fin, "et le " %>
-    <%= text_field_tag :fin, params[:fin], class: 'datepicker' %>
+    <%= text_field_tag :fin, params[:fin], type: 'date' %>
   </div>
   <br>
 
