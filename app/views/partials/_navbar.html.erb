@@ -5,6 +5,11 @@
     <% end %>
   </li>
   <li class="nav-item mx-auto">
+    <%= link_to "/about", title: "À Propos de CrystalData" do %>
+      <i class="fa-solid fa-circle-question fa-2xl text-white"></i>
+    <% end %>
+  </li>
+  <li class="nav-item mx-auto">
     <%= link_to @current_user, title: "Profil utilisateur" do %>
       <i class="fa-solid fa-circle-user fa-2xl text-white"></i>
     <% end %>
