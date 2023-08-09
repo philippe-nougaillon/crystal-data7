@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Bienvenue</h1>
+    Un compte '<%= @user.name %>' a été créé.<br><br>
+
+    Pour vous connecter, rendez-vous à cette adresse: <%= link_to "crystal-data.philnoug.com", root_url(m:@user.email) %>
+    <br>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<h2>
+    <i class="glyphicon glyphicon-share"></i> 
+	Liste des partages
+</h2>
+<br>
+
+<table class="table table-striped table-hover table-bordered table-responsive">
+	<thead>
+		<tr>
+			<th>Nom</th><th>Adresse mail</th><th>Rôle</th><th />
+		</tr>
+	</thead>
+
+	<% @table.users.each do |user| %>
+		<tr>
+			<td><b><%= user.name %></b></td>
+			<td><%= user.email %></td>
+			<td><%= @table.is_owner?(user) ? "Créateur" : "Invité" %></td>
+			<td>
+				<% unless @table.is_owner?(user) %>
+					<%= link_to "Annuler le partage", annuler_partage_path(@table, user_id:user.id), title:"Annuler ce partage", 
+						data: { confirm: 'Vraiment ??' }, class: 'btn btn-danger btn-sm' %>
+				<% end %>
+			</td>
+		</tr>
+	<% end %>
+</table>
+<i><small>Seul le créateur d'une table peut en modifier la structure</small></i>
+<br><br>
+
+
+<% if @table.is_owner?(@current_user) %>
+  	<%= link_to add_user_path(@table), title:"Ajouter un partage avec un autre utilisateur", class:'btn btn-success' do %>
+  		<i class="glyphicon glyphicon-plus-sign"></i> Ajouter un partage
+  	<% end %>
+<% end %>
+<br /><br />
+
+<h3>
+    <i class="glyphicon glyphicon-phone"></i> 
+	Saisie de données depuis un mobile
+</h3>
+<p>
+	Pour permettre à un utilisateur en mobilité d'ajouter des données dans la table '<%= @table.name %>' depuis son téléphone, <br>
+	envoyez-lui simplement ce lien : <%= link_to fill_url(@table.slug), fill_url(@table.slug) %>
+
+</p>
+<br>

@@ -1,0 +1,25 @@
+<br>
+<h2>
+    <i class="glyphicon glyphicon-download"></i> 
+	Importer
+</h2>
+<br>
+
+<b>
+  Le fichier à importer doit être de type CSV au format UTF-8, avec séparateur ';' et les entêtes de colonnes sur la première ligne. 
+</b>
+<br><br>  
+
+<%= form_tag({action: "import_do", method: :post}, multipart: true) do %>
+
+  <div class="field">
+    <%= label :filename, "Fichier source" %>
+    <%= file_field_tag 'upload', accept: 'text/csv' %>
+  </div>
+  <br>
+  <br>
+
+  <div class="actions">
+    <%= submit_tag "Importer", class: 'btn btn-success' %>
+  </div>
+<% end %>

@@ -1,0 +1,26 @@
+<h2>
+  <i class="glyphicon glyphicon-stats"></i> 
+  Activité
+</h2>
+<br>
+
+<p>
+  <%= form_tag(request.path, method: :get) do %>
+
+    Utilisateur:
+    <%= select_tag :user_id, options_from_collection_for_select(@table.users, :id, :name, params[:user_id]), include_blank:true, onchange: 'this.form.submit()' %>
+
+    Action:
+    <%= select_tag :type_action, options_for_select(Log.actions, params[:type_action]), include_blank:true, onchange: 'this.form.submit()' %>
+
+    <% @table.fields.filtres.each_with_index do | field,index | %>
+        <%= field.name.humanize %>:
+        <% default_value = params[:select] ? params[:select][index.to_s] : 'nil' %>
+        <%= select_tag "select[#{field.id}]", options_for_select(field.values.pluck(:data).uniq.sort, default_value), include_blank:true, onchange:'this.form.submit()' %>
+    <% end %>
+    | 
+    <%= submit_tag 'Filtrer', class:'btn btn-success' %>
+  <% end %>
+</p>
+
+<%= line_chart [name:@table.name.humanize, data:@hash] %>

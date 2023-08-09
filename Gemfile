@@ -37,7 +37,7 @@ gem "redis", "~> 4.0"
 # gem "kredis"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
@@ -73,3 +73,25 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem "simple_form", ">= 5.0.0"
+gem "bootstrap-sass", ">= 3.4.1"
+gem "bootstrap_form", "~> 4.0"
+gem 'autoprefixer-rails'
+
+gem "groupdate"
+gem "chartkick", ">= 3.2.0"
+
+# gem 'will_paginate'
+# gem 'will_paginate-bootstrap'
+
+gem 'ranked-model'
+# gem 'signature-pad-rails'
+
+gem 'sitemap_generator'
+
+gem 'friendly_id', '~> 5.2.4'
+gem "audited"
+
+gem 'exception_notification'
+gem 'sucker_punch', '~> 2.0'

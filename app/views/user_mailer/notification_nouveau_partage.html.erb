@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+  	'<%= @table.users.first.name %>' partage avec vous la table <b><%= @table.name.humanize %></b>.<br><br>
+
+    Pour vous connecter, rendez-vous à cette adresse: <%= link_to "crystal-data.philnoug.com", root_url(m:@user.email) %>
+    <br>
+  </body>
+</html>
