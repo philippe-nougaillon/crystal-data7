@@ -32,25 +32,8 @@
   </head>
   <body>
     <main class="d-flex min-vh-100">
-      <nav class="nav flex-column bg-secondary gap-5 py-4 position-absolute top-0 start-0 overflow-hidden h-100" style="width: 80px;">
-        <li class="nav-item flex-fill mx-auto mt-2">
-          <%= link_to root_path do %>
-            <i class="fa-solid fa-house fa-2xl text-white"></i>
-          <% end %>
-        </li>
-        <li class="nav-item mx-auto">
-          <%= link_to @current_user do %>
-            <i class="fa-solid fa-user fa-2xl text-white"></i>
-          <% end %>
-        </li>
-        <li class="nav-item mx-auto">
-          <%= link_to root_path do %>
-            <i class="fa-solid fa-gear fa-2xl text-white"></i>
-          <% end %>
-        </li>
-      </nav>
+      <%= render "partials/navbar" %>
       <div class="flex-fill px-5 py-4" style="margin-left: 80px;">
-        <%# render "partials/navbar" %>
         <%= render "partials/notification" %>
         <%= yield %>
       </div>

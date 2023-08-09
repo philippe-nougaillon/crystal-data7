@@ -1,8 +1,8 @@
-<div class="page-header">
-	<h1>
-    	<span class="fa fa-database"></span>
-    	Tables
-	</h1>
+<div class="mb-4">
+  <h1>
+    <span class="fa fa-database"></span>
+    Tables
+  </h1>
 </div>
 
 <table class="table table-hover w-100">
@@ -38,12 +38,12 @@
             <td class="text-right"><%= table.files_size %> MB</td>
             <td>
               <% if table.is_owner?(@current_user) %>
-                <%= link_to 'Modifier', show_attrs_path(id:table), title:"Modifier les colonnes", class: 'btn btn-info btn-xs' %>
+                <%= link_to 'Modifier', show_attrs_path(id:table), title:"Modifier les colonnes", class: 'btn btn-outline-info btn-sm' %>
               <% end %>
             </td>
             <td>
               <% if table.is_owner?(@current_user) %>
-                <%= link_to '[X]', table, method: :delete, data: { confirm: 'Vraiment?' }, class: 'btn btn-danger btn-xs' %>
+                <%= link_to 'X', table, data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm' %>
               <% end %>
             </td>
           </tr>

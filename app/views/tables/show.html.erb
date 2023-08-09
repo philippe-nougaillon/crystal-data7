@@ -1,131 +1,128 @@
-<div class="page-header">
-
-	<h1>
+<div>
+  <h1 class="d-inline">
     <i class="fa-solid fa-database"></i>
     <%= @table.name.humanize %>
-	</h1>
-	<div class="btn-group">
-	    <%= link_to fill_url(@table.slug), class: 'btn btn-outline-success' do %>
-			<i class="glyphicon glyphicon-plus"></i> Ajouter
-		<% end %>
-	</div>
+  </h1>
 
-	<% if @table.is_owner?(@current_user) %>
-		<small class="float-end">
-			<%= link_to 'Modifier', show_attrs_path(id:@table), title:"Modifier les colonnes", data: { no_turbolink: true } %> 
-			|
-			<%= link_to "Partager", partages_path(@table), title:"Voir les utilisateurs qui partagent cette table" %>
-			|
-			<%= link_to 'Audit', logs_path(id:@table), title:"Audit des modifications" %> 
-			|
+  <% if @table.is_owner?(@current_user) %>
+    <small class="float-end mt-3">
+      <%= link_to 'Modifier', show_attrs_path(id:@table), title:"Modifier les colonnes", data: { no_turbolink: true } %> 
+      |
+      <%= link_to "Partager", partages_path(@table), title:"Voir les utilisateurs qui partagent cette table" %>
+      |
+      <%= link_to 'Audit', logs_path(id:@table), title:"Audit des modifications" %> 
+      |
       <%= link_to 'Exporter', export_path(@table), title:"Exporter les données" %>
-		</small>
-		<br><br>
-	<% end %>
+    </small>
+    <br><br>
+  <% end %>
 </div>
 
 <% if @table.fields.any? %>
-	<%= bootstrap_form_tag url: table_path(@table), method: :get do |f| %>
-			<div class="row">
-				<div class="col-sm-3">
-					<%= f.text_field :search, value: params[:search], label: "Rechercher", onchange:'this.form.submit()' %>
-				</div>
+  <%= bootstrap_form_tag url: table_path(@table), method: :get do |f| %>
+    <div class="row align-items-center">
+      <div class="col-sm-3">
+        <%= f.text_field :search, value: params[:search], label: "Rechercher", onchange:'this.form.submit()' %>
+      </div>
 
-				<% @table.fields.filtres.each do | field | %>
-					<div class="col-sm-2">
-						<%= label_tag :filter, field.name.humanize %>
-						<% default_value = params.permit![:select] ? params[:select][field.id.to_s] : 'nil' %>
-						<%= select_tag "select[#{field.id}]", 
-									options_for_select(
-										field.values.records_at(@records).where.not(data: nil).pluck(:data).uniq.sort,
-										default_value), 
-									include_blank: true, 
-									class: "form-select", 
-									onchange: 'this.form.submit()' %>
-					</div>
-				<% end %>
-			</div>
-	<% end %>
-	<br>
+      <% @table.fields.filtres.each do | field | %>
+        <div class="col-sm-3">
+          <%= label_tag :filter, field.name.humanize %>
+          <% default_value = params.permit![:select] ? params[:select][field.id.to_s] : 'nil' %>
+          <%= select_tag "select[#{field.id}]", 
+                options_for_select(
+                  field.values.records_at(@records).where.not(data: nil).pluck(:data).uniq.sort,
+                  default_value), 
+                include_blank: true, 
+                class: "form-select", 
+                onchange: 'this.form.submit()' %>
+        </div>
+      <% end %>
+      <div class="col-sm-3 align-self-end">
+        <%= link_to "+ Ajouter un enregistrement", fill_url(@table.slug) %>
+      </div>
+    </div>
+  <% end %>
+  <br>
 
-	<div class="table-responsive">
-		<table class="table table-striped table-hover table-bordered sticky">
-			<thead>
-				<tr>
-					<% @table.fields.each_with_index do | field,index | %>
-						<th>
-							<%= link_to field.name.humanize, url_for(params.merge(sort_by: field.id).permit(:id, :sort_by, :search, :select)) %>
-						</th>
-						<% @td_style[index] = @numeric_types.include?(field.datatype) ? 'text-right' : nil %>
-					<% end %>
-					<th></th>
-				</tr>
-			</thead>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered sticky">
+      <thead>
+        <tr>
+          <% @table.fields.each_with_index do | field,index | %>
+            <th>
+              <%= link_to field.name.humanize, url_for(params.merge(sort_by: field.id).permit(:id, :sort_by, :search, :select)) %>
+            </th>
+            <% @td_style[index] = @numeric_types.include?(field.datatype) ? 'text-right' : nil %>
+          <% end %>
+          <th></th>
+        </tr>
+      </thead>
 
-			<% unless @records.size.zero? %>
-				<tbody>
-					<% @records.each do | record_index | %>
-						<% values = @table.value_datas(record_index) %>
-						<tr>
-							<% @table.fields.each_with_index do | field,index | %>
-								<% value = values[index] %>
-								<td class= <%= @td_style[index] %> >
-									<% if field.datatype == "Fichier" and values[index] %>
-										<%= link_to(value.split('__').last, url_for("/table_files/" + value)) %>
-									<% elsif field.datatype == "Signature" and values[index] %>
-										<%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index),data: { no_turbolink: true }) %>
-									<% elsif field.datatype == "Date" and values[index] %>
-										<%= l(value.to_date) unless value.blank? %>
-									<% else %>
-										<%= value %>
-									<% end %>
-									<% if field.operation %>
-										<% @sum[field.id] += value.to_f %>
-									<% end %>
-								</td>
-							<% end %>
-							<td class="pull-right">
-								<%= link_to fill_url(@table.id, record_index:record_index), class: 'btn btn-xs' do %>
-										<i class="glyphicon glyphicon-pencil"></i> Modifier
-								<% end %>
-								<%= link_to logs_path(record_index: record_index), class: 'btn btn-xs', title:"Audit des modifications" do %>
-										<i class="glyphicon glyphicon-time"></i> Audit
-								<% end %>
-								<%= link_to "[X]", delete_record_url(@table.id, record_index:record_index), method: :delete, data: { confirm: 'Vraiment ?' }, class: 'btn btn-xs' %>
-							</td>
-						</tr>
-					<% end %>
-				</tbody>
+      <% unless @records.size.zero? %>
+        <tbody>
+          <% @records.each do | record_index | %>
+            <% values = @table.value_datas(record_index) %>
+            <tr>
+              <% @table.fields.each_with_index do | field,index | %>
+                <% value = values[index] %>
+                <td class= <%= @td_style[index] %> >
+                  <% if field.datatype == "Fichier" and values[index] %>
+                    <%= link_to(value.split('__').last, url_for("/table_files/" + value)) %>
+                  <% elsif field.datatype == "Signature" and values[index] %>
+                    <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index),data: { no_turbolink: true }) %>
+                  <% elsif field.datatype == "Date" and values[index] %>
+                    <%= l(value.to_date) unless value.blank? %>
+                  <% else %>
+                    <%= value %>
+                  <% end %>
+                  <% if field.operation %>
+                    <% @sum[field.id] += value.to_f %>
+                  <% end %>
+                </td>
+              <% end %>
+              <td class="pull-right">
+                <%= link_to fill_url(@table.id, record_index:record_index), class: 'btn btn-outline-info btn-sm' do %>
+                    <i class="glyphicon glyphicon-pencil"></i> Modifier
+                <% end %>
+                <%= link_to logs_path(record_index: record_index), class: 'btn btn-outline-dark btn-sm', title:"Audit des modifications" do %>
+                    <i class="glyphicon glyphicon-time"></i> Audit
+                <% end %>
+                <%= link_to "[X]", delete_record_url(@table.id, record_index:record_index), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
 
-				<tfoot>
-					<tr>
-						<% @table.fields.each do |field| %>
-							<% if field.operation %>
-								<td class="text-right text-info">
-									<% if field.Somme? %>
-										<%= @sum[field.id] %>
-									<% elsif field.Moyenne? %>
-										<%= @sum[field.id] / @records.count %>
-									<% end %>
-								</td>
-							<% else %>
-								<td />
-							<% end %>
-						<% end %>
-						<td />
-					</tr>
-				</tfoot>
-			<% end %>
-		</table>
-		<%= @records.size %> sur <%= @table.size %> au total 
-		<br>
-	</div>
+        <tfoot>
+          <tr>
+            <% @table.fields.each do |field| %>
+              <% if field.operation %>
+                <td class="text-right text-info">
+                  <% if field.Somme? %>
+                    <%= @sum[field.id] %>
+                  <% elsif field.Moyenne? %>
+                    <%= @sum[field.id] / @records.count %>
+                  <% end %>
+                </td>
+              <% else %>
+                <td />
+              <% end %>
+            <% end %>
+            <td />
+          </tr>
+        </tfoot>
+      <% end %>
+    </table>
+    <%= @records.size %> sur <%= @table.size %> au total 
+    <br>
+  </div>
 <% else %>
-	<% unless params[:attrs] %>
-		Cette table ne contient aucune colonne<br><br>
-		<%= link_to show_attrs_path(id:@table), class: 'btn btn-success' do %>
-		  <i class="glyphicon glyphicon-plus"></i> Ajouter une colonne
-		<% end %> 
-	<% end %>
+  <% unless params[:attrs] %>
+    Cette table ne contient aucune colonne<br><br>
+    <%= link_to show_attrs_path(id:@table), class: 'btn btn-success' do %>
+      <i class="glyphicon glyphicon-plus"></i> Ajouter une colonne
+    <% end %> 
+  <% end %>
 <% end %>
 <br><br>
