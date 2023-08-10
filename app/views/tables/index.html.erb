@@ -23,7 +23,7 @@
       <tbody>
         <% @tables.each do | table | %>
           <tr>
-            <td style="font-size:16px"><b><%= link_to table.name.humanize, table %></b></td>
+            <td><%= link_to table.name.humanize, table, class: 'fw-bold text-decoration-none' %></td>
             <td><%= table.fields.pluck(:name).join(", ") %></td>
             <td>
               <%= table.shared_with(@current_user) %>
@@ -49,9 +49,6 @@
           </tr>
         <% end %>
       </tbody>
-      <tfoot>
-        <tr><% 8.times do %><th /><% end %></tr>
-      </tfoot>
   <% else %>
     <tbody>
       <tr>

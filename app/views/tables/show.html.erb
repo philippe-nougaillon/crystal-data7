@@ -1,11 +1,11 @@
-<div>
+<div class="mb-4">
   <h1 class="text-primary">
     <%= @table.name.humanize %>
   </h1>
 
   <% if @table.is_owner?(@current_user) %>
     <small class="float-end mt-3">
-      <%= link_to 'Modifier', show_attrs_path(id:@table), title:"Modifier les colonnes", data: { no_turbolink: true } %> 
+      <%= link_to 'Modifier la structure de la table', show_attrs_path(id:@table), title:"Modifier les colonnes", data: { no_turbolink: true } %> 
       |
       <%= link_to "Partager", partages_path(@table), title:"Voir les utilisateurs qui partagent cette table" %>
       |
@@ -13,12 +13,11 @@
       |
       <%= link_to 'Exporter', export_path(@table), title:"Exporter les données" %>
     </small>
-    <br><br>
   <% end %>
 </div>
 
 <% if @table.fields.any? %>
-  <%= bootstrap_form_tag url: table_path(@table), method: :get do |f| %>
+  <%= bootstrap_form_tag url: table_path(@table), method: :get, class: 'mb-4' do |f| %>
     <div class="row align-items-center">
       <div class="col-sm-3">
         <%= f.text_field :search, value: params[:search], label: "Rechercher", onchange:'this.form.submit()' %>
@@ -37,12 +36,11 @@
                 onchange: 'this.form.submit()' %>
         </div>
       <% end %>
-      <div class="col-sm-3 align-self-end">
-        <%= link_to "+ Ajouter un enregistrement", fill_url(@table.slug) %>
+      <div class="col align-self-end">
+        <%= link_to "+ Ajouter un enregistrement", fill_url(@table.slug), class: 'btn btn-outline-primary' %>
       </div>
     </div>
   <% end %>
-  <br>
 
   <div class="table-responsive">
     <table class="table table-striped table-hover table-bordered sticky">
@@ -87,7 +85,7 @@
                 <%= link_to logs_path(record_index: record_index), class: 'btn btn-outline-dark btn-sm', title:"Audit des modifications" do %>
                     <i class="glyphicon glyphicon-time"></i> Audit
                 <% end %>
-                <%= link_to "[X]", delete_record_url(@table.id, record_index:record_index), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm' %>
+                <%= link_to "X", delete_record_url(@table.id, record_index:record_index), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm' %>
               </td>
             </tr>
           <% end %>
