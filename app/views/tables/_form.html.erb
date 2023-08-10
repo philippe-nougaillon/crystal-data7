@@ -1,10 +1,10 @@
 <%= bootstrap_form_for(@table) do |f| %>
 
-    <%= f.text_field :name, required: true, label: "Nom de la table", placeholder: 'Ex: Articles', autofocus: true %>
+    <%= f.text_field :name, required: true, label: "Nom de la table", placeholder: 'Ex: Articles', autofocus: true, class:'mb-4' %>
 
     <%= f.form_group do %>
+        <%= f.check_box :lifo, label: "Afficher le contenu de la table trié par date de modification (le dernier modifié en haut)" %>
         <%= f.check_box :notification, label: "Notification ? Si vous voulez être notifié à chaque nouvel ajout de données" %>
-        <%= f.check_box :lifo, label: "Afficher d'abord les contenues les plus récents ? Afficher le contenu de la table trié par date de modification (le dernier modifié en haut)" %>
     <% end %>
     <br>
 

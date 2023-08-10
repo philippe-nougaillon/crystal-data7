@@ -22,28 +22,28 @@
                 <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control' %>
               </div>
             <% elsif field.datatype == "Nombre" %>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <%= number_field_tag field_name, field_value, class: 'form-control' %>
               </div>
             <% elsif field.datatype == "Euros" %>  
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <%= number_field_tag field_name, field_value, step: 'any', class: 'form-control', placeholder: "€" %>
               </div>
             <% elsif field.datatype == "Date" %>
-              <div class="col-sm-2">
-                <%= text_field_tag field_name, field_value, class: 'form-control', type: 'date', size:6 %>
+              <div class="col-sm-3">
+                <%= text_field_tag field_name, field_value, class: 'form-control', type: 'date' %>
               </div>
             <% elsif field.datatype == "Oui_non?" %>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui') %> Oui
                 <%= radio_button_tag field_name, 'Non', (field_value == 'Non') %> Non
               </div>
             <% elsif field.datatype == "Liste" %>
               <div class="col-sm-3">
-                <%= select_tag field_name, options_for_select(field.items.split(","), field_value), include_blank: true, class: 'form-control' %>
+                <%= select_tag field_name, options_for_select(field.items.split(","), field_value), include_blank: true, class: 'form-select' %>
               </div>
             <% elsif field.datatype == "Formule" %>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <% field_value = field.evaluate(@table.values.joins(:field).records_at(@record_index).order("fields.row_order").pluck(:data)) %>
                 <%= text_field_tag field_name, field_value, disabled:true, class: 'form-control' %>
               </div>
