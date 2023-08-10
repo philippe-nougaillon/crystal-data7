@@ -1,6 +1,7 @@
-<h2>
+<h1 class="text-primary">
   <i class="glyphicon glyphicon-share"></i> 
-	Partager la table '<%= @table.name.humanize %>' avec un autre utilisateur</h2>
+  Partager la table '<%= @table.name.humanize %>' avec un autre utilisateur
+</h1>
 <br>
 
 <%= form_for :user, url: '/add_user_do' do %>

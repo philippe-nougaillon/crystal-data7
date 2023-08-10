@@ -46,7 +46,7 @@
             <th>
               <%= link_to field.name.humanize, url_for(params.merge(sort_by: field.id).permit(:id, :sort_by, :search, :select)) %>
             </th>
-            <% @td_style[index] = @numeric_types.include?(field.datatype) ? 'text-right' : nil %>
+            <% @td_style[index] = @numeric_types.include?(field.datatype) ? 'text-align: right;' : nil %>
           <% end %>
           <th></th>
         </tr>
@@ -59,7 +59,7 @@
             <tr>
               <% @table.fields.each_with_index do | field,index | %>
                 <% value = values[index] %>
-                <td class= <%= @td_style[index] %> >
+                <td style="<%= @td_style[index] %>">
                   <% if field.datatype == "Fichier" and values[index] %>
                     <%= link_to(value.split('__').last, url_for("/table_files/" + value)) %>
                   <% elsif field.datatype == "Signature" and values[index] %>
@@ -87,11 +87,11 @@
           <tr>
             <% @table.fields.each do |field| %>
               <% if field.operation %>
-                <td class="text-right text-info">
+                <td class="text-primary" style="text-align: right">
                   <% if field.Somme? %>
-                    <%= @sum[field.id] %>
+                    <%= number_with_precision(@sum[field.id], precision: 2) %>
                   <% elsif field.Moyenne? %>
-                    <%= @sum[field.id] / @records.count %>
+                    <%= number_with_precision(@sum[field.id] / @records.count, precision: 2) %>
                   <% end %>
                 </td>
               <% else %>
@@ -103,8 +103,7 @@
         </tfoot>
       <% end %>
     </table>
-    <%= @records.size %> sur <%= @table.size %> au total 
-    <br>
+    Affichage de <%= @records.size %> <%= @table.name %> sur <%= @table.size %> au total 
   </div>
 <% else %>
   <% unless params[:attrs] %>

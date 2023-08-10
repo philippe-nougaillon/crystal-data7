@@ -1,9 +1,7 @@
-<br>
-<h2>
+<h1 class="text-primary mb-4">
   <i class="glyphicon glyphicon-upload"></i> 
   Exporter la table '<%= @table.name.humanize %>'
-</h2>
-<br><br>
+</h1>
 
 <%= form_tag(action: "export_do", method: :get, format: :csv) do %>
 

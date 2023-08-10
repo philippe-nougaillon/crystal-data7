@@ -1,21 +1,21 @@
-<h2>
-    <i class="glyphicon glyphicon-user"></i> 
-	<%= @user.name %>
-</h2>
-<br>
+<h1 class="text-primary mb-4">
+  <%= @user.name %>
+</h1>
 
 <h3>Activité du compte</h3>
 
-Nombre de tables créées: <span class="badge text-bg-primary"><%= @total_tables %></span> | 
-Nombre total d'enregistrements: <span class="badge text-bg-primary"><%= @total_lignes %> lignes</span><br>
-Fichiers sauvegardés: <span class="badge text-bg-primary"><%= @fichiers %></span> |
-Espace de stockage utilisé: <span class="badge text-bg-primary"><%= @total_fichiers.round(2) %> MB</span>
-<br><br>
+<div class="mb-4">
+  Nombre de tables créées: <span class="badge text-bg-primary"><%= @total_tables %></span> | 
+  Nombre total d'enregistrements: <span class="badge text-bg-primary"><%= @total_lignes %> lignes</span><br>
+  Fichiers sauvegardés: <span class="badge text-bg-primary"><%= @fichiers %></span> |
+  Espace de stockage utilisé: <span class="badge text-bg-primary"><%= @total_fichiers.round(2) %> MB</span>
+</div>
 
-<h3>Informations personnelles</h3>	
-<i>Utilisateur depuis <%= time_ago_in_words(@user.created_at) %></i><br>
-<i>Ce compte a été modifié il y a <%= time_ago_in_words(@user.updated_at) %></i>
-<br><br>
+<div class="mb-4">
+  <h3>Informations personnelles</h3>	
+  <i>Utilisateur depuis <%= time_ago_in_words(@user.created_at) %></i><br>
+  <i>Ce compte a été modifié il y a <%= time_ago_in_words(@user.updated_at) %></i>
+</div>
 
 <%= form_for(@user, html: {class: 'form-horizontal'}) do |f| %>
 
@@ -31,13 +31,13 @@ Espace de stockage utilisé: <span class="badge text-bg-primary"><%= @total_fich
 	    </div>
 	<% end %>
    
-	<div class="field form-group">
+	<div class="field form-group mb-4">
 	    <div class="col-sm-3">
 	    	<%= f.label 'Nom' %>
 		    <%= f.text_field :name, required:true, class: 'form-control' %>
 	    </div>
 	</div> 
-	<div class="field form-group">
+	<div class="field form-group mb-4">
 	    <div class="col-sm-3">
 	    	<%= f.label 'Adresse mail' %>
 		    <%= f.text_field :email, required:true, class: 'form-control' %>

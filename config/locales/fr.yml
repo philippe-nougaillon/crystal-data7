@@ -8,20 +8,20 @@
 
 fr:
   will_paginate:
-      previous_label: "&#8592; Précédent"
-      next_label: "Suivant &#8594;"
-      page_gap: "&hellip;"
-      page_entries_info:
-        single_page:
-          zero:  "No %{model} found"
-          one:   "Displaying 1 %{model}"
-          other: "Displaying all %{count} %{model}"
-        single_page_html:
-          zero:  "No %{model} found"
-          one:   "Affichage de <b>1</b> %{model}"
-          other: "Affichage de <b>%{count}</b> %{model}(s)"
-        multi_page: "Affichage de %{model} %{from} - %{to} of %{count} in total"
-        multi_page_html: "Affichage de <b>%{from}&nbsp;-&nbsp;%{to}</b> / <b>%{count}</b> %{model}(s) au total"
+    previous_label: "&#8592; Précédent"
+    next_label: "Suivant &#8594;"
+    page_gap: "&hellip;"
+    page_entries_info:
+      single_page:
+        zero:  "No %{model} found"
+        one:   "Displaying 1 %{model}"
+        other: "Displaying all %{count} %{model}"
+      single_page_html:
+        zero:  "No %{model} found"
+        one:   "Affichage de <b>1</b> %{model}"
+        other: "Affichage de <b>%{count}</b> %{model}(s)"
+      multi_page: "Affichage de %{model} %{from} - %{to} of %{count} in total"
+      multi_page_html: "Affichage de <b>%{from}&nbsp;-&nbsp;%{to}</b> / <b>%{count}</b> %{model}(s) au total"
   date:
     formats:
       default: "%d/%m/%Y"

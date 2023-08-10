@@ -1,5 +1,5 @@
 <div class="mb-4">
-  <h1>
+  <h1 class="text-primary">
     <span class="fa fa-database"></span>
     Tables
   </h1>
@@ -13,7 +13,11 @@
       <th class="col-md-2">Partagée avec</th>
       <th>Dernière_Màj</th>
       <th>Lignes</th>
-      <th>Stockage</th>
+      <%
+=begin%>
+ <th>Stockage</th> 
+<%
+=end%>
       <th />
       <th />
     </tr>
@@ -35,7 +39,11 @@
             </td>
             <td><%= "Il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" if table.values.any? %></td>
             <td class="text-right"><%= table.size %></td>
-            <td class="text-right"><%= table.files_size %> MB</td>
+            <%
+=begin%>
+ <td class="text-right"><%= table.files_size %> MB</td> 
+<%
+=end%>
             <td>
               <% if table.is_owner?(@current_user) %>
                 <%= link_to 'Modifier', show_attrs_path(id:table), title:"Modifier les colonnes", class: 'btn btn-outline-primary btn-sm' %>

@@ -36,8 +36,8 @@
       <%= f.check_box :filtre %> Filtre ?<br>
     </div>
 
-    <div class="mb-4">
-      Opération en bas de page: <%= f.select :operation, options_for_select(Field.operations.keys.to_a, @field.operation),include_blank:true %>
+    <div class="mb-4 w-25">
+      Opération en bas de page: <%= f.select :operation, options_for_select(Field.operations.keys.to_a, @field.operation), {include_blank: true}, class: 'form-select w-50' %>
     </div>
 
     <% if @field.new_record? %>
