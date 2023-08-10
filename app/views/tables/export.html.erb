@@ -7,12 +7,12 @@
 
   <%= hidden_field_tag :id, params[:id] %>
 
-  <div class="field">
-    <%= label :date_debut, "Exporter les données modifiées entre le " %>
-    <%= text_field_tag :debut, params[:debut], type: 'date' %>
+  <div class="w-50">
+    <%= label :date_debut, "Exporter les données modifiées du" %>
+    <%= text_field_tag :debut, params[:debut], type: 'date', class: 'form-control' %>
 
-    <%= label :date_fin, "et le " %>
-    <%= text_field_tag :fin, params[:fin], type: 'date' %>
+    <%= label :date_fin, "au " %>
+    <%= text_field_tag :fin, params[:fin], type: 'date', class: 'form-control' %>
   </div>
   <br>
 
