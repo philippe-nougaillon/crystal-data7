@@ -62,7 +62,10 @@
                   <%= hidden_field_tag field_name, nil, class: "output" %><br /><br />
                 </div>
               </div>
-              <br /><br />
+            <% elsif field.datatype == "Texte_long" %>
+              <div class="col-sm-3">
+                <%= text_area_tag field_name, field_value, autofocus: (index == 0),col: 10, row: 10, class: 'form-control' %>
+              </div>
             <% end %>
           </div>
   		</fieldset>
