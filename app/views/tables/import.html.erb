@@ -4,7 +4,7 @@
 </h1>
 
 <p class="mb-4">
-  Le fichier à importer doit être de type CSV au format UTF-8, avec séparateur ';' et les entêtes de colonnes sur la première ligne. 
+  Le fichier à importer doit être de type CSV, au format UTF-8, avec comme séparateur la virgule (,) et les entêtes de colonnes sur la première ligne. 
 </p>
 
 <%= form_tag({action: "import_do", method: :post}, multipart: true) do %>

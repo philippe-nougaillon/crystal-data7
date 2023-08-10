@@ -8,7 +8,7 @@ namespace :tables do
     inserts_log = []
     inserts_value = []
 
-    CSV.foreach(args.file_path, headers: true, return_headers: true, col_sep: ';', encoding: 'UTF-8') do |row|
+    CSV.foreach(args.file_path, headers: true, return_headers: true, col_sep: ',', encoding: 'UTF-8') do |row|
       if row.header_row?
         @new_table = Table.new(name:File.basename(args.filename,'.csv'))
         if @new_table.save
