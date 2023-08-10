@@ -34,11 +34,11 @@
 
     <br>
     <% if @field.new_record? %>
-      <%= f.submit "Ajouter cette nouvelle colonne", class: 'btn btn-success' %>
+      <%= f.submit "Ajouter cette nouvelle colonne", class: 'btn btn-outline-success' %>
       | 
       <%= link_to "Voir la table de données", @field.table %>
     <% else %>  
-      <%= f.submit "Modifier", class: 'btn btn-success' %>
+      <%= f.submit "Modifier", class: 'btn btn-outline-success' %>
       | 
       <%= link_to 'Retour',  show_attrs_path(id: @field.table)  %>
     <% end %>

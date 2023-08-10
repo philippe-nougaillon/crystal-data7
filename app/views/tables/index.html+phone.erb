@@ -4,10 +4,10 @@
         <% @tables.each do |table| %>
           <tr>
             <td>
-              <b><%= link_to table.name.humanize, table, class:'btn btn-lg btn-block btn-default' %></b>
+              <b><%= link_to table.name.humanize, table, class:'btn btn-lg btn-block btn-outline-dark' %></b>
             </td>
             <td>
-              <%= link_to fill_url(table.id), class:'btn btn-lg btn-success center-block' do %>
+              <%= link_to fill_url(table.id), class:'btn btn-lg btn-outline-success center-block' do %>
                   <i class="glyphicon glyphicon-plus"></i> 
               <% end %>
             </td>

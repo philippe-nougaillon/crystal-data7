@@ -1,6 +1,5 @@
 <div>
-  <h1 class="d-inline">
-    <i class="fa-solid fa-database"></i>
+  <h1 class="text-primary">
     <%= @table.name.humanize %>
   </h1>
 
@@ -120,7 +119,7 @@
 <% else %>
   <% unless params[:attrs] %>
     Cette table ne contient aucune colonne<br><br>
-    <%= link_to show_attrs_path(id:@table), class: 'btn btn-success' do %>
+    <%= link_to show_attrs_path(id:@table), class: 'btn btn-outline-success' do %>
       <i class="glyphicon glyphicon-plus"></i> Ajouter une colonne
     <% end %> 
   <% end %>

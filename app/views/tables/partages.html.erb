@@ -19,7 +19,7 @@
 			<td>
 				<% unless @table.is_owner?(user) %>
 					<%= link_to "Annuler le partage", annuler_partage_path(@table, user_id:user.id), title:"Annuler ce partage", 
-						data: { confirm: 'Vraiment ??' }, class: 'btn btn-danger btn-sm' %>
+						data: { confirm: 'Vraiment ??' }, class: 'btn btn-outline-danger btn-sm' %>
 				<% end %>
 			</td>
 		</tr>
@@ -30,7 +30,7 @@
 
 
 <% if @table.is_owner?(@current_user) %>
-  	<%= link_to add_user_path(@table), title:"Ajouter un partage avec un autre utilisateur", class:'btn btn-success' do %>
+  	<%= link_to add_user_path(@table), title:"Ajouter un partage avec un autre utilisateur", class:'btn btn-outline-success' do %>
   		<i class="glyphicon glyphicon-plus-sign"></i> Ajouter un partage
   	<% end %>
 <% end %>

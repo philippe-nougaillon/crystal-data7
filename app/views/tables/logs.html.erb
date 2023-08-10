@@ -13,7 +13,7 @@
     Action:
     <%= select_tag :type_action, options_for_select(Log.actions, params[:type_action]), include_blank:true, onchange: 'this.form.submit()' %>
 
-    <%= submit_tag 'Filtrer', class: 'btn btn-success' %>
+    <%= submit_tag 'Filtrer', class: 'btn btn-outline-success' %>
   <% end %>
 </p>
 <br>
