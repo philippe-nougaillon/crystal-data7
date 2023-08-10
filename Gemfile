@@ -82,8 +82,8 @@ gem 'autoprefixer-rails'
 gem "groupdate"
 gem "chartkick", ">= 3.2.0"
 
-# gem 'will_paginate'
-# gem 'will_paginate-bootstrap'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 
 gem 'ranked-model'
 # gem 'signature-pad-rails'

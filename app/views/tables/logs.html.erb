@@ -2,21 +2,17 @@
   <i class="glyphicon glyphicon-time"></i> 
   Audit des modifications
 </h2>
-<br>
 
-<p>
-  <%= form_tag(request.path, method: :get) do %>
+<%= form_tag(request.path, method: :get, class: 'd-flex mb-4 gap-4 align-items-center') do %>
 
-    Utilisateur:
-    <%= select_tag :user_id, options_from_collection_for_select(@table.users, "id", "name", params[:user_id]), include_blank:true, onchange: 'this.form.submit()'%>
+  <%= label_tag "Utilisateur" %>
+  <%= select_tag :user_id, options_from_collection_for_select(@table.users, "id", "name", params[:user_id]), include_blank:true, onchange: 'this.form.submit()', class:'form-select' %>
 
-    Action:
-    <%= select_tag :type_action, options_for_select(Log.actions, params[:type_action]), include_blank:true, onchange: 'this.form.submit()' %>
+  Action:
+  <%= select_tag :type_action, options_for_select(Log.actions, params[:type_action]), include_blank:true, onchange: 'this.form.submit()', class: 'form-select' %>
 
-    <%= submit_tag 'Filtrer', class: 'btn btn-outline-success' %>
-  <% end %>
-</p>
-<br>
+  <%= submit_tag 'Filtrer', class: 'btn btn-outline-success' %>
+<% end %>
 
 <table class="table table-hover table-bordered sticky">
   <thead>
@@ -45,10 +41,8 @@
   </tbody>
 </table>
 <%= will_paginate @audits, renderer: BootstrapPagination::Rails %>
-<br>
 
 <%= @audits.size.to_s + " modification".pluralize(@audits.size) %>
-<br><br>
 
 <%= @sql %>
 
