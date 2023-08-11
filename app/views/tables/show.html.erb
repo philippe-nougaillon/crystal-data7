@@ -68,6 +68,8 @@
                     <%= l(value.to_date) unless value.blank? %>
                   <% elsif field.datatype == "Texte_long" and values[index] %>
                     <%= truncate(value, length: 50) %>
+                  <% elsif field.datatype == "Euros" and values[index] %>
+                    <%= number_to_currency(value) %>
                   <% else %>
                     <%= value %>
                   <% end %>
@@ -91,9 +93,17 @@
               <% if field.operation %>
                 <td class="text-primary" style="text-align: right">
                   <% if field.Somme? %>
-                    <%= number_with_precision(@sum[field.id], precision: 2) %>
+                    <% if field.datatype == "Euros" %>
+                      <%= number_to_currency(@sum[field.id]) %>
+                    <% else %>
+                      <%= number_with_precision(@sum[field.id], precision: 2) %>
+                    <% end %>
                   <% elsif field.Moyenne? %>
-                    <%= number_with_precision(@sum[field.id] / @records.count, precision: 2) %>
+                    <% if field.datatype == "Euros" %>
+                      <%= number_to_currency(@sum[field.id] / @records.count) %>
+                    <% else %>
+                      <%= number_with_precision(@sum[field.id] / @records.count, precision: 2) %>
+                    <% end %>
                   <% end %>
                 </td>
               <% else %>
