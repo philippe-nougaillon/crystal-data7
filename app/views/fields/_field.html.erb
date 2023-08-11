@@ -6,14 +6,14 @@
     <%= "= #{field.items}" unless field.items.blank? %>
   </td>
   <td>
-    <% if field.obligatoire %><i class="glyphicon glyphicon-ok"></i> Obligatoire<% end %>
+    <% if field.obligatoire %>Obligatoire<% end %>
     <% if field.filtre %>
       <%= " | " if field.obligatoire %>
-      <i class="glyphicon glyphicon-zoom-in"></i> Filtre
+      Filtre
     <% end %>
     <% if field.operation %>
       <%= " | " if field.obligatoire or field.filtre %>
-      <i class="glyphicon glyphicon-flash"></i> <%= field.operation.humanize %>
+      <%= field.operation.humanize %>
       en bas de page
     <% end %>
   </td>

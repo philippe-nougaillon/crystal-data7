@@ -46,7 +46,7 @@
 									<% if field.datatype == "Fichier" and value %>
 										<%= link_to(value.split('__').last, url_for("/table_files/" + value)) %>
 									<% elsif field.datatype == "Signature" and value %>
-										<%= link_to_modal("Oui", values_signature_path(table:@table, field:field, record_index:record_index),data: { no_turbolink: true }) %>
+										<%= link_to_modal("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>
 									<% else %>
 										<%= value %>
 									<% end %>

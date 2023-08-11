@@ -5,7 +5,7 @@
 
   <% if @table.is_owner?(@current_user) %>
     <small class="float-end mt-3">
-      <%= link_to 'Modifier Structure', show_attrs_path(id:@table), title:"Modifier la structure de la table ou des colonnes", data: { no_turbolink: true } %> 
+      <%= link_to 'Modifier Structure', show_attrs_path(id:@table), title:"Modifier la structure de la table ou des colonnes" %> 
       |
       <%= link_to "Partager", partages_path(@table), title:"Voir les utilisateurs qui partagent cette table" %>
       |
@@ -63,7 +63,7 @@
                   <% if field.datatype == "Fichier" and values[index] %>
                     <%= link_to(value.split('__').last, url_for("/table_files/" + value)) %>
                   <% elsif field.datatype == "Signature" and values[index] %>
-                    <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index),data: { no_turbolink: true }) %>
+                    <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>
                   <% elsif field.datatype == "Date" and values[index] %>
                     <%= l(value.to_date) unless value.blank? %>
                   <% elsif field.datatype == "Texte_long" and values[index] %>
@@ -121,7 +121,7 @@
   <% unless params[:attrs] %>
     Cette table ne contient aucune colonne<br><br>
     <%= link_to show_attrs_path(id:@table), class: 'btn btn-outline-success' do %>
-      <i class="glyphicon glyphicon-plus"></i> Ajouter une colonne
+      Ajouter une colonne
     <% end %> 
   <% end %>
 <% end %>

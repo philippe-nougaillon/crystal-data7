@@ -1,8 +1,12 @@
 <div class="mb-4">
-	<h1 class="text-primary">
-		<span class="fa fa-gears"></span>
-		Structure de la table '<%= @table.name.humanize %>'
-	</h1>
+  <h1 class="text-primary">
+    <span class="fa fa-gears"></span>
+    Structure de la table '<%= @table.name.humanize %>'
+  </h1>
+
+  <small class="float-end mt-3">
+    <%= link_to 'Voir la table de données', @field.table, title:"Voir la table de données" %> 
+  </small>
 </div>
 
 <!--
