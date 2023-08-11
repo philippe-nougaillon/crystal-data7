@@ -147,7 +147,11 @@ class TablesController < ApplicationController
       # enregistre le fichier
       if field.datatype == 'Fichier' 
         if value
-          value = field.save_file(value)
+          b = Blob.new()
+          b.file.attach(value)
+          b.save
+          value = b.id
+          created_at_date = DateTime.now
         else 
           # si l'utilisateur n'a pas choisi de fichier
           # on passe pour ne pas écraser le fichier existant
@@ -163,16 +167,16 @@ class TablesController < ApplicationController
       old_value = table.values.find_by(record_index:record_index, field:field)
 
       if old_value
-          if (old_value.data != value) and !(old_value.data.blank? and value.blank?)
-            # supprimer les anciennes données
-            table.values.find_by(record_index:record_index, field:field).delete
+        if (old_value.data != value) and !(old_value.data.blank? and value.blank?)
+          # supprimer les anciennes données
+          table.values.find_by(record_index:record_index, field:field).delete
 
-            # enregistrer les nouvelles données
-            Value.create(field_id: field.id, 
-                          record_index: record_index, 
-                          data: value, 
-                          created_at: created_at_date)
-          end
+          # enregistrer les nouvelles données
+          Value.create(field_id: field.id, 
+                        record_index: record_index, 
+                        data: value, 
+                        created_at: created_at_date)
+        end
       else
         # enregistrer les nouvelles données
         Value.create(field_id: field.id, 

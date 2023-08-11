@@ -95,3 +95,5 @@ gem "audited"
 
 gem 'exception_notification'
 gem 'sucker_punch', '~> 2.0'
+
+gem "aws-sdk-s3", require: false
