@@ -1,6 +1,6 @@
 <h1 class="text-primary mb-4">Formulaire '<%= @table.name.humanize %>'</h1>
 
-<%= form_tag(url: fill_do_path, multipart:true) do %>
+<%= form_tag fill_do_path, multipart: true do %>
 
   <%= hidden_field_tag :table_id, @table.id %>
 
@@ -48,12 +48,10 @@
               </div>
             <% elsif field.datatype == "Fichier" %>
               <div class="col-sm-4">
-                <% if field.datatype == "Fichier" and field_value %>
-                    <% url = url_for("/table_files/" + field_value) %>
-                    <%= link_to(image_tag(url, width:"600"), url, target:"_new") %>
-                    <%= link_to(field_value.split('__').last, url) %>
+                <% if field_value %>
+                  <%= link_to Blob.find(field_value).file_attachment.filename, url_for(Blob.find(field_value).file) %>
                 <% end %>
-                <%= file_field_tag field_name, class: 'form-control-file' %>
+                <%= file_field_tag field_name %>
               </div>
             <% elsif field.datatype == "Signature" %>
               <div class="col-sm-4 sigPad">

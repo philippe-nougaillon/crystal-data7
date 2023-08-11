@@ -61,7 +61,7 @@
                 <% value = values[index] %>
                 <td style="<%= @td_style[index] %>">
                   <% if field.datatype == "Fichier" and values[index] %>
-                    <%= link_to(value.split('__').last, url_for("/table_files/" + value)) %>
+                    <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
                   <% elsif field.datatype == "Signature" and values[index] %>
                     <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>
                   <% elsif field.datatype == "Date" and values[index] %>

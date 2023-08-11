@@ -51,6 +51,8 @@ Rails.application.routes.draw do
 
   delete 'tables/:id/delete_record' => 'tables#delete_record', as: :delete_record
 
+  resources :blobs, only: [:new, :create]
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
