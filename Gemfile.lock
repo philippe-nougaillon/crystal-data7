@@ -224,6 +224,9 @@ GEM
     rubyzip (2.3.2)
     sassc (2.4.0)
       ffi (~> 1.9)
+    seed_dump (3.3.1)
+      activerecord (>= 4)
+      activesupport (>= 4)
     selenium-webdriver (4.10.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -299,6 +302,7 @@ DEPENDENCIES
   rails (~> 7.0.6)
   ranked-model
   redis (~> 4.0)
+  seed_dump (~> 3.3)
   selenium-webdriver
   simple_form (>= 5.0.0)
   sitemap_generator

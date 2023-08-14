@@ -1,62 +1,133 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+User.create!([
+  {name: "Démo", email: "philippe.nougaillon@gmail.com", password: "CDPassword", password_confirmation: "CDPassword", authentication_token: nil}
+])
+Table.create!([
+  {name: "Stocks", notification: false, lifo: false, slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"},
+  {name: "Interventions", notification: false, lifo: false, slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"}
+])
+TablesUser.create!([
+  {table_id: 1, user_id: 1},
+  {table_id: 2, user_id: 1}
+])
 
-user = User
-        .where(name: 'Démo')
-        .first_or_create do |user|
-            user.name                   = 'Démo' 
-            user.email                  = 'philippe.nougaillon@gmail.com' 
-            user.password               = 'CDPassword' 
-            user.password_confirmation  = 'CDPassword'
-        end
+Field.create!([
+  {name: "Type", table_id: 1, datatype: "Texte", items: nil, filtre: true, obligatoire: false, row_order: 0, operation: nil, slug: "d346547b-766d-41e5-ab23-c4b588d2ea7f"},
+  {name: "date", table_id: 2, datatype: "Texte", items: nil, filtre: false, obligatoire: false, row_order: 0, operation: nil, slug: "95371e31-6da2-49c1-9682-a4576bb5c663"},
+  {name: "client", table_id: 2, datatype: "Texte", items: nil, filtre: false, obligatoire: false, row_order: 1073741824, operation: nil, slug: "e67a87e1-be55-4cab-a5f6-6395bb7d2fe0"},
+  {name: "Marque", table_id: 1, datatype: "Texte", items: nil, filtre: true, obligatoire: false, row_order: 1073741824, operation: nil, slug: "ab8c1c4d-27eb-461e-b304-515e3126546e"},
+  {name: "état", table_id: 2, datatype: "Texte", items: nil, filtre: false, obligatoire: false, row_order: 1610612736, operation: nil, slug: "ad18e6da-5474-4216-b508-7b9ded8fa54f"},
+  {name: "Désignation", table_id: 1, datatype: "Texte", items: nil, filtre: false, obligatoire: false, row_order: 1610612736, operation: nil, slug: "6178e16c-ae1f-4569-ba72-b4f56293bc9f"},
+  {name: "description", table_id: 2, datatype: "Texte", items: nil, filtre: false, obligatoire: false, row_order: 1879048192, operation: nil, slug: "0ebb2d39-055b-4b09-8aef-28ff4f7f75c1"},
+  {name: "Prix", table_id: 1, datatype: "Euros", items: nil, filtre: false, obligatoire: false, row_order: 1879048192, operation: nil, slug: "38060e19-93f9-4bab-a9fc-00dc165581c6"},
+  {name: "Remarques", table_id: 1, datatype: "Texte", items: nil, filtre: false, obligatoire: false, row_order: 2013265920, operation: nil, slug: "9205be6b-0b54-4cb7-8e41-b6b2d2144d57"},
+  {name: "prévoir un escabeau", table_id: 2, datatype: "Texte", items: nil, filtre: false, obligatoire: false, row_order: 2013265920, operation: nil, slug: "8c1aa55b-3ee0-4295-90bb-c4475a5f1049"},
+  {name: "technicien", table_id: 2, datatype: "Texte", items: nil, filtre: false, obligatoire: false, row_order: 2080374784, operation: nil, slug: "a028f718-ce14-42ec-8ed6-e7a7d92c8f43"},
+  {name: "Qté en stock", table_id: 1, datatype: "Nombre", items: nil, filtre: false, obligatoire: false, row_order: 2080374784, operation: "Somme", slug: "c464126c-d848-497c-8f32-046b1bac9130"},
+  {name: "observations", table_id: 2, datatype: "Texte", items: nil, filtre: false, obligatoire: false, row_order: 2113929216, operation: nil, slug: "f4088f22-ce58-4738-836e-a503f9bffe43"},
+  {name: "temps passé", table_id: 2, datatype: "Texte", items: nil, filtre: false, obligatoire: false, row_order: 2130706432, operation: nil, slug: "0962d1b7-382e-4484-aa28-560bae2c5cbf"}
+])
 
-table = Table
-            .where(name: 'Stocks')
-            .first_or_create do |table|
-                table.users << user
-                table.name = 'Stocks'
-            end
+Value.create!([
+  {field_id: 1, data: "A", record_index: 1},
+  {field_id: 2, data: "ACME", record_index: 1},
+  {field_id: 3, data: "Produit Z", record_index: 1},
+  {field_id: 4, data: "123.45", record_index: 1},
+  {field_id: 5, data: "RAS", record_index: 1},
+  {field_id: 6, data: "7291", record_index: 1},
+  {field_id: 1, data: "A", record_index: 2},
+  {field_id: 2, data: "ACME", record_index: 2},
+  {field_id: 3, data: "Produit X", record_index: 2},
+  {field_id: 4, data: "45.0", record_index: 2},
+  {field_id: 5, data: "RAS", record_index: 2},
+  {field_id: 6, data: "7", record_index: 2},
+  {field_id: 1, data: "B", record_index: 3},
+  {field_id: 2, data: "NEWACME", record_index: 3},
+  {field_id: 3, data: "Produit Y", record_index: 3},
+  {field_id: 4, data: "15.99", record_index: 3},
+  {field_id: 5, data: "RAS", record_index: 3},
+  {field_id: 6, data: "91", record_index: 3},
+  {field_id: 1, data: "C", record_index: 4},
+  {field_id: 2, data: "NEWACME", record_index: 4},
+  {field_id: 3, data: "Produit A", record_index: 4},
+  {field_id: 4, data: "99.99", record_index: 4},
+  {field_id: 5, data: "Très solide !", record_index: 4},
+  {field_id: 6, data: "79", record_index: 4},
+  {field_id: 7, data: "2023-08-24", record_index: 1},
+  {field_id: 8, data: "le plateau", record_index: 1},
+  {field_id: 9, data: "nouvelle", record_index: 1},
+  {field_id: 10, data: "installer une lampe", record_index: 1},
+  {field_id: 11, data: "Oui", record_index: 1},
+  {field_id: 12, data: "Robert", record_index: 1},
+  {field_id: 13, data: "", record_index: 1},
+  {field_id: 14, data: "0", record_index: 1},
+  {field_id: 7, data: "2023-08-14", record_index: 2},
+  {field_id: 8, data: "Auchan", record_index: 2},
+  {field_id: 9, data: " terminée", record_index: 2},
+  {field_id: 10, data: "Réparer caisse n°3", record_index: 2},
+  {field_id: 11, data: "Non", record_index: 2},
+  {field_id: 12, data: " Bruno", record_index: 2},
+  {field_id: 14, data: "2", record_index: 2},
+  {field_id: 7, data: "2023-08-30", record_index: 3},
+  {field_id: 8, data: "Monoprix", record_index: 3},
+  {field_id: 9, data: " en cours", record_index: 3},
+  {field_id: 10, data: "Migration réseau LAN Drive", record_index: 3},
+  {field_id: 11, data: "Oui", record_index: 3},
+  {field_id: 12, data: " Jean", record_index: 3},
+  {field_id: 14, data: "4", record_index: 3},
+  {field_id: 7, data: "", record_index: 4},
+  {field_id: 8, data: "", record_index: 4},
+  {field_id: 9, data: "", record_index: 4},
+  {field_id: 10, data: "", record_index: 4},
+  {field_id: 11, data: "", record_index: 4},
+  {field_id: 12, data: "", record_index: 4},
+  {field_id: 13, data: "", record_index: 4},
+  {field_id: 14, data: "", record_index: 4},
+  {field_id: 13, data: "Ça m'a l'air compliqué", record_index: 3},
+  {field_id: 13, data: "Elle est souvent cassé cette machine, c'est embêtant !", record_index: 2}
+])
 
-table.fields.destroy_all
-
-field_Type = table.fields.create(name: 'Type', filtre: true)
-field_Marque = table.fields.create(name: 'Marque', filtre: true)
-field_Désignation = table.fields.create(name: 'Désignation')
-field_Prix = table.fields.create(name: 'Prix', datatype: Field.datatypes['Euros'])
-field_Rem = table.fields.create(name: 'Remarques')
-field_QtéStock = table.fields.create(name: 'Qté en stock', datatype: Field.datatypes['Nombre'], operation: 'Somme')
-
-field_Type.values.create(data: 'A', record_index: 1)
-field_Marque.values.create(data: 'ACME', record_index: 1)
-field_Désignation.values.create(data: 'Produit Z', record_index: 1)
-field_Prix.values.create(data: 123.45, record_index: 1)
-field_Rem.values.create(data: 'RAS', record_index: 1)
-field_QtéStock.values.create(data: 7291, record_index: 1)
-
-field_Type.values.create(data: 'A', record_index: 2)
-field_Marque.values.create(data: 'ACME', record_index: 2)
-field_Désignation.values.create(data: 'Produit X', record_index: 2)
-field_Prix.values.create(data: 45.00, record_index: 2)
-field_Rem.values.create(data: 'RAS', record_index: 2)
-field_QtéStock.values.create(data: 7, record_index: 2)
-
-field_Type.values.create(data: 'B', record_index: 3)
-field_Marque.values.create(data: 'NEWACME', record_index: 3)
-field_Désignation.values.create(data: 'Produit Y', record_index: 3)
-field_Prix.values.create(data: 15.99, record_index: 3)
-field_Rem.values.create(data: 'RAS', record_index: 3)
-field_QtéStock.values.create(data: 91, record_index: 3)
-
-field_Type.values.create(data: 'C', record_index: 4)
-field_Marque.values.create(data: 'NEWACME', record_index: 4)
-field_Désignation.values.create(data: 'Produit A', record_index: 4)
-field_Prix.values.create(data: 99.99, record_index: 4)
-field_Rem.values.create(data: 'Très solide !', record_index: 4)
-field_QtéStock.values.create(data: 79, record_index: 4)
-
+Audited::Audit.create!([
+  {auditable_id: 1, auditable_type: "Table", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"lifo"=>false, "name"=>"Stocks", "slug"=>"0f002a24-ef0b-4eec-8476-0392d6b21077", "notification"=>false}, version: 1, comment: nil, remote_address: nil, request_uuid: "b018c657-9d50-4fc3-ae5a-ca04f84d85d6"},
+  {auditable_id: 1, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"name"=>"Type", "slug"=>"d346547b-766d-41e5-ab23-c4b588d2ea7f", "items"=>nil, "filtre"=>true, "datatype"=>0, "table_id"=>1, "operation"=>nil, "row_order"=>0, "obligatoire"=>false}, version: 1, comment: nil, remote_address: nil, request_uuid: "ce0b510f-5f78-45b6-b896-1a2121dd09ce"},
+  {auditable_id: 2, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"name"=>"Marque", "slug"=>"ab8c1c4d-27eb-461e-b304-515e3126546e", "items"=>nil, "filtre"=>true, "datatype"=>0, "table_id"=>1, "operation"=>nil, "row_order"=>1073741824, "obligatoire"=>false}, version: 1, comment: nil, remote_address: nil, request_uuid: "a7f3972c-87d0-4215-ac7c-10b2d521b880"},
+  {auditable_id: 3, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"name"=>"Désignation", "slug"=>"6178e16c-ae1f-4569-ba72-b4f56293bc9f", "items"=>nil, "filtre"=>false, "datatype"=>0, "table_id"=>1, "operation"=>nil, "row_order"=>1610612736, "obligatoire"=>false}, version: 1, comment: nil, remote_address: nil, request_uuid: "283d6991-b5c6-4352-be19-28ba5cfca3ee"},
+  {auditable_id: 4, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"name"=>"Prix", "slug"=>"38060e19-93f9-4bab-a9fc-00dc165581c6", "items"=>nil, "filtre"=>false, "datatype"=>2, "table_id"=>1, "operation"=>nil, "row_order"=>1879048192, "obligatoire"=>false}, version: 1, comment: nil, remote_address: nil, request_uuid: "0cd379e9-8d4c-40a6-8743-b6279f958807"},
+  {auditable_id: 5, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"name"=>"Remarques", "slug"=>"9205be6b-0b54-4cb7-8e41-b6b2d2144d57", "items"=>nil, "filtre"=>false, "datatype"=>0, "table_id"=>1, "operation"=>nil, "row_order"=>2013265920, "obligatoire"=>false}, version: 1, comment: nil, remote_address: nil, request_uuid: "fb2e98b3-3a84-4ac1-b31e-65494456e628"},
+  {auditable_id: 6, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"name"=>"Qté en stock", "slug"=>"c464126c-d848-497c-8f32-046b1bac9130", "items"=>nil, "filtre"=>false, "datatype"=>1, "table_id"=>1, "operation"=>0, "row_order"=>2080374784, "obligatoire"=>false}, version: 1, comment: nil, remote_address: nil, request_uuid: "b49b7130-a7f0-41b0-aaf9-951d8900b731"},
+  {auditable_id: 1, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"A", "field_id"=>1, "record_index"=>1}, version: 1, comment: nil, remote_address: nil, request_uuid: "4690df75-27ec-4b35-9fc2-e740d35bf37a"},
+  {auditable_id: 2, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"ACME", "field_id"=>2, "record_index"=>1}, version: 1, comment: nil, remote_address: nil, request_uuid: "63fbd733-ff0c-49ae-b874-2b90c97ce5f7"},
+  {auditable_id: 3, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"Produit Z", "field_id"=>3, "record_index"=>1}, version: 1, comment: nil, remote_address: nil, request_uuid: "a8a63584-b0a0-40d7-a920-ca743e8414a4"},
+  {auditable_id: 4, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"123.45", "field_id"=>4, "record_index"=>1}, version: 1, comment: nil, remote_address: nil, request_uuid: "a08f4d28-1cf8-4324-89c6-6d7bd3e0ca62"},
+  {auditable_id: 5, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"RAS", "field_id"=>5, "record_index"=>1}, version: 1, comment: nil, remote_address: nil, request_uuid: "4fa2d3f1-0d5c-4e16-b241-9e3652bb1f47"},
+  {auditable_id: 6, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"7291", "field_id"=>6, "record_index"=>1}, version: 1, comment: nil, remote_address: nil, request_uuid: "0dd4773c-3944-4bff-b5de-001b9e136127"},
+  {auditable_id: 7, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"A", "field_id"=>1, "record_index"=>2}, version: 1, comment: nil, remote_address: nil, request_uuid: "472c817e-faf3-4455-85d7-4ef3f3ca56e1"},
+  {auditable_id: 8, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"ACME", "field_id"=>2, "record_index"=>2}, version: 1, comment: nil, remote_address: nil, request_uuid: "fb0f2ba9-a245-4b18-ac36-4b5922e65e76"},
+  {auditable_id: 9, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"Produit X", "field_id"=>3, "record_index"=>2}, version: 1, comment: nil, remote_address: nil, request_uuid: "341da48d-30b3-4af4-9448-09995eae2434"},
+  {auditable_id: 10, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"45.0", "field_id"=>4, "record_index"=>2}, version: 1, comment: nil, remote_address: nil, request_uuid: "53fb7118-30f5-4332-a378-6af1d8f8d584"},
+  {auditable_id: 11, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"RAS", "field_id"=>5, "record_index"=>2}, version: 1, comment: nil, remote_address: nil, request_uuid: "39386a7d-8088-4acf-a3b7-98075bd3c829"},
+  {auditable_id: 12, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"7", "field_id"=>6, "record_index"=>2}, version: 1, comment: nil, remote_address: nil, request_uuid: "270daf2b-9af9-4c47-95dd-60e771db0de6"},
+  {auditable_id: 13, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"B", "field_id"=>1, "record_index"=>3}, version: 1, comment: nil, remote_address: nil, request_uuid: "59593463-bc10-46db-a993-73dd8d21de4d"},
+  {auditable_id: 14, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"NEWACME", "field_id"=>2, "record_index"=>3}, version: 1, comment: nil, remote_address: nil, request_uuid: "172cb4e4-ea0d-484c-af90-5a43c4ab0658"},
+  {auditable_id: 15, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"Produit Y", "field_id"=>3, "record_index"=>3}, version: 1, comment: nil, remote_address: nil, request_uuid: "6d89f167-bf26-413e-a859-0c6bbc3be888"},
+  {auditable_id: 16, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"15.99", "field_id"=>4, "record_index"=>3}, version: 1, comment: nil, remote_address: nil, request_uuid: "783659c8-766d-4281-9b3e-5d13a7553c19"},
+  {auditable_id: 17, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"RAS", "field_id"=>5, "record_index"=>3}, version: 1, comment: nil, remote_address: nil, request_uuid: "d2521ce0-fddc-4445-b179-9fada446e25d"},
+  {auditable_id: 18, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"91", "field_id"=>6, "record_index"=>3}, version: 1, comment: nil, remote_address: nil, request_uuid: "69cdfeda-3508-4927-b6c1-306ce7f4d096"},
+  {auditable_id: 19, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"C", "field_id"=>1, "record_index"=>4}, version: 1, comment: nil, remote_address: nil, request_uuid: "bdb0e057-84e2-4e69-9aac-3de7212c7984"},
+  {auditable_id: 20, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"NEWACME", "field_id"=>2, "record_index"=>4}, version: 1, comment: nil, remote_address: nil, request_uuid: "430969a3-3bda-4835-bbdd-c51f3a0e6f1a"},
+  {auditable_id: 21, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"Produit A", "field_id"=>3, "record_index"=>4}, version: 1, comment: nil, remote_address: nil, request_uuid: "1b03567f-3320-4b63-8d2e-db2f6e533f09"},
+  {auditable_id: 22, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"99.99", "field_id"=>4, "record_index"=>4}, version: 1, comment: nil, remote_address: nil, request_uuid: "6bb87411-2763-46bd-9c37-ab4541fbb400"},
+  {auditable_id: 23, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"Très solide !", "field_id"=>5, "record_index"=>4}, version: 1, comment: nil, remote_address: nil, request_uuid: "e145a718-26bf-4898-9d70-877acde11e26"},
+  {auditable_id: 24, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: nil, user_type: nil, username: nil, action: "create", audited_changes: {"data"=>"79", "field_id"=>6, "record_index"=>4}, version: 1, comment: nil, remote_address: nil, request_uuid: "42e780bf-7085-4619-b1f0-e7b4e6822684"},
+  {auditable_id: 2, auditable_type: "Table", associated_id: nil, associated_type: nil, user_id: 1, user_type: "User", username: nil, action: "create", audited_changes: {"lifo"=>false, "name"=>"Interventions", "slug"=>"b7ad6668-c5e9-4d2e-8eec-8ceb396d088a", "notification"=>false}, version: 1, comment: nil, remote_address: "127.0.0.1", request_uuid: "52376928-c4e7-4ecb-a70e-224d27b39584"},
+  {auditable_id: 7, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: 1, user_type: "User", username: nil, action: "create", audited_changes: {"name"=>"date", "slug"=>"95371e31-6da2-49c1-9682-a4576bb5c663", "items"=>nil, "filtre"=>false, "datatype"=>0, "table_id"=>2, "operation"=>nil, "row_order"=>0, "obligatoire"=>false}, version: 1, comment: nil, remote_address: "127.0.0.1", request_uuid: "52376928-c4e7-4ecb-a70e-224d27b39584"},
+  {auditable_id: 8, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: 1, user_type: "User", username: nil, action: "create", audited_changes: {"name"=>"client", "slug"=>"e67a87e1-be55-4cab-a5f6-6395bb7d2fe0", "items"=>nil, "filtre"=>false, "datatype"=>0, "table_id"=>2, "operation"=>nil, "row_order"=>1073741824, "obligatoire"=>false}, version: 1, comment: nil, remote_address: "127.0.0.1", request_uuid: "52376928-c4e7-4ecb-a70e-224d27b39584"},
+  {auditable_id: 9, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: 1, user_type: "User", username: nil, action: "create", audited_changes: {"name"=>"état", "slug"=>"ad18e6da-5474-4216-b508-7b9ded8fa54f", "items"=>nil, "filtre"=>false, "datatype"=>0, "table_id"=>2, "operation"=>nil, "row_order"=>1610612736, "obligatoire"=>false}, version: 1, comment: nil, remote_address: "127.0.0.1", request_uuid: "52376928-c4e7-4ecb-a70e-224d27b39584"},
+  {auditable_id: 10, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: 1, user_type: "User", username: nil, action: "create", audited_changes: {"name"=>"description", "slug"=>"0ebb2d39-055b-4b09-8aef-28ff4f7f75c1", "items"=>nil, "filtre"=>false, "datatype"=>0, "table_id"=>2, "operation"=>nil, "row_order"=>1879048192, "obligatoire"=>false}, version: 1, comment: nil, remote_address: "127.0.0.1", request_uuid: "52376928-c4e7-4ecb-a70e-224d27b39584"},
+  {auditable_id: 11, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: 1, user_type: "User", username: nil, action: "create", audited_changes: {"name"=>"prévoir un escabeau", "slug"=>"8c1aa55b-3ee0-4295-90bb-c4475a5f1049", "items"=>nil, "filtre"=>false, "datatype"=>0, "table_id"=>2, "operation"=>nil, "row_order"=>2013265920, "obligatoire"=>false}, version: 1, comment: nil, remote_address: "127.0.0.1", request_uuid: "52376928-c4e7-4ecb-a70e-224d27b39584"},
+  {auditable_id: 12, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: 1, user_type: "User", username: nil, action: "create", audited_changes: {"name"=>"technicien", "slug"=>"a028f718-ce14-42ec-8ed6-e7a7d92c8f43", "items"=>nil, "filtre"=>false, "datatype"=>0, "table_id"=>2, "operation"=>nil, "row_order"=>2080374784, "obligatoire"=>false}, version: 1, comment: nil, remote_address: "127.0.0.1", request_uuid: "52376928-c4e7-4ecb-a70e-224d27b39584"},
+  {auditable_id: 13, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: 1, user_type: "User", username: nil, action: "create", audited_changes: {"name"=>"observations", "slug"=>"f4088f22-ce58-4738-836e-a503f9bffe43", "items"=>nil, "filtre"=>false, "datatype"=>0, "table_id"=>2, "operation"=>nil, "row_order"=>2113929216, "obligatoire"=>false}, version: 1, comment: nil, remote_address: "127.0.0.1", request_uuid: "52376928-c4e7-4ecb-a70e-224d27b39584"},
+  {auditable_id: 14, auditable_type: "Field", associated_id: nil, associated_type: nil, user_id: 1, user_type: "User", username: nil, action: "create", audited_changes: {"name"=>"temps passé", "slug"=>"0962d1b7-382e-4484-aa28-560bae2c5cbf", "items"=>nil, "filtre"=>false, "datatype"=>0, "table_id"=>2, "operation"=>nil, "row_order"=>2130706432, "obligatoire"=>false}, version: 1, comment: nil, remote_address: "127.0.0.1", request_uuid: "52376928-c4e7-4ecb-a70e-224d27b39584"},
+  {auditable_id: 57, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: 1, user_type: "User", username: nil, action: "create", audited_changes: {"data"=>"Ça m'a l'air compliqué", "field_id"=>13, "record_index"=>3}, version: 1, comment: nil, remote_address: "127.0.0.1", request_uuid: "0aee5499-bbe3-481e-afbd-4cc387f5b05c"},
+  {auditable_id: 58, auditable_type: "Value", associated_id: nil, associated_type: nil, user_id: 1, user_type: "User", username: nil, action: "create", audited_changes: {"data"=>"Elle est souvent cassé cette machine, c'est embêtant !", "field_id"=>13, "record_index"=>2}, version: 1, comment: nil, remote_address: "127.0.0.1", request_uuid: "0c28c302-e6c9-4cb3-8873-cec28ff98d37"}
+])
 
