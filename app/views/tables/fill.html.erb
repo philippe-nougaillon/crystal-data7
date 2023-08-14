@@ -9,7 +9,7 @@
       <% value = field.values.find_by(record_index: @record_index) %> 
       <% field_value = value.data if value %>
 
-      <fieldset class="form-group">
+      <fieldset class="form-group mb-2">
 
           <label>
             <%= (field.obligatoire ? field.name.insert(0, '* ') : field.name) %>
@@ -46,7 +46,7 @@
                 <% field_value = field.evaluate(@table.values.joins(:field).records_at(@record_index).order("fields.row_order").pluck(:data)) %>
                 <%= text_field_tag field_name, field_value, disabled:true, class: 'form-control' %>
               </div>
-            <% elsif field.datatype == "Fichier" %>
+            <% elsif field.datatype == "Fichier" || field.datatype == "Image" %>
               <div class="col-sm-4">
                 <% if field_value %>
                   <%= link_to Blob.find(field_value).file_attachment.filename, url_for(Blob.find(field_value).file) %>

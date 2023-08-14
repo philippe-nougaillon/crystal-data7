@@ -62,6 +62,10 @@
                 <td style="<%= @td_style[index] %>">
                   <% if field.datatype == "Fichier" and values[index] %>
                     <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
+                  <% elsif field.datatype == "Image" and values[index] %>
+                    <% if Blob.find(value).file.representable? %>
+                      <%= link_to image_tag(Blob.find(value).file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file) %>
+                    <% end %>
                   <% elsif field.datatype == "Signature" and values[index] %>
                     <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>
                   <% elsif field.datatype == "Date" and values[index] %>
