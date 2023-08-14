@@ -6,6 +6,9 @@ class Field < ApplicationRecord
 
 	audited
 
+	extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
+
 	belongs_to :table
 	has_many :values, dependent: :destroy
 	has_many :logs, dependent: :destroy
@@ -49,6 +52,12 @@ class Field < ApplicationRecord
 	def delete_file(filename)
 		pathname = Rails.root.join('public', 'table_files') 
 		File.delete(pathname + filename) 
-	end	
+	end
+
+	private
+
+  def slug_candidates
+    [SecureRandom.uuid]
+  end
 
 end

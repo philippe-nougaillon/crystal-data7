@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_11_081335) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_14_100103) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,7 +80,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_081335) do
     t.boolean "obligatoire", default: false
     t.integer "row_order"
     t.integer "operation"
+    t.string "slug"
     t.index ["name"], name: "index_fields_on_name"
+    t.index ["slug"], name: "index_fields_on_slug", unique: true
     t.index ["table_id"], name: "index_fields_on_table_id"
   end
 

@@ -83,7 +83,7 @@
                 </td>
               <% end %>
               <td>
-                <%= link_to "Modifier", fill_url(@table.id, record_index:record_index), class: 'btn btn-outline-primary btn-sm' %>
+                <%= link_to "Modifier", fill_url(@table.slug, record_index:record_index), class: 'btn btn-outline-primary btn-sm' %>
                 <%= link_to "Audit", logs_path(record_index: record_index), class: 'btn btn-outline-info btn-sm', title:"Audit des modifications" %>
                 <%= link_to "X", delete_record_url(@table.id, record_index:record_index), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm' %>
               </td>
