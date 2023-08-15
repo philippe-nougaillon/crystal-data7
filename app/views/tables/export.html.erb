@@ -7,16 +7,18 @@
 
   <%= hidden_field_tag :id, params[:id] %>
 
-  <div class="w-50">
-    <%= label :date_debut, "Exporter les données modifiées du" %>
-    <%= text_field_tag :debut, params[:debut], type: 'date', class: 'form-control' %>
+  <p>Exporter les données modifiées</p>
 
-    <%= label :date_fin, "au " %>
-    <%= text_field_tag :fin, params[:fin], type: 'date', class: 'form-control' %>
+  <div class="d-flex flex-wrap gap-4 mb-4">
+    <div>
+      <%= label :date_debut, "du" %>
+      <%= text_field_tag :debut, params[:debut], type: 'date', class: 'form-control' %>
+    </div>
+    <div>
+      <%= label :date_fin, "au " %>
+      <%= text_field_tag :fin, params[:fin], type: 'date', class: 'form-control' %>
+    </div>
   </div>
-  <br>
 
-  <div class="actions">
-    <%= submit_tag "Exporter", class: 'btn btn-outline-success' %>
-  </div>
+  <%= submit_tag "Exporter", class: 'btn btn-outline-success' %>
 <% end %>

@@ -5,26 +5,27 @@
   </h1>
 </div>
 
-<table class="table table-hover w-100">
-  <thead>
-    <tr>
-      <th>Nom</th>
-      <th>Colonnes</th>
-      <th class="col-md-2">Partagée avec</th>
-      <th>Dernière_Màj</th>
-      <th>Lignes</th>
-      <%
+<div class="overflow-x-auto">
+  <table class="table table-hover w-100">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Colonnes</th>
+        <th class="col-md-2">Partagée avec</th>
+        <th>Dernière_Màj</th>
+        <th>Lignes</th>
+        <%
 =begin%>
- <th>Stockage</th> 
+ <th>Stockage</th>  
 <%
 =end%>
-      <th />
-      <th />
-    </tr>
-  </thead>
+        <th />
+        <th />
+      </tr>
+    </thead>
 
-  <% if @tables.any? %>
-      <tbody>
+    <tbody>
+      <% if @tables.any? %>
         <% @tables.each do | table | %>
           <tr>
             <td><%= link_to table.name.humanize, table, class: 'fw-bold text-decoration-none' %></td>
@@ -56,21 +57,20 @@
             </td>
           </tr>
         <% end %>
-      </tbody>
-  <% else %>
-    <tbody>
-      <tr>
-        <td colspan=7>
-          <i>
-            Aucune table partagée pour l'instant...
-            <br>
-            Pour en créer une, utilisez le bouton '+ Nouvelle table' ci-dessous
-          </i>
-        </td>
-      </tr>
+      <% else %>
+        <tr>
+          <td colspan=7>
+            <i>
+              Aucune table partagée pour l'instant...
+              <br>
+              Pour en créer une, utilisez le bouton '+ Nouvelle table' ci-dessous
+            </i>
+          </td>
+        </tr>
+      <% end %>
     </tbody>
-  <% end %>
-</table>
+  </table>
+</div>
 
 <%= link_to new_table_path, class: 'btn btn-outline-success' do %>
     <i class="glyphicon glyphicon-plus"></i> Nouvelle Table

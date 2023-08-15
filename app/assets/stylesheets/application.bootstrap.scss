@@ -1,6 +1,44 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 
+#content{
+  margin-left: 50px;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  @media (min-width: 576px) {
+    margin-left: 80px;
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+
+.nav{
+  width: 50px;
+  i{
+    font-size: 1.5rem;
+  }
+  @media (min-width: 576px) {
+    width: 80px;
+    i{
+      font-size: 2rem;
+    }
+  }
+}
+
+div.d-flex{
+  div{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    @media (min-width: 576px) {
+      flex-grow: 0;
+    }
+  }
+  .form-control, .form-select{
+
+  }
+}
+
 .translate-x-0{
   transform: translateX(0px);
 }
