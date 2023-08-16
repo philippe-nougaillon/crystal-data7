@@ -1,27 +1,34 @@
-<nav class="nav flex-column bg-secondary gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100" style="width: 80px;">
+<nav class="nav flex-column bg-secondary gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100">
   <li class="nav-item flex-fill mx-auto mt-2">
     <%= link_to root_path, title: "Liste des tables" do %>
-      <i class="fa-solid fa-house fa-2xl text-white"></i>
+      <i class="fa-solid fa-house text-white"></i>
     <% end %>
   </li>
-  <li class="nav-item mx-auto">
-    <%= link_to "/about", title: "À Propos de CrystalData" do %>
-      <i class="fa-solid fa-circle-question fa-2xl text-white"></i>
-    <% end %>
-  </li>
-  <li class="nav-item mx-auto">
-    <%= link_to @current_user, title: "Profil utilisateur" do %>
-      <i class="fa-solid fa-circle-user fa-2xl text-white"></i>
-    <% end %>
-  </li>
-  <li class="nav-item mx-auto">
-    <%= link_to root_path, title: "Paramètres" do %>
-      <i class="fa-solid fa-gear fa-2xl text-white"></i>
-    <% end %>
-  </li>
-  <li class="nav-item mx-auto">
-    <%= link_to "/logout", title: "Se déconnecter" do %>
-      <i class="fa-solid fa-right-from-bracket fa-2xl text-white"></i>
-    <% end %>
-  </li>
+  <% if @current_user %>
+    <li class="nav-item mx-auto">
+      <%= link_to @current_user, title: "Profil utilisateur" do %>
+        <i class="fa-solid fa-circle-user fa-2xl text-white"></i>
+      <% end %>
+    </li>
+    <%
+=begin%>
+ <li class="nav-item mx-auto">
+      <%= link_to root_path, title: "Paramètres" do %>
+        <i class="fa-solid fa-gear text-white"></i>
+      <% end %>
+    </li> 
+<%
+=end%>
+    <li class="nav-item mx-auto">
+      <%= link_to "/logout", title: "Se déconnecter" do %>
+        <i class="fa-solid fa-right-from-bracket text-white"></i>
+      <% end %>
+    </li>
+  <% else %>
+    <li class="nav-item mx-auto">
+      <%= link_to "/about", title: "À Propos de CrystalData" do %>
+        <i class="fa-solid fa-circle-question text-white"></i>
+      <% end %>
+    </li>
+  <% end %>
 </nav>

@@ -1,79 +1,77 @@
-<h2>Formulaire '<%= @table.name.humanize %>'</h2>
-<br>
+<h1 class="text-primary mb-4">Formulaire '<%= @table.name.humanize %>'</h1>
 
-<%= form_tag(url: fill_do_path, multipart:true) do %>
+<%= form_tag fill_do_path, multipart: true do %>
 
   <%= hidden_field_tag :table_id, @table.id %>
 
 	<% @table.fields.each_with_index do |field, index| %>
-      <% field_name = "[data][#{@record_index}][#{field.id}]" %> 
-      <% value = field.values.find_by(record_index: @record_index) %> 
-      <% field_value = value.data if value %>
+    <% field_name = "[data][#{@record_index}][#{field.id}]" %> 
+    <% value = field.values.find_by(record_index: @record_index) %> 
+    <% field_value = value.data if value %>
 
-      <fieldset class="form-group">
+    <fieldset class="mb-2">
 
-          <label>
-            <%= (field.obligatoire ? field.name.insert(0, '* ') : field.name) %>
-          </label>
-            
-          <div class="row">
-            <% if field.datatype == "Texte" %>
-              <div class="col-sm-3">  
-                <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control' %>
-              </div>
-            <% elsif field.datatype == "Nombre" %>
-              <div class="col-sm-2">
-                <%= number_field_tag field_name, field_value, class: 'form-control' %>
-              </div>
-            <% elsif field.datatype == "Euros" %>  
-              <div class="col-sm-2">
-                <%= number_field_tag field_name, field_value, step: 'any', class: 'form-control', placeholder: "€" %>
-              </div>
-            <% elsif field.datatype == "Date" %>
-              <div class="col-sm-2">
-                <%= text_field_tag field_name, field_value, class: 'form-control', type: 'date', size:6 %>
-              </div>
-            <% elsif field.datatype == "Oui_non?" %>
-              <div class="col-sm-2">
-                <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui') %> Oui
-                <%= radio_button_tag field_name, 'Non', (field_value == 'Non') %> Non
-              </div>
-            <% elsif field.datatype == "Liste" %>
-              <div class="col-sm-3">
-                <%= select_tag field_name, options_for_select(field.items.split(","), field_value), include_blank: true, class: 'form-control' %>
-              </div>
-            <% elsif field.datatype == "Formule" %>
-              <div class="col-sm-2">
-                <% field_value = field.evaluate(@table.values.joins(:field).records_at(@record_index).order("fields.row_order").pluck(:data)) %>
-                <%= text_field_tag field_name, field_value, disabled:true, class: 'form-control' %>
-              </div>
-            <% elsif field.datatype == "Fichier" %>
-              <div class="col-sm-4">
-                <% if field.datatype == "Fichier" and field_value %>
-                    <% url = url_for("/table_files/" + field_value) %>
-                    <%= link_to(image_tag(url, width:"600"), url, target:"_new") %>
-                    <%= link_to(field_value.split('__').last, url) %>
-                <% end %>
-                <%= file_field_tag field_name, class: 'form-control-file' %>
-              </div>
-            <% elsif field.datatype == "Signature" %>
-              <div class="col-sm-4 sigPad">
-                <div class="sig, disabled:true">
-                  <canvas class="pad" width="400" height="53"></canvas>
-                  <%= hidden_field_tag field_name, nil, class: "output" %><br /><br />
-                </div>
-              </div>
-              <br /><br />
-            <% end %>
+      <label>
+        <%= (field.obligatoire ? field.name.insert(0, '* ') : field.name) %>
+      </label>
+
+      <div class="row">
+        <% if field.datatype == "Texte" %>
+          <div class="col-sm-3">  
+            <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control' %>
           </div>
-  		</fieldset>
-  <% end %>  
+        <% elsif field.datatype == "Nombre" %>
+          <div class="col-sm-3">
+            <%= number_field_tag field_name, field_value, class: 'form-control' %>
+          </div>
+        <% elsif field.datatype == "Euros" %>  
+          <div class="col-sm-3">
+            <%= number_field_tag field_name, field_value, step: 'any', class: 'form-control', placeholder: "€" %>
+          </div>
+        <% elsif field.datatype == "Date" %>
+          <div class="col-sm-3">
+            <%= text_field_tag field_name, field_value, class: 'form-control', type: 'date' %>
+          </div>
+        <% elsif field.datatype == "Oui_non?" %>
+          <div class="col-sm-3">
+            <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui') %> Oui
+            <%= radio_button_tag field_name, 'Non', (field_value == 'Non') %> Non
+          </div>
+        <% elsif field.datatype == "Liste" %>
+          <div class="col-sm-3">
+            <%= select_tag field_name, options_for_select(field.items.split(","), field_value), include_blank: true, class: 'form-select' %>
+          </div>
+        <% elsif field.datatype == "Formule" %>
+          <div class="col-sm-3">
+            <% field_value = field.evaluate(@table.values.joins(:field).records_at(@record_index).order("fields.row_order").pluck(:data)) %>
+            <%= text_field_tag field_name, field_value, disabled:true, class: 'form-control' %>
+          </div>
+        <% elsif field.datatype == "Fichier" || field.datatype == "Image" %>
+          <div class="col-sm-4">
+            <% if field_value %>
+              <%= link_to Blob.find(field_value).file_attachment.filename, url_for(Blob.find(field_value).file) %>
+            <% end %>
+            <%= file_field_tag field_name %>
+          </div>
+        <% elsif field.datatype == "Signature" %>
+          <div class="col-sm-4 sigPad">
+            <div class="sig, disabled:true">
+              <canvas class="pad" width="400" height="53"></canvas>
+              <%= hidden_field_tag field_name, nil, class: "output" %><br /><br />
+            </div>
+          </div>
+        <% elsif field.datatype == "Texte_long" %>
+          <div class="col-sm-3">
+            <%= text_area_tag field_name, field_value, autofocus: (index == 0),col: 10, row: 10, class: 'form-control' %>
+          </div>
+        <% end %>
+      </div>
+    </fieldset>
+  <% end %>
   <br>
 
-  <div class="form-group row">
-    <div class="col-sm-5">
-       <%= submit_tag "Enregistrer", class: 'btn btn-success'%>
-        | <%= link_to "Voir les données de '#{@table.name}'", @table %>
-    </div>
+  <div class="d-flex flex-wrap align-items-center gap-2">
+    <%= submit_tag "Enregistrer", class: 'btn btn-outline-success'%>
+    <%= link_to "Voir les données de '#{@table.name}'", @table %>
   </div>
 <% end %>

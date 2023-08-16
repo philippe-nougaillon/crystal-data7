@@ -19,7 +19,7 @@
         <%= select_tag "select[#{field.id}]", options_for_select(field.values.pluck(:data).uniq.sort, default_value), include_blank:true, onchange:'this.form.submit()' %>
     <% end %>
     | 
-    <%= submit_tag 'Filtrer', class:'btn btn-success' %>
+    <%= submit_tag 'Filtrer', class:'btn btn-outline-success' %>
   <% end %>
 </p>
 

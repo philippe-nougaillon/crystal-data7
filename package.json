@@ -12,7 +12,8 @@
     "nodemon": "^3.0.1",
     "postcss": "^8.4.27",
     "postcss-cli": "^10.1.0",
-    "sass": "^1.64.2"
+    "sass": "^1.64.2",
+    "stimulus-notification": "^2.2.0"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",

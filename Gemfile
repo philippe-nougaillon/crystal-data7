@@ -49,7 +49,7 @@ gem "bootsnap", require: false
 # gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -65,6 +65,10 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  gem 'sitemap_generator'
+
+  gem "seed_dump", "~> 3.3"
 end
 
 group :test do
@@ -76,22 +80,21 @@ end
 
 gem "simple_form", ">= 5.0.0"
 gem "bootstrap-sass", ">= 3.4.1"
-gem "bootstrap_form", "~> 4.0"
 gem 'autoprefixer-rails'
 
 gem "groupdate"
 gem "chartkick", ">= 3.2.0"
 
-# gem 'will_paginate'
-# gem 'will_paginate-bootstrap'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 
 gem 'ranked-model'
 # gem 'signature-pad-rails'
-
-gem 'sitemap_generator'
 
 gem 'friendly_id', '~> 5.2.4'
 gem "audited"
 
 gem 'exception_notification'
 gem 'sucker_punch', '~> 2.0'
+
+gem "aws-sdk-s3", require: false

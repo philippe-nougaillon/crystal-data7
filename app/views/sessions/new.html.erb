@@ -1,31 +1,32 @@
-<div class="d-flex gap-5 align-items-center h-100">
-  <div class="w-100 flex-grow-1">
+<div class="d-flex flex-wrap flex-sm-nowrap gap-5 align-items-center">
+  <div class="w-100 w-sm-50 bg-light p-4 p-sm-5">
     <%= image_tag "undraw_Real_time_sync_re_nky7.png", class: "w-100" %>
     <h1 class="text-primary">Crystal Data</h1>
-    <h2 class="fw-normal">Vos données métier, en ligne et en mobilité</h2>
-    <h3 class="fw-light">Cette application Web vous permet de créer des tables de données à partir de feuilles Excel, de les partager en ligne et en mobilité</h3>
+    <h2 class="fw-normal fs-4">Vos données métier, en ligne et en mobilité</h2>
+    <h3 class="fw-light fs-5">Cette application Web vous permet de créer des tables de données à partir de feuilles Excel, de les partager en ligne et en mobilité</h3>
+    <%= link_to "En savoir plus", "/about", class: "btn btn-outline-primary mt-4" %>
   </div>
 
-  <div class="w-75 flex-grow-1 border p-5">
+  <div class="border p-4 p-sm-5">
     <h2 class="text-center mb-5">Connexion</h2>
 
     <%= form_for :user, url:'/login', class: "d-flex flex-column gap-4" do |f| %>
 
-      <%= f.text_field :email, required: true, class: 'form-control', placeholder:'Adresse mail' %>
-      <%= f.password_field :password, required: true, class: 'form-control', placeholder:'Mot de passe' %>
-      <div>
+      <%= f.text_field :email, required: true, class: 'form-control w-100', placeholder:'Adresse mail' %>
+      <%= f.password_field :password, required: true, class: 'form-control w-100', placeholder:'Mot de passe' %>
+      <div class="d-inline">
         <%= f.check_box :remember_me %>
         <%= f.label(:remember_me, "Maintenir la connexion ?") %>
       </div>
 
       <div class='d-flex gap-4 mb-4'>
-        <%= f.submit "S'identifier", class: 'btn btn-outline-success w-100 flex-grow-1' %>
-        <%= link_to "Créer un compte", signup_path, class: 'btn btn-outline-warning w-100 flex-grow-1' %> 
+        <%= f.submit "S'identifier", class: 'btn btn-outline-success' %>
+        <%= link_to "Créer un compte", signup_path, class: 'btn btn-outline-warning' %> 
       </div>
 
     <% end %>
 
-    <%= link_to "Se connecter en tant qu'invité (mode démonstration)", demo_path, class: 'btn btn-outline-primary w-100' %>
+    <%= link_to "Se connecter en tant qu'invité (mode démonstration)", demo_path, class: 'btn btn-outline-primary' %>
   </div>
 </div>
 

@@ -1,29 +1,34 @@
 <div class="mb-4">
-  <h1>
+  <h1 class="text-primary">
     <span class="fa fa-database"></span>
     Tables
   </h1>
 </div>
 
-<table class="table table-hover w-100">
-  <thead>
-    <tr>
-      <th>Nom</th>
-      <th>Colonnes</th>
-      <th class="col-md-2">Partagée avec</th>
-      <th>Dernière_Màj</th>
-      <th>Lignes</th>
-      <th>Stockage</th>
-      <th />
-      <th />
-    </tr>
-  </thead>
+<div class="overflow-x-auto">
+  <table class="table table-hover w-100">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Colonnes</th>
+        <th class="col-md-2">Partagée avec</th>
+        <th>Dernière_Màj</th>
+        <th>Lignes</th>
+        <%
+=begin%>
+ <th>Stockage</th>  
+<%
+=end%>
+        <th />
+        <th />
+      </tr>
+    </thead>
 
-  <% if @tables.any? %>
-      <tbody>
+    <tbody>
+      <% if @tables.any? %>
         <% @tables.each do | table | %>
           <tr>
-            <td style="font-size:16px"><b><%= link_to table.name.humanize, table %></b></td>
+            <td><%= link_to table.name.humanize, table, class: 'fw-bold text-decoration-none' %></td>
             <td><%= table.fields.pluck(:name).join(", ") %></td>
             <td>
               <%= table.shared_with(@current_user) %>
@@ -35,10 +40,14 @@
             </td>
             <td><%= "Il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" if table.values.any? %></td>
             <td class="text-right"><%= table.size %></td>
-            <td class="text-right"><%= table.files_size %> MB</td>
+            <%
+=begin%>
+ <td class="text-right"><%= table.files_size %> MB</td> 
+<%
+=end%>
             <td>
               <% if table.is_owner?(@current_user) %>
-                <%= link_to 'Modifier', show_attrs_path(id:table), title:"Modifier les colonnes", class: 'btn btn-outline-info btn-sm' %>
+                <%= link_to 'Modifier', show_attrs_path(id: table.slug), title:"Modifier les colonnes", class: 'btn btn-outline-primary btn-sm' %>
               <% end %>
             </td>
             <td>
@@ -48,31 +57,25 @@
             </td>
           </tr>
         <% end %>
-      </tbody>
-      <tfoot>
-        <tr><% 8.times do %><th /><% end %></tr>
-      </tfoot>
-  <% else %>
-    <tbody>
-      <tr>
-        <td>
-          <b>
+      <% else %>
+        <tr>
+          <td colspan=7>
             <i>
               Aucune table partagée pour l'instant...
               <br>
               Pour en créer une, utilisez le bouton '+ Nouvelle table' ci-dessous
             </i>
-          </b>
-        </td>
-      </tr>
+          </td>
+        </tr>
+      <% end %>
     </tbody>
-  <% end %>
-</table>
+  </table>
+</div>
 
-<%= link_to new_table_path, class: 'btn btn-success' do %>
+<%= link_to new_table_path, class: 'btn btn-outline-success' do %>
     <i class="glyphicon glyphicon-plus"></i> Nouvelle Table
 <% end %>
 
-<%= link_to import_path, class: 'btn btn-default' do %>
+<%= link_to import_path, class: 'btn btn-outline-dark' do %>
     <i class="glyphicon glyphicon-download"></i> Importer
 <% end %>

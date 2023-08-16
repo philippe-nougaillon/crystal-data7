@@ -36,10 +36,10 @@ class FieldsController < ApplicationController
         @field.table.size.times do |index|
           @field.values.create(record_index: (index + 1))
         end   
-        format.html { redirect_to show_attrs_path(id: @field.table), notice: 'Nouvelle colonne ajoutée.' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Nouvelle colonne ajoutée.' }
         format.json { render :show, status: :created, location: @field }
       else
-        format.html { redirect_to show_attrs_path(id: @field.table), alert: 'Veuillez donner un nom à cette colonne' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), alert: 'Veuillez donner un nom à cette colonne' }
         format.json { render json: @field.errors, status: :unprocessable_entity }
       end
     end
@@ -50,7 +50,7 @@ class FieldsController < ApplicationController
   def update
     respond_to do |format|
       if @field.update(field_params)
-        format.html { redirect_to show_attrs_path(id:@field.table), notice: 'Colonne modifiée.' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Colonne modifiée.' }
         format.json { render :show, status: :ok, location: @field }
       else
         format.html { render :edit }
@@ -66,7 +66,7 @@ class FieldsController < ApplicationController
     @table.values.where(field_id:@field.id).destroy_all
     @field.destroy
     respond_to do |format|
-      format.html { redirect_to show_attrs_path(id:@field.table), notice: 'Colonne supprimée.' }
+      format.html { redirect_to show_attrs_path(id: @field.table), notice: 'Colonne supprimée.' }
       format.json { head :no_content }
     end
   end
@@ -84,7 +84,7 @@ class FieldsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_field
-      @field = Field.find(params[:id])
+      @field = Field.find_by(slug: params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

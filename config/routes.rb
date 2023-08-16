@@ -2,11 +2,11 @@ Rails.application.routes.draw do
 
   resources :users
   resources :tables
-  resources :values do
+  resources :values, only: %i[edit update] do
     get :signature
   end  
 
-  resources :fields do
+  resources :fields, only: %i[index edit update destroy] do
     post :update_row_order, on: :collection
   end
 
@@ -50,6 +50,8 @@ Rails.application.routes.draw do
   get '/demo' => 'sessions#demo'
 
   delete 'tables/:id/delete_record' => 'tables#delete_record', as: :delete_record
+
+  resources :blobs, only: [:new, :create]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

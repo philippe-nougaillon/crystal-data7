@@ -1,24 +1,24 @@
-<br>
-<h2>
+<h1 class="text-primary mb-4">
   <i class="glyphicon glyphicon-upload"></i> 
   Exporter la table '<%= @table.name.humanize %>'
-</h2>
-<br><br>
+</h1>
 
 <%= form_tag(action: "export_do", method: :get, format: :csv) do %>
 
   <%= hidden_field_tag :id, params[:id] %>
 
-  <div class="field">
-    <%= label :date_debut, "Exporter les données modifiées entre le " %>
-    <%= text_field_tag :debut, params[:debut], type: 'date' %>
+  <p>Exporter les données modifiées</p>
 
-    <%= label :date_fin, "et le " %>
-    <%= text_field_tag :fin, params[:fin], type: 'date' %>
+  <div class="d-flex flex-wrap gap-4 mb-4">
+    <div>
+      <%= label :date_debut, "du" %>
+      <%= text_field_tag :debut, params[:debut], type: 'date', class: 'form-control' %>
+    </div>
+    <div>
+      <%= label :date_fin, "au " %>
+      <%= text_field_tag :fin, params[:fin], type: 'date', class: 'form-control' %>
+    </div>
   </div>
-  <br>
 
-  <div class="actions">
-    <%= submit_tag "Exporter", class: 'btn btn-success' %>
-  </div>
+  <%= submit_tag "Exporter", class: 'btn btn-outline-success' %>
 <% end %>

@@ -1,8 +1,12 @@
-<div class="page-header">
-	<h1>
-    	<span class="fa fa-gears"></span>
-		Structure de la table '<%= @table.name.humanize %>'
-	</h1>
+<div class="mb-4">
+  <h1 class="text-primary">
+    <span class="fa fa-gears"></span>
+    Structure de la table '<%= @table.name.humanize %>'
+  </h1>
+
+  <div class="float-end mt-3">
+    <%= link_to 'Voir la table de données', @field.table, title:"Voir la table de données" %> 
+  </div>
 </div>
 
 <!--
@@ -13,29 +17,27 @@
 
 <br>
 <% if @table.fields.any? %>
-	<table class="table table-hover table-condensed">
-		<thead>
-			<tr>
-				<th class="col-md-1">#</th>
-				<th>Nom de la colonne</th>
-				<th>Type</th>
-				<th>Options</th>
-				<th />
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<th colspan=5></th>
-			</tr>
-		</tfoot>
-		<% @table.fields.each_with_index do | field, index | %>
-			<%= render partial:'fields/field', locals: {field:field, i:index} %>
-		<% end %>
-	</table>
+	<div class="overflow-x-auto">
+		<table class="table table-hover table-condensed">
+			<thead>
+				<tr>
+					<th class="col-md-1">#</th>
+					<th>Nom de la colonne</th>
+					<th>Type</th>
+					<th>Options</th>
+					<th colspan=2>
+				</tr>
+			</thead>
+			<% @table.fields.each_with_index do | field, index | %>
+				<%= render partial:'fields/field', locals: {field:field, i:index} %>
+			<% end %>
+		</table>
+	</div>
 <% end %>
 <br>
 
-<h3>Ajouter une nouvelle colonne</h3>
+<h3 class="mb-4">Ajouter une nouvelle colonne</h3>
+
 <% if @field %>	
 	<%= render partial:'fields/form' %>
 <% end %>

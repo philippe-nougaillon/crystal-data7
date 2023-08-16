@@ -2,7 +2,7 @@
 
 class TablesController < ApplicationController
   before_action :authorize, except: [:fill, :fill_do]
-  before_action :set_table, except: [:new, :create, :import, :import_do, :checkifmobile, :index, :log]
+  before_action :set_table, except: [:new, :create, :import, :import_do, :checkifmobile, :index, :log, :delete_record]
 
   # GET /tables
   # GET /tables.json
@@ -31,7 +31,7 @@ class TablesController < ApplicationController
 
     # recherche les lignes 
     unless params.permit![:search].blank?
-      @values = @table.values.where("data like ?", "%#{params.permit![:search].strip}%")      
+      @values = @table.values.where("data ilike ?", "%#{params.permit![:search].strip}%")
     else
       @values = @table.values
     end
@@ -145,9 +145,13 @@ class TablesController < ApplicationController
       end  
 
       # enregistre le fichier
-      if field.datatype == 'Fichier' 
+      if field.datatype == 'Fichier' || field.datatype == 'Image'
         if value
-          value = field.save_file(value)
+          b = Blob.new()
+          b.file.attach(value)
+          b.save
+          value = b.id
+          created_at_date = DateTime.now
         else 
           # si l'utilisateur n'a pas choisi de fichier
           # on passe pour ne pas écraser le fichier existant
@@ -163,16 +167,16 @@ class TablesController < ApplicationController
       old_value = table.values.find_by(record_index:record_index, field:field)
 
       if old_value
-          if (old_value.data != value) and !(old_value.data.blank? and value.blank?)
-            # supprimer les anciennes données
-            table.values.find_by(record_index:record_index, field:field).delete
+        if (old_value.data != value) and !(old_value.data.blank? and value.blank?)
+          # supprimer les anciennes données
+          table.values.find_by(record_index:record_index, field:field).delete
 
-            # enregistrer les nouvelles données
-            Value.create(field_id: field.id, 
-                          record_index: record_index, 
-                          data: value, 
-                          created_at: created_at_date)
-          end
+          # enregistrer les nouvelles données
+          Value.create(field_id: field.id, 
+                        record_index: record_index, 
+                        data: value, 
+                        created_at: created_at_date)
+        end
       else
         # enregistrer les nouvelles données
         Value.create(field_id: field.id, 
@@ -338,28 +342,28 @@ class TablesController < ApplicationController
 
     @records = @table.values.pluck(:record_index).uniq
 
-    @csv_string = CSV.generate(col_sep:';') do |csv|
+    @csv_string = CSV.generate(col_sep:',') do |csv|
       csv << @table.fields.pluck(:name)
 
       @records.each do | index |
-          values = @table.values.joins(:field).records_at(index).order("fields.row_order").pluck(:data)
-          #updated_at = updated_at_list[index]
-          cols = []
-          @table.fields.each_with_index do | field,index |
-            if field.datatype == "Signature" and values[index]
-              cols << "Signé"
-            else
-              cols << (values[index] ? values[index].to_s.gsub("'", " ") : nil) 
-            end
+        values = @table.values.joins(:field).records_at(index).order("fields.row_order").pluck(:data)
+        #updated_at = updated_at_list[index]
+        cols = []
+        @table.fields.each_with_index do | field,index |
+          if field.datatype == "Signature" and values[index]
+            cols << "Signé"
+          else
+            cols << (values[index] ? values[index].to_s.gsub("'", " ") : nil) 
           end
-          #cols << l(updated_at) 
-          csv << cols
+        end
+        #cols << l(updated_at) 
+        csv << cols
       end    
     end
 
     respond_to do |format|
       format.csv do
-        headers['Content-Disposition'] = "attachment; filename=\"#{@table.name.humanize}\""
+        headers['Content-Disposition'] = "attachment; filename=\"#{@table.name.humanize + '.csv'}\""
         headers['Content-Type'] ||= 'text/csv'
       end
     end
@@ -480,7 +484,7 @@ class TablesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_table
-      @table = Table.friendly.find(params[:id])
+      @table = Table.find_by(slug: params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
