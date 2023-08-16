@@ -1,16 +1,23 @@
-<%= bootstrap_form_for(@table) do |f| %>
+<%= form_for(@table) do |f| %>
 
-    <%= f.text_field :name, required: true, label: "Nom de la table", placeholder: 'Nom de la collection que vous souhaitez créer. Ex: Articles, Interventions, Chantiers...', autofocus: true, class:'mb-4' %>
+  <%= f.label :name, "Nom de la table" %>
+  <%= f.text_field :name, required: true, placeholder: 'Ex: Articles, Interventions, Chantiers...', autofocus: true, class:' form-control mb-4' %>
 
-    <%= f.form_group do %>
-        <div class="mb-4">
-            <%= f.check_box :lifo, label: "Trier ?" %>
-            <div id="lifo" class="form-text">Afficher le contenu de la table trié par date de modification (le dernier élément modifié apparaît en haut de la liste)</div>
-        </div>
+  <div class="mb-4">
+    <%= f.check_box :lifo %>
+    <%= f.label :lifo, "Trier ?" %>
+    <div id="lifo" class="form-text">
+      Afficher le contenu de la table trié par date de modification (le dernier élément modifié apparaît en haut de la liste)
+    </div>
+  </div>
 
-        <%= f.check_box :notification, label: "Notification ?" %>
-        <div id="notification" class="form-text">Si vous voulez être notifié à chaque nouvel ajout d'un nouvel élément dans la collection</div>
-    <% end %>
+  <div class="mb-4">
+    <%= f.check_box :notification %>
+    <%= f.label :notification, "Notification ?" %>
+    <div class="form-text">
+      Si vous voulez être notifié à chaque nouvel ajout d'un nouvel élément dans la collection
+    </div>
+  </div>
 
-    <%= f.submit @table.new_record? ? "Continuer" : "Modifier cette table", class: 'btn btn-outline-success mt-4' %>
+  <%= f.submit @table.new_record? ? "Continuer" : "Modifier cette table", class: 'btn btn-outline-success' %>
 <% end %>

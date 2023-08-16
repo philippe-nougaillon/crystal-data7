@@ -34,8 +34,27 @@ div.d-flex{
       flex-grow: 0;
     }
   }
-  .form-control, .form-select{
+}
 
+.form-control, .form-select{
+  @media (min-width: 576px) {
+    width: fit-content;
+  }
+}
+
+.w-sm-75{
+  @media (min-width: 576px) {
+    width: 75% !important;
+  }
+}
+.w-sm-50{
+  @media (min-width: 576px) {
+    width: 50% !important;
+  }
+}
+.w-sm-25{
+  @media (min-width: 576px) {
+    width: 25% !important;
   }
 }
 

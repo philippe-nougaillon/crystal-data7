@@ -2,7 +2,7 @@
 
 class TablesController < ApplicationController
   before_action :authorize, except: [:fill, :fill_do]
-  before_action :set_table, except: [:new, :create, :import, :import_do, :checkifmobile, :index, :log]
+  before_action :set_table, except: [:new, :create, :import, :import_do, :checkifmobile, :index, :log, :delete_record]
 
   # GET /tables
   # GET /tables.json

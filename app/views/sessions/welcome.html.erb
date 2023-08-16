@@ -116,9 +116,11 @@ intégrant les liens entre les données, les règles métiers et les vues person
 		</i> 
 	</h3>
 </div>
-<%= link_to image_tag(image_path("screen-sm-1.png"), width:'32%', id:"imageresource-sm-1", class:"img-thumbnail"), image_path("screen-sm-1.png") %>
-<%= link_to image_tag(image_path("screen-sm-2.png"), width:'32%', id:"imageresource-sm-2", class:"img-thumbnail"), image_path("screen-sm-2.png") %>
-<%= link_to image_tag(image_path("screen-sm-3.png"), width:'32%', id:"imageresource-sm-3", class:"img-thumbnail"), image_path("screen-sm-3.png") %>
+<div class="d-flex gap-2 gap-sm-4">
+	<%= link_to image_tag(image_path("screen-sm-1.png"), id:"imageresource-sm-1", class:"img-thumbnail"), image_path("screen-sm-1.png") %>
+	<%= link_to image_tag(image_path("screen-sm-2.png"), id:"imageresource-sm-2", class:"img-thumbnail"), image_path("screen-sm-2.png") %>
+	<%= link_to image_tag(image_path("screen-sm-3.png"), id:"imageresource-sm-3", class:"img-thumbnail"), image_path("screen-sm-3.png") %>
+</div>
 <br /><br />
 <pre class="text-wrap">Les écrans s'adaptent automatiquement à la taille d'un écran de smartphone => WebApp</pre>
 <br /><br />

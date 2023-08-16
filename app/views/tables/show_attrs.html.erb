@@ -4,9 +4,9 @@
     Structure de la table '<%= @table.name.humanize %>'
   </h1>
 
-  <small class="float-end mt-3">
+  <div class="float-end mt-3">
     <%= link_to 'Voir la table de données', @field.table, title:"Voir la table de données" %> 
-  </small>
+  </div>
 </div>
 
 <!--
@@ -25,7 +25,7 @@
 					<th>Nom de la colonne</th>
 					<th>Type</th>
 					<th>Options</th>
-					<th />
+					<th colspan=2>
 				</tr>
 			</thead>
 			<% @table.fields.each_with_index do | field, index | %>

@@ -4,51 +4,50 @@
   </h1>
 
   <% if @table.is_owner?(@current_user) %>
-    <small class="float-end mt-3">
-      <%= link_to 'Modifier Structure', show_attrs_path(id:@table), title:"Modifier la structure de la table ou des colonnes" %> 
-      |
+    <div class="d-flex justify-content-end gap-2">
+      <%= link_to 'Modifier structure', show_attrs_path(id:@table), title:"Modifier la structure de la table ou des colonnes", class: 'text-end' %> 
       <%= link_to "Partager", partages_path(@table), title:"Voir les utilisateurs qui partagent cette table" %>
-      |
-      <%= link_to 'Audit', logs_path(id:@table), title:"Audit des modifications" %> 
-      |
+      <%= link_to 'Audit', logs_path(id:@table), title:"Audit des modifications" %>
       <%= link_to 'Exporter', export_path(@table), title:"Exporter les données" %>
-    </small>
+    </div>
   <% end %>
 </div>
 
 <% if @table.fields.any? %>
-  <%= bootstrap_form_tag url: table_path(@table), method: :get, class: 'd-flex gap-4 mb-4' do |f| %>
-    <div>
-      <%= f.text_field :search, value: params[:search], label: "Rechercher", onchange:'this.form.submit()' %>
-    </div>
-
-    <% @table.fields.filtres.each do | field | %>
+  <%= form_tag url: table_path(@table), method: :get, class: 'd-flex gap-4 mb-4' do |f| %>
+    <div class="d-flex gap-4 flex-wrap mb-4">
       <div>
-        <%= label_tag :filter, field.name.humanize %>
-        <% default_value = params.permit![:select] ? params[:select][field.id.to_s] : 'nil' %>
-        <%= select_tag "select[#{field.id}]", 
-              options_for_select(
-                field.values.records_at(@records).where.not(data: nil).pluck(:data).uniq.sort,
-                default_value), 
-              include_blank: true, 
-              class: "form-select", 
-              onchange: 'this.form.submit()' %>
+        <%= label_tag :search, "Rechercher" %>
+        <%= text_field_tag :search, params[:search], onchange:'this.form.submit()', class:'form-control' %>
       </div>
-    <% end %>
-    <%= link_to "+ Ajouter", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
+      <% @table.fields.filtres.each do | field | %>
+        <div>
+          <%= label_tag "select[#{field.id}]", field.name.humanize %>
+          <% default_value = params.permit![:select] ? params[:select][field.id.to_s] : 'nil' %>
+          <%= select_tag "select[#{field.id}]", 
+                options_for_select(
+                  field.values.records_at(@records).where.not(data: nil).pluck(:data).uniq.sort,
+                  default_value), 
+                include_blank: true, 
+                class: "form-select", 
+                onchange: 'this.form.submit()' %>
+        </div>
+      <% end %>
+      <%= link_to "+ Ajouter", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
+    </div>
   <% end %>
 
   <div class="overflow-x-auto">
-    <table class="table table-striped table-hover table-bordered sticky">
+    <table class="table table-striped table-hover sticky">
       <thead>
-        <tr>
+        <tr style="vertical-align: middle">
           <% @table.fields.each_with_index do | field,index | %>
             <th>
               <%= link_to field.name.humanize, url_for(params.merge(sort_by: field.id).permit(:id, :sort_by, :search, :select)) %>
             </th>
             <% @td_style[index] = @numeric_types.include?(field.datatype) ? 'text-align: right;' : nil %>
           <% end %>
-          <th></th>
+          <th colspan=3></th>
         </tr>
       </thead>
 
@@ -84,7 +83,11 @@
               <% end %>
               <td>
                 <%= link_to "Modifier", fill_url(@table.slug, record_index:record_index), class: 'btn btn-outline-primary btn-sm' %>
+              </td>
+              <td>
                 <%= link_to "Audit", logs_path(record_index: record_index), class: 'btn btn-outline-info btn-sm', title:"Audit des modifications" %>
+              </td>
+              <td>
                 <%= link_to "X", delete_record_url(@table.id, record_index:record_index), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm' %>
               </td>
             </tr>
@@ -115,6 +118,7 @@
               <% end %>
             <% end %>
             <td />
+            <td colspan=2></td>
           </tr>
         </tfoot>
       <% end %>

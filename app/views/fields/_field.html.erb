@@ -19,6 +19,8 @@
   </td>
   <td>
     <%= link_to 'Modifier', edit_field_path(id: field.slug), class: 'btn btn-outline-info btn-sm' %>
+  </td>
+  <td>
     <%= link_to 'X', field, data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm' %>
   </td>
 </tr>
