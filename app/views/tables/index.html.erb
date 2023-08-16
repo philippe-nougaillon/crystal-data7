@@ -47,7 +47,7 @@
 =end%>
             <td>
               <% if table.is_owner?(@current_user) %>
-                <%= link_to 'Modifier', show_attrs_path(slug:table.slug), title:"Modifier les colonnes", class: 'btn btn-outline-primary btn-sm' %>
+                <%= link_to 'Modifier', show_attrs_path(id: table.slug), title:"Modifier les colonnes", class: 'btn btn-outline-primary btn-sm' %>
               <% end %>
             </td>
             <td>
