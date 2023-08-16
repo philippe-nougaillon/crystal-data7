@@ -12,7 +12,7 @@ class UsersController < ApplicationController
            @total_tables += 1
            @total_lignes += table.size
            @fichiers += table.files_count
-           @total_fichiers += table.files_size
+          #  @total_fichiers += table.files_size
         end
       end
   	end
