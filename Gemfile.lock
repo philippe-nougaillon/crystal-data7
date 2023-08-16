@@ -96,9 +96,6 @@ GEM
     bootstrap-sass (3.4.1)
       autoprefixer-rails (>= 5.2.1)
       sassc (>= 2.0.0)
-    bootstrap_form (4.5.0)
-      actionpack (>= 5.2)
-      activemodel (>= 5.2)
     builder (3.2.4)
     capybara (3.39.2)
       addressable
@@ -286,7 +283,6 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
   bootstrap-sass (>= 3.4.1)
-  bootstrap_form (~> 4.0)
   capybara
   chartkick (>= 3.2.0)
   cssbundling-rails
