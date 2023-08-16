@@ -11,48 +11,52 @@
     </div>
   <% end %>
 
-  <%= f.hidden_field :table_id %>
+  <div data-controller="type">
+    <%= f.hidden_field :table_id %>
 
-  <div class="d-flex flex-wrap gap-4 mb-4">
-    <div>
-      <%= f.label :name, "Nom" %>
-      <%= f.text_field :name, class: 'form-control', required: true %>
+    <div class="d-flex flex-wrap gap-4 mb-4">
+      <div>
+        <%= f.label :name, "Nom" %>
+        <%= f.text_field :name, class: 'form-control', required: true %>
+      </div>
+
+      <div>
+        <%= f.label :name, "Type de données" %>
+        <span data-action="change->type#change">
+          <%= f.select :datatype, options_for_select(@fields, @field.datatype), {}, class: 'form-select', data: { 'type-target': 'source' } %>
+        </span>
+      </div>
+
+      <div data-type-target='params'>
+        <%= f.label :name, "Paramètres" %>
+        <%= f.text_field :items, class: "form-control" %>
+      </div>
     </div>
 
-    <div>
-      <%= f.label :name, "Type de données" %>
-      <%= f.select :datatype, options_for_select(@fields, @field.datatype), {}, class: 'form-select' %>
+    <div class="mb-4">
+      <div class="d-flex gap-2">
+        <%= f.check_box :obligatoire %>
+        <%= f.label :obligatoire, "Obligatoire ?" %>
+      </div>
+      <div class="d-flex gap-2">
+        <%= f.check_box :filtre %>
+        <%= f.label :filtre, "Filtre ?" %>
+      </div>
     </div>
 
-    <div>
-      <%= f.label :name, "Paramètres" %>
-      <%= f.text_field :items, class: "form-control" %>
+    <div data-type-target='number' class="mb-4">
+      <%= f.label :operation, "Opération en bas de page:" %>
+      <%= f.select :operation, options_for_select(Field.operations.keys.to_a, @field.operation), {include_blank: true}, class: 'form-select' %>
     </div>
-  </div>
 
-  <div class="mb-4">
-    <div class="d-flex gap-2">
-      <%= f.check_box :obligatoire %>
-      <%= f.label :obligatoire, "Obligatoire ?" %>
+    <div class="d-flex flex-wrap align-items-center gap-2">
+      <% if @field.new_record? %>
+        <%= f.submit "Ajouter cette nouvelle colonne", class: 'btn btn-outline-success' %>
+        <%= link_to "Voir la table de données", @field.table %>
+      <% else %>
+        <%= f.submit "Modifier", class: 'btn btn-outline-success' %>
+        <%= link_to 'Retour', show_attrs_path(id: @field.table) %>
+      <% end %>
     </div>
-    <div class="d-flex gap-2">
-      <%= f.check_box :filtre %>
-      <%= f.label :filtre, "Filtre ?" %>
-    </div>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :operation, "Opération en bas de page:" %>
-    <%= f.select :operation, options_for_select(Field.operations.keys.to_a, @field.operation), {include_blank: true}, class: 'form-select' %>
-  </div>
-
-  <div class="d-flex flex-wrap align-items-center gap-2">
-    <% if @field.new_record? %>
-      <%= f.submit "Ajouter cette nouvelle colonne", class: 'btn btn-outline-success' %>
-      <%= link_to "Voir la table de données", @field.table %>
-    <% else %>
-      <%= f.submit "Modifier", class: 'btn btn-outline-success' %>
-      <%= link_to 'Retour', show_attrs_path(id: @field.table) %>
-    <% end %>
   </div>
 <% end %>
