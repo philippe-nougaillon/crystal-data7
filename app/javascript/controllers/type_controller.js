@@ -6,6 +6,7 @@ export default class extends Controller {
   initialize() {
     this.paramsTarget.style.display = 'none';
     this.numberTarget.style.display = 'none';
+    this.change();
   }
 
   connect() {
