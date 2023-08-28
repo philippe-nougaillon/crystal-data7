@@ -16,55 +16,38 @@
       </label>
 
       <div class="row">
-        <% if field.datatype == "Texte" %>
-          <div class="col-sm-3">  
+        <div class="col-sm-4"> 
+          <% case field.datatype 
+            when 'Texte' %>
             <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control' %>
-          </div>
-        <% elsif field.datatype == "Nombre" %>
-          <div class="col-sm-3">
+          <% when 'Nombre' %>
             <%= number_field_tag field_name, field_value, class: 'form-control' %>
-          </div>
-        <% elsif field.datatype == "Euros" %>  
-          <div class="col-sm-3">
+          <% when 'Euros' %>
             <%= number_field_tag field_name, field_value, step: 'any', class: 'form-control', placeholder: "€" %>
-          </div>
-        <% elsif field.datatype == "Date" %>
-          <div class="col-sm-3">
+          <% when 'Date' %>
             <%= text_field_tag field_name, field_value, class: 'form-control', type: 'date' %>
-          </div>
-        <% elsif field.datatype == "Oui_non?" %>
-          <div class="col-sm-3">
-            <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui') %> Oui
+          <% when 'Oui_non?' %>
+            <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui') %> Oui 
             <%= radio_button_tag field_name, 'Non', (field_value == 'Non') %> Non
-          </div>
-        <% elsif field.datatype == "Liste" %>
-          <div class="col-sm-3">
+          <% when 'Liste' %>
             <%= select_tag field_name, options_for_select(field.items.split(","), field_value), include_blank: true, class: 'form-select' %>
-          </div>
-        <% elsif field.datatype == "Formule" %>
-          <div class="col-sm-3">
+          <% when 'Formule' %>
             <% field_value = field.evaluate(@table.values.joins(:field).records_at(@record_index).order("fields.row_order").pluck(:data)) %>
             <%= text_field_tag field_name, field_value, disabled:true, class: 'form-control' %>
-          </div>
-        <% elsif field.datatype == "Fichier" || field.datatype == "Image" %>
-          <div class="col-sm-4">
+          <% when 'Signature' %>
+            <div class="sig" disabled=true>
+              <canvas class="pad" width="400" height="53"></canvas>
+              <%= hidden_field_tag field_name, nil, class: "output" %>
+            </div>
+          <% when 'Texte_long' %>
+            <%= text_area_tag field_name, field_value, autofocus: (index == 0),col: 10, row: 10, class: 'form-control' %>
+          <% else %>
             <% if field_value %>
               <%= link_to Blob.find(field_value).file_attachment.filename, url_for(Blob.find(field_value).file) %>
             <% end %>
             <%= file_field_tag field_name %>
-          </div>
-        <% elsif field.datatype == "Signature" %>
-          <div class="col-sm-4 sigPad">
-            <div class="sig, disabled:true">
-              <canvas class="pad" width="400" height="53"></canvas>
-              <%= hidden_field_tag field_name, nil, class: "output" %><br /><br />
-            </div>
-          </div>
-        <% elsif field.datatype == "Texte_long" %>
-          <div class="col-sm-3">
-            <%= text_area_tag field_name, field_value, autofocus: (index == 0),col: 10, row: 10, class: 'form-control' %>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
     </fieldset>
   <% end %>
