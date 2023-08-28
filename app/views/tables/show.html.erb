@@ -70,7 +70,7 @@
                   <% elsif field.datatype == "Date" and values[index] %>
                     <%= l(value.to_date) unless value.blank? %>
                   <% elsif field.datatype == "Texte_long" and values[index] %>
-                    <%= truncate(value, length: 50) %>
+                    <%= truncate(value, length: 80) %>
                   <% elsif field.datatype == "Euros" and values[index] %>
                     <%= number_to_currency(value) %>
                   <% else %>
