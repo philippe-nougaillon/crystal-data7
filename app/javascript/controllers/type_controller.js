@@ -15,9 +15,14 @@ export default class extends Controller {
   change() {
     var type = this.sourceTarget;
 
-    if (type.value == "Formule" || type.value == "Liste" ) {
+    if (type.value == "Formule" ) {
       this.paramsTarget.style.display = 'block';
       this.numberTarget.style.dispaly = 'none';
+      this.paramsTarget.children[2].innerHTML = "ex: [Temps] * [Coût horaire] ou [Prix HT] * 1.2 "
+    } else if (type.value == "Liste" ) {
+      this.paramsTarget.style.display = 'block';
+      this.numberTarget.style.dispaly = 'none';
+      this.paramsTarget.children[2].innerHTML = "ex : Bleu,Blanc,Rouge ou À faire,Fait,Annulé"
     } else if (type.value == "Nombre" || type.value == "Euros" ) {
       this.paramsTarget.style.display = 'none';
       this.numberTarget.style.display = 'block';

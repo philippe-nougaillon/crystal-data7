@@ -160,7 +160,7 @@ class TablesController < ApplicationController
       end
 
       if field.datatype == 'Formule'
-         value = field.evaluate(values.values) # evalue le champ calculé
+         value = field.evaluate(table, record_index) # evalue le champ calculé
       end          
   
       # test si c'est un update ou new record

@@ -73,6 +73,8 @@
                     <%= truncate(value, length: 80) %>
                   <% elsif field.datatype == "Euros" and values[index] %>
                     <%= number_to_currency(value) %>
+                  <% elsif field.datatype == "Formule" and values[index] %>
+                    <%= field.evaluate(@table, record_index) %>
                   <% else %>
                     <%= value %>
                   <% end %>

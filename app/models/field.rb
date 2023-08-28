@@ -24,29 +24,36 @@ class Field < ApplicationRecord
 
 	default_scope { rank(:row_order) } 
 
-	def evaluate(values)
-		# evaluer [1] + [2]
-		begin
-			# test si opérandes nulles 
-			unless self.items.scan(/\[([^\]]+)\]/).flatten.select{|i| values[i.to_i - 1].nil? }.any?
-				result = self.items.gsub(/\[([^\]]+)\]/) {|w| values[w.delete('[]').to_i - 1]}
-				eval(result)
+	def evaluate(table, record_index)
+		# evaluer [1] + [2] ou [1] * [2]
+		formule_to_evaluate = self.items # ex: "[Temps passé] + [prix Heure]"
+		formule = self.items.gsub(/\[|\]/, '')
+		pattern = /[\+\*]+/
+		operands = formule.split(pattern) # ex: ["Temps passé", "prix Heure"]
+
+		# Pour chaque opérande, remplacer du nom par la valeur, ex: [2] * [10]
+		operands.each do |operand|
+			operand.strip! # suppression des espaces inutiles
+			field = self.table.fields.find_by(name: operand) # trouver le field qui a le nom de l'opérande à remplacer
+			next if not field
+			value = field.values.find_by(record_index: record_index) # trouver la valeur du record
+			unless value.data.blank?
+				# Substituer le nom du champ par sa valeur, ex: [2] * [prix Heure]
+				formule_to_evaluate = formule_to_evaluate.gsub(operand, value.data)
 			else
-				nil
+				return 'n/a'
 			end
-		rescue Error => se	
-			"#{se}: #{result}"
 		end
+		return eval(formule_to_evaluate.delete!('[]'))
 	end
 
 	def save_file(uploaded_io)
 		pathname = Rails.root.join('public', 'table_files') 
-			
-        filename = DateTime.now.to_s(:compact) + '__' + uploaded_io.original_filename
-        File.open(pathname + filename, 'wb') do | file |
-            file.write(uploaded_io.read)
-        end
-        filename
+		filename = DateTime.now.to_s(:compact) + '__' + uploaded_io.original_filename
+		File.open(pathname + filename, 'wb') do | file |
+				file.write(uploaded_io.read)
+		end
+		filename
 	end
 
 	def delete_file(filename)

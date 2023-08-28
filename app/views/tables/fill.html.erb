@@ -32,8 +32,8 @@
           <% when 'Liste' %>
             <%= select_tag field_name, options_for_select(field.items.split(","), field_value), include_blank: true, class: 'form-select' %>
           <% when 'Formule' %>
-            <% field_value = field.evaluate(@table.values.joins(:field).records_at(@record_index).order("fields.row_order").pluck(:data)) %>
-            <%= text_field_tag field_name, field_value, disabled:true, class: 'form-control' %>
+            <% field_value = field.evaluate(@table, @record_index) %>
+            <%= text_field_tag field_name, field_value, disabled: true, class: 'form-control' %>
           <% when 'Signature' %>
             <div class="sig" disabled=true>
               <canvas class="pad" width="400" height="53"></canvas>
