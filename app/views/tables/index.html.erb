@@ -13,7 +13,7 @@
         <th>Colonnes</th>
         <th class="col-md-2">Partagée avec</th>
         <th>Dernière_Màj</th>
-        <th>Lignes</th>
+        <th>Nbr_lignes</th>
         <%
 =begin%>
  <th>Stockage</th>  
@@ -29,7 +29,7 @@
         <% @tables.each do | table | %>
           <tr>
             <td><%= link_to table.name.humanize, table, class: 'fw-bold text-decoration-none' %></td>
-            <td><%= table.fields.pluck(:name).join(", ") %></td>
+            <td><%= table.field_names %></td>
             <td>
               <%= table.shared_with(@current_user) %>
               <% if table.is_owner?(@current_user) %>
@@ -39,7 +39,7 @@
               <% end %>
             </td>
             <td><%= "Il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" if table.values.any? %></td>
-            <td class="text-right"><%= table.size %></td>
+            <td style="text-align: right"><%= table.size %></td>
             <%
 =begin%>
  <td class="text-right"><%= table.files_size %> MB</td> 

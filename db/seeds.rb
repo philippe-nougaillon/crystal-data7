@@ -66,6 +66,7 @@ Value.create!([
   {field_id: 10, data: "Réparer caisse n°3", record_index: 2},
   {field_id: 11, data: "Non", record_index: 2},
   {field_id: 12, data: " Bruno", record_index: 2},
+  {field_id: 13, data: "Elle est souvent cassée cette machine, c'est embêtant !", record_index: 2},
   {field_id: 14, data: "2", record_index: 2},
   {field_id: 7, data: "2023-08-30", record_index: 3},
   {field_id: 8, data: "Monoprix", record_index: 3},
@@ -74,14 +75,7 @@ Value.create!([
   {field_id: 11, data: "Oui", record_index: 3},
   {field_id: 12, data: " Jean", record_index: 3},
   {field_id: 14, data: "4", record_index: 3},
-  {field_id: 7, data: "", record_index: 4},
-  {field_id: 8, data: "", record_index: 4},
-  {field_id: 9, data: "", record_index: 4},
-  {field_id: 10, data: "", record_index: 4},
-  {field_id: 11, data: "", record_index: 4},
-  {field_id: 12, data: "", record_index: 4},
-  {field_id: 13, data: "", record_index: 4},
-  {field_id: 14, data: "", record_index: 4},
-  {field_id: 13, data: "Ça m'a l'air compliqué", record_index: 3},
-  {field_id: 13, data: "Elle est souvent cassé cette machine, c'est embêtant !", record_index: 2}
+  {field_id: 13, data: "Ça m'a l'air compliqué", record_index: 3}
 ])
+
+Audited::Audit.delete_all

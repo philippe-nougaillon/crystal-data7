@@ -9,10 +9,10 @@
     <% value = field.values.find_by(record_index: @record_index) %> 
     <% field_value = value.data if value %>
 
-    <fieldset class="mb-2">
+    <fieldset class="mb-3">
 
-      <label>
-        <%= (field.obligatoire ? field.name.insert(0, '* ') : field.name) %>
+      <label class="fw-bold">
+        <%= (field.obligatoire ? field.name.humanize.insert(0, '* ') : field.name.humanize) %>
       </label>
 
       <div class="row">
