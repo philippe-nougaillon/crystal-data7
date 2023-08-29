@@ -50,6 +50,10 @@ class Table < ApplicationRecord
 		self.values.includes(:field).records_at(record_index).order("fields.row_order").pluck(:data)
 	end
 
+	def field_names
+		self.fields.pluck(:name).map{|x| x.humanize}.join(', ')
+	end
+
 private
 	# only one candidate for an nice id; one random UDID
 	def slug_candidates

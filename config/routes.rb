@@ -2,11 +2,11 @@ Rails.application.routes.draw do
 
   resources :users
   resources :tables
-  resources :values, only: %i[edit update] do
+  resources :values do
     get :signature
   end  
 
-  resources :fields, only: %i[index edit update destroy] do
+  resources :fields do
     post :update_row_order, on: :collection
   end
 
