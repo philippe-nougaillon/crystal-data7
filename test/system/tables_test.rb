@@ -14,7 +14,7 @@ class TablesTest < ApplicationSystemTestCase
   
   test "creating a Table" do
     visit tables_url
-    click_button "Nouvelle Table"
+    click_on "Nouvelle Table"
 
     fill_in "Nom de la table", with: "Interventions"
     click_button "Continuer"
@@ -24,6 +24,7 @@ class TablesTest < ApplicationSystemTestCase
     fill_in "Nom", with: "Titre"
     check "Obligatoire ?"
     click_button "Ajouter cette nouvelle colonne"
+    assert_text "Nouvelle colonne ajoutée."
     # TODO: checker si le type du type est un string
     # TODO: checker si le champ est obligatoire
 
@@ -31,12 +32,13 @@ class TablesTest < ApplicationSystemTestCase
     fill_in "Nom", with: "Prix"
     page.select "Nombre", from: "Type de données"
     click_button "Ajouter cette nouvelle colonne"
+    assert_text "Nouvelle colonne ajoutée."
   end
 
   test "updating a Table" do
     visit tables_url
-    click_button "Modifier", match: :first
-    click_button "Modifier", match: :first
+    click_on "Modifier", match: :first
+    click_on "Modifier", match: :first
 
     fill_in "Nom", with: "Type"
     click_button "Modifier"
@@ -47,7 +49,7 @@ class TablesTest < ApplicationSystemTestCase
   test "destroying a Table" do
     visit tables_url
     page.accept_confirm do
-      click_button "X", match: :first
+      click_on "X", match: :first
     end
 
     assert_text "Table supprimée."
