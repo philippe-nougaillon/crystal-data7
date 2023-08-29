@@ -36,9 +36,9 @@
 
 	<h3 class="mt-5 text-info">Principales fonctionnalités de CrystalData</h3>
 
-	<ul class="list-group list-group-flush mb-5 ">
+	<ul class="list-group list-group-flush mb-5">
 		<li class="list-group-item"><i class="fa fa-circle-check text-primary"></i> Créez vos tables de donnée simplement à partir de feuilles Excel (exportées au format CSV)</li>
-		<li class="list-group-item"><i class="fa fa-circle-check text-primary"></i> Ajoutez des colonnes de type: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Champ calculé (formule Ruby), Fichier, Image, Signature manuscrite, Coordonnées GPS, Météo locale</li>
+		<li class="list-group-item"><i class="fa fa-circle-check text-primary"></i> Ajoutez des colonnes de type: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Champ calculé (formule Ruby), Fichier, Image, ...</li>
 		<li class="list-group-item"><i class="fa fa-circle-check text-primary"></i> Ajoutez, éditez vos enregistrements dans un formulaire</li>
 		<li class="list-group-item"><i class="fa fa-circle-check text-primary"></i> Audit: chaque modification est consignée dans un historique (qui, quand, quoi)</li>
 		<li class="list-group-item"><i class="fa fa-circle-check text-primary"></i> Recherchez, filtrez et triez vos données</li> 
@@ -136,13 +136,31 @@
 		<i class="fa fa-circle-check"></i>
 		Accédez à vos données en mobilité
 	</h4>
-	<p>Les écrans s'adaptent automatiquement à la taille d'un écran de smartphone (Responsive WebApp)</p>
+	<p>Les écrans s'adaptent automatiquement à la taille d'un écran de smartphone (Responsive Design)</p>
 
-	<div class="d-flex gap-2 gap-sm-4">
+	<div class="d-flex gap-2 gap-sm-4 mb-5">
 		<%= image_tag 'screen-sm-1.png', class: 'img-thumbnail w-25' %>
 		<%= image_tag 'screen-sm-2.png', class: 'img-thumbnail w-25' %>
 		<%= image_tag 'screen-sm-3.png', class: 'img-thumbnail w-25' %>
 	</div>
+
+	<h3 class="text-info">Les types de données à la loupe</h3>
+
+	<p>
+		Une table de données est constituée de colonne (ex: Marque, Couleur, Prix, Qté en stock) et chaque colonne peut avoir un type de données spécifique afin de s'adapter au mieux aux données contenues dans chaque colonne.
+		Les types de données disponibles dans CrystalData sont : 
+		<ul class="list-group list-group-flush mb-5">
+			<li>Texte : peut contenir une chaine de 255 caractères maximum. L'option 'Filtre ?' permet de créer une liste déroulante contenant les valeurs distinctes. </li>
+			<li>Nombre : pour saisir des valeurs numériques, avec ou sans décimales. L'option 'Opération en bas de page', calculera la moyenne ou la somme des valeurs de la colonne.</li>
+			<li>Euros : idem 'Nombre' mais affiche la valeur avec le symbole euros (€).</li>
+			<li>Date : une date choisie dans un calendrier.</li>
+			<li>Oui_Non? : permet de choisir en Oui ou Non ou aucun des deux.</li>
+			<li>Liste : pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.</li> 
+			<li>Formule : champ calculé à partir de champs existants ou d'une formule Ruby, ex: '[Temps Passé] * [Coût horaire]' ou '[Prix HT] * 1.2'
+			<li>Fichier : permet de lier et de stocker un fichier (document, image, etc...).</li>
+			<li>Image : idem 'Fichier' mais affiche un aperçu de l'image ou l'image d'origine selon le contexte.</li>
+		</ul>
+	</p>
 
 	<h3 class="my-5 text-info">Développement, support et services</h3>
 	<p class="mb-5">
