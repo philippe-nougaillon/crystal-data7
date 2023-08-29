@@ -1,6 +1,6 @@
 require "application_system_test_case"
 
-class TablesTest < ApplicationSystemTestCase
+class FieldsTest < ApplicationSystemTestCase
 
   setup do
     login_user
@@ -8,20 +8,17 @@ class TablesTest < ApplicationSystemTestCase
   
   test "visiting the index" do
     visit tables_url
-    assert_selector "h1", text: "Tables"
+    click_on "Stocks"
+    assert_selector "h1", text: "Stocks"
   end
   
-  test "creating a Table" do
+  test "creating a Field" do
     visit tables_url
-    click_on "Nouvelle Table"
+    click_on "Stocks"
+    click_on "Modifier structure"
 
-    fill_in "Nom de la table", with: "Interventions"
-    click_button "Continuer"
-    assert_text "Table créée. Vous pouvez maintenant y ajouter des colonnes"
-
-    # Ajout de fields
-    fill_in "Nom", with: "Titre"
-    check "Obligatoire ?"
+    # Ajout d'un field
+    fill_in "Nom", with: "Désignation"
     click_button "Ajouter cette nouvelle colonne"
     assert_text "Nouvelle colonne ajoutée."
     # TODO: checker si le type du field est un string
@@ -34,23 +31,26 @@ class TablesTest < ApplicationSystemTestCase
     assert_text "Nouvelle colonne ajoutée."
   end
 
-  test "updating a Table" do
+  test "updating a Field" do
     visit tables_url
+    click_on "Stocks"
+    click_on "Modifier structure"
     click_on "Modifier", match: :first
-    click_on "Modifier", match: :first
-
-    fill_in "Nom", with: "Type"
+    
+    fill_in "Nom", with: "Description"
     click_button "Modifier"
-
+    
     assert_text "Colonne modifiée."
   end
-
-  test "destroying a Table" do
+  
+  test "destroying a Field" do
     visit tables_url
+    click_on "Stocks"
+    click_on "Modifier structure"
     page.accept_confirm do
       click_on "X", match: :first
     end
 
-    assert_text "Table supprimée."
+    assert_text "Colonne supprimée."
   end
 end

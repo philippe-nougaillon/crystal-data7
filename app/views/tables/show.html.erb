@@ -84,7 +84,7 @@
                 </td>
               <% end %>
               <td>
-                <%= link_to "Modifier", fill_url(@table.slug, record_index:record_index), class: 'btn btn-outline-primary btn-sm' %>
+                <%= link_to "Modifier", fill_url(@table.slug, record_index:record_index), class: 'btn btn-outline-primary btn-sm', 'data-testid': "Modifier ligne n°#{record_index}" %>
               </td>
               <td>
                 <%= link_to "Audit", logs_path(record_index: record_index), class: 'btn btn-outline-info btn-sm', title:"Audit des modifications" %>

@@ -19,33 +19,33 @@
         <div class="col-sm-4"> 
           <% case field.datatype 
             when 'Texte' %>
-            <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control' %>
+            <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control', 'data-testid': field.name %>
           <% when 'Nombre' %>
-            <%= number_field_tag field_name, field_value, class: 'form-control' %>
+            <%= number_field_tag field_name, field_value, class: 'form-control', 'data-testid': field.name %>
           <% when 'Euros' %>
-            <%= number_field_tag field_name, field_value, step: 'any', class: 'form-control', placeholder: "€" %>
+            <%= number_field_tag field_name, field_value, step: 'any', class: 'form-control', placeholder: "€", 'data-testid': field.name %>
           <% when 'Date' %>
-            <%= text_field_tag field_name, field_value, class: 'form-control', type: 'date' %>
+            <%= text_field_tag field_name, field_value, class: 'form-control', type: 'date', 'data-testid': field.name %>
           <% when 'Oui_non?' %>
-            <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui') %> Oui 
-            <%= radio_button_tag field_name, 'Non', (field_value == 'Non') %> Non
+            <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui'), 'data-testid': field.name %> Oui 
+            <%= radio_button_tag field_name, 'Non', (field_value == 'Non'), 'data-testid': field.name %> Non
           <% when 'Liste' %>
-            <%= select_tag field_name, options_for_select(field.items.split(","), field_value), include_blank: true, class: 'form-select' %>
+            <%= select_tag field_name, options_for_select(field.items.split(","), field_value), include_blank: true, class: 'form-select', 'data-testid': field.name %>
           <% when 'Formule' %>
             <% field_value = field.evaluate(@table, @record_index) %>
-            <%= text_field_tag field_name, field_value, disabled: true, class: 'form-control' %>
+            <%= text_field_tag field_name, field_value, disabled: true, class: 'form-control', 'data-testid': field.name %>
           <% when 'Signature' %>
             <div class="sig" disabled=true>
               <canvas class="pad" width="400" height="53"></canvas>
-              <%= hidden_field_tag field_name, nil, class: "output" %>
+              <%= hidden_field_tag field_name, nil, class: "output", 'data-testid': field.name %>
             </div>
           <% when 'Texte_long' %>
-            <%= text_area_tag field_name, field_value, autofocus: (index == 0),col: 10, row: 10, class: 'form-control' %>
+            <%= text_area_tag field_name, field_value, autofocus: (index == 0),col: 10, row: 10, class: 'form-control', 'data-testid': field.name %>
           <% else %>
             <% if field_value %>
-              <%= link_to Blob.find(field_value).file_attachment.filename, url_for(Blob.find(field_value).file) %>
+              <%= link_to Blob.find(field_value).file_attachment.filename, url_for(Blob.find(field_value).file), 'data-testid': field.name %>
             <% end %>
-            <%= file_field_tag field_name %>
+            <%= file_field_tag field_name, 'data-testid': field.name %>
           <% end %>
         </div>
       </div>
