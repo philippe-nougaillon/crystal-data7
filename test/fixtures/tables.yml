@@ -2,3 +2,8 @@ stocks:
   id: 1
   name: Stocks
   slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"
+
+interventions:
+  id: 2
+  name: Interventions
+  slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"

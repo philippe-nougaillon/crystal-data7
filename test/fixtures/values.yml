@@ -1,11 +1,30 @@
-rj45:
+stock_rj45:
   id: 1
   field_id: 1
-  data: RJ45
   record_index: 1
+  data: RJ45
 
-rj11:
+stock_rj11:
   id: 2
   field_id: 1
-  data: RJ11
   record_index: 2
+  data: RJ11
+
+intervention_rj45:
+  id: 3
+  field_id: 2
+  record_index: 1
+  data: RJ45
+
+intervention_paris:
+  id: 4
+  field_id: 3
+  record_index: 1
+  data: Paris
+
+intervention_marseille:
+  id: 5
+  field_id: 3
+  record_index: 2
+  data: Marseille
+

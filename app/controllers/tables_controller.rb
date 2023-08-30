@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class TablesController < ApplicationController
-  before_action :authorize, except: [:fill, :fill_do]
+  before_action :authorize
   before_action :set_table, except: [:new, :create, :import, :import_do, :checkifmobile, :index, :log, :delete_record]
 
   # GET /tables
@@ -110,6 +110,7 @@ class TablesController < ApplicationController
 
   # formulaire d'ajout / modification
   def fill
+    
     if params[:record_index]
       # modification ligne existante
       @record_index = params[:record_index]

@@ -1,6 +1,21 @@
 stock_marque:
   id: 1
-  name: Marque
-  datatype: "Texte"
   table_id: 1
-  slug: "zoeifjéozefz-efzeq12312-z"
+  name: Marque
+  datatype: Texte
+  slug: a
+
+intervention_marque_outil:
+  id: 2
+  table_id: 2
+  name: Marque de l'outil
+  datatype: Liste
+  items: '[Stocks.Marque]'
+  slug: abc
+
+intervention_lieu:
+  id: 3
+  table_id: 2
+  name: Lieu
+  datatype: Texte
+  slug: abcd

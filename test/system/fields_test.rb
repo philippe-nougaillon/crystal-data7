@@ -21,14 +21,24 @@ class FieldsTest < ApplicationSystemTestCase
     fill_in "Nom", with: "Désignation"
     click_button "Ajouter cette nouvelle colonne"
     assert_text "Nouvelle colonne ajoutée."
+    assert_text "Désignation"
     # TODO: checker si le type du field est un string
     # TODO: checker si le field est obligatoire
 
-    sleep(1) # Pour éviter que ça aille trop vite et que ça plante
     fill_in "Nom", with: "Prix"
     page.select "Nombre", from: "Type de données"
     click_button "Ajouter cette nouvelle colonne"
     assert_text "Nouvelle colonne ajoutée."
+    assert_text "Nombre"
+
+    sleep(1)
+    fill_in "Nom", with: "Lieu"
+    page.select "Liste", from: "Type de données"
+    fill_in "Paramètres", with: "[Interventions.Lieu]"
+    click_button "Ajouter cette nouvelle colonne"
+    assert_text "Nouvelle colonne ajoutée."
+    assert_text "Liste"
+    sleep(100)
   end
 
   test "updating a Field" do
