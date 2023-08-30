@@ -22,7 +22,7 @@ export default class extends Controller {
     } else if (type.value == "Liste" ) {
       this.paramsTarget.style.display = 'block';
       this.numberTarget.style.dispaly = 'none';
-      this.paramsTarget.children[2].innerHTML = "ex : Bleu,Blanc,Rouge ou À faire,Fait,Annulé"
+      this.paramsTarget.children[2].innerHTML = "ex : À faire,Fait,Annulé ou [Utilisateurs.Nom]"
     } else if (type.value == "Nombre" || type.value == "Euros" ) {
       this.paramsTarget.style.display = 'none';
       this.numberTarget.style.display = 'block';

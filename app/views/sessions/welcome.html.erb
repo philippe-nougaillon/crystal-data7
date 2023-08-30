@@ -155,7 +155,16 @@
 			<li>Euros : idem 'Nombre' mais affiche la valeur avec le symbole euros (€).</li>
 			<li>Date : une date choisie dans un calendrier.</li>
 			<li>Oui_Non? : permet de choisir en Oui ou Non ou aucun des deux.</li>
-			<li>Liste : pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.</li> 
+			<li>Liste : 
+				<ol>
+					<li>
+						pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.
+					</li>
+					<li>
+						pour contenir une liste de valeurs venant d'une autre table, en utilisant la syntaxe suivante :[nom_table.nom_colonne], ex : [Utilisateurs.Nom]. (Attention aux min/Majuscules)
+					</li>
+				</ol>
+			</li>
 			<li>Formule : champ calculé à partir de champs existants ou d'une formule Ruby, ex: '[Temps Passé] * [Coût horaire]' ou '[Prix HT] * 1.2'
 			<li>Fichier : permet de lier et de stocker un fichier (document, image, etc...).</li>
 			<li>Image : idem 'Fichier' mais affiche un aperçu de l'image ou l'image d'origine selon le contexte.</li>
