@@ -32,7 +32,11 @@
           <% when 'Liste' %>
             <%= select_tag field_name, options_for_select(field.items.split(","), field_value), include_blank: true, class: 'form-select', 'data-testid': field.name %>
           <% when 'Formule' %>
-            <% field_value = field.evaluate(@table, @record_index) %>
+            <% if params[:record_index].present? %>
+              <% field_value = field.evaluate(@table, @record_index) %>
+            <% else %>
+              <% field_value = 'n/a' %>
+            <% end %>
             <%= text_field_tag field_name, field_value, disabled: true, class: 'form-control', 'data-testid': field.name %>
           <% when 'Signature' %>
             <div class="sig" disabled=true>
