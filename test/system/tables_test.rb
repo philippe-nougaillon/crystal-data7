@@ -53,4 +53,15 @@ class TablesTest < ApplicationSystemTestCase
 
     assert_text "Table supprimée."
   end
+
+  test 'chercher une valeur dans une table' do
+    @table = tables(:stocks)
+
+    visit tables_url
+    click_on @table.name
+    assert_selector 'h1', text: 'Stocks'
+    fill_in 'Rechercher', with: 'RJ45'
+    send_keys(:return)
+    assert_selector 'p', text: 'Affichage de 1 Stocks sur 2 au total'
+  end
 end

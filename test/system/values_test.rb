@@ -19,7 +19,7 @@ class ValuesTest < ApplicationSystemTestCase
 
     # Ajout des values
     field = find('[data-testid="Marque"]')
-    field.fill_in with: "Peugeot"
+    field.fill_in with: "RJ11"
     click_button "Enregistrer"
     assert_text "Données ajoutées avec succès :)"
     click_on "Voir les données de 'Stocks'"
@@ -35,10 +35,10 @@ class ValuesTest < ApplicationSystemTestCase
   #   assert_text "Formulaire 'Stocks'"
 
   #   field = find('[data-testid="Marque"]')
-  #   field.fill_in with: "Citroën"
+  #   field.fill_in with: "RJ23"
   #   click_button "Enregistrer"
     
-  #   assert_text "Citroën"
+  #   assert_text "RJ23"
   # end
   
   # test "destroying a Field" do

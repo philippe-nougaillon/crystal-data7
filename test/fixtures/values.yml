@@ -1,5 +1,11 @@
-volkswagen:
+rj45:
   id: 1
   field_id: 1
-  data: volkswagen
+  data: RJ45
   record_index: 1
+
+rj11:
+  id: 2
+  field_id: 1
+  data: RJ11
+  record_index: 2
