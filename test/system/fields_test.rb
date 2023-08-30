@@ -38,7 +38,6 @@ class FieldsTest < ApplicationSystemTestCase
     click_button "Ajouter cette nouvelle colonne"
     assert_text "Nouvelle colonne ajoutée."
     assert_text "Liste"
-    sleep(100)
   end
 
   test "updating a Field" do

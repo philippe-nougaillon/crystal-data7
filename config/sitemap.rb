@@ -25,6 +25,6 @@ SitemapGenerator::Sitemap.create do
   #     add article_path(article), :lastmod => article.updated_at
   #   end
   
-  add about_path
+  add a_propos_path
 
 end

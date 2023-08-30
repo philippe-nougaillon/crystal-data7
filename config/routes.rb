@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
-  get '/about' => 'sessions#welcome'
+  get 'à_propos', to: 'pages#à_propos', as: :a_propos
   get '/demo' => 'sessions#demo'
 
   delete 'tables/:id/delete_record' => 'tables#delete_record', as: :delete_record
