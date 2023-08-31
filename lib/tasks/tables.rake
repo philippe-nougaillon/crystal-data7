@@ -4,7 +4,7 @@ require 'csv'
 namespace :tables do
   task :import, [:file_path, :filename, :user_id, :ip] => [:environment] do |t, args|
     @record_index = 0
-  CONN = ActiveRecord::Base.connection
+    CONN = ActiveRecord::Base.connection
     inserts_log = []
     inserts_value = []
 
@@ -42,7 +42,7 @@ namespace :tables do
     end
 
     # maj du nombre de ligne de cette table
-    # @new_table.update_attributes(record_index: @record_index)
+    @new_table.update(record_index: @record_index)
 
     # execure requête d'insertion dans VALUES
     # sql = "INSERT INTO values (field_id, table_id, user_id, data, created_at, updated_at, record_index) "
