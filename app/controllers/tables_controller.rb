@@ -2,7 +2,7 @@
 
 class TablesController < ApplicationController
   before_action :authorize
-  before_action :set_table, except: [:new, :create, :import, :import_do, :checkifmobile, :index, :log, :delete_record]
+  before_action :set_table, except: [:new, :create, :import, :import_do, :checkifmobile, :index, :log]
 
   # GET /tables
   # GET /tables.json
@@ -374,24 +374,17 @@ class TablesController < ApplicationController
   end
 
   def add_user_do
-    unless params[:email].blank?
-      @user = User.find_by(email:params[:email])
-      if @user
-        unless @table.users.exists?(@user)
-          # ajoute le nouvel utilisateur aux utilisateurs de la table
-          @table.users << @user 
-          UserMailer.notification_nouveau_partage(@user, @table).deliver_later
-          flash[:notice] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' activé"
-        else
-          flash[:alert] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' déjà existant !"
-        end
+    if @user = User.find_by(email:params[:email])
+      unless @table.users.include?(@user)
+        # ajoute le nouvel utilisateur aux utilisateurs de la table
+        @table.users << @user 
+        # UserMailer.notification_nouveau_partage(@user, @table).deliver_later
+        flash[:notice] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' activé"
       else
-        flash[:alert] = "Utilisateur inconnu ! Créez un compte en allant sur 'Créer un compte' dans le menu utilisateur"
-        redirect_to add_user_path(@table)
-        return
+        flash[:alert] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' déjà existant !"
       end
     else
-      flash[:alert] = "Veuillez entrer une adresse mail svp."
+      flash[:alert] = "Utilisateur inconnu ! Créez un compte en allant sur 'Créer un compte' dans le menu utilisateur"
       redirect_to add_user_path(@table)
       return
     end
