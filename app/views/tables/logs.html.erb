@@ -3,12 +3,14 @@
   Audit des modifications dans '<%= @table.name %>'
 </h1>
 
-<%= form_tag(request.path, method: :get, class: 'd-flex mb-4 gap-4 align-items-center') do %>
+<% if params[:record_index].blank? %>
+  <%= form_tag(request.path, method: :get, class: 'd-flex mb-4 gap-4 align-items-center') do %>
 
-  <%= label_tag "Utilisateur" %>
-  <%= select_tag :user_id, options_from_collection_for_select(@table.users, "id", "name", params[:user_id]), include_blank:true, onchange: 'this.form.submit()', class:'form-select' %>
+    <%= label_tag "Utilisateur" %>
+    <%= select_tag :user_id, options_from_collection_for_select(@table.users, "id", "name", params[:user_id]), include_blank:true, onchange: 'this.form.submit()', class:'form-select' %>
 
-  <%= submit_tag 'Filtrer', class: 'btn btn-outline-success' %>
+    <%= submit_tag 'Filtrer', class: 'btn btn-outline-success' %>
+  <% end %>
 <% end %>
 
 <div class="overflow-x-auto">

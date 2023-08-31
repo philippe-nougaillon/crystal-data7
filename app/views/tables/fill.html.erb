@@ -4,7 +4,7 @@
 
   <%= hidden_field_tag :table_id, @table.id %>
 
-	<% @table.fields.each_with_index do |field, index| %>
+  <% @table.fields.each_with_index do |field, index| %>
     <% field_name = "[data][#{@record_index}][#{field.id}]" %> 
     <% value = field.values.find_by(record_index: @record_index) %> 
     <% field_value = value.data if value %>

@@ -2,8 +2,8 @@ User.create!([
   {name: "Démo", email: "philippe.nougaillon@gmail.com", password: "CDPassword", password_confirmation: "CDPassword", authentication_token: nil}
 ])
 Table.create!([
-  {name: "Stocks", notification: false, lifo: false, slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"},
-  {name: "Interventions", notification: false, lifo: false, slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"}
+  {name: "Stocks", notification: false, lifo: false, record_index: 2, slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"},
+  {name: "Interventions", notification: false, lifo: false, record_index: 3, slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"}
 ])
 TablesUser.create!([
   {table_id: 1, user_id: 1},

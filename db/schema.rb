@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_14_100103) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_31_083728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -117,6 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_100103) do
     t.boolean "notification", default: false
     t.boolean "lifo", default: false
     t.string "slug"
+    t.integer "record_index", default: 0, null: false
     t.index ["slug"], name: "index_tables_on_slug", unique: true
   end
 

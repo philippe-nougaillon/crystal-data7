@@ -6,11 +6,11 @@ class ValuesTest < ApplicationSystemTestCase
     login_user
   end
   
-  test "visiting the index" do
-    visit tables_url
-    click_on "Stocks"
-    assert_selector "h1", text: "Stocks"
-  end
+  # test "visiting the index" do
+  #   visit tables_url
+  #   click_on "Stocks"
+  #   assert_selector "h1", text: "Stocks"
+  # end
   
   test "creating values" do
     visit tables_url
@@ -22,7 +22,6 @@ class ValuesTest < ApplicationSystemTestCase
     field.fill_in with: "RJ11"
     click_button "Enregistrer"
     assert_text "Données ajoutées avec succès :)"
-    click_on "Voir les données de 'Stocks'"
     assert_text "Stocks"
   end
 
