@@ -100,7 +100,7 @@
                   <%= link_to "Audit", logs_path(record_index: record_index), class: 'btn btn-outline-info btn-sm', title:"Audit des modifications" %>
                 </td>
                 <td>
-                  <%= link_to "X", delete_record_url(@table.slug, record_index:record_index), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm' %>
+                  <%= link_to "X", delete_record_url(@table.slug, record_index:record_index), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm', 'data-testid': "Supprimer ligne n°#{record_index}" %>
                 </td>
               </tr>
             <% end %>
