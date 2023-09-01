@@ -197,7 +197,7 @@ class TablesController < ApplicationController
 
       redirect_to table, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
     else
-      redirect_to table, alert: "Aucune données enregistrées"
+      redirect_to table, alert: "Aucune donnée enregistrée"
     end
   end  
 
