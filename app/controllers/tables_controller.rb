@@ -474,6 +474,14 @@ class TablesController < ApplicationController
     end  
   end
 
+  def details
+    unless params[:record_index].blank?
+      @record_index = params[:record_index]
+    else
+      redirect_to @table, alert: "donnée non existante"
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_table

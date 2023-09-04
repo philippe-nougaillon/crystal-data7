@@ -1,0 +1,52 @@
+<h1 class="text-primary mb-4"><%= @table.name.humanize %></h1>
+
+<div class="border rounded shadow px-5 py-5 mb-4">
+  <% @table.fields.each_with_index do |field, index| %>
+    <% values = @table.value_datas(@record_index) %>
+    <% value = field.values.find_by(record_index: @record_index) %> 
+    <% field_value = value.data if value %>
+
+    <% if index % 2 == 0 %>
+      <div class="row mb-3">
+    <% end %>
+
+    <div class="col-md-6">
+      <label class="fw-bold">
+        <%= field.name.humanize %>
+      </label>
+      <% if value = values[index]%>
+        <div> 
+          <% case field.datatype when 'Fichier' %>
+            <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
+          <% when 'Image' %>
+            <% if Blob.find(value).file.representable? %>
+              <%= link_to image_tag(Blob.find(value).file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file) %>
+            <% end %>
+          <% when 'Signature' %>
+            <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>
+          <% when 'Date' %>
+            <%= l(value.to_date) unless value.blank? %>
+          <% when 'Texte_long' %>
+            <%= value %>
+          <% when 'Euros' %>
+            <%= number_to_currency(value) %>
+          <% when 'Formule' %>
+            <%= field.evaluate(@table, record_index) %>
+          <% when 'Workflow' %>
+            <% items = field.items.split(',').map{|i| i.split(':')}.to_h %>
+            <% color = items[value] %>
+            <span class="badge bg-<%= color %>"><%= value %></span>
+          <% else %>
+            <%= value %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <% if (index + 1) % 2 == 0 || index == @table.fields.length - 1 %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<%= link_to "Retour", @table %>

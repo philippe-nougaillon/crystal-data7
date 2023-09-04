@@ -103,6 +103,9 @@
                 <% end %>
 
                 <td>
+                  <%= link_to "Voir", details_path(@table.slug, record_index:record_index), class: 'btn btn-outline-primary btn-sm', 'data-testid': "Voir ligne n°#{record_index}" %>
+                </td>
+                <td>
                   <%= link_to "Modifier", fill_url(@table.slug, record_index:record_index), class: 'btn btn-outline-primary btn-sm', 'data-testid': "Modifier ligne n°#{record_index}" %>
                 </td>
                 <td>
