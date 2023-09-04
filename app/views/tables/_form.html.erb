@@ -1,7 +1,10 @@
 <%= form_for(@table) do |f| %>
 
   <%= f.label :name, "Nom de la table" %>
-  <%= f.text_field :name, required: true, placeholder: 'Ex: Articles, Interventions, Chantiers...', autofocus: true, class:' form-control mb-4' %>
+  <%= f.text_field :name, required: true, 
+                    placeholder: 'Ex: Articles, Interventions, Chantiers...', 
+                    autofocus: true, 
+                    class: 'form-control mb-4 w-25' %>
 
   <div class="mb-4">
     <%= f.check_box :lifo %>

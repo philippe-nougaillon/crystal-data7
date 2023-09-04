@@ -62,37 +62,42 @@
         <% records_size = 0 %>
         <tbody>
           <% @records.each do | record_index | %>
-            <% values = @table.value_datas(record_index).compact_blank %>
+            <% values = @table.value_datas(record_index) %>
             <% if not values.empty? %>
               <% records_size += 1 %>
               <tr>
-                <% @table.fields.each_with_index do | field,index | %>
-                  <% value = values[index] %>
-                  <td style="<%= @td_style[index] %>">
-                    <% if field.datatype == "Fichier" and values[index] %>
-                      <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
-                    <% elsif field.datatype == "Image" and values[index] %>
-                      <% if Blob.find(value).file.representable? %>
-                        <%= link_to image_tag(Blob.find(value).file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file) %>
+                <% @table.fields.each_with_index do | field, index | %>
+                  <% if value = values[index]%>
+                    <td style="<%= @td_style[index] %>">
+                      <% case field.datatype when 'Fichier' %>
+                        <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
+                      <% when 'Image' %>
+                        <% if Blob.find(value).file.representable? %>
+                          <%= link_to image_tag(Blob.find(value).file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file) %>
+                        <% end %>
+                      <% when 'Signature' %>
+                        <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>
+                      <% when 'Date' %>
+                        <%= l(value.to_date) unless value.blank? %>
+                      <% when 'Texte_long' %>
+                        <%= truncate(value, length: 80) %>
+                      <% when 'Euros' %>
+                        <%= number_to_currency(value) %>
+                      <% when 'Formule' %>
+                        <%= field.evaluate(@table, record_index) %>
+                      <% else %>
+                        <%= value %>
                       <% end %>
-                    <% elsif field.datatype == "Signature" and values[index] %>
-                      <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>
-                    <% elsif field.datatype == "Date" and values[index] %>
-                      <%= l(value.to_date) unless value.blank? %>
-                    <% elsif field.datatype == "Texte_long" and values[index] %>
-                      <%= truncate(value, length: 80) %>
-                    <% elsif field.datatype == "Euros" and values[index] %>
-                      <%= number_to_currency(value) %>
-                    <% elsif field.datatype == "Formule" and values[index] %>
-                      <%= field.evaluate(@table, record_index) %>
-                    <% else %>
-                      <%= value %>
-                    <% end %>
-                    <% if field.operation %>
-                      <% @sum[field.id] += value.to_f %>
-                    <% end %>
-                  </td>
+
+                      <% if field.operation %>
+                        <% @sum[field.id] += value.to_f %>
+                      <% end %>
+                    </td>
+                  <% else %>
+                    <td></td>
+                  <% end %>  
                 <% end %>
+
                 <td>
                   <%= link_to "Modifier", fill_url(@table.slug, record_index:record_index), class: 'btn btn-outline-primary btn-sm', 'data-testid': "Modifier ligne n°#{record_index}" %>
                 </td>
