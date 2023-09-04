@@ -48,4 +48,22 @@ class ValuesTest < ApplicationSystemTestCase
     assert_text "Enregistrement #1 supprimé avec succès"
     assert_no_selector('[data-testid="Supprimer ligne n°1"]', visible: :all)
   end
+
+  test 'filter les valeurs dans une table' do
+    @table = tables(:stocks)
+
+    visit tables_url
+    click_on @table.name
+    assert_selector 'h1', text: 'Stocks'
+
+    # fill_in 'Rechercher', with: 'RJ45'
+    select 'Électronique', from: 'Catégorie'
+    send_keys(:return)
+    assert_selector 'p', text: 'Affichage de 2 Stocks sur 3 au total'
+
+    select '', from: 'Catégorie'
+    select 'Automobile', from: 'Catégorie'
+    send_keys(:return)
+    assert_selector 'p', text: 'Affichage de 1 Stocks sur 3 au total'
+  end
 end

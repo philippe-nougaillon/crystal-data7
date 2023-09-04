@@ -1,30 +1,44 @@
-stock_rj45:
-  id: 1
-  field_id: 1
+stock_marque_rj45:
+  field_id: <%= ActiveRecord::FixtureSet.identify(:stock_marque) %>
   record_index: 1
   data: RJ45
 
-stock_rj11:
-  id: 2
-  field_id: 1
+stock_marque_rj11:
+  field_id: <%= ActiveRecord::FixtureSet.identify(:stock_marque) %>
   record_index: 2
   data: RJ11
 
+stock_marque_peugeot107:
+  field_id: <%= ActiveRecord::FixtureSet.identify(:stock_marque) %>
+  record_index: 3
+  data: Peugeot 107
+
+stock_catégorie_rj45:
+  field_id: <%= ActiveRecord::FixtureSet.identify(:stock_catégorie) %>
+  record_index: 1
+  data: Électronique
+
+stock_catégorie_rj11:
+  field_id: <%= ActiveRecord::FixtureSet.identify(:stock_catégorie) %>
+  record_index: 2
+  data: Électronique
+
+stock_catégorie_Peugeot207:
+  field_id: <%= ActiveRecord::FixtureSet.identify(:stock_catégorie) %>
+  record_index: 3
+  data: Automobile
+
 intervention_rj45:
-  id: 3
-  field_id: 2
+  field_id: <%= ActiveRecord::FixtureSet.identify(:intervetion_marque_outil) %>
   record_index: 1
   data: RJ45
 
 intervention_paris:
-  id: 4
-  field_id: 3
+  field_id: <%= ActiveRecord::FixtureSet.identify(:intervetion_lieu) %>
   record_index: 1
   data: Paris
 
 intervention_marseille:
-  id: 5
-  field_id: 3
+  field_id: <%= ActiveRecord::FixtureSet.identify(:intervetion_lieu) %>
   record_index: 2
   data: Marseille
-

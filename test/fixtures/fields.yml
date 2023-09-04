@@ -1,21 +1,26 @@
 stock_marque:
-  id: 1
-  table_id: 1
+  table_id: <%= ActiveRecord::FixtureSet.identify(:stocks) %>
   name: Marque
   datatype: Texte
   slug: a
 
+stock_catégorie:
+  table_id: <%= ActiveRecord::FixtureSet.identify(:stocks) %>
+  name: Catégorie
+  datatype: Liste
+  items: Automobile,Mobilier,Alimentation,Vêtements,Électronique
+  filtre: true
+  slug: abcde
+
 intervention_marque_outil:
-  id: 2
-  table_id: 2
+  table_id: <%= ActiveRecord::FixtureSet.identify(:interventions) %>
   name: Marque de l'outil
   datatype: Liste
   items: '[Stocks.Marque]'
   slug: abc
 
 intervention_lieu:
-  id: 3
-  table_id: 2
+  table_id: <%= ActiveRecord::FixtureSet.identify(:interventions) %>
   name: Lieu
   datatype: Texte
   slug: abcd
