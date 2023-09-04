@@ -59,8 +59,8 @@
             <% end %>
             <%= file_field_tag field_name, 'data-testid': field.name %>
           <% when 'Workflow' %>
-            <% items = field.items.split(',').map{|i| i.split(':')}.map{|e| e.first} %>
-            <%= select_tag field_name, options_for_select(items, field_value), include_blank: true, class: 'form-select', 'data-testid': field.name %>
+            <% items = field.items.split(',').map{|i| i.split(':')}.to_h %>
+            <%= select_tag field_name, options_for_select(items.keys, field_value), include_blank: true, class: 'form-select', 'data-testid': field.name %>
           <% end %>
         </div>
       </div>

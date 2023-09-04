@@ -124,6 +124,26 @@ class CreatorFlowTest < ApplicationSystemTestCase
     assert_text "Colonne supprimée."
   end
 
+  test "create workflow field" do
+    visit tables_url
+    click_on "Stocks"
+    click_on "Modifier structure"
+
+    fill_in "Nom", with: "État"
+    page.select "Workflow", from: "Type de données"
+    fill_in "Paramètres", with: "Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary"
+    click_button "Ajouter cette nouvelle colonne"
+    assert_text "Nouvelle colonne ajoutée."
+
+    click_on "Voir la table de données", match: :first
+    click_on "+ Ajouter"
+    field = find('[data-testid="État"]')
+    field.select "Nouveau"
+    click_button "Enregistrer"
+    assert_text "Données ajoutées avec succès :)"
+    assert_selector "span.badge.bg-primary"
+  end
+
   # Values
 
   test "creating values" do
