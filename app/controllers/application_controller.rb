@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   
   before_action :detect_device_format
   before_action :set_layout_variables
+  before_action :prepare_exception_notifier
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -30,6 +31,12 @@ private
   def set_layout_variables
     @sitename ||= "CrystalData"
     @sitename.concat(" v7.0 ")
+  end
+
+  def prepare_exception_notifier
+    request.env["exception_notifier.exception_data"] = {
+      current_user: @current_user
+    }
   end
 
 end

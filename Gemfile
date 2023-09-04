@@ -69,6 +69,8 @@ group :development do
   gem 'sitemap_generator'
 
   gem "seed_dump", "~> 3.3"
+
+  gem 'exception_notification'
 end
 
 group :test do
@@ -94,7 +96,6 @@ gem 'ranked-model'
 gem 'friendly_id', '~> 5.2.4'
 gem "audited"
 
-gem 'exception_notification'
 gem 'sucker_punch', '~> 2.0'
 
 gem "aws-sdk-s3", require: false
