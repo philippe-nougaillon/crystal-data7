@@ -53,11 +53,14 @@
             </div>
           <% when 'Texte_long' %>
             <%= text_area_tag field_name, field_value, autofocus: (index == 0),col: 10, row: 10, class: 'form-control', 'data-testid': field.name %>
-          <% else %>
+          <% when 'Fichier', 'Image' %>
             <% if field_value %>
               <%= link_to Blob.find(field_value).file_attachment.filename, url_for(Blob.find(field_value).file), 'data-testid': field.name %>
             <% end %>
             <%= file_field_tag field_name, 'data-testid': field.name %>
+          <% when 'Workflow' %>
+            <% items = field.items.split(',').map{|i| i.split(':')}.map{|e| e.first} %>
+            <%= select_tag field_name, options_for_select(items, field_value), include_blank: true, class: 'form-select', 'data-testid': field.name %>
           <% end %>
         </div>
       </div>
