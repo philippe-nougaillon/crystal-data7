@@ -1,53 +1,52 @@
-<h1 class="text-primary">
-  <i class="glyphicon glyphicon-time"></i> 
-  Audit des modifications dans '<%= @table.name %>'
-</h1>
+<%= turbo_frame_tag "main_frame" do %>
+  <h1 class="text-primary">
+    <i class="glyphicon glyphicon-time"></i> 
+    Audit Trail
+  </h1>
 
-<% if params[:record_index].blank? %>
-  <%= form_tag(request.path, method: :get, class: 'd-flex mb-4 gap-4 align-items-center') do %>
+  <% if params[:record_index].blank? %>
+    <%= form_tag(request.path, method: :get, class: 'd-flex mb-4 gap-4 align-items-center') do %>
 
-    <%= label_tag "Utilisateur" %>
-    <%= select_tag :user_id, options_from_collection_for_select(@table.users, "id", "name", params[:user_id]), include_blank:true, onchange: 'this.form.submit()', class:'form-select' %>
+      <%= label_tag "Utilisateur" %>
+      <%= select_tag :user_id, options_from_collection_for_select(@table.users, "id", "name", params[:user_id]), include_blank:true, onchange: 'this.form.submit()', class:'form-select' %>
 
-    <%= submit_tag 'Filtrer', class: 'btn btn-outline-success' %>
+      <%= submit_tag 'Filtrer', class: 'btn btn-outline-success' %>
+    <% end %>
   <% end %>
-<% end %>
 
-<div class="overflow-x-auto">
-  <table class="table table-hover table-bordered sticky">
-    <thead>
-      <tr>
-        <th>Le</th>
-        <th>Qui</th>
-        <th>IP</th>
-        <th>Ligne n°</th>
-        <th>Colonne</th>
-        <th>Nouvelle valeur</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @audits.each do |log| %>
+  <div class="overflow-x-auto">
+    <table class="table table-hover table-bordered sticky">
+      <thead>
         <tr>
-          <td>
-            <%= l(log.created_at) %>
-            (il y a <%= time_ago_in_words(log.created_at) %>)
-          </td>
-          <td><%= log.user.name.humanize if log.user %></td>
-          <td><%= log.remote_address %></td>
-          <td><%= log.audited_changes['record_index'] %></td>
-          <td><%= Field.find(log.audited_changes['field_id']).name %></td>
-          <td><%= log.audited_changes['data'] %></td>
+          <th>Il y a</th>
+          <th>Qui</th>
+          <th>IP</th>
+          <th>Ligne n°</th>
+          <th>Colonne</th>
+          <th>Nouvelle valeur</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-<%= will_paginate @audits, renderer: BootstrapPagination::Rails %>
+      </thead>
 
-<%= @audits.size.to_s + " modification".pluralize(@audits.size) %>
+      <tbody>
+        <% @audits.each do |log| %>
+          <tr>
+            <td>
+              <%= time_ago_in_words(log.created_at) %>
+              (le <%= l(log.created_at) %>)
+            </td>
+            <td><%= log.user.name.humanize if log.user %></td>
+            <td><%= log.remote_address %></td>
+            <td><%= log.audited_changes['record_index'] %></td>
+            <td><%= Field.find(log.audited_changes['field_id']).name %></td>
+            <td><%= log.audited_changes['data'] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= will_paginate @audits, renderer: BootstrapPagination::Rails %>
 
-<%= @sql %>
+  <%= @audits.size.to_s + " modification".pluralize(@audits.size) %>
 
-
-
+  <%= @sql %>
+<% end %>

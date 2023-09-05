@@ -49,4 +49,12 @@
   <% end %>
 </div>
 
-<%= link_to "Retour", @table %>
+<div class="d-flex gap-3">
+  <%= link_to "Audit Trail", logs_path(record_index: @record_index), class: 'btn btn-outline-info btn-sm', title:"Audit des modifications", data: { turbo_frame: "main_frame" } %>
+  <%= link_to "Retour", @table %>
+</div>
+
+<div class="mt-4">
+  <%= turbo_frame_tag "main_frame" do %>
+  <% end %>
+</div>
