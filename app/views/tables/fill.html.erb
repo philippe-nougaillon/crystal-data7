@@ -66,7 +66,9 @@
           <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', 'data-testid': field.name %>
         <% when 'Couleur' %>
           <br>
-          <%= color_field_tag field_name, field_value, 'data-testid': field.name %>
+          <%= color_field_tag field_name, field_value, class: 'form-control w-100', 'data-testid': field.name %>
+        <% when 'GPS' %>
+          <%= text_field_tag field_name, field_value, class: 'form-control w-100', 'data-testid': field.name %>
         <% end %>
       </fieldset>
     <% end %>

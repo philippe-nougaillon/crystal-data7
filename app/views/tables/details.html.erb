@@ -40,6 +40,8 @@
             <%= link_to URI.parse(value).host, value, target: "_blank" %>
           <% when 'Couleur' %>
             <span style="background-color: <%= value %>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <% when 'GPS' %>
+            <%= render partial: 'partials/mapbox', locals: {value: value} %>
           <% else %>
             <%= value %>
           <% end %>

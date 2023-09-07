@@ -93,6 +93,8 @@
                         <%= link_to URI.parse(value).host, value, target: "_blank" %>
                       <% when 'Couleur' %>
                         <span style="background-color: <%= value %>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      <% when 'GPS' %>
+                        <%= value %>
                       <% else %>
                         <%= value %>
                       <% end %>
