@@ -163,6 +163,25 @@ class CreatorFlowTest < ApplicationSystemTestCase
     click_on "youtube.com"
   end
 
+  test "create color field" do
+    visit tables_url
+    click_on "Stocks"
+    click_on "Modifier structure"
+
+    fill_in "Nom", with: "Couleur"
+    page.select "Couleur", from: "Type de données"
+    click_button "Ajouter cette nouvelle colonne"
+    assert_text "Nouvelle colonne ajoutée."
+
+    click_on "Voir la table de données", match: :first
+    click_on "+ Ajouter"
+    field = find('[data-testid="Couleur"]')
+    field.set("#FF0000")
+    click_button "Enregistrer"
+    assert_text "Données ajoutées avec succès :)"
+    assert_selector('span[style="background-color: #ff0000"]')
+  end
+
   # Values
 
   test "creating values" do

@@ -91,6 +91,8 @@
                         <span class="badge bg-<%= color %>"><%= value %></span>
                       <% when 'URL' %>
                         <%= link_to URI.parse(value).host, value, target: "_blank" %>
+                      <% when 'Couleur' %>
+                        <span style="background-color: <%= value %>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                       <% else %>
                         <%= value %>
                       <% end %>

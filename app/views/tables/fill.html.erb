@@ -64,6 +64,9 @@
           <%= select_tag field_name, options_for_select(items.keys, field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %>
         <% when 'URL' %>
           <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', 'data-testid': field.name %>
+        <% when 'Couleur' %>
+          <br>
+          <%= color_field_tag field_name, field_value, 'data-testid': field.name %>
         <% end %>
       </fieldset>
     <% end %>
