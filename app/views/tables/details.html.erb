@@ -36,6 +36,8 @@
             <% items = field.items.split(',').map{|i| i.split(':')}.to_h %>
             <% color = items[value] %>
             <span class="badge bg-<%= color %>"><%= value %></span>
+          <% when 'URL' %>
+            <%= link_to URI.parse(value).host, value, target: "_blank" %>
           <% else %>
             <%= value %>
           <% end %>

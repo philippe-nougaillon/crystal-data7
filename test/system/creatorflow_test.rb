@@ -144,6 +144,25 @@ class CreatorFlowTest < ApplicationSystemTestCase
     assert_selector "span.badge.bg-primary"
   end
 
+  test "create url field" do
+    visit tables_url
+    click_on "Stocks"
+    click_on "Modifier structure"
+
+    fill_in "Nom", with: "Url"
+    page.select "URL", from: "Type de données"
+    click_button "Ajouter cette nouvelle colonne"
+    assert_text "Nouvelle colonne ajoutée."
+
+    click_on "Voir la table de données", match: :first
+    click_on "+ Ajouter"
+    field = find('[data-testid="Url"]')
+    field.fill_in with: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    click_button "Enregistrer"
+    assert_text "Données ajoutées avec succès :)"
+    click_on "youtube.com"
+  end
+
   # Values
 
   test "creating values" do
