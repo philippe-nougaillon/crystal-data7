@@ -148,7 +148,7 @@ class TablesController < ApplicationController
         end  
 
         # enregistre le fichier
-        if field.datatype == 'Fichier' || field.datatype == 'Image'
+        if field.datatype == 'Fichier' || field.datatype == 'Image' || field.datatype == 'PDF'
           if value
             b = Blob.new()
             b.file.attach(value)

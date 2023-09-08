@@ -18,9 +18,11 @@
         <div> 
           <% case field.datatype when 'Fichier' %>
             <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
-          <% when 'Image' %>
+          <% when 'Image', 'PDF' %>
             <% if Blob.find(value).file.representable? %>
-              <%= link_to image_tag(Blob.find(value).file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file) %>
+              <%= link_to url_for(Blob.find(value).file), {target: "_blank"} do %>
+                <%= image_tag(Blob.find(value).file.representation(resize_to_limit: [500, nil]), class: 'shadow-lg') %>
+              <% end %>
             <% end %>
           <% when 'Signature' %>
             <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>

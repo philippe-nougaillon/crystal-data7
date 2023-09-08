@@ -204,6 +204,46 @@ class CreatorFlowTest < ApplicationSystemTestCase
     assert_selector('canvas[class="mapboxgl-canvas"]')
   end
 
+  test "create image field" do
+    visit tables_url
+    click_on "Stocks"
+    click_on "Modifier structure"
+
+    fill_in "Nom", with: "Image"
+    page.select "Image", from: "Type de données"
+    click_button "Ajouter cette nouvelle colonne"
+    assert_text "Nouvelle colonne ajoutée."
+
+    click_on "Voir la table de données", match: :first
+    click_on "+ Ajouter"
+    field = find('[data-testid="Image"]')
+    field.attach_file(Rails.root.join("test/fixtures/files/sample.jpg"))
+    click_button "Enregistrer"
+    assert_text "Données ajoutées avec succès :)"
+    assert_selector('a[title="sample.jpg"]')
+    assert_selector('img')
+  end
+
+  test "create pdf field" do
+    visit tables_url
+    click_on "Stocks"
+    click_on "Modifier structure"
+
+    fill_in "Nom", with: "PDF"
+    page.select "PDF", from: "Type de données"
+    click_button "Ajouter cette nouvelle colonne"
+    assert_text "Nouvelle colonne ajoutée."
+
+    click_on "Voir la table de données", match: :first
+    click_on "+ Ajouter"
+    field = find('[data-testid="PDF"]')
+    field.attach_file(Rails.root.join("test/fixtures/files/sample.pdf"))
+    click_button "Enregistrer"
+    assert_text "Données ajoutées avec succès :)"
+    assert_selector('a[title="sample.pdf"]')
+    assert_selector('img')
+  end
+
   # Values
 
   test "creating values" do
