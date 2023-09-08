@@ -97,7 +97,7 @@
                       <% when 'GPS' %>
                         <%= value %>
                       <% when 'Table' %>
-                        <%= link_to value, details_path(Table.find_by(name: field.items.tr('[]','').split('.')).slug, record_index: value), target: "_blank" %>
+                        <%= link_to value, details_path(Table.find_by(name: field.items.tr('[]','').split('.')).slug, record_index: value), target: "_blank", title: "Voir les détails de #{field.items.tr('[]','').split('.').first} à la ligne n°#{value}" %>
                       <% else %>
                         <%= value %>
                       <% end %>

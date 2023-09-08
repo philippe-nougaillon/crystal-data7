@@ -24,3 +24,9 @@ intervention_lieu:
   name: Lieu
   datatype: Texte
   slug: abcd
+
+intervention_date:
+  table_id: <%= ActiveRecord::FixtureSet.identify(:interventions) %>
+  name: Date
+  datatype: Date
+  slug: abcdef
