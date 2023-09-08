@@ -1,3 +1,4 @@
+<%= link_to "Audit Trail", logs_path(record_index: @record_index), class: 'btn btn-outline-info btn-sm float-end mt-3', title:"Audit des modifications", data: { turbo_frame: "main_frame" } %>
 <h1 class="text-primary mb-4"><%= @table.name.humanize %></h1>
 
 <div class="border rounded shadow px-5 py-5 mb-4">
@@ -57,10 +58,7 @@
   <% end %>
 </div>
 
-<div class="d-flex gap-3">
-  <%= link_to "Audit Trail", logs_path(record_index: @record_index), class: 'btn btn-outline-info btn-sm', title:"Audit des modifications", data: { turbo_frame: "main_frame" } %>
-  <%= link_to "Retour", @table %>
-</div>
+<%= link_to "Retour", @table %>
 
 <div class="mt-4">
   <%= turbo_frame_tag "main_frame" do %>
