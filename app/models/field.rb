@@ -1,8 +1,8 @@
 # encoding: utf-8
 
 class Field < ApplicationRecord
-	include RankedModel
-  	ranks :row_order, :with_same => :table_id 
+	# include RankedModel
+  	# ranks :row_order, :with_same => :table_id 
 
 	audited
 
@@ -16,13 +16,13 @@ class Field < ApplicationRecord
 	validates_presence_of :name
 	validates_presence_of :datatype
 
-	enum datatype: [:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF]
+	enum datatype: [:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Table]
 	enum operation: [:Somme, :Moyenne]
 
 	scope :filtres, -> { where(filtre: true) }
 	scope :sommes,  -> { where(sum: true) }
 
-	default_scope { rank(:row_order) } 
+	# default_scope { rank(:row_order) } 
 
 	def evaluate(table, record_index)
 		# evaluer [1] + [2] ou [1] * [2]

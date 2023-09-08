@@ -104,7 +104,7 @@ class TablesController < ApplicationController
       redirect_to tables_path
       return
     end 
-    @field = Field.new(table_id:@table.id)
+    @field = Field.new(table_id: @table.id)
     @fields = Field.datatypes.keys.to_a
   end
 

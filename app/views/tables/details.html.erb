@@ -45,6 +45,8 @@
             <span style="background-color: <%= value %>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <% when 'GPS' %>
             <%= render partial: 'partials/mapbox', locals: {value: value} %>
+          <% when 'Table' %>
+            <%= link_to value, details_path(Table.find_by(name: field.items.tr('[]','').split('.')).slug, record_index: value), target: "_blank" %>
           <% else %>
             <%= value %>
           <% end %>
