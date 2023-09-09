@@ -61,6 +61,28 @@ class Field < ApplicationRecord
 		File.delete(pathname + filename) 
 	end
 
+	def is_valid_table_params
+		self.items.include?('[') && self.items.include?(']')
+	end
+
+	def populate_linked_table
+		table_data = {}
+		sources = self.items.tr('[]','').split('.')
+		table = self.table.users.first.tables.find_by(name: sources.first)
+		source_fields = sources.last.tr('"','').split(',')
+
+		table.values.each do |value| 
+		  if source_fields.include?(value.field.name) 
+			if table_data.key?(value.record_index) 
+			  table_data[value.record_index] << ', ' << value.data 
+			else 
+			  table_data[value.record_index] = value.data 
+			end 
+		  end 
+		end
+		return table_data 
+	end
+
 	private
 
   def slug_candidates
