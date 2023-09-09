@@ -474,7 +474,7 @@ class TablesController < ApplicationController
     end  
   end
 
-  def details
+  def show_details
     unless params[:record_index].blank?
       @record_index = params[:record_index]
     else
