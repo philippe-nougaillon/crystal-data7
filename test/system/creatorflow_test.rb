@@ -244,6 +244,35 @@ class CreatorFlowTest < ApplicationSystemTestCase
     assert_selector('img')
   end
 
+  test "create table type field" do
+    visit tables_url
+    click_on "Stocks"
+    click_on "Modifier structure"
+
+    fill_in "Nom", with: "Interventions"
+    page.select "Table", from: "Type de données"
+    fill_in "Paramètres", with: "[Interventions.\"Lieu,Date\"]"
+    click_button "Ajouter cette nouvelle colonne"
+    assert_text "Nouvelle colonne ajoutée."
+
+    click_on "Voir la table de données", match: :first
+    click_on "+ Ajouter"
+    field = find('[data-testid="Interventions"]')
+    field.select "Paris, 2023-12-25"
+    click_button "Enregistrer"
+    assert_text "Données ajoutées avec succès :)"
+    
+    new_window = window_opened_by do
+      link = find('[title="Voir les détails de Interventions à la ligne n°1"]')
+      link.click
+    end
+    within_window new_window do
+      assert_text "Interventions"
+      assert_text "Paris"
+      assert_text "25/12/2023"
+    end
+  end
+
   # Values
 
   test "creating values" do

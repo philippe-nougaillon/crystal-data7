@@ -41,6 +41,11 @@ intervention_paris:
   record_index: 1
   data: Paris
 
+intervention_25_12_2023:
+  field_id: <%= ActiveRecord::FixtureSet.identify(:intervention_date) %>
+  record_index: 1
+  data: "2023-12-25"
+
 intervention_marseille:
   field_id: <%= ActiveRecord::FixtureSet.identify(:intervention_lieu) %>
   record_index: 2
