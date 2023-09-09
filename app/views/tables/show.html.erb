@@ -98,7 +98,7 @@
                         <%= value %>
                       <% when 'Table' %>
                         <% linked_value = field.populate_linked_table[value.to_i] %>
-                        <%= link_to linked_value, details_path(Table.find_by(name: field.items.tr('[]','').split('.')).slug, record_index: value), target: "_blank" %>
+                        <%= link_to linked_value, details_path(Table.find_by(name: field.items.tr('[]','').split('.')).slug, record_index: value) %>
                       <% else %>
                         <%= value %>
                       <% end %>

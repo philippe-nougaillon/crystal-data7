@@ -66,17 +66,18 @@ class Field < ApplicationRecord
 	end
 
 	def populate_linked_table
-		table_data = {}
 		sources = self.items.tr('[]','').split('.')
-		table = self.table.users.first.tables.find_by(name: sources.first)
 		source_fields = sources.last.tr('"','').split(',')
-
-		table.values.each do |value| 
+		table = self.table.users.first.tables.find_by(name: sources.first)
+		
+		table_data = {}
+		
+		table.values.includes(:field).each do |value| 
 		  if source_fields.include?(value.field.name) 
-			if table_data.key?(value.record_index) 
-			  table_data[value.record_index] << ', ' << value.data 
+			unless table_data.key?(value.record_index) 
+				table_data[value.record_index] = value.data 
 			else 
-			  table_data[value.record_index] = value.data 
+				table_data[value.record_index] << ', ' << value.data 
 			end 
 		  end 
 		end
