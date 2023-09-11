@@ -32,7 +32,7 @@
           <% when 'Texte_long' %>
             <%= value %>
           <% when 'Texte_riche' %>
-            <%= value.content %>
+            <%= simple_format(value) %>
           <% when 'Euros' %>
             <%= number_to_currency(value) %>
           <% when 'Formule' %>
