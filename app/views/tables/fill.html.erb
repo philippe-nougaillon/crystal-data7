@@ -70,7 +70,7 @@
         <% when 'GPS' %>
           <div data-controller="geolocation">
             <%= text_field_tag field_name, field_value, class: 'form-control w-100', 'data-geolocation-target': 'gpstextfield', 'data-testid': field.name %>
-            <button data-action="click->geolocation#connect">Géolocalisation</button>
+            <button type="button" data-action="click->geolocation#search">Position actuelle</button>
           </div>
         <% when 'Table' %>
           <%# Checker si la liste vient d'une autre table %>
