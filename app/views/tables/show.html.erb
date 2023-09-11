@@ -72,9 +72,9 @@
                       <% case field.datatype when 'Fichier' %>
                         <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
                       <% when 'Image', 'PDF' %>
-                        <% blob = Blob.find(value).file %>
-                        <% if blob.representable? %>
-                          <%= link_to image_tag(blob.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file), title: blob.filename %>
+                        <% blob = Blob.find(value) %>
+                        <% if blob.file.representable? %>
+                          <%= link_to image_tag(blob.file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file), title: blob.file.filename %>
                         <% end %>
                       <% when 'Signature' %>
                         <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>
