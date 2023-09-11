@@ -4,5 +4,8 @@
 
 import { application } from "./application"
 
+import GeolocationController from "./geolocation_controller"
+application.register("geolocation", GeolocationController)
+
 import TypeController from "./type_controller"
 application.register("type", TypeController)

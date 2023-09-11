@@ -1,5 +1,7 @@
 <h1 class="text-primary mb-4">Formulaire '<%= @table.name.humanize %>'</h1>
 
+<div data-controller="geolocation"></div>
+
 <%= form_tag fill_do_path, multipart: true do %>
 
   <%= hidden_field_tag :table_id, @table.id %>
