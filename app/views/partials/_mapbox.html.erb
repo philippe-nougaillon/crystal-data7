@@ -3,8 +3,8 @@
 <script>
   mapboxgl.accessToken = 'pk.eyJ1IjoicGhpbG5vdWciLCJhIjoiY2pvNXRyczhjMDFkajNxcGVmNHZtcHZ4OSJ9.vcFMjboSUDUUg--tDsgapg';
 
-  const lng = <%= value.split(',').last.to_f %>
-  const lat = <%= value.split(',').first.to_f %>
+  var lng = <%= value.split(',').last.to_f %>
+  var lat = <%= value.split(',').first.to_f %>
   var map = new mapboxgl.Map({
     container: 'map',
     center: [lng, lat],
