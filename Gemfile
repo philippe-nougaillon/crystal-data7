@@ -79,7 +79,6 @@ group :test do
 end
 
 gem "simple_form", ">= 5.0.0"
-gem "bootstrap-sass", ">= 3.4.1"
 gem 'autoprefixer-rails'
 
 gem "groupdate"
