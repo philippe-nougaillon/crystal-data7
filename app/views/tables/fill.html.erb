@@ -1,7 +1,5 @@
 <h1 class="text-primary mb-4">Formulaire '<%= @table.name.humanize %>'</h1>
 
-<div data-controller="geolocation"></div>
-
 <%= form_tag fill_do_path, multipart: true do %>
 
   <%= hidden_field_tag :table_id, @table.id %>
@@ -70,7 +68,10 @@
           <br>
           <%= color_field_tag field_name, field_value, class: 'form-control w-100', 'data-testid': field.name %>
         <% when 'GPS' %>
-          <%= text_field_tag field_name, field_value, class: 'form-control w-100', 'data-testid': field.name %>
+          <div data-controller="geolocation">
+            <%= text_field_tag field_name, field_value, class: 'form-control w-100', 'data-geolocation-target': 'gpstextfield', 'data-testid': field.name %>
+            <button data-action="click->geolocation#connect">Géolocalisation</button>
+          </div>
         <% when 'Table' %>
           <%# Checker si la liste vient d'une autre table %>
           <% if field.is_valid_table_params %>

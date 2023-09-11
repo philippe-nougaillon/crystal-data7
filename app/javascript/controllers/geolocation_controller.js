@@ -8,20 +8,21 @@ const options = {
 // Connects to data-controller="geolocation"
 export default class extends Controller {
   static values = { url: String }
+  static targets = [ 'gpstextfield' ]
 
-  initialize(){
-    console.log("Geoloc Initialize")
-  }
-  connect() {
+  connect(){
     console.log("Geoloc Connect")
+  }
+
+  search() {
+    console.log("Geoloc Search")
     navigator.geolocation.getCurrentPosition(this.success.bind(this), this.error, options);
   }
 
   success(pos) {
     console.log("Geoloc Success")
     const crd = pos.coords;
-    // redirect with coordinates in params
-    location.assign(`/locations/?place=${crd.latitude},${crd.longitude}`)
+    this.gpstextfieldTarget = `${crd.latitude}, ${crd.longitude}`
   }
   
   error(err) {
