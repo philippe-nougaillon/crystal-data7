@@ -16,7 +16,7 @@ class Field < ApplicationRecord
 	validates_presence_of :name
 	validates_presence_of :datatype
 
-	enum datatype: [:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Table]
+	enum datatype: [:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Table, :Texte_riche]
 	enum operation: [:Somme, :Moyenne]
 
 	scope :filtres, -> { where(filtre: true) }
