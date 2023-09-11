@@ -3,7 +3,7 @@ class Value < ApplicationRecord
 
   belongs_to :field
 
-  has_rich_text :texte_riche
+  has_rich_text :content
 
   scope :records_at, ->(i) { where(record_index:i) }
   scope :record_at,  ->(i) { find_by(record_index:i) }
