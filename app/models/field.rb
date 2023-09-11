@@ -84,10 +84,23 @@ class Field < ApplicationRecord
 		return table_data 
 	end
 
-	private
+	def get_linked_table_record(index)
+		sources = self.items.tr('[]','').split('.')
+		source_fields = sources.last.tr('"','').split(',')
+		table = self.table.users.first.tables.find_by(name: sources.first)
+		
+		table_data = []
+		
+		table.values.where(record_index: index).includes(:field).each do |value| 
+			table_data << value.data if (source_fields.include?(value.field.name))
+		end
+		return table_data.join(', ') 
+	end
 
-  def slug_candidates
-    [SecureRandom.uuid]
-  end
+private
+
+	def slug_candidates
+		[SecureRandom.uuid]
+	end
 
 end
