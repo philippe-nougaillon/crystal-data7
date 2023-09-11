@@ -53,6 +53,8 @@
           </div>
         <% when 'Texte_long' %>
           <%= text_area_tag field_name, field_value, autofocus: (index == 0),col: 10, row: 10, class: 'form-control w-100', 'data-testid': field.name %>
+        <% when 'Texte_riche' %>
+          <%= rich_text_area_tag field_name, nil %>
         <% when 'Fichier', 'Image', 'PDF' %>
           <% if field_value %>
             <%= link_to Blob.find(field_value).file_attachment.filename, url_for(Blob.find(field_value).file), class:'w-100', 'data-testid': field.name %>
