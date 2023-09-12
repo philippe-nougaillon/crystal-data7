@@ -17,7 +17,7 @@
     <table class="table table-hover table-bordered sticky">
       <thead>
         <tr>
-          <th>Il y a</th>
+          <th>Date</th>
           <th>Qui</th>
           <th>IP</th>
           <th>Ligne n°</th>
@@ -30,8 +30,8 @@
         <% @audits.each do |log| %>
           <tr>
             <td>
-              <%= time_ago_in_words(log.created_at) %>
-              (le <%= l(log.created_at) %>)
+              <%= l log.created_at %>
+              <%= "il y a #{ time_ago_in_words(log.created_at) }" %>
             </td>
             <td><%= log.user.name.humanize if log.user %></td>
             <td><%= log.remote_address %></td>

@@ -27,7 +27,6 @@ class TablesController < ApplicationController
     @sum = Hash.new(0)
     @numeric_types = ['Formule','Euros','Nombre']
     @td_style = []
-    @pathname = Rails.root.join('public', 'table_files') 
 
     # recherche les lignes 
     unless params.permit![:search].blank?
@@ -43,7 +42,7 @@ class TablesController < ApplicationController
       params[:select].each do | option | 
         unless option.last.blank? 
           field = Field.find(option.first)
-          filter_records = @table.values.where(field:field, data:option.last).pluck(:record_index) 
+          filter_records = @table.values.where(field: field, data: option.last).pluck(:record_index) 
           if @records_filter.empty?
             @records_filter = filter_records 
           else
@@ -171,14 +170,9 @@ class TablesController < ApplicationController
 
         if old_value
           if (old_value.data != value) and !(old_value.data.blank? and value.blank?)
-            # supprimer les anciennes données
-            table.values.find_by(record_index:record_index, field:field).delete
-
             # enregistrer les nouvelles données
-            Value.create(field_id: field.id, 
-                          record_index: record_index, 
-                          data: value, 
-                          created_at: created_at_date)
+            table.values.find_by(record_index:record_index, field:field)
+                        .update(data: value)
           end
         else
           # enregistrer les nouvelles données
@@ -192,7 +186,7 @@ class TablesController < ApplicationController
 
       # notifier l'utilisateur d'un ajout 
       if not update and table.notification
-        UserMailer.notification(table, notif_items).deliver_later
+        #UserMailer.notification(table, notif_items).deliver_later
       end
 
       redirect_to table, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
@@ -422,6 +416,9 @@ class TablesController < ApplicationController
        sql = sql + " OR " unless index == @table.fields.size - 1
     end
     sql = sql + ")"
+
+    @sql_request = sql
+
     @audits = Audited::Audit.where(sql)
     @audits = @audits.reorder('created_at DESC').paginate(page: params[:page])
   end
