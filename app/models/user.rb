@@ -2,7 +2,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  has_and_belongs_to_many :tables
+  has_many :tables_users, dependent: :destroy
+  has_many :tables, through: :tables_users
   has_many :fields, through: :tables
 
   validates :name, :email, :password, :password_confirmation, presence:true

@@ -32,7 +32,7 @@
             <td><%= table.field_names %></td>
             <td>
               <%= table.shared_with(@current_user) %>
-              <% if table.is_owner?(@current_user) %>
+              <% if table.propriétaire?(@current_user) %>
                 <%= link_to partages_path(table), title: "Partager avec un autre utilisateur" do %>
                   +
                 <% end %>
@@ -46,12 +46,12 @@
 <%
 =end%>
             <td>
-              <% if table.is_owner?(@current_user) %>
+              <% if table.propriétaire?(@current_user) %>
                 <%= link_to 'Modifier', show_attrs_path(id: table.slug), title:"Modifier les colonnes", class: 'btn btn-outline-warning btn-sm' %>
               <% end %>
             </td>
             <td>
-              <% if table.is_owner?(@current_user) %>
+              <% if table.propriétaire?(@current_user) %>
                 <%= link_to 'X', table, data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm' %>
               <% end %>
             </td>

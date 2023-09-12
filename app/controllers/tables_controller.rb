@@ -99,7 +99,7 @@ class TablesController < ApplicationController
   end
 
   def show_attrs
-    unless @table.is_owner?(@current_user)
+    unless @table.propriétaire?(@current_user)
       flash[:notice] = "Désolé mais vous n'êtes pas son propriétaire !"
       redirect_to tables_path
       return
@@ -249,7 +249,7 @@ class TablesController < ApplicationController
 
     respond_to do |format|
       if @table.save
-        @table.users << @current_user
+        @table.tables_users << TablesUser.create(table_id: @table.id, user_id: @current_user.id, role: "propriétaire")
         format.html { redirect_to show_attrs_path(id: @table), notice: "Table créée. Vous pouvez maintenant y ajouter des colonnes" }
         format.json { render :show, status: :created, location: @table }
       else
@@ -276,7 +276,7 @@ class TablesController < ApplicationController
   # DELETE /tables/1
   # DELETE /tables/1.json
   def destroy
-    if @table.is_owner?(@current_user)
+    if @table.propriétaire?(@current_user)
       # supprime les champs
       @table.fields.destroy_all
 
@@ -371,10 +371,12 @@ class TablesController < ApplicationController
   end
 
   def add_user_do
-    if @user = User.find_by(email:params[:email])
+    if not TablesUser.roles.keys.reject { |i| i == "propriétaire" }.include?(params[:role])
+      redirect_to add_user_path(@table), alert: "Rôle indisponible"
+    elsif @user = User.find_by(email:params[:email])
       unless @table.users.include?(@user)
         # ajoute le nouvel utilisateur aux utilisateurs de la table
-        @table.users << @user 
+        @table.tables_users << TablesUser.create(table_id: @table.id, user_id: @user.id, role: params[:role])
         # UserMailer.notification_nouveau_partage(@user, @table).deliver_later
         flash[:notice] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' activé"
       else

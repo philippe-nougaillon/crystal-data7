@@ -3,7 +3,7 @@
     <%= @table.name.humanize %>
   </h1>
 
-  <% if @table.is_owner?(@current_user) %>
+  <% if @table.propriétaire?(@current_user) %>
     <div class="d-flex justify-content-end gap-2">
       <%= link_to 'Modifier structure', show_attrs_path(id:@table), title:"Modifier la structure de la table ou des colonnes", class: 'text-end' %> 
       <%= link_to "Partager", partages_path(@table), title:"Voir les utilisateurs qui partagent cette table" %>

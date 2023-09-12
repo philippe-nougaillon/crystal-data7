@@ -8,7 +8,7 @@ class UsersController < ApplicationController
       @total_tables, @total_lignes, @fichiers, @total_fichiers = 0, 0, 0, 0
 
       @user.tables.each do |table|
-        if table.is_owner?(@user)
+        if table.propriétaire?(@user)
            @total_tables += 1
            @total_lignes += table.size
            @fichiers += table.files_count

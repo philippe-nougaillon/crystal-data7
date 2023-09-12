@@ -4,7 +4,8 @@ class Table < ApplicationRecord
 
 	audited
 
-	has_and_belongs_to_many :users
+	has_many :tables_users, dependent: :destroy
+  has_many :users, through: :tables_users
 	has_many :fields, dependent: :destroy
 	has_many :values, through: :fields, dependent: :destroy
 	has_many :logs, through: :fields, dependent: :destroy
@@ -17,8 +18,24 @@ class Table < ApplicationRecord
 		self.values.where.not(data: nil).pluck(:record_index).uniq.count
 	end
 
-	def is_owner?(user)
-		self.users[0] == user
+	def role(user)
+		self.tables_users.find_by(user_id: user.id).role
+	end
+
+	def lecteur?(user)
+		self.tables_users.find_by(user_id: user.id).role == 'lecteur'
+	end
+	
+	def ajouteur?(user)
+		self.tables_users.find_by(user_id: user.id).role == 'ajouteur'
+	end
+
+	def éditeur?(user)
+		self.tables_users.find_by(user_id: user.id).role == 'éditeur'
+	end
+
+	def propriétaire?(user)
+		self.tables_users.find_by(user_id: user.id).role == 'propriétaire'
 	end
 
 	def files_size
