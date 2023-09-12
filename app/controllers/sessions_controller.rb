@@ -1,8 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :authorize, except:[:new, :create, :welcome, :demo]
-
-  def welcome
-  end
+  before_action :authorize, except:[:new, :create, :demo]
 
   def new
     @user.email = params[:m] if params[:m]

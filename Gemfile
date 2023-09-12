@@ -79,7 +79,6 @@ group :test do
 end
 
 gem "simple_form", ">= 5.0.0"
-gem "bootstrap-sass", ">= 3.4.1"
 gem 'autoprefixer-rails'
 
 gem "groupdate"
@@ -94,7 +93,8 @@ gem 'ranked-model'
 gem 'friendly_id', '~> 5.2.4'
 gem "audited"
 
-gem 'exception_notification'
 gem 'sucker_punch', '~> 2.0'
 
 gem "aws-sdk-s3", require: false
+
+gem 'exception_notification'

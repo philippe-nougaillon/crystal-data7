@@ -1,5 +1,4 @@
 <h1 class="text-primary mb-4">
-    <i class="glyphicon glyphicon-share"></i> 
 	Liste des partages
 </h1>
 
@@ -32,13 +31,12 @@
 
 <% if @table.is_owner?(@current_user) %>
   	<%= link_to add_user_path(@table), title:"Ajouter un partage avec un autre utilisateur", class:'btn btn-outline-success' do %>
-  		<i class="glyphicon glyphicon-plus-sign"></i> Ajouter un partage
+  		Ajouter un partage
   	<% end %>
 <% end %>
 <br /><br />
 
 <h3>
-    <i class="glyphicon glyphicon-phone"></i> 
 	Saisie de données depuis un mobile
 </h3>
 <p>

@@ -43,7 +43,14 @@
         <tr style="vertical-align: middle">
           <% @table.fields.each_with_index do | field,index | %>
             <th>
-              <%= link_to field.name.humanize, url_for(params.merge(sort_by: field.id).permit(:id, :sort_by, :search, :select)) %>
+              <%= link_to url_for(params.merge(sort_by: field.id).permit(:id, :sort_by, :search, :select)), class:'text-decoration-none' do %>
+                <span class="text-nowrap">
+                  <%= field.name.humanize %>
+                  <% if params[:sort_by] == field.id.to_s %>
+                    <span class="text-decoration-none text-black"><%= (session[:order_by] == 'ASC') ? '△' : '▽' %></span>
+                  <% end %>
+                </span>
+              <% end %>
             </th>
             <% @td_style[index] = @numeric_types.include?(field.datatype) ? 'text-align: right;' : nil %>
           <% end %>
@@ -52,80 +59,107 @@
       </thead>
 
       <% unless @records.size.zero? %>
+        <% records_size = 0 %>
         <tbody>
           <% @records.each do | record_index | %>
             <% values = @table.value_datas(record_index) %>
-            <tr>
-              <% @table.fields.each_with_index do | field,index | %>
-                <% value = values[index] %>
-                <td style="<%= @td_style[index] %>">
-                  <% if field.datatype == "Fichier" and values[index] %>
-                    <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
-                  <% elsif field.datatype == "Image" and values[index] %>
-                    <% if Blob.find(value).file.representable? %>
-                      <%= link_to image_tag(Blob.find(value).file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file) %>
-                    <% end %>
-                  <% elsif field.datatype == "Signature" and values[index] %>
-                    <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>
-                  <% elsif field.datatype == "Date" and values[index] %>
-                    <%= l(value.to_date) unless value.blank? %>
-                  <% elsif field.datatype == "Texte_long" and values[index] %>
-                    <%= truncate(value, length: 80) %>
-                  <% elsif field.datatype == "Euros" and values[index] %>
-                    <%= number_to_currency(value) %>
-                  <% elsif field.datatype == "Formule" and values[index] %>
-                    <%= field.evaluate(@table, record_index) %>
+            <% if not values.empty? %>
+              <% records_size += 1 %>
+              <tr>
+                <% @table.fields.each_with_index do | field, index | %>
+                  <% if value = values[index]%>
+                    <td style="<%= @td_style[index] %>">
+                      <% case field.datatype when 'Fichier' %>
+                        <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
+                      <% when 'Image', 'PDF' %>
+                        <% blob = Blob.find(value) %>
+                        <% if blob.file.representable? %>
+                          <%= link_to image_tag(blob.file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file), title: blob.file.filename %>
+                        <% end %>
+                      <% when 'Signature' %>
+                        <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>
+                      <% when 'Date' %>
+                        <%= l(value.to_date) unless value.blank? %>
+                      <% when 'Texte_long' %>
+                        <%= truncate(value, length: 80) %>
+                      <% when 'Texte_riche' %>
+                        <%= simple_format(value) %>
+                      <% when 'Euros' %>
+                        <%= number_to_currency(value) %>
+                      <% when 'Formule' %>
+                        <%= field.evaluate(@table, record_index) %>
+                      <% when 'Workflow' %>
+                        <% items = field.items.split(',').map{|i| i.split(':')}.to_h %>
+                        <% color = items[value] %>
+                        <span class="badge bg-<%= color %>"><%= value %></span>
+                      <% when 'URL' %>
+                        <%= link_to URI.parse(value).host, value, target: "_blank" %>
+                      <% when 'Couleur' %>
+                        <span style="background-color: <%= value %>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      <% when 'GPS' %>
+                        <%= value %>
+                      <% when 'Table' %>
+                        <% linked_value = field.get_linked_table_record(value.to_i) %>
+                        <%= link_to linked_value, details_path(Table.find_by(name: field.items.tr('[]','').split('.')).slug, record_index: value) %>
+                      <% else %>
+                        <%= value %>
+                      <% end %>
+
+                      <% if field.operation %>
+                        <% @sum[field.id] += value.to_f %>
+                      <% end %>
+                    </td>
                   <% else %>
-                    <%= value %>
-                  <% end %>
-                  <% if field.operation %>
-                    <% @sum[field.id] += value.to_f %>
-                  <% end %>
+                    <td></td>
+                  <% end %>  
+                <% end %>
+
+                <td>
+                  <%= link_to "Voir", details_path(@table.slug, record_index:record_index), class: 'btn btn-outline-info btn-sm', 'data-testid': "Voir ligne n°#{record_index}" %>
                 </td>
-              <% end %>
-              <td>
-                <%= link_to "Modifier", fill_url(@table.slug, record_index:record_index), class: 'btn btn-outline-primary btn-sm' %>
-              </td>
-              <td>
-                <%= link_to "Audit", logs_path(record_index: record_index), class: 'btn btn-outline-info btn-sm', title:"Audit des modifications" %>
-              </td>
-              <td>
-                <%= link_to "X", delete_record_url(@table.id, record_index:record_index), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm' %>
-              </td>
-            </tr>
+                <td>
+                  <%= link_to "Modifier", fill_url(@table.slug, record_index:record_index), class: 'btn btn-outline-primary btn-sm', 'data-testid': "Modifier ligne n°#{record_index}" %>
+                </td>
+                <td>
+                  <%= link_to "X", delete_record_url(@table.slug, record_index:record_index), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm', 'data-testid': "Supprimer ligne n°#{record_index}" %>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
 
-        <tfoot>
-          <tr>
-            <% @table.fields.each do |field| %>
-              <% if field.operation %>
-                <td class="text-primary" style="text-align: right">
-                  <% if field.Somme? %>
-                    <% if field.datatype == "Euros" %>
-                      <%= number_to_currency(@sum[field.id]) %>
-                    <% else %>
-                      <%= number_with_precision(@sum[field.id], precision: 2) %>
+        <% if @table.fields.where.not(operation: nil).any? %>
+          <tfoot>
+            <tr>
+              <% @table.fields.each do |field| %>
+                <% if field.operation %>
+                  <td class="text-primary" style="text-align: right">
+                    <% if field.Somme? %>
+                      <% if field.datatype == "Euros" %>
+                        <%= number_to_currency(@sum[field.id]) %>
+                      <% else %>
+                        <%= number_with_precision(@sum[field.id], precision: 2) %>
+                      <% end %>
+                    <% elsif field.Moyenne? %>
+                      <% if field.datatype == "Euros" %>
+                        <%= number_to_currency(@sum[field.id] / @records.count) %>
+                      <% else %>
+                        <%= number_with_precision(@sum[field.id] / @records.count, precision: 2) %>
+                      <% end %>
                     <% end %>
-                  <% elsif field.Moyenne? %>
-                    <% if field.datatype == "Euros" %>
-                      <%= number_to_currency(@sum[field.id] / @records.count) %>
-                    <% else %>
-                      <%= number_with_precision(@sum[field.id] / @records.count, precision: 2) %>
-                    <% end %>
-                  <% end %>
-                </td>
-              <% else %>
-                <td />
+                  </td>
+                <% else %>
+                  <td></td>
+                <% end %>
               <% end %>
-            <% end %>
-            <td />
-            <td colspan=2></td>
-          </tr>
-        </tfoot>
+              <td colspan=3></td>
+            </tr>
+          </tfoot>
+        <% end %>
+        
       <% end %>
     </table>
-    Affichage de <%= @records.size %> <%= @table.name %> sur <%= @table.size %> au total 
+    <p>Affichage de <%= records_size %> <%= @table.name %> sur <%= @table.size %> au total <p>
   </div>
 <% else %>
   <% unless params[:attrs] %>

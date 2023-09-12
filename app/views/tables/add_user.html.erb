@@ -1,5 +1,4 @@
 <h1 class="text-primary">
-  <i class="glyphicon glyphicon-share"></i> 
   Partager la table '<%= @table.name.humanize %>' avec un autre utilisateur
 </h1>
 <br>
@@ -13,7 +12,8 @@
       <h4>Entrez l'adresse mail de l'utilisateur avec qui vous souhaitez pargager cette table.</h4>
       <i><small>Si l'utilisateur n'a pas de compte, <%= link_to "créez-lui un compte maintenant", signup_path %></small></i>
       <br><br>
-      <%= text_field_tag :email, nil, class:'form-control'  %>
+      <%= label_tag :email %>
+      <%= text_field_tag :email, nil, class:'form-control w-100', required: true %>
       <br>
       <%= submit_tag "Partager", class: 'btn btn-outline-success' %>
     </div>

@@ -93,9 +93,6 @@ GEM
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
-    bootstrap-sass (3.4.1)
-      autoprefixer-rails (>= 5.2.1)
-      sassc (>= 2.0.0)
     builder (3.2.4)
     capybara (3.39.2)
       addressable
@@ -219,8 +216,6 @@ GEM
     ruby-vips (2.1.4)
       ffi (~> 1.12)
     rubyzip (2.3.2)
-    sassc (2.4.0)
-      ffi (~> 1.9)
     seed_dump (3.3.1)
       activerecord (>= 4)
       activesupport (>= 4)
@@ -282,7 +277,6 @@ DEPENDENCIES
   aws-sdk-s3
   bcrypt (~> 3.1.7)
   bootsnap
-  bootstrap-sass (>= 3.4.1)
   capybara
   chartkick (>= 3.2.0)
   cssbundling-rails

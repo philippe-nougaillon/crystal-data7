@@ -1,8 +1,8 @@
 # encoding: utf-8
 
 class TablesController < ApplicationController
-  before_action :authorize, except: [:fill, :fill_do]
-  before_action :set_table, except: [:new, :create, :import, :import_do, :checkifmobile, :index, :log, :delete_record]
+  before_action :authorize
+  before_action :set_table, except: [:new, :create, :import, :import_do, :checkifmobile, :index, :log]
 
   # GET /tables
   # GET /tables.json
@@ -104,18 +104,19 @@ class TablesController < ApplicationController
       redirect_to tables_path
       return
     end 
-    @field = Field.new(table_id:@table.id)
+    @field = Field.new(table_id: @table.id)
     @fields = Field.datatypes.keys.to_a
   end
 
   # formulaire d'ajout / modification
   def fill
+    
     if params[:record_index]
       # modification ligne existante
       @record_index = params[:record_index]
     else
       # ajout d'une ligne
-      @record_index = @table.size + 1
+      @record_index = @table.increment_record_index
     end
   end
 
@@ -127,75 +128,76 @@ class TablesController < ApplicationController
     record_index = data.keys.first
     values = data[record_index.to_s]
 
-    inserts_log = []
-    notif_items = []
+    if not values.values.compact_blank.blank?
 
-    # update? = si données existent déjà, on les supprime avant pour pouvoir ajouter les données modifiées 
-    update = table.values.where(record_index:record_index).any?
-    # garde la date de dernière mise à jour
-    created_at_date = table.values.where(record_index:record_index).first.created_at if update
+      inserts_log = []
+      notif_items = []
 
-    # quel champ a été modifié ?
-    table.fields.each do |field|
-      value = values[field.id.to_s]
-      if field.obligatoire and value.blank?
-        flash[:alert] = "Champ(s) obligatoire(s) manquant(s)"
-        redirect_to action: 'fill', record_index: record_index
-        return
-      end  
+      # update? = si données existent déjà, on les supprime avant pour pouvoir ajouter les données modifiées 
+      update = table.values.where(record_index:record_index).any?
+      # garde la date de dernière mise à jour
+      created_at_date = table.values.where(record_index:record_index).first.created_at if update
 
-      # enregistre le fichier
-      if field.datatype == 'Fichier' || field.datatype == 'Image'
-        if value
-          b = Blob.new()
-          b.file.attach(value)
-          b.save
-          value = b.id
-          created_at_date = DateTime.now
-        else 
-          # si l'utilisateur n'a pas choisi de fichier
-          # on passe pour ne pas écraser le fichier existant
-          next
+      # quel champ a été modifié ?
+      table.fields.each do |field|
+        value = values[field.id.to_s]
+        if field.obligatoire and value.blank?
+          flash[:alert] = "Champ(s) obligatoire(s) manquant(s)"
+          redirect_to action: 'fill', record_index: record_index
+          return
+        end  
+
+        # enregistre le fichier
+        if field.datatype == 'Fichier' || field.datatype == 'Image' || field.datatype == 'PDF'
+          if value
+            b = Blob.new()
+            b.file.attach(value)
+            b.save
+            value = b.id
+            created_at_date = DateTime.now
+          else 
+            # si l'utilisateur n'a pas choisi de fichier
+            # on passe pour ne pas écraser le fichier existant
+            next
+          end
         end
-      end
 
-      if field.datatype == 'Formule'
-         value = field.evaluate(table, record_index) # evalue le champ calculé
-      end          
-  
-      # test si c'est un update ou new record
-      old_value = table.values.find_by(record_index:record_index, field:field)
+        if field.datatype == 'Formule'
+          value = field.evaluate(table, record_index) # evalue le champ calculé
+        end          
+    
+        # test si c'est un update ou new record
+        old_value = table.values.find_by(record_index:record_index, field:field)
 
-      if old_value
-        if (old_value.data != value) and !(old_value.data.blank? and value.blank?)
-          # supprimer les anciennes données
-          table.values.find_by(record_index:record_index, field:field).delete
+        if old_value
+          if (old_value.data != value) and !(old_value.data.blank? and value.blank?)
+            # supprimer les anciennes données
+            table.values.find_by(record_index:record_index, field:field).delete
 
+            # enregistrer les nouvelles données
+            Value.create(field_id: field.id, 
+                          record_index: record_index, 
+                          data: value, 
+                          created_at: created_at_date)
+          end
+        else
           # enregistrer les nouvelles données
           Value.create(field_id: field.id, 
-                        record_index: record_index, 
-                        data: value, 
-                        created_at: created_at_date)
+                      record_index: record_index, 
+                      data: value, 
+                      created_at: created_at_date)
+
         end
-      else
-        # enregistrer les nouvelles données
-        Value.create(field_id: field.id, 
-                    record_index: record_index, 
-                    data: value, 
-                    created_at: created_at_date)
-
       end
-    end
 
-    # notifier l'utilisateur d'un ajout 
-    if not update and table.notification
-      UserMailer.notification(table, notif_items).deliver_later
-    end
+      # notifier l'utilisateur d'un ajout 
+      if not update and table.notification
+        UserMailer.notification(table, notif_items).deliver_later
+      end
 
-    if update
-      redirect_to table
+      redirect_to table, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
     else
-      redirect_to :fill, notice: "Données ajoutées avec succès :)"
+      redirect_to table, alert: "Aucune donnée enregistrée"
     end
   end  
 
@@ -209,15 +211,16 @@ class TablesController < ApplicationController
       deletes_log = []
       record_index = params[:record_index].to_i
       @table.values.where(record_index:record_index).each do | value |
-          # log l'action dans l'historique
-          #deletes_log.push "(#{value.field.id}, #{@current_user.id}, \"#{"#{value.data} => ~"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
+        # log l'action dans l'historique
+        #deletes_log.push "(#{value.field.id}, #{@current_user.id}, \"#{"#{value.data} => ~"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
 
-          # supprime le fichier lié
-          if value.field.Fichier? and value.data
-              value.field.delete_file(value.data)
-              deletes_log.push "(#{value.field.id}, #{@current_user.id}, \"#{"fichier supprimé. #{value.data} => !"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
-          end
-          value.delete
+        # supprime le fichier lié
+        # if value.field.Fichier? and value.data
+        #   value.field.delete_file(value.data)
+        #   deletes_log.push "(#{value.field.id}, #{@current_user.id}, \"#{"fichier supprimé. #{value.data} => !"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
+        # end
+        value.delete
+        
       end
 
       # if deletes_log.any?
@@ -247,7 +250,7 @@ class TablesController < ApplicationController
     respond_to do |format|
       if @table.save
         @table.users << @current_user
-        format.html { redirect_to show_attrs_path(id: @table), notice: "Table créée. Vous pouvez mantenant y ajouter des colonnes" }
+        format.html { redirect_to show_attrs_path(id: @table), notice: "Table créée. Vous pouvez maintenant y ajouter des colonnes" }
         format.json { render :show, status: :created, location: @table }
       else
         format.html { render :new }
@@ -298,26 +301,21 @@ class TablesController < ApplicationController
   end
 
   def import_do
-    if params[:upload]
-      require 'rake'
+    require 'rake'
 
-      #Save file to local dir
-      filename = params[:upload].original_filename
-      filename_with_path = Rails.root.join('public', 'tmp', filename)
-      File.open(filename_with_path, 'wb') do |file|
-          file.write(params[:upload].read)
-      end
+    #Save file to local dir
+    filename = params[:upload].original_filename
+    filename_with_path = Rails.root.join('public', 'tmp', filename)
+    File.open(filename_with_path, 'wb') do |file|
+        file.write(params[:upload].read)
+    end
 
-      Rake::Task.clear # necessary to avoid tasks being loaded several times in dev mode
-      CrystalData::Application.load_tasks 
-      Rake::Task['tables:import'].invoke(filename_with_path, filename, @current_user.id, request.remote_ip)
+    Rake::Task.clear # necessary to avoid tasks being loaded several times in dev mode
+    CrystalData::Application.load_tasks 
+    Rake::Task['tables:import'].invoke(filename_with_path, filename, @current_user.id, request.remote_ip)
 
-      @new_table = Table.last
-      redirect_to tables_path, notice: "Importation terminé. Table '#{Table.last.name.humanize}' créée avec succès."
-      return
-    else
-      redirect_to action: 'import', alert:"Il manque le fichier source"
-    end  
+    @new_table = Table.last
+    redirect_to tables_path, notice: "Importation terminé. Table '#{Table.last.name.humanize}' créée avec succès."
   end
 
   def export
@@ -373,24 +371,17 @@ class TablesController < ApplicationController
   end
 
   def add_user_do
-    unless params[:email].blank?
-      @user = User.find_by(email:params[:email])
-      if @user
-        unless @table.users.exists?(@user)
-          # ajoute le nouvel utilisateur aux utilisateurs de la table
-          @table.users << @user 
-          UserMailer.notification_nouveau_partage(@user, @table).deliver_later
-          flash[:notice] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' activé"
-        else
-          flash[:alert] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' déjà existant !"
-        end
+    if @user = User.find_by(email:params[:email])
+      unless @table.users.include?(@user)
+        # ajoute le nouvel utilisateur aux utilisateurs de la table
+        @table.users << @user 
+        # UserMailer.notification_nouveau_partage(@user, @table).deliver_later
+        flash[:notice] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' activé"
       else
-        flash[:alert] = "Utilisateur inconnu ! Créez un compte en allant sur 'Créer un compte' dans le menu utilisateur"
-        redirect_to add_user_path(@table)
-        return
+        flash[:alert] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' déjà existant !"
       end
     else
-      flash[:alert] = "Veuillez entrer une adresse mail svp."
+      flash[:alert] = "Utilisateur inconnu ! Créez un compte en allant sur 'Créer un compte' dans le menu utilisateur"
       redirect_to add_user_path(@table)
       return
     end
@@ -417,10 +408,13 @@ class TablesController < ApplicationController
     # Afficher les changements pour la ligne #record_index
     if params[:record_index]
       sql = "audited_changes ->> 'record_index' = '#{params[:record_index].to_s}'"
-      sql = sql + " AND ("
+      sql += " AND ("
+    elsif not params[:user_id].blank?
+      sql = "(user_id = '#{params[:user_id]}')"
+      sql += " AND ("
     else
-      sql = "("  
-    end    
+      sql = " ("
+    end
 
     # et ayant comme champs ceux de la table en référence 
     @table.fields.each_with_index do |field, index|
@@ -428,7 +422,6 @@ class TablesController < ApplicationController
        sql = sql + " OR " unless index == @table.fields.size - 1
     end
     sql = sql + ")"
-  
     @audits = Audited::Audit.where(sql)
     @audits = @audits.reorder('created_at DESC').paginate(page: params[:page])
   end
@@ -479,6 +472,14 @@ class TablesController < ApplicationController
       #logger.debug "[DEBUG] value:#{value} fields:#{fields_count} r:#{r}"
       @hash[key] = r / fields_count
     end  
+  end
+
+  def show_details
+    unless params[:record_index].blank?
+      @record_index = params[:record_index]
+    else
+      redirect_to @table, alert: "donnée non existante"
+    end
   end
 
   private

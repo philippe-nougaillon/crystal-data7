@@ -34,7 +34,7 @@
               <%= table.shared_with(@current_user) %>
               <% if table.is_owner?(@current_user) %>
                 <%= link_to partages_path(table), title: "Partager avec un autre utilisateur" do %>
-                  <i class="glyphicon glyphicon-plus-sign"></i>
+                  +
                 <% end %>
               <% end %>
             </td>
@@ -63,7 +63,7 @@
             <i>
               Aucune table partagée pour l'instant...
               <br>
-              Pour en créer une, utilisez le bouton '+ Nouvelle table' ci-dessous
+              Pour en créer une, utilisez le bouton 'Nouvelle Table' ci-dessous
             </i>
           </td>
         </tr>
@@ -73,9 +73,9 @@
 </div>
 
 <%= link_to new_table_path, class: 'btn btn-outline-success' do %>
-    <i class="glyphicon glyphicon-plus"></i> Nouvelle Table
+  Nouvelle Table
 <% end %>
 
 <%= link_to import_path, class: 'btn btn-outline-dark' do %>
-    <i class="glyphicon glyphicon-download"></i> Importer
+  Importer
 <% end %>

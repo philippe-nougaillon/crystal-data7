@@ -21,14 +21,14 @@
       </div>
 
       <div>
-        <%= f.label :name, "Type de données" %>
+        <%= f.label :datatype, "Type de données" %>
         <span data-action="change->type#change">
           <%= f.select :datatype, options_for_select(@fields, @field.datatype), {}, class: 'form-select', data: { 'type-target': 'source' } %>
         </span>
       </div>
 
-      <div data-type-target='params'>
-        <%= f.label :name, "Paramètres" %>
+      <div data-type-target='params' class="w-100">
+        <%= f.label :items, "Paramètres" %>
         <%= f.text_field :items, class: "form-control w-100" %>
         <small class="form-text text-muted"></small>
       </div>

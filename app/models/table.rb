@@ -13,7 +13,8 @@ class Table < ApplicationRecord
 
 	# Donne le nombre de ligne exact de la table 
 	def size
-		self.values.group("values.id, values.record_index").reorder(:id).count.size
+		# self.values.group("values.id, values.record_index").reorder(:id).count.size
+		self.values.where.not(data: nil).pluck(:record_index).uniq.count
 	end
 
 	def is_owner?(user)
@@ -52,6 +53,12 @@ class Table < ApplicationRecord
 
 	def field_names
 		self.fields.pluck(:name).map{|x| x.humanize}.join(', ')
+	end
+
+	def increment_record_index
+		record_index = self.record_index + 1
+		self.update(record_index: record_index)
+		record_index
 	end
 
 private

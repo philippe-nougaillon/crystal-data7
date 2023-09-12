@@ -1,5 +1,4 @@
 <h1 class="text-primary mb-4">
-  <i class="glyphicon glyphicon-download"></i> 
   Importer
 </h1>
 
@@ -8,6 +7,7 @@
 </p>
 
 <%= form_tag({action: "import_do", method: :post}, multipart: true) do %>
-  <%= file_field_tag 'upload', accept: 'text/csv', class: 'form-control w-25' %>
+  <%= label_tag :upload, "Fichier source" %>
+  <%= file_field_tag :upload, accept: 'text/csv', class: 'form-control w-25', required: true %>
   <%= submit_tag "Importer", class: 'btn btn-outline-success mt-4' %>
 <% end %>

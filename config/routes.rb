@@ -46,12 +46,14 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
-  get '/about' => 'sessions#welcome'
+  get 'à_propos', to: 'pages#à_propos', as: :a_propos
   get '/demo' => 'sessions#demo'
 
   delete 'tables/:id/delete_record' => 'tables#delete_record', as: :delete_record
 
   resources :blobs, only: [:new, :create]
+
+  get 'tables/:id/details', to: 'tables#show_details', as: :details
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
