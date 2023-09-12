@@ -31,7 +31,7 @@ class TablesController < ApplicationController
 
     # recherche les lignes 
     unless params.permit![:search].blank?
-      @values = @table.values.where("data ilike ?", "%#{params.permit![:search].strip}%")
+      @values = @table.values.where("data ILIKE ?", "%#{params.permit![:search].strip}%")
     else
       @values = @table.values
     end
