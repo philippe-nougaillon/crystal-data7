@@ -63,6 +63,12 @@
       </div>
     <% end %>
   <% end %>
+
+  <div class="text-center mt-5 text-warning">
+    MÀJ le <%= l @table.last_update_at(@record_index) %>
+    (il y a <%= time_ago_in_words(@table.last_update_at(@record_index)) %>)
+  </div>
+
 </div>
 
 <%= link_to "Modifier", fill_url(@table.slug, record_index: @record_index), 'data-testid': "Modifier ligne n°#{ @record_index }" %>

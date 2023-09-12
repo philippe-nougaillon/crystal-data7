@@ -12,7 +12,7 @@
         <th>Nom</th>
         <th>Colonnes</th>
         <th class="col-md-2">Partagée avec</th>
-        <th>Dernière_Màj</th>
+        <th>MÀJ</th>
         <th>Nbr_lignes</th>
         <%
 =begin%>
@@ -38,7 +38,7 @@
                 <% end %>
               <% end %>
             </td>
-            <td><%= "Il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" if table.values.any? %></td>
+            <td><%= "il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" if table.values.any? %></td>
             <td style="text-align: right"><%= table.size %></td>
             <%
 =begin%>

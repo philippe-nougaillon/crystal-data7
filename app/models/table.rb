@@ -51,6 +51,10 @@ class Table < ApplicationRecord
 		self.values.includes(:field).records_at(record_index).order("fields.row_order").pluck(:data)
 	end
 
+	def last_update_at(record_index)
+		self.values.where(record_index: record_index).maximum(:updated_at)
+	end
+
 	def field_names
 		self.fields.pluck(:name).map{|x| x.humanize}.join(', ')
 	end
