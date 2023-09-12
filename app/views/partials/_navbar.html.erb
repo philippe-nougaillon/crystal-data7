@@ -7,7 +7,7 @@
   <% if @current_user %>
     <li class="nav-item mx-auto">
       <%= link_to @current_user, title: "Profil utilisateur" do %>
-        <i class="fa-solid fa-circle-user fa-2xl text-white"></i>
+        <i class="fa-solid fa-circle-user fa-2xl text-primary"></i>
       <% end %>
     </li>
     <%
@@ -21,7 +21,7 @@
 =end%>
     <li class="nav-item mx-auto">
       <%= link_to "/logout", title: "Se déconnecter" do %>
-        <i class="fa-solid fa-right-from-bracket text-white"></i>
+        <i class="fa-solid fa-right-from-bracket text-warning"></i>
       <% end %>
     </li>
   <% else %>

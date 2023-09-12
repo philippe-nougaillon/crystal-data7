@@ -5,10 +5,10 @@
 
   <% if @table.is_owner?(@current_user) %>
     <div class="d-flex justify-content-end gap-2">
-      <%= link_to 'Modifier structure', show_attrs_path(id:@table), title:"Modifier la structure de la table ou des colonnes", class: 'text-end' %> 
+      <%= link_to 'Modifier Structure', show_attrs_path(id:@table), title:"Modifier la structure de la table ou des colonnes" %> 
       <%= link_to "Partager", partages_path(@table), title:"Voir les utilisateurs qui partagent cette table" %>
-      <%= link_to 'Audit', logs_path(id:@table), title:"Audit des modifications" %>
       <%= link_to 'Exporter', export_path(@table), title:"Exporter les données" %>
+      <%= link_to 'Audit Trail', logs_path(id:@table), title:"Historique des modifications" %>
     </div>
   <% end %>
 </div>
