@@ -9,7 +9,7 @@
       <%= label_tag "Utilisateur" %>
       <%= select_tag :user_id, options_from_collection_for_select(@table.users, "id", "name", params[:user_id]), include_blank:true, onchange: 'this.form.submit()', class:'form-select' %>
 
-      <%= submit_tag 'Filtrer', class: 'btn btn-outline-success' %>
+      <%= submit_tag 'Filtrer', class: 'btn btn-outline-primary' %>
     <% end %>
   <% end %>
 
