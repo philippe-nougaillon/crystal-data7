@@ -1,6 +1,6 @@
 <h1 class="text-primary mb-4"><%= @table.name.humanize %></h1>
 
-<div class="border rounded shadow px-5 py-5 mb-4">
+<div class="border rounded shadow p-5">
   <% @table.fields.each_with_index do |field, index| %>
     <% values = @table.value_datas(@record_index) %>
     <% value = field.values.find_by(record_index: @record_index) %> 
@@ -64,18 +64,20 @@
     <% end %>
   <% end %>
 
-  <div class="text-center mt-5 text-warning">
+  <div class="text-end mt-5 text-warning">
     MÀJ le <%= l @table.last_update_at(@record_index) %>
     (il y a <%= time_ago_in_words(@table.last_update_at(@record_index)) %>)
   </div>
 
 </div>
 
-<%= link_to "Modifier", fill_url(@table.slug, record_index: @record_index), 'data-testid': "Modifier ligne n°#{ @record_index }" %>
-|
-<%= link_to "Audit Trail", logs_path(record_index: @record_index), title:"Audit des modifications", data: { turbo_frame: "main_frame" } %>
-|
-<%= link_to "Retour", @table %>
+<div class="mt-3">
+  <%= link_to "Modifier", fill_url(@table.slug, record_index: @record_index), 'data-testid': "Modifier ligne n°#{ @record_index }" %>
+  |
+  <%= link_to "Audit Trail", logs_path(record_index: @record_index), title:"Audit des modifications", data: { turbo_frame: "main_frame" } %>
+  |
+  <%= link_to "Retour", @table %>
+</div>
 
 <div class="mt-4">
   <%= turbo_frame_tag "main_frame" do %>

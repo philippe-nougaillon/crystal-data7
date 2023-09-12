@@ -1,4 +1,4 @@
-<div id='map' style='height:70vh'></div>
+<div id='map' style='height:70vh; margin-top: 5px'></div>
 
 <script>
   mapboxgl.accessToken = 'pk.eyJ1IjoicGhpbG5vdWciLCJhIjoiY2pvNXRyczhjMDFkajNxcGVmNHZtcHZ4OSJ9.vcFMjboSUDUUg--tDsgapg';
@@ -13,8 +13,8 @@
   });
 
   var marker = new mapboxgl.Marker({ color: "#FF0000"})
-    .setLngLat([lng, lat])
-    .addTo(map);
+                            .setLngLat([lng, lat])
+                            .addTo(map);
 
   map.addControl(new mapboxgl.FullscreenControl());
   map.addControl(new mapboxgl.NavigationControl());
