@@ -20,9 +20,11 @@
           <th>Date</th>
           <th>Qui</th>
           <th>IP</th>
-          <th>Ligne n°</th>
+          <th>Ligne</th>
           <th>Colonne</th>
+          <th>Action</th>
           <th>Nouvelle valeur</th>
+          <th>Remplace</th>
         </tr>
       </thead>
 
@@ -37,12 +39,15 @@
             <td><%= log.remote_address %></td>
             <td><%= log.audited_changes['record_index'] %></td>
             <td><%= Field.find(log.audited_changes['field_id']).name %></td>
+            <td><%= log.audited_changes['old_value'] ? 'Modification' : 'Création' %>
             <td><%= log.audited_changes['data'] %></td>
+            <td><%= log.audited_changes['old_value'] %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
+  
   <%= will_paginate @audits, renderer: BootstrapPagination::Rails %>
 
   <%= @audits.size.to_s + " modification".pluralize(@audits.size) %>

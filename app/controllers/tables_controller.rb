@@ -170,9 +170,15 @@ class TablesController < ApplicationController
 
         if old_value
           if (old_value.data != value) and !(old_value.data.blank? and value.blank?)
+            # supprimer les anciennes données
+            table.values.find_by(record_index:record_index, field:field).delete
+
             # enregistrer les nouvelles données
-            table.values.find_by(record_index:record_index, field:field)
-                        .update(data: value)
+            Value.create(field_id: field.id, 
+                          record_index: record_index, 
+                          data: value, 
+                          old_value: old_value.data,
+                          created_at: created_at_date)
           end
         else
           # enregistrer les nouvelles données
@@ -186,7 +192,7 @@ class TablesController < ApplicationController
 
       # notifier l'utilisateur d'un ajout 
       if not update and table.notification
-        #UserMailer.notification(table, notif_items).deliver_later
+        UserMailer.notification(table, notif_items).deliver_later
       end
 
       redirect_to table, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
@@ -416,9 +422,6 @@ class TablesController < ApplicationController
        sql = sql + " OR " unless index == @table.fields.size - 1
     end
     sql = sql + ")"
-
-    @sql_request = sql
-
     @audits = Audited::Audit.where(sql)
     @audits = @audits.reorder('created_at DESC').paginate(page: params[:page])
   end
