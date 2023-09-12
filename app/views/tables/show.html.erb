@@ -47,7 +47,7 @@
                 <span class="text-nowrap">
                   <%= field.name.humanize %>
                   <% if params[:sort_by] == field.id.to_s %>
-                    <span class="text-decoration-none text-black"><%= (session[:order_by] == 'ASC') ? '△' : '▽' %></span>
+                    <span class="text-decoration-none text-warning "><%= (session[:order_by] == 'ASC') ? '△' : '▽' %></span>
                   <% end %>
                 </span>
               <% end %>
@@ -115,10 +115,10 @@
                 <% end %>
 
                 <td>
-                  <%= link_to "Voir", details_path(@table.slug, record_index:record_index), class: 'btn btn-outline-info btn-sm', 'data-testid': "Voir ligne n°#{record_index}" %>
+                  <%= link_to "Voir", details_path(@table.slug, record_index:record_index), class: 'btn btn-outline-primary btn-sm', 'data-testid': "Voir ligne n°#{record_index}" %>
                 </td>
                 <td>
-                  <%= link_to "Modifier", fill_url(@table.slug, record_index:record_index), class: 'btn btn-outline-primary btn-sm', 'data-testid': "Modifier ligne n°#{record_index}" %>
+                  <%= link_to "Modifier", fill_url(@table.slug, record_index:record_index), class: 'btn btn-outline-warning btn-sm', 'data-testid': "Modifier ligne n°#{record_index}" %>
                 </td>
                 <td>
                   <%= link_to "X", delete_record_url(@table.slug, record_index:record_index), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm', 'data-testid': "Supprimer ligne n°#{record_index}" %>
