@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 class FieldsController < ApplicationController
-  before_action :authorize
   before_action :set_field, only: [:show, :edit, :update, :destroy]
 
   # GET /fields
