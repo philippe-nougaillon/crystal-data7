@@ -2,6 +2,7 @@
 
 class TablesController < ApplicationController
   before_action :set_table, except: [:new, :create, :import, :import_do, :checkifmobile, :index, :log]
+  before_action :is_user_authorized?
 
   # GET /tables
   # GET /tables.json
@@ -16,11 +17,6 @@ class TablesController < ApplicationController
   # GET /tables/1
   # GET /tables/1.json
   def show
-    unless @table.users.include?(current_user)
-      redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
-      return
-    end
-
     @sum = Hash.new(0)
     @numeric_types = ['Formule','Euros','Nombre']
     @td_style = []
@@ -95,12 +91,7 @@ class TablesController < ApplicationController
     end 
   end
 
-  def show_attrs
-    unless @table.propriétaire?(current_user)
-      flash[:notice] = "Désolé mais vous n'êtes pas son propriétaire !"
-      redirect_to tables_path
-      return
-    end 
+  def show_attrs 
     @field = Field.new(table_id: @table.id)
     @fields = Field.datatypes.keys.to_a
   end
@@ -199,11 +190,6 @@ class TablesController < ApplicationController
   end  
 
   def delete_record
-    unless @table.users.include?(current_user)
-      redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
-      return
-    end
-
     if params[:record_index]
       deletes_log = []
       record_index = params[:record_index].to_i
@@ -273,23 +259,18 @@ class TablesController < ApplicationController
   # DELETE /tables/1
   # DELETE /tables/1.json
   def destroy
-    if @table.propriétaire?(current_user)
-      # supprime les champs
-      @table.fields.destroy_all
+    # supprime les champs
+    @table.fields.destroy_all
 
-      # supprime les fichiers liés
-      @table.values.each do | value |
-          value.field.delete_file(value.data) if value.field and value.field.Fichier? and value.data
-          value.destroy
-        end
-      
-      @table.destroy
-      flash[:notice] = "Table supprimée."
-    else
-      flash[:notice] = "Vous n'êtes pas son propriétaire !"
-    end 
+    # supprime les fichiers liés
+    @table.values.each do | value |
+        value.field.delete_file(value.data) if value.field and value.field.Fichier? and value.data
+        value.destroy
+      end
+    @table.destroy
+
     respond_to do |format|
-      format.html { redirect_to tables_url }
+      format.html { redirect_to tables_url, notice: 'Table supprimée.'}
       format.json { head :no_content }
     end
   end
@@ -316,10 +297,6 @@ class TablesController < ApplicationController
   end
 
   def export
-    unless @table.users.include?(current_user)
-      redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
-      return
-    end
   end
 
   def export_do
@@ -399,11 +376,6 @@ class TablesController < ApplicationController
   end 
 
   def logs
-    unless @table.users.include?(current_user)
-      redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
-      return
-    end
-
     # Afficher les changements pour la ligne #record_index
     if params[:record_index]
       sql = "audited_changes ->> 'record_index' = '#{params[:record_index].to_s}'"
@@ -426,11 +398,6 @@ class TablesController < ApplicationController
   end
 
   def activity
-    unless @table.users.include?(current_user)
-      redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
-      return
-    end
-
     unless params[:type_action].blank?
       @logs = @table.logs.where(action:params[:type_action].to_i)
     else
@@ -490,5 +457,13 @@ class TablesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def table_params
       params.require(:table).permit(:name, :record_index, :lifo, :notification)
+    end
+
+    def is_user_authorized?
+      if ['index', 'new', 'create', 'import', 'import_do'].include?(action_name)
+        authorize Table
+      else
+        authorize @table
+      end
     end
 end

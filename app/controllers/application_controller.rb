@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  include Pundit::Authorization
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -31,10 +34,14 @@ private
     }
   end
 
+  def user_not_authorized
+    flash[:error] = "Vous n'êtes pas autorisé à effectuer cette action."
+    redirect_to(request.referrer || root_path)
+  end
+
 protected
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
     devise_parameter_sanitizer.permit(:account_update, keys: [:name])
   end
-
 end

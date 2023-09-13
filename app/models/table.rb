@@ -18,6 +18,10 @@ class Table < ApplicationRecord
 		self.values.where.not(data: nil).pluck(:record_index).uniq.count
 	end
 
+	def role_number(user)
+    TablesUser.roles[self.tables_users.find_by(user_id: user.id).role]
+  end
+
 	def role(user)
 		self.tables_users.find_by(user_id: user.id).role
 	end
