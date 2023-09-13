@@ -208,26 +208,13 @@ class TablesController < ApplicationController
     end
 
     if params[:record_index]
-      deletes_log = []
       record_index = params[:record_index].to_i
-      @table.values.where(record_index:record_index).each do | value |
-        # log l'action dans l'historique
-        #deletes_log.push "(#{value.field.id}, #{@current_user.id}, \"#{"#{value.data} => ~"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
-
-        # supprime le fichier lié
-        # if value.field.Fichier? and value.data
-        #   value.field.delete_file(value.data)
-        #   deletes_log.push "(#{value.field.id}, #{@current_user.id}, \"#{"fichier supprimé. #{value.data} => !"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
-        # end
-        value.delete
-        
+      if @table.record_can_be_destroy?(record_index)
+        @table.values.where(record_index: record_index).delete_all
+        flash[:notice] = "Enregistrement ##{record_index} supprimé avec succès"
+      else
+        flash[:alert] = "Cet enregistrement n'a pas été supprimé car il est utilisé dans d'autres Tables !"
       end
-
-      # if deletes_log.any?
-      #   sql = "INSERT INTO logs (`field_id`, `user_id`, `message`, `created_at`, `updated_at`, `record_index`, `ip`, `action`) VALUES #{deletes_log.join(", ")}"
-      #   ActiveRecord::Base.connection.execute sql
-      # end
-      flash[:notice] = "Enregistrement ##{record_index} supprimé avec succès"
     end  
 
     redirect_to @table

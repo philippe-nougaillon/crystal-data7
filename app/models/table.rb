@@ -64,6 +64,21 @@ class Table < ApplicationRecord
 		self.update(record_index: record_index)
 		record_index
 	end
+    
+	# Vérifier que l'enregistrement est libre 
+    # (aucun autre enregistrement pointe dessus (type Table))
+
+	def record_can_be_destroy?(record_index)
+      # Est-ce que des types référencent cette table ?
+      allow_destroy = true
+      fields = Field.where("items ILIKE '[#{self.name}.%'")
+      if fields.any?
+        fields.each do | field |
+          allow_destroy = !field.values.pluck(:record_index).include?(record_index)
+        end
+      end
+	  allow_destroy
+	end
 
 private
 	# only one candidate for an nice id; one random UDID
