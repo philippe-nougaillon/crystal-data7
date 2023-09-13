@@ -47,8 +47,12 @@ class Table < ApplicationRecord
 		return users.map{|u| u.humanize}.join(', ')
 	end
 
-	def value_datas(record_index)
-		self.values.includes(:field).records_at(record_index).order("fields.row_order").pluck(:data)
+	def value_datas_listable(record_index)
+		self.values.includes(:field).where("fields.visibility = 0 OR fields.visibility = 1").records_at(record_index).order("fields.row_order").pluck(:data)
+	end
+
+	def value_datas_détaillable(record_index)
+		self.values.includes(:field).where("fields.visibility = 0 OR fields.visibility = 2").records_at(record_index).order("fields.row_order").pluck(:data)
 	end
 
 	def last_update_at(record_index)
