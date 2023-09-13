@@ -1,15 +1,12 @@
 # encoding: utf-8
 
 class TablesController < ApplicationController
-  before_action :authorize
   before_action :set_table, except: [:new, :create, :import, :import_do, :checkifmobile, :index, :log]
 
   # GET /tables
   # GET /tables.json
   def index
-    session[:user_id] = @current_user.id if @current_user && session[:user_id].nil?
-    @tables = @current_user.tables.includes(:fields)
-     
+    @tables = current_user.tables.includes(:fields)
     respond_to do |format|
       format.html.phone
       format.html.none 
@@ -19,7 +16,7 @@ class TablesController < ApplicationController
   # GET /tables/1
   # GET /tables/1.json
   def show
-    unless @table.users.include?(@current_user)
+    unless @table.users.include?(current_user)
       redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
       return
     end
@@ -99,7 +96,7 @@ class TablesController < ApplicationController
   end
 
   def show_attrs
-    unless @table.propriétaire?(@current_user)
+    unless @table.propriétaire?(current_user)
       flash[:notice] = "Désolé mais vous n'êtes pas son propriétaire !"
       redirect_to tables_path
       return
@@ -123,7 +120,7 @@ class TablesController < ApplicationController
   # formulaire d'ajout / modification posté
   def fill_do
     table = Table.find(params[:table_id])
-    user = @current_user
+    user = current_user
     data = params[:data]
     record_index = data.keys.first
     values = data[record_index.to_s]
@@ -202,7 +199,7 @@ class TablesController < ApplicationController
   end  
 
   def delete_record
-    unless @table.users.include?(@current_user)
+    unless @table.users.include?(current_user)
       redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
       return
     end
@@ -212,12 +209,12 @@ class TablesController < ApplicationController
       record_index = params[:record_index].to_i
       @table.values.where(record_index:record_index).each do | value |
         # log l'action dans l'historique
-        #deletes_log.push "(#{value.field.id}, #{@current_user.id}, \"#{"#{value.data} => ~"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
+        #deletes_log.push "(#{value.field.id}, #{current_user.id}, \"#{"#{value.data} => ~"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
 
         # supprime le fichier lié
         # if value.field.Fichier? and value.data
         #   value.field.delete_file(value.data)
-        #   deletes_log.push "(#{value.field.id}, #{@current_user.id}, \"#{"fichier supprimé. #{value.data} => !"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
+        #   deletes_log.push "(#{value.field.id}, #{current_user.id}, \"#{"fichier supprimé. #{value.data} => !"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
         # end
         value.delete
         
@@ -249,7 +246,7 @@ class TablesController < ApplicationController
 
     respond_to do |format|
       if @table.save
-        @table.tables_users << TablesUser.create(table_id: @table.id, user_id: @current_user.id, role: "propriétaire")
+        @table.tables_users << TablesUser.create(table_id: @table.id, user_id: current_user.id, role: "propriétaire")
         format.html { redirect_to show_attrs_path(id: @table), notice: "Table créée. Vous pouvez maintenant y ajouter des colonnes" }
         format.json { render :show, status: :created, location: @table }
       else
@@ -276,7 +273,7 @@ class TablesController < ApplicationController
   # DELETE /tables/1
   # DELETE /tables/1.json
   def destroy
-    if @table.propriétaire?(@current_user)
+    if @table.propriétaire?(current_user)
       # supprime les champs
       @table.fields.destroy_all
 
@@ -312,14 +309,14 @@ class TablesController < ApplicationController
 
     Rake::Task.clear # necessary to avoid tasks being loaded several times in dev mode
     CrystalData::Application.load_tasks 
-    Rake::Task['tables:import'].invoke(filename_with_path, filename, @current_user.id, request.remote_ip)
+    Rake::Task['tables:import'].invoke(filename_with_path, filename, current_user.id, request.remote_ip)
 
     @new_table = Table.last
     redirect_to tables_path, notice: "Importation terminé. Table '#{Table.last.name.humanize}' créée avec succès."
   end
 
   def export
-    unless @table.users.include?(@current_user)
+    unless @table.users.include?(current_user)
       redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
       return
     end
@@ -402,7 +399,7 @@ class TablesController < ApplicationController
   end 
 
   def logs
-    unless @table.users.include?(@current_user)
+    unless @table.users.include?(current_user)
       redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
       return
     end
@@ -429,7 +426,7 @@ class TablesController < ApplicationController
   end
 
   def activity
-    unless @table.users.include?(@current_user)
+    unless @table.users.include?(current_user)
       redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
       return
     end

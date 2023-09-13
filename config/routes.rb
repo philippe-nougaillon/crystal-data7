@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :users
 
-  resources :users
+  resources :users do
+    get :connect_guest_user
+  end
   resources :tables
   resources :values do
     get :signature
@@ -24,6 +27,10 @@ Rails.application.routes.draw do
     end
   end
 
+  controller :pages do
+    get :a_propos, to: 'pages#a_propos'
+  end
+
   get "show_attrs" => "tables#show_attrs" 
   get 'tables/:id/fill' => 'tables#fill', as: :fill
   get 'tables/:id/add_user', to:'tables#add_user', as: :add_user
@@ -39,15 +46,6 @@ Rails.application.routes.draw do
 
   get '/import', to: 'tables#import'
   post '/import_do', to: 'tables#import_do'
-
-  get '/signup' => 'users#new'
-  post '/users' => 'users#create'
-
-  get '/login' => 'sessions#new'
-  post '/login' => 'sessions#create'
-  get '/logout' => 'sessions#destroy'
-  get 'à_propos', to: 'pages#à_propos', as: :a_propos
-  get '/demo' => 'sessions#demo'
 
   delete 'tables/:id/delete_record' => 'tables#delete_record', as: :delete_record
 

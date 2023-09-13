@@ -30,7 +30,7 @@
 <i><small>Seul les utilisateurs propriétaires peuvent modifier la structure de la table</small></i>
 <br><br>
 
-<% if @table.propriétaire?(@current_user) %>
+<% if @table.propriétaire?(current_user) %>
   	<%= link_to add_user_path(@table), title:"Ajouter un partage avec un autre utilisateur", class:'btn btn-outline-success' do %>
   		Ajouter un partage
   	<% end %>
