@@ -11,6 +11,7 @@
       <tr>
         <th>Nom</th>
         <th>Colonnes</th>
+        <th>Rôle</th>
         <th class="col-md-2">Partagée avec</th>
         <th>MÀJ</th>
         <th>Nbr_lignes</th>
@@ -30,9 +31,10 @@
           <tr>
             <td><%= link_to table.name.humanize, table, class: 'fw-bold text-decoration-none' %></td>
             <td><%= table.field_names %></td>
+            <td><%= table.role_name(current_user) %></td>
             <td>
               <%= table.shared_with(current_user) %>
-              <% if table.propriétaire?(current_user) %>
+              <% if policy(table).partages? %>
                 <%= link_to partages_path(table), title: "Partager avec un autre utilisateur" do %>
                   +
                 <% end %>

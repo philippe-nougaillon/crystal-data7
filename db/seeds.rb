@@ -9,9 +9,9 @@ Table.create!([
 ])
 
 TablesUser.create!([
-  {table_id: 1, user_id: 1, role: "propriétaire"},
-  {table_id: 2, user_id: 1, role: "propriétaire"},
-  {table_id: 3, user_id: 1, role: "propriétaire"}
+  {table_id: 1, user_id: 1, role: "Propriétaire"},
+  {table_id: 2, user_id: 1, role: "Propriétaire"},
+  {table_id: 3, user_id: 1, role: "Propriétaire"}
 ])
 
 Field.create!([

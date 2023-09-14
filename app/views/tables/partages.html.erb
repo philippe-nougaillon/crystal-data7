@@ -16,7 +16,7 @@
 			<tr>
 				<td><b><%= user.name %></b></td>
 				<td><%= user.email %></td>
-				<td><%= @table.role(user).humanize %></td>
+				<td><%= @table.role_name(user) %></td>
 				<td>
 					<% unless @table.users[0] == user %>
 						<%= link_to "Annuler le partage", annuler_partage_path(@table, user_id:user.id), title:"Annuler ce partage", 
@@ -30,7 +30,7 @@
 <i><small>Seul les utilisateurs propriétaires peuvent modifier la structure de la table</small></i>
 <br><br>
 
-<% if @table.propriétaire?(current_user) %>
+<% if policy(@table).add_user? %>
   	<%= link_to add_user_path(@table), title:"Ajouter un partage avec un autre utilisateur", class:'btn btn-outline-success' do %>
   		Ajouter un partage
   	<% end %>

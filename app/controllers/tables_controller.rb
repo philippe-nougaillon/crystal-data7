@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class TablesController < ApplicationController
-  before_action :set_table, except: [:new, :create, :import, :import_do, :checkifmobile, :index, :log]
+  before_action :set_table, except: [:new, :create, :import, :import_do, :index]
   before_action :is_user_authorized?
 
   # GET /tables
@@ -232,7 +232,7 @@ class TablesController < ApplicationController
 
     respond_to do |format|
       if @table.save
-        @table.tables_users << TablesUser.create(table_id: @table.id, user_id: current_user.id, role: "propriétaire")
+        @table.tables_users << TablesUser.create(table_id: @table.id, user_id: current_user.id, role: "Propriétaire")
         format.html { redirect_to show_attrs_path(id: @table), notice: "Table créée. Vous pouvez maintenant y ajouter des colonnes" }
         format.json { render :show, status: :created, location: @table }
       else
@@ -345,7 +345,7 @@ class TablesController < ApplicationController
   end
 
   def add_user_do
-    if not TablesUser.roles.keys.reject { |i| i == "propriétaire" }.include?(params[:role])
+    if not TablesUser.roles.keys.reject { |i| i == "Propriétaire" }.include?(params[:role])
       redirect_to add_user_path(@table), alert: "Rôle indisponible"
     elsif @user = User.find_by(email:params[:email])
       unless @table.users.include?(@user)
@@ -460,10 +460,6 @@ class TablesController < ApplicationController
     end
 
     def is_user_authorized?
-      if ['index', 'new', 'create', 'import', 'import_do'].include?(action_name)
-        authorize Table
-      else
-        authorize @table
-      end
+      authorize @table ? @table : Table
     end
 end

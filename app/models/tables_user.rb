@@ -3,9 +3,9 @@ class TablesUser < ApplicationRecord
   belongs_to :user
 
   enum role: {
-    lecteur: 0, 
-    ajouteur: 1, 
-    éditeur: 2, 
-    propriétaire: 3
+    Lecteur: 0, 
+    Ajouteur: 1, 
+    Éditeur: 2, 
+    Propriétaire: 3
   }
 end

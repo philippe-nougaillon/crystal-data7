@@ -66,24 +66,24 @@ class Table < ApplicationRecord
     TablesUser.roles[self.tables_users.find_by(user_id: user.id).role]
   end
 
-  def role(user)
+  def role_name(user)
     self.tables_users.find_by(user_id: user.id).role
   end
 
   def lecteur?(user)
-    self.tables_users.find_by(user_id: user.id).role == 'lecteur'
+    self.tables_users.find_by(user_id: user.id).role == 'Lecteur'
   end
 
   def ajouteur?(user)
-    self.tables_users.find_by(user_id: user.id).role == 'ajouteur'
+    self.tables_users.find_by(user_id: user.id).role == 'Ajouteur'
   end
 
   def éditeur?(user)
-    self.tables_users.find_by(user_id: user.id).role == 'éditeur'
+    self.tables_users.find_by(user_id: user.id).role == 'Éditeur'
   end
 
   def propriétaire?(user)
-    self.tables_users.find_by(user_id: user.id).role == 'propriétaire'
+    self.tables_users.find_by(user_id: user.id).role == 'Propriétaire'
   end
 
 private

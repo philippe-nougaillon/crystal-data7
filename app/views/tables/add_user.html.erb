@@ -15,7 +15,7 @@
       <%= label_tag :email %>
       <%= text_field_tag :email, nil, class:'form-control w-100', required: true %>
       <%= label_tag :role %>
-      <%= select_tag :role, options_for_select(TablesUser.roles.keys.reject { |i| i == "propriétaire" }), class:'form-select', required: true %>
+      <%= select_tag :role, options_for_select(TablesUser.roles.keys.reject { |i| i == "Propriétaire" }), class:'form-select', required: true %>
       <br>
       <%= submit_tag "Partager", class: 'btn btn-outline-success' %>
     </div>
