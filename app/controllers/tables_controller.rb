@@ -170,15 +170,20 @@ class TablesController < ApplicationController
 
         if old_value
           if (old_value.data != value) and !(old_value.data.blank? and value.blank?)
-            # supprimer les anciennes données
-            table.values.find_by(record_index:record_index, field:field).delete
 
-            # enregistrer les nouvelles données
-            Value.create(field_id: field.id, 
-                          record_index: record_index, 
-                          data: value, 
-                          old_value: old_value.data,
-                          created_at: created_at_date)
+            ActiveRecord::Base.transaction do
+              # supprimer les anciennes données
+              table.values
+                    .find_by(record_index:record_index, field:field)
+                    .delete
+
+              # enregistrer les nouvelles données
+              Value.create(field_id: field.id, 
+                            record_index: record_index, 
+                            data: value, 
+                            old_value: old_value.data,
+                            created_at: created_at_date)
+            end
           end
         else
           # enregistrer les nouvelles données
