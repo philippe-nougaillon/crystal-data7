@@ -1,5 +1,5 @@
 User.create!([
-  {name: "Démo", email: "philippe.nougaillon@gmail.com", password: "CDPassword", password_confirmation: "CDPassword", authentication_token: nil}
+  {name: "Démo", email: "philippe.nougaillon@gmail.com", password: "CDPassword", password_confirmation: "CDPassword"}
 ])
 
 Table.create!([
@@ -9,9 +9,9 @@ Table.create!([
 ])
 
 TablesUser.create!([
-  {table_id: 1, user_id: 1},
-  {table_id: 2, user_id: 1},
-  {table_id: 3, user_id: 1}
+  {table_id: 1, user_id: 1, role: "Propriétaire"},
+  {table_id: 2, user_id: 1, role: "Propriétaire"},
+  {table_id: 3, user_id: 1, role: "Propriétaire"}
 ])
 
 Field.create!([

@@ -4,7 +4,8 @@ class Table < ApplicationRecord
 
 	audited
 
-	has_and_belongs_to_many :users
+	has_many :tables_users, dependent: :destroy
+  has_many :users, through: :tables_users
 	has_many :fields, dependent: :destroy
 	has_many :values, through: :fields, dependent: :destroy
 	has_many :logs, through: :fields, dependent: :destroy
@@ -15,10 +16,6 @@ class Table < ApplicationRecord
 	def size
 		# self.values.group("values.id, values.record_index").reorder(:id).count.size
 		self.values.where.not(data: nil).pluck(:record_index).uniq.count
-	end
-
-	def is_owner?(user)
-		self.users[0] == user
 	end
 
 	def files_size
@@ -83,6 +80,30 @@ class Table < ApplicationRecord
       end
 	  allow_destroy
 	end
+
+  def role_number(user)
+    TablesUser.roles[self.tables_users.find_by(user_id: user.id).role]
+  end
+
+  def role_name(user)
+    self.tables_users.find_by(user_id: user.id).role
+  end
+
+  def lecteur?(user)
+    self.tables_users.find_by(user_id: user.id).role == 'Lecteur'
+  end
+
+  def ajouteur?(user)
+    self.tables_users.find_by(user_id: user.id).role == 'Ajouteur'
+  end
+
+  def éditeur?(user)
+    self.tables_users.find_by(user_id: user.id).role == 'Éditeur'
+  end
+
+  def propriétaire?(user)
+    self.tables_users.find_by(user_id: user.id).role == 'Propriétaire'
+  end
 
 private
 	# only one candidate for an nice id; one random UDID

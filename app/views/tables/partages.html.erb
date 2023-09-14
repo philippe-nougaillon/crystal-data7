@@ -1,12 +1,14 @@
 <h1 class="text-primary mb-4">
-	Liste des partages
+	Liste des partages de '<%= @table.name.humanize %>'
 </h1>
 
 <div class="overflow-x-auto">
   <table class="table table-striped table-hover table-bordered table-responsive">
 		<thead>
 			<tr>
-				<th>Nom</th><th>Adresse mail</th><th>Rôle</th><th />
+				<th>Nom utilisateur</th>
+				<th>Adresse mail</th>
+				<th>Rôle</th><th />
 			</tr>
 		</thead>
 
@@ -14,9 +16,9 @@
 			<tr>
 				<td><b><%= user.name %></b></td>
 				<td><%= user.email %></td>
-				<td><%= @table.is_owner?(user) ? "Créateur" : "Invité" %></td>
+				<td><%= @table.role_name(user) %></td>
 				<td>
-					<% unless @table.is_owner?(user) %>
+					<% unless @table.users[0] == user %>
 						<%= link_to "Annuler le partage", annuler_partage_path(@table, user_id:user.id), title:"Annuler ce partage", 
 							data: { confirm: 'Vraiment ??' }, class: 'btn btn-outline-danger btn-sm' %>
 					<% end %>
@@ -25,23 +27,11 @@
 		<% end %>
   </table>
 </div>
-<i><small>Seul le créateur d'une table peut en modifier la structure</small></i>
+<i><small>Seul les utilisateurs propriétaires peuvent modifier la structure de la table</small></i>
 <br><br>
 
-
-<% if @table.is_owner?(@current_user) %>
-  	<%= link_to add_user_path(@table), title:"Ajouter un partage avec un autre utilisateur", class:'btn btn-outline-primary' do %>
-  		Ajouter un partage
-  	<% end %>
+<% if policy(@table).add_user? %>
+  <%= link_to add_user_path(@table), title:"Ajouter un partage avec un autre utilisateur", class:'btn btn-outline-primary' do %>
+    Ajouter un partage
+  <% end %>
 <% end %>
-<br /><br />
-
-<h3>
-	Saisie de données depuis un mobile
-</h3>
-<p>
-	Pour permettre à un utilisateur en mobilité d'ajouter des données dans la table '<%= @table.name %>' depuis son téléphone, <br>
-	envoyez-lui simplement ce lien : <%= link_to fill_url(@table.slug), fill_url(@table.slug) %>
-
-</p>
-<br>

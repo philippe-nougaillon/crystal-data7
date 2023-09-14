@@ -4,9 +4,9 @@
       <i class="fa-solid fa-house text-white"></i>
     <% end %>
   </li>
-  <% if @current_user %>
+  <% if current_user %>
     <li class="nav-item mx-auto">
-      <%= link_to @current_user, title: "Profil utilisateur" do %>
+      <%= link_to current_user, title: "Profil utilisateur" do %>
         <i class="fa-solid fa-circle-user fa-2xl text-primary"></i>
       <% end %>
     </li>
@@ -20,7 +20,7 @@
 <%
 =end%>
     <li class="nav-item mx-auto">
-      <%= link_to "/logout", title: "Se déconnecter" do %>
+      <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-accent btn-outline !normal-case', 'data-turbo': false do %>
         <i class="fa-solid fa-right-from-bracket text-warning"></i>
       <% end %>
     </li>

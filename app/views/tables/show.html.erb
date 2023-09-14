@@ -3,14 +3,20 @@
     <%= @table.name.humanize %>
   </h1>
 
-  <% if @table.is_owner?(@current_user) %>
-    <div class="d-flex justify-content-end gap-2">
+  <div class="d-flex justify-content-end gap-2">
+    <% if policy(@table).show_attrs? %>
       <%= link_to 'Modifier Structure', show_attrs_path(id:@table), title:"Modifier la structure de la table ou des colonnes" %> 
+    <% end %>
+    <% if policy(@table).partages? %>
       <%= link_to "Partager", partages_path(@table), title:"Voir les utilisateurs qui partagent cette table" %>
+    <% end %>
+    <% if policy(@table).export? %>
       <%= link_to 'Exporter', export_path(@table), title:"Exporter les données" %>
+    <% end %>
+    <% if policy(@table).logs? %>
       <%= link_to 'Audit Trail', logs_path(id:@table), title:"Historique des modifications" %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
 
 <% if @table.fields.any? %>
@@ -33,7 +39,9 @@
                 onchange: 'this.form.submit()' %>
         </div>
       <% end %>
-      <%= link_to "+ Ajouter", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
+      <% if policy(@table).fill? %>
+        <%= link_to "+ Ajouter", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
+      <% end %>
     </div>
   <% end %>
 
@@ -102,7 +110,8 @@
                         <%= value %>
                       <% when 'Table' %>
                         <% linked_value = field.get_linked_table_record(value.to_i) %>
-                        <%= link_to linked_value, details_path(Table.find_by(name: field.items.tr('[]','').split('.')).slug, record_index: value) %>
+                        <% linked_table = Table.find_by(name: field.items.tr('[]','').split('.')) %>
+                        <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value) %>
                       <% else %>
                         <%= value %>
                       <% end %>
@@ -121,13 +130,19 @@
                 </td>
 
                 <td>
-                  <%= link_to "Voir", details_path(@table.slug, record_index: record_index), class: 'btn btn-outline-primary btn-sm', 'data-testid': "Voir ligne n°#{record_index}" %>
+                  <% if policy(@table).show_details? %>
+                    <%= link_to "Voir", details_path(@table.slug, record_index: record_index), class: 'btn btn-outline-primary btn-sm', 'data-testid': "Voir ligne n°#{record_index}" %>
+                  <% end %>
                 </td>
                 <td>
-                  <%= link_to "Modifier", fill_url(@table.slug, record_index: record_index), class: 'btn btn-outline-warning btn-sm', 'data-testid': "Modifier ligne n°#{record_index}" %>
+                  <% if policy(@table).fill? %>
+                    <%= link_to "Modifier", fill_url(@table.slug, record_index: record_index), class: 'btn btn-outline-warning btn-sm', 'data-testid': "Modifier ligne n°#{record_index}" %>
+                  <% end %>
                 </td>
                 <td>
-                  <%= link_to "X", delete_record_url(@table.slug, record_index: record_index), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm', 'data-testid': "Supprimer ligne n°#{record_index}" %>
+                  <% if policy(@table).delete_record? %>
+                    <%= link_to "X", delete_record_url(@table.slug, record_index: record_index), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm', 'data-testid': "Supprimer ligne n°#{record_index}" %>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

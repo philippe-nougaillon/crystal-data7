@@ -48,7 +48,7 @@
     </div>
   </div> 
 
-  <% unless @current_user.id == 1 %>
+  <% unless current_user.id == 1 %>
     <div class="col-sm-2">
       <%= f.label :password, 'Mot de passe' %>
       <%= f.password_field :password, required:true, class: 'form-control mb-4', placeholder:'Mot de passe' %>

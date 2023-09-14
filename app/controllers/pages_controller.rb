@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
-  def à_propos
+  skip_before_action :authenticate_user!
+
+  def a_propos
   end
 end

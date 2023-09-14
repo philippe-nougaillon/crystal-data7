@@ -5,10 +5,14 @@
 </div>
 
 <div class="mt-3">
-  <%= link_to "Modifier", fill_url(@table.slug, record_index: @record_index), 'data-testid': "Modifier ligne n°#{ @record_index }" %>
-  |
-  <%= link_to "Audit Trail", logs_path(record_index: @record_index), title:"Audit des modifications", data: { turbo_frame: "main_frame" } %>
-  |
+  <% if policy(@table).fill? %>
+    <%= link_to "Modifier", fill_url(@table.slug, record_index: @record_index), 'data-testid': "Modifier ligne n°#{ @record_index }" %>
+    |
+  <% end %>
+  <% if policy(@table).logs? %>
+    <%= link_to "Audit Trail", logs_path(record_index: @record_index), title:"Audit des modifications", data: { turbo_frame: "main_frame" } %>
+    |
+  <% end %>
   <%= link_to "Retour", request.referrer %>
 </div>
 

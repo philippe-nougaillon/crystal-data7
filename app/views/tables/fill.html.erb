@@ -33,7 +33,7 @@
           <%# Checker si la liste vient d'une autre table %>
           <% if field.items.include?('[') && field.items.include?(']') %>
             <% sources = field.items.tr('[]','').split('.') %>
-            <% table = @current_user.tables.find_by(name: sources.first) %>
+            <% table = current_user.tables.find_by(name: sources.first) %>
             <% source_field = table.fields.find_by(name: sources.last) %>
             <%= select_tag field_name, options_for_select(source_field.values.pluck(:data).sort, field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %>
           <% else %>

@@ -1,23 +1,18 @@
 class ApplicationController < ActionController::Base
+  include Pundit::Authorization
+  # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   
+  before_action :authenticate_user!
   before_action :detect_device_format
   before_action :set_layout_variables
   before_action :prepare_exception_notifier
-
-  def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
-    @current_user ||= User.find_by_authentication_token(cookies[:auth_token]) if cookies[:auth_token] && @current_user.nil?
-    @current_user
-  end
-  helper_method :current_user
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
 private
-  def authorize 
-    redirect_to '/login' unless current_user
-  end
 
   def detect_device_format
     case request.user_agent
@@ -30,13 +25,23 @@ private
 
   def set_layout_variables
     @sitename ||= "CrystalData"
-    @sitename.concat(" v0.7 ")
+    @sitename.concat(" v0.8 ")
   end
 
   def prepare_exception_notifier
     request.env["exception_notifier.exception_data"] = {
-      current_user: @current_user
+      current_user: current_user
     }
   end
 
+  def user_not_authorized
+    flash[:alert] = "Vous n'êtes pas autorisé à effectuer cette action."
+    redirect_to(request.referrer || root_path)
+  end
+
+protected
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+  end
 end
