@@ -43,7 +43,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
     fill_in "Nom", with: "Type"
     click_button "Modifier"
 
-    assert_text "Colonne modifiée."
+    assert_text "Colonne modifiée avec succès."
   end
 
   test "destroying a Table" do
@@ -76,7 +76,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "creating a Field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     # Ajout d'un field
     fill_in "Nom", with: "Désignation"
@@ -104,19 +104,19 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "updating a Field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
     click_on "Modifier", match: :first
     
     fill_in "Nom", with: "Description"
     click_button "Modifier"
     
-    assert_text "Colonne modifiée."
+    assert_text "Colonne modifiée avec succès."
   end
   
   test "destroying a Field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
     page.accept_confirm do
       click_on "X", match: :first
     end
@@ -127,7 +127,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create workflow field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "État"
     page.select "Workflow", from: "Type de données"
@@ -147,7 +147,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create url field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "Url"
     page.select "URL", from: "Type de données"
@@ -166,7 +166,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create color field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "Couleur"
     page.select "Couleur", from: "Type de données"
@@ -185,7 +185,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create gps field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "Coordonnées"
     page.select "GPS", from: "Type de données"
@@ -207,7 +207,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create image field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "Image"
     page.select "Image", from: "Type de données"
@@ -227,7 +227,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create pdf field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "PDF"
     page.select "PDF", from: "Type de données"
@@ -247,7 +247,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create table type field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "Interventions"
     page.select "Table", from: "Type de données"

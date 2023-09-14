@@ -20,7 +20,7 @@
 <%
 =end%>
     <li class="nav-item mx-auto">
-      <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-accent btn-outline !normal-case', 'data-turbo': false do %>
+      <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-accent btn-outline !normal-case', 'data-turbo': false, title: 'Se déconnecter' do %>
         <i class="fa-solid fa-right-from-bracket text-warning"></i>
       <% end %>
     </li>
