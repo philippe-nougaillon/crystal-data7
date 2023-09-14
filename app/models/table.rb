@@ -4,7 +4,8 @@ class Table < ApplicationRecord
 
 	audited
 
-	has_and_belongs_to_many :users
+	has_many :tables_users, dependent: :destroy
+  has_many :users, through: :tables_users
 	has_many :fields, dependent: :destroy
 	has_many :values, through: :fields, dependent: :destroy
 	has_many :logs, through: :fields, dependent: :destroy
@@ -15,10 +16,6 @@ class Table < ApplicationRecord
 	def size
 		# self.values.group("values.id, values.record_index").reorder(:id).count.size
 		self.values.where.not(data: nil).pluck(:record_index).uniq.count
-	end
-
-	def is_owner?(user)
-		self.users[0] == user
 	end
 
 	def files_size
@@ -47,8 +44,16 @@ class Table < ApplicationRecord
 		return users.map{|u| u.humanize}.join(', ')
 	end
 
-	def value_datas(record_index)
-		self.values.includes(:field).records_at(record_index).order("fields.row_order").pluck(:data)
+	def value_datas_listable(record_index)
+		self.values.includes(:field).where("fields.visibility = 0 OR fields.visibility = 1").records_at(record_index).order("fields.row_order").pluck(:data)
+	end
+
+	def value_datas_détaillable(record_index)
+		self.values.includes(:field).where("fields.visibility = 0 OR fields.visibility = 2").records_at(record_index).order("fields.row_order").pluck(:data)
+	end
+
+	def last_update_at(record_index)
+		self.values.where(record_index: record_index).maximum(:updated_at)
 	end
 
 	def field_names
@@ -60,6 +65,45 @@ class Table < ApplicationRecord
 		self.update(record_index: record_index)
 		record_index
 	end
+    
+	# Vérifier que l'enregistrement est libre 
+    # (aucun autre enregistrement pointe dessus (type Table))
+
+	def record_can_be_destroy?(record_index)
+      # Est-ce que des types référencent cette table ?
+      allow_destroy = true
+      fields = Field.where("items ILIKE '[#{self.name}.%'")
+      if fields.any?
+        fields.each do | field |
+          allow_destroy = !field.values.pluck(:record_index).include?(record_index)
+        end
+      end
+	  allow_destroy
+	end
+
+  def role_number(user)
+    TablesUser.roles[self.tables_users.find_by(user_id: user.id).role]
+  end
+
+  def role_name(user)
+    self.tables_users.find_by(user_id: user.id).role
+  end
+
+  def lecteur?(user)
+    self.tables_users.find_by(user_id: user.id).role == 'Lecteur'
+  end
+
+  def ajouteur?(user)
+    self.tables_users.find_by(user_id: user.id).role == 'Ajouteur'
+  end
+
+  def éditeur?(user)
+    self.tables_users.find_by(user_id: user.id).role == 'Éditeur'
+  end
+
+  def propriétaire?(user)
+    self.tables_users.find_by(user_id: user.id).role == 'Propriétaire'
+  end
 
 private
 	# only one candidate for an nice id; one random UDID

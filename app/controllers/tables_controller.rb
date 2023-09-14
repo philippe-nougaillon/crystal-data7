@@ -1,15 +1,13 @@
 # encoding: utf-8
 
 class TablesController < ApplicationController
-  before_action :authorize
-  before_action :set_table, except: [:new, :create, :import, :import_do, :checkifmobile, :index, :log]
+  before_action :set_table, except: [:new, :create, :import, :import_do, :index]
+  before_action :is_user_authorized?
 
   # GET /tables
   # GET /tables.json
   def index
-    session[:user_id] = @current_user.id if @current_user && session[:user_id].nil?
-    @tables = @current_user.tables.includes(:fields)
-     
+    @tables = current_user.tables.includes(:fields)
     respond_to do |format|
       format.html.phone
       format.html.none 
@@ -19,19 +17,22 @@ class TablesController < ApplicationController
   # GET /tables/1
   # GET /tables/1.json
   def show
-    unless @table.users.include?(@current_user)
-      redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
-      return
-    end
-
     @sum = Hash.new(0)
     @numeric_types = ['Formule','Euros','Nombre']
     @td_style = []
-    @pathname = Rails.root.join('public', 'table_files') 
 
     # recherche les lignes 
-    unless params.permit![:search].blank?
-      @values = @table.values.where("data ilike ?", "%#{params.permit![:search].strip}%")
+    unless params.permit(:search).blank?
+      search = "%#{ params[:search].strip }%"
+      @values = @table.values.where("data ILIKE ?", search)
+      # Est-ce qu'il y a des Tables liées ?
+      @table.fields.Table.each do | field_table |
+        # Rchercher dans les values de ce champ lié si valeurs recherchées
+        s = /#{ params[:search].strip }/i
+        results = field_table.populate_linked_table.select{|k,v| v.match(s)}
+        # Ajouter les clés trouvées
+        @values = @values + field_table.values.where(data: results.keys)
+      end
     else
       @values = @table.values
     end
@@ -43,7 +44,7 @@ class TablesController < ApplicationController
       params[:select].each do | option | 
         unless option.last.blank? 
           field = Field.find(option.first)
-          filter_records = @table.values.where(field:field, data:option.last).pluck(:record_index) 
+          filter_records = @table.values.where(field: field, data: option.last).pluck(:record_index) 
           if @records_filter.empty?
             @records_filter = filter_records 
           else
@@ -98,12 +99,7 @@ class TablesController < ApplicationController
     end 
   end
 
-  def show_attrs
-    unless @table.is_owner?(@current_user)
-      flash[:notice] = "Désolé mais vous n'êtes pas son propriétaire !"
-      redirect_to tables_path
-      return
-    end 
+  def show_attrs 
     @field = Field.new(table_id: @table.id)
     @fields = Field.datatypes.keys.to_a
   end
@@ -123,7 +119,7 @@ class TablesController < ApplicationController
   # formulaire d'ajout / modification posté
   def fill_do
     table = Table.find(params[:table_id])
-    user = @current_user
+    user = current_user
     data = params[:data]
     record_index = data.keys.first
     values = data[record_index.to_s]
@@ -171,14 +167,20 @@ class TablesController < ApplicationController
 
         if old_value
           if (old_value.data != value) and !(old_value.data.blank? and value.blank?)
-            # supprimer les anciennes données
-            table.values.find_by(record_index:record_index, field:field).delete
 
-            # enregistrer les nouvelles données
-            Value.create(field_id: field.id, 
-                          record_index: record_index, 
-                          data: value, 
-                          created_at: created_at_date)
+            ActiveRecord::Base.transaction do
+              # supprimer les anciennes données
+              table.values
+                    .find_by(record_index:record_index, field:field)
+                    .delete
+
+              # enregistrer les nouvelles données
+              Value.create(field_id: field.id, 
+                            record_index: record_index, 
+                            data: value, 
+                            old_value: old_value.data,
+                            created_at: created_at_date)
+            end
           end
         else
           # enregistrer les nouvelles données
@@ -202,32 +204,14 @@ class TablesController < ApplicationController
   end  
 
   def delete_record
-    unless @table.users.include?(@current_user)
-      redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
-      return
-    end
-
     if params[:record_index]
-      deletes_log = []
       record_index = params[:record_index].to_i
-      @table.values.where(record_index:record_index).each do | value |
-        # log l'action dans l'historique
-        #deletes_log.push "(#{value.field.id}, #{@current_user.id}, \"#{"#{value.data} => ~"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
-
-        # supprime le fichier lié
-        # if value.field.Fichier? and value.data
-        #   value.field.delete_file(value.data)
-        #   deletes_log.push "(#{value.field.id}, #{@current_user.id}, \"#{"fichier supprimé. #{value.data} => !"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
-        # end
-        value.delete
-        
+      if @table.record_can_be_destroy?(record_index)
+        @table.values.where(record_index: record_index).delete_all
+        flash[:notice] = "Enregistrement ##{record_index} supprimé avec succès"
+      else
+        flash[:alert] = "Cet enregistrement n'a pas été supprimé car il est utilisé dans d'autres Tables !"
       end
-
-      # if deletes_log.any?
-      #   sql = "INSERT INTO logs (`field_id`, `user_id`, `message`, `created_at`, `updated_at`, `record_index`, `ip`, `action`) VALUES #{deletes_log.join(", ")}"
-      #   ActiveRecord::Base.connection.execute sql
-      # end
-      flash[:notice] = "Enregistrement ##{record_index} supprimé avec succès"
     end  
 
     redirect_to @table
@@ -249,7 +233,7 @@ class TablesController < ApplicationController
 
     respond_to do |format|
       if @table.save
-        @table.users << @current_user
+        @table.tables_users << TablesUser.create(table_id: @table.id, user_id: current_user.id, role: "Propriétaire")
         format.html { redirect_to show_attrs_path(id: @table), notice: "Table créée. Vous pouvez maintenant y ajouter des colonnes" }
         format.json { render :show, status: :created, location: @table }
       else
@@ -276,23 +260,18 @@ class TablesController < ApplicationController
   # DELETE /tables/1
   # DELETE /tables/1.json
   def destroy
-    if @table.is_owner?(@current_user)
-      # supprime les champs
-      @table.fields.destroy_all
+    # supprime les champs
+    @table.fields.destroy_all
 
-      # supprime les fichiers liés
-      @table.values.each do | value |
-          value.field.delete_file(value.data) if value.field and value.field.Fichier? and value.data
-          value.destroy
-        end
-      
-      @table.destroy
-      flash[:notice] = "Table supprimée."
-    else
-      flash[:notice] = "Vous n'êtes pas son propriétaire !"
-    end 
+    # supprime les fichiers liés
+    @table.values.each do | value |
+        value.field.delete_file(value.data) if value.field and value.field.Fichier? and value.data
+        value.destroy
+      end
+    @table.destroy
+
     respond_to do |format|
-      format.html { redirect_to tables_url }
+      format.html { redirect_to tables_url, notice: 'Table supprimée.'}
       format.json { head :no_content }
     end
   end
@@ -312,17 +291,13 @@ class TablesController < ApplicationController
 
     Rake::Task.clear # necessary to avoid tasks being loaded several times in dev mode
     CrystalData::Application.load_tasks 
-    Rake::Task['tables:import'].invoke(filename_with_path, filename, @current_user.id, request.remote_ip)
+    Rake::Task['tables:import'].invoke(filename_with_path, filename, current_user.id, request.remote_ip)
 
     @new_table = Table.last
     redirect_to tables_path, notice: "Importation terminé. Table '#{Table.last.name.humanize}' créée avec succès."
   end
 
   def export
-    unless @table.users.include?(@current_user)
-      redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
-      return
-    end
   end
 
   def export_do
@@ -371,10 +346,12 @@ class TablesController < ApplicationController
   end
 
   def add_user_do
-    if @user = User.find_by(email:params[:email])
+    if not TablesUser.roles.keys.reject { |i| i == "Propriétaire" }.include?(params[:role])
+      redirect_to add_user_path(@table), alert: "Rôle indisponible"
+    elsif @user = User.find_by(email:params[:email])
       unless @table.users.include?(@user)
         # ajoute le nouvel utilisateur aux utilisateurs de la table
-        @table.users << @user 
+        @table.tables_users << TablesUser.create(table_id: @table.id, user_id: @user.id, role: params[:role])
         # UserMailer.notification_nouveau_partage(@user, @table).deliver_later
         flash[:notice] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' activé"
       else
@@ -400,11 +377,6 @@ class TablesController < ApplicationController
   end 
 
   def logs
-    unless @table.users.include?(@current_user)
-      redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
-      return
-    end
-
     # Afficher les changements pour la ligne #record_index
     if params[:record_index]
       sql = "audited_changes ->> 'record_index' = '#{params[:record_index].to_s}'"
@@ -427,11 +399,6 @@ class TablesController < ApplicationController
   end
 
   def activity
-    unless @table.users.include?(@current_user)
-      redirect_to tables_path, alert:"Vous n'êtes pas un utilisateur connu de cette table ! Circulez, y'a rien à voir :)"
-      return
-    end
-
     unless params[:type_action].blank?
       @logs = @table.logs.where(action:params[:type_action].to_i)
     else
@@ -491,5 +458,9 @@ class TablesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def table_params
       params.require(:table).permit(:name, :record_index, :lifo, :notification)
+    end
+
+    def is_user_authorized?
+      authorize @table ? @table : Table
     end
 end

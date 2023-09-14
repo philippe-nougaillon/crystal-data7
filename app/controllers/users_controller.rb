@@ -1,14 +1,14 @@
 # encoding: utf-8
 
 class UsersController < ApplicationController
-  	before_action :authorize, except: [:new, :create]
+  skip_before_action :authenticate_user!, only: %i[connect_guest_user]
 
   	def show
-  		@user = @current_user
+  		@user = current_user
       @total_tables, @total_lignes, @fichiers, @total_fichiers = 0, 0, 0, 0
 
       @user.tables.each do |table|
-        if table.is_owner?(@user)
+        if table.propriétaire?(@user)
            @total_tables += 1
            @total_lignes += table.size
            @fichiers += table.files_count
@@ -39,6 +39,11 @@ class UsersController < ApplicationController
       else
         render :show
       end
+    end
+
+    def connect_guest_user
+      sign_in User.find(1)
+      redirect_to tables_path, notice: "Bienvenue dans la démonstration. Vous pouvez ici tester librement l'application. Merci d'en faire bon usage."
     end
 
   private

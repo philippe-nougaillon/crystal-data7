@@ -1,24 +1,8 @@
 # encoding: utf-8
 
 class FieldsController < ApplicationController
-  before_action :authorize
-  before_action :set_field, only: [:show, :edit, :update, :destroy]
-
-  # GET /fields
-  # GET /fields.json
-  def index
-    @fields = Field.all
-  end
-
-  # GET /fields/1
-  # GET /fields/1.json
-  def show
-  end
-
-  # GET /fields/new
-  def new
-    @field = Field.new
-  end
+  before_action :set_field, only: [:edit, :update, :destroy]
+  before_action :is_user_authorized?
 
   # GET /fields/1/edit
   def edit
@@ -50,7 +34,7 @@ class FieldsController < ApplicationController
   def update
     respond_to do |format|
       if @field.update(field_params)
-        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Colonne modifiée.' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Colonne modifiée avec succès.' }
         format.json { render :show, status: :ok, location: @field }
       else
         format.html { render :edit }
@@ -89,7 +73,13 @@ class FieldsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def field_params
-      params.require(:field).permit(:name, :table_id, :datatype, :filtre, :items, :obligatoire, :operation, :field_id, :row_order_position)
+      params.require(:field).permit(:name, :table_id, :datatype, :filtre, :items, :obligatoire, :operation, :field_id, :row_order_position, :visibility)
     end
 
+    def is_user_authorized?
+      if ['create'].include?(action_name)
+        @field = Field.new(field_params)
+      end
+      authorize @field
+    end
 end

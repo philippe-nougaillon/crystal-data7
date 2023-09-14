@@ -1,27 +1,36 @@
 Rails.application.routes.draw do
+  devise_for :users
 
-  resources :users
+  resources :users do
+    get :connect_guest_user
+  end
+
   resources :tables
-  resources :values do
+
+  resources :values, only: [] do
     get :signature
   end  
 
-  resources :fields do
+  resources :fields, only: %i[create edit update destroy] do
     post :update_row_order, on: :collection
   end
 
-  namespace :api, defaults: {format: :json}  do
-    namespace :v1 do
-      get 'timestamps', to: 'users#timestamps'
-      post 'values/post_value'
-      resources :users 
-      resources :tables
-      resources :fields
-      resources :values
-    end
-    namespace :v2 do
+  # namespace :api, defaults: {format: :json}  do
+  #   namespace :v1 do
+  #     get 'timestamps', to: 'users#timestamps'
+  #     post 'values/post_value'
+  #     resources :users 
+  #     resources :tables
+  #     resources :fields
+  #     resources :values
+  #   end
+  #   namespace :v2 do
 
-    end
+  #   end
+  # end
+
+  controller :pages do
+    get :a_propos, to: 'pages#a_propos'
   end
 
   get "show_attrs" => "tables#show_attrs" 
@@ -39,15 +48,6 @@ Rails.application.routes.draw do
 
   get '/import', to: 'tables#import'
   post '/import_do', to: 'tables#import_do'
-
-  get '/signup' => 'users#new'
-  post '/users' => 'users#create'
-
-  get '/login' => 'sessions#new'
-  post '/login' => 'sessions#create'
-  get '/logout' => 'sessions#destroy'
-  get 'à_propos', to: 'pages#à_propos', as: :a_propos
-  get '/demo' => 'sessions#demo'
 
   delete 'tables/:id/delete_record' => 'tables#delete_record', as: :delete_record
 

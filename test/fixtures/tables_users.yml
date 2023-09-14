@@ -1,7 +1,9 @@
 one:
   table_id: <%= ActiveRecord::FixtureSet.identify(:stocks) %>
   user_id: 1
+  role: Propriétaire
 
 two:
   table_id: <%= ActiveRecord::FixtureSet.identify(:interventions) %>
   user_id: 1
+  role: Propriétaire
