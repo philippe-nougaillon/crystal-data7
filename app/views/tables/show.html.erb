@@ -43,7 +43,7 @@
         <tr style="vertical-align: middle">
           <% @table.fields.listable.each_with_index do | field,index | %>
             <th>
-              <%= link_to url_for(params.merge(sort_by: field.id)), class:'text-decoration-none' do %>
+              <%= link_to url_for(params.permit!.merge(sort_by: field.id)), class:'text-decoration-none' do %>
                 <span class="text-nowrap">
                   <%= field.name.humanize %>
                   <% if params[:sort_by] == field.id.to_s %>
