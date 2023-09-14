@@ -31,14 +31,30 @@
       <tbody>
         <% @audits.includes(:user).each do | log | %>
           <tr>
+            <% field = Field.find(log.audited_changes['field_id']) %>
+            <% record_index = log.audited_changes['record_index'] %>
+            <% value = log.audited_changes['data'] %>
+            <% old_value = log.audited_changes['old_value'] %>
             <td><%= "#{ l log.created_at } (il y a #{ time_ago_in_words(log.created_at) })" %></td>
             <td><%= log.user.name.humanize if log.user %></td>
             <td><%= log.remote_address %></td>
             <td><%= log.audited_changes['old_value'] ? 'Modification' : 'Création' %>
-            <td><%= log.audited_changes['record_index'] %></td>
-            <td><%= Field.find(log.audited_changes['field_id']).name %></td>
-            <td><%= log.audited_changes['data'] %></td>
-            <td><%= log.audited_changes['old_value'] %></td>
+            <td><%= record_index %></td>
+            <td><%= field.name %></td>
+            <td>
+              <% if field.Table? %>
+                <%= field.get_linked_table_record(value.to_i) %>
+              <% else %>
+                <%= value %>
+              <% end %>
+            </td>
+            <td>
+              <% if field.Table? %>
+                <%= field.get_linked_table_record(old_value.to_i) %>
+              <% else %>
+                <%= old_value %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
