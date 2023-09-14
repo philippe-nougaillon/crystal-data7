@@ -13,34 +13,25 @@
     </div>
   <% end %>
 
-  <div class="mb-4">
-    <div class="col-sm-offset-1 col-sm-3">
-      <%= f.label :name, "Nom ou Pseudo" %>
-      <%= f.text_field :name, required: true, class: 'form-control' %>
-    </div>
+  <div class="d-flex flex-column"style="gap: 1rem">
+  <div class="col-sm-offset-1 col-sm-3">
+    <%= f.label :name, "Nom ou Pseudo" %>
+    <%= f.text_field :name, required: true, class: 'form-control w-100' %>
   </div>
-  <div class="mb-4">
-    <div class="col-sm-offset-1 col-sm-3">
-      <%= f.label :email, "Adresse email" %>
-      <%= f.text_field :email, required:true, class: 'form-control' %>
-    </div>
+  <div class="col-sm-offset-1 col-sm-3">
+    <%= f.label :email, "Adresse email" %>
+    <%= f.text_field :email, required:true, class: 'form-control w-100' %>
   </div>
-  <div class="mb-4">
-    <div class="col-sm-offset-1 col-sm-3">
-      <%= f.label :password, "Mot de passe" %>
-      <%= f.password_field :password, required:true, class: 'form-control', hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
-    </div>
+  <div class="col-sm-offset-1 col-sm-3">
+    <%= f.label :password, "Mot de passe" %>
+    <%= f.password_field :password, required:true, class: 'form-control w-100', hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
   </div>
-  <div>
-    <div class="col-sm-offset-1 col-sm-3">
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
-    </div>
+  <div class="col-sm-offset-1 col-sm-3">
+    <%= f.label :password_confirmation, "Confirmation" %>
+    <%= f.password_field :password_confirmation, class: 'form-control w-100' %>
   </div>
-
-  <div class="d-flex align-items-center gap-4 mt-4">
+  <div class="col-sm-offset-1 col-sm-3 mt-4" style="gap: 1rem">
     <%= f.submit "Créer mon compte", class: 'btn btn-outline-success' %>
+    <%= link_to "Retour", root_path, class:'btn btn-outline-dark' %>
   </div>
 <% end %>
-
-<%= link_to "Retour", root_path %>

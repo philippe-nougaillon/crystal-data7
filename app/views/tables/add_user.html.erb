@@ -10,7 +10,7 @@
   <div>
     <div class="col-sm-5">
       <h4>Entrez l'adresse mail de l'utilisateur avec qui vous souhaitez pargager cette table.</h4>
-      <i><small>Si l'utilisateur n'a pas de compte, <%= link_to "créez-lui un compte maintenant", signup_path %></small></i>
+      <i><small>Si l'utilisateur n'a pas de compte, <%# link_to "créez-lui un compte maintenant", new_registration_path(user) %></small></i>
       <br><br>
       <%= label_tag :email %>
       <%= text_field_tag :email, nil, class:'form-control w-100', required: true %>

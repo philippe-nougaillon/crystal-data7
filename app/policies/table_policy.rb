@@ -38,7 +38,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def fill?
-    record.users.include?(user)
+    record.users.include?(user) && record.role_number(user) >= 1
   end
 
   def fill_do?

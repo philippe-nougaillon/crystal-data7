@@ -18,30 +18,6 @@ class Table < ApplicationRecord
 		self.values.where.not(data: nil).pluck(:record_index).uniq.count
 	end
 
-	def role_number(user)
-    TablesUser.roles[self.tables_users.find_by(user_id: user.id).role]
-  end
-
-	def role(user)
-		self.tables_users.find_by(user_id: user.id).role
-	end
-
-	def lecteur?(user)
-		self.tables_users.find_by(user_id: user.id).role == 'lecteur'
-	end
-	
-	def ajouteur?(user)
-		self.tables_users.find_by(user_id: user.id).role == 'ajouteur'
-	end
-
-	def éditeur?(user)
-		self.tables_users.find_by(user_id: user.id).role == 'éditeur'
-	end
-
-	def propriétaire?(user)
-		self.tables_users.find_by(user_id: user.id).role == 'propriétaire'
-	end
-
 	def files_size
 		sizeInMB = 0.00
 		self.fields.Fichier.each do |f| 
@@ -85,6 +61,30 @@ class Table < ApplicationRecord
 		self.update(record_index: record_index)
 		record_index
 	end
+
+  def role_number(user)
+    TablesUser.roles[self.tables_users.find_by(user_id: user.id).role]
+  end
+
+  def role(user)
+    self.tables_users.find_by(user_id: user.id).role
+  end
+
+  def lecteur?(user)
+    self.tables_users.find_by(user_id: user.id).role == 'lecteur'
+  end
+
+  def ajouteur?(user)
+    self.tables_users.find_by(user_id: user.id).role == 'ajouteur'
+  end
+
+  def éditeur?(user)
+    self.tables_users.find_by(user_id: user.id).role == 'éditeur'
+  end
+
+  def propriétaire?(user)
+    self.tables_users.find_by(user_id: user.id).role == 'propriétaire'
+  end
 
 private
 	# only one candidate for an nice id; one random UDID

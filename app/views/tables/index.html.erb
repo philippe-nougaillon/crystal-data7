@@ -46,12 +46,12 @@
 <%
 =end%>
             <td>
-              <% if table.propriétaire?(current_user) %>
+              <% if policy(table).show_attrs? %>
                 <%= link_to 'Modifier', show_attrs_path(id: table.slug), title:"Modifier les colonnes", class: 'btn btn-outline-warning btn-sm' %>
               <% end %>
             </td>
             <td>
-              <% if table.propriétaire?(current_user) %>
+              <% if policy(table).destroy? %>
                 <%= link_to 'X', table, data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm' %>
               <% end %>
             </td>

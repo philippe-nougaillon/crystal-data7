@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -35,7 +35,7 @@ private
   end
 
   def user_not_authorized
-    flash[:error] = "Vous n'êtes pas autorisé à effectuer cette action."
+    flash[:alert] = "Vous n'êtes pas autorisé à effectuer cette action."
     redirect_to(request.referrer || root_path)
   end
 
