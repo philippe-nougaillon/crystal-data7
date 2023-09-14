@@ -7,7 +7,7 @@ class Field < ApplicationRecord
 	audited
 
 	extend FriendlyId
-  friendly_id :slug_candidates, use: :slugged
+	friendly_id :slug_candidates, use: :slugged
 
 	belongs_to :table
 	has_many :values, dependent: :destroy
@@ -18,9 +18,12 @@ class Field < ApplicationRecord
 
 	enum datatype: [:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Table, :Texte_riche]
 	enum operation: [:Somme, :Moyenne]
+	enum visibility: [:Liste_et_Détails, :Vue_Liste, :Vue_Détails]
 
 	scope :filtres, -> { where(filtre: true) }
 	scope :sommes,  -> { where(sum: true) }
+	scope :listable, -> { where(visibility: 'Vue_Liste').or(where(visibility: 'Liste_et_Détails')) }
+	scope :détaillable, -> { where(visibility: 'Vue_Détails').or(where(visibility: 'Liste_et_Détails')) }
 
 	# default_scope { rank(:row_order) } 
 

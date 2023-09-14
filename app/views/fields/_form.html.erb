@@ -45,6 +45,11 @@
       </div>
     </div>
 
+    <div class="mb-4">
+      <%= f.label :visibility, "Visibilité:" %>
+      <%= f.select :visibility, options_for_select(Field.visibilities.keys.to_a, @field.visibility), {}, class: 'form-select' %>
+    </div>
+
     <div data-type-target='number' class="mb-4">
       <%= f.label :operation, "Opération en bas de page:" %>
       <%= f.select :operation, options_for_select(Field.operations.keys.to_a, @field.operation), {include_blank: true}, class: 'form-select' %>
@@ -52,10 +57,10 @@
 
     <div class="d-flex flex-wrap align-items-center gap-2">
       <% if @field.new_record? %>
-        <%= f.submit "Ajouter cette nouvelle colonne", class: 'btn btn-outline-success' %>
+        <%= f.submit "Ajouter cette nouvelle colonne", class: 'btn btn-outline-primary' %>
         <%= link_to "Voir la table de données", @field.table %>
       <% else %>
-        <%= f.submit "Modifier", class: 'btn btn-outline-success' %>
+        <%= f.submit "Modifier", class: 'btn btn-outline-primary' %>
         <%= link_to 'Retour', show_attrs_path(id: @field.table) %>
       <% end %>
     </div>

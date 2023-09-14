@@ -91,6 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_085339) do
     t.integer "row_order"
     t.integer "operation"
     t.string "slug"
+    t.integer "visibility", default: 0
     t.index ["name"], name: "index_fields_on_name"
     t.index ["slug"], name: "index_fields_on_slug", unique: true
     t.index ["table_id"], name: "index_fields_on_table_id"
@@ -157,6 +158,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_085339) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "record_index"
+    t.string "old_value"
     t.index ["field_id"], name: "index_values_on_field_id"
     t.index ["record_index"], name: "index_values_on_record_index"
   end

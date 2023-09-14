@@ -34,7 +34,7 @@ class FieldsController < ApplicationController
   def update
     respond_to do |format|
       if @field.update(field_params)
-        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Colonne modifiée.' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Colonne modifiée avec succès.' }
         format.json { render :show, status: :ok, location: @field }
       else
         format.html { render :edit }
@@ -73,7 +73,7 @@ class FieldsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def field_params
-      params.require(:field).permit(:name, :table_id, :datatype, :filtre, :items, :obligatoire, :operation, :field_id, :row_order_position)
+      params.require(:field).permit(:name, :table_id, :datatype, :filtre, :items, :obligatoire, :operation, :field_id, :row_order_position, :visibility)
     end
 
     def is_user_authorized?

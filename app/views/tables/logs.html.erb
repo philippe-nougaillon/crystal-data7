@@ -9,7 +9,7 @@
       <%= label_tag "Utilisateur" %>
       <%= select_tag :user_id, options_from_collection_for_select(@table.users, "id", "name", params[:user_id]), include_blank:true, onchange: 'this.form.submit()', class:'form-select' %>
 
-      <%= submit_tag 'Filtrer', class: 'btn btn-outline-success' %>
+      <%= submit_tag 'Filtrer', class: 'btn btn-outline-primary' %>
     <% end %>
   <% end %>
 
@@ -17,35 +17,52 @@
     <table class="table table-hover table-bordered sticky">
       <thead>
         <tr>
-          <th>Il y a</th>
+          <th>Le</th>
           <th>Qui</th>
           <th>IP</th>
-          <th>Ligne n°</th>
+          <th>Action</th>
+          <th>Ligne</th>
           <th>Colonne</th>
-          <th>Nouvelle valeur</th>
+          <th>Valeur</th>
+          <th>Remplace</th>
         </tr>
       </thead>
 
       <tbody>
-        <% @audits.each do |log| %>
+        <% @audits.includes(:user).each do | log | %>
           <tr>
-            <td>
-              <%= time_ago_in_words(log.created_at) %>
-              (le <%= l(log.created_at) %>)
-            </td>
+            <% field = Field.find(log.audited_changes['field_id']) %>
+            <% record_index = log.audited_changes['record_index'] %>
+            <% value = log.audited_changes['data'] %>
+            <% old_value = log.audited_changes['old_value'] %>
+            <td><%= "#{ l log.created_at } (il y a #{ time_ago_in_words(log.created_at) })" %></td>
             <td><%= log.user.name.humanize if log.user %></td>
             <td><%= log.remote_address %></td>
-            <td><%= log.audited_changes['record_index'] %></td>
-            <td><%= Field.find(log.audited_changes['field_id']).name %></td>
-            <td><%= log.audited_changes['data'] %></td>
+            <td><%= log.audited_changes['old_value'] ? 'Modification' : 'Création' %>
+            <td><%= record_index %></td>
+            <td><%= field.name %></td>
+            <td>
+              <% if field.Table? %>
+                <%= field.get_linked_table_record(value.to_i) %>
+              <% else %>
+                <%= value %>
+              <% end %>
+            </td>
+            <td>
+              <% if field.Table? %>
+                <%= field.get_linked_table_record(old_value.to_i) %>
+              <% else %>
+                <%= old_value %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
+  
   <%= will_paginate @audits, renderer: BootstrapPagination::Rails %>
 
   <%= @audits.size.to_s + " modification".pluralize(@audits.size) %>
 
-  <%= @sql %>
 <% end %>

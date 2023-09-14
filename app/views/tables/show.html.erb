@@ -5,16 +5,16 @@
 
   <div class="d-flex justify-content-end gap-2">
     <% if policy(@table).show_attrs? %>
-      <%= link_to 'Modifier structure', show_attrs_path(id:@table), title:"Modifier la structure de la table ou des colonnes", class: 'text-end' %> 
+      <%= link_to 'Modifier Structure', show_attrs_path(id:@table), title:"Modifier la structure de la table ou des colonnes" %> 
     <% end %>
     <% if policy(@table).partages? %>
       <%= link_to "Partager", partages_path(@table), title:"Voir les utilisateurs qui partagent cette table" %>
     <% end %>
-    <% if policy(@table).logs? %>
-      <%= link_to 'Audit', logs_path(id:@table), title:"Audit des modifications" %>
-    <% end %>
     <% if policy(@table).export? %>
       <%= link_to 'Exporter', export_path(@table), title:"Exporter les données" %>
+    <% end %>
+    <% if policy(@table).logs? %>
+      <%= link_to 'Audit Trail', logs_path(id:@table), title:"Historique des modifications" %>
     <% end %>
   </div>
 </div>
@@ -49,9 +49,9 @@
     <table class="table table-striped table-hover sticky">
       <thead>
         <tr style="vertical-align: middle">
-          <% @table.fields.each_with_index do | field,index | %>
+          <% @table.fields.listable.each_with_index do | field,index | %>
             <th>
-              <%= link_to url_for(params.merge(sort_by: field.id)), class:'text-decoration-none' do %>
+              <%= link_to url_for(params.permit!.merge(sort_by: field.id)), class:'text-decoration-none' do %>
                 <span class="text-nowrap">
                   <%= field.name.humanize %>
                   <% if params[:sort_by] == field.id.to_s %>
@@ -71,12 +71,12 @@
         <% records_size = 0 %>
         <tbody>
           <% @records.each do | record_index | %>
-            <% values = @table.value_datas(record_index) %>
+            <% values = @table.value_datas_listable(record_index) %>
 
             <% if not values.empty? %>
               <% records_size += 1 %>
               <tr>
-                <% @table.fields.each_with_index do | field, index | %>
+                <% @table.fields.listable.each_with_index do | field, index | %>
                   <% if value = values[index]%>
                     <td style="<%= @td_style[index] %>">
                       <% case field.datatype when 'Fichier' %>
@@ -149,10 +149,10 @@
           <% end %>
         </tbody>
 
-        <% if @table.fields.where.not(operation: nil).any? %>
+        <% if @table.fields.listable.where.not(operation: nil).any? %>
           <tfoot>
             <tr>
-              <% @table.fields.each do |field| %>
+              <% @table.fields.listable.each do |field| %>
                 <% if field.operation %>
                   <td class="text-primary" style="text-align: right">
                     <% if field.Somme? %>
@@ -173,7 +173,7 @@
                   <td></td>
                 <% end %>
               <% end %>
-              <td colspan=3></td>
+              <td colspan=4></td>
             </tr>
           </tfoot>
         <% end %>
@@ -185,7 +185,7 @@
 <% else %>
   <% unless params[:attrs] %>
     Cette table ne contient aucune colonne<br><br>
-    <%= link_to show_attrs_path(id:@table), class: 'btn btn-outline-success' do %>
+    <%= link_to show_attrs_path(id:@table), class: 'btn btn-outline-primary' do %>
       Ajouter une colonne
     <% end %> 
   <% end %>

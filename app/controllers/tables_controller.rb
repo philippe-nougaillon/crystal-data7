@@ -20,11 +20,19 @@ class TablesController < ApplicationController
     @sum = Hash.new(0)
     @numeric_types = ['Formule','Euros','Nombre']
     @td_style = []
-    @pathname = Rails.root.join('public', 'table_files') 
 
     # recherche les lignes 
-    unless params.permit![:search].blank?
-      @values = @table.values.where("data ILIKE ?", "%#{params.permit![:search].strip}%")
+    unless params.permit(:search).blank?
+      search = "%#{ params[:search].strip }%"
+      @values = @table.values.where("data ILIKE ?", search)
+      # Est-ce qu'il y a des Tables liées ?
+      @table.fields.Table.each do | field_table |
+        # Rchercher dans les values de ce champ lié si valeurs recherchées
+        s = /#{ params[:search].strip }/i
+        results = field_table.populate_linked_table.select{|k,v| v.match(s)}
+        # Ajouter les clés trouvées
+        @values = @values + field_table.values.where(data: results.keys)
+      end
     else
       @values = @table.values
     end
@@ -36,7 +44,7 @@ class TablesController < ApplicationController
       params[:select].each do | option | 
         unless option.last.blank? 
           field = Field.find(option.first)
-          filter_records = @table.values.where(field:field, data:option.last).pluck(:record_index) 
+          filter_records = @table.values.where(field: field, data: option.last).pluck(:record_index) 
           if @records_filter.empty?
             @records_filter = filter_records 
           else
@@ -159,14 +167,20 @@ class TablesController < ApplicationController
 
         if old_value
           if (old_value.data != value) and !(old_value.data.blank? and value.blank?)
-            # supprimer les anciennes données
-            table.values.find_by(record_index:record_index, field:field).delete
 
-            # enregistrer les nouvelles données
-            Value.create(field_id: field.id, 
-                          record_index: record_index, 
-                          data: value, 
-                          created_at: created_at_date)
+            ActiveRecord::Base.transaction do
+              # supprimer les anciennes données
+              table.values
+                    .find_by(record_index:record_index, field:field)
+                    .delete
+
+              # enregistrer les nouvelles données
+              Value.create(field_id: field.id, 
+                            record_index: record_index, 
+                            data: value, 
+                            old_value: old_value.data,
+                            created_at: created_at_date)
+            end
           end
         else
           # enregistrer les nouvelles données
@@ -191,26 +205,13 @@ class TablesController < ApplicationController
 
   def delete_record
     if params[:record_index]
-      deletes_log = []
       record_index = params[:record_index].to_i
-      @table.values.where(record_index:record_index).each do | value |
-        # log l'action dans l'historique
-        #deletes_log.push "(#{value.field.id}, #{current_user.id}, \"#{"#{value.data} => ~"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
-
-        # supprime le fichier lié
-        # if value.field.Fichier? and value.data
-        #   value.field.delete_file(value.data)
-        #   deletes_log.push "(#{value.field.id}, #{current_user.id}, \"#{"fichier supprimé. #{value.data} => !"}\", '#{Time.now.to_s(:db)}', '#{Time.now.to_s(:db)}', #{record_index}, \"#{request.remote_ip}\", 3)"  
-        # end
-        value.delete
-        
+      if @table.record_can_be_destroy?(record_index)
+        @table.values.where(record_index: record_index).delete_all
+        flash[:notice] = "Enregistrement ##{record_index} supprimé avec succès"
+      else
+        flash[:alert] = "Cet enregistrement n'a pas été supprimé car il est utilisé dans d'autres Tables !"
       end
-
-      # if deletes_log.any?
-      #   sql = "INSERT INTO logs (`field_id`, `user_id`, `message`, `created_at`, `updated_at`, `record_index`, `ip`, `action`) VALUES #{deletes_log.join(", ")}"
-      #   ActiveRecord::Base.connection.execute sql
-      # end
-      flash[:notice] = "Enregistrement ##{record_index} supprimé avec succès"
     end  
 
     redirect_to @table

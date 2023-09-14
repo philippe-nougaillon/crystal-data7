@@ -44,8 +44,12 @@ class Table < ApplicationRecord
 		return users.map{|u| u.humanize}.join(', ')
 	end
 
-	def value_datas(record_index)
-		self.values.includes(:field).records_at(record_index).order("fields.row_order").pluck(:data)
+	def value_datas_listable(record_index)
+		self.values.includes(:field).where("fields.visibility = 0 OR fields.visibility = 1").records_at(record_index).order("fields.row_order").pluck(:data)
+	end
+
+	def value_datas_détaillable(record_index)
+		self.values.includes(:field).where("fields.visibility = 0 OR fields.visibility = 2").records_at(record_index).order("fields.row_order").pluck(:data)
 	end
 
 	def last_update_at(record_index)
@@ -60,6 +64,21 @@ class Table < ApplicationRecord
 		record_index = self.record_index + 1
 		self.update(record_index: record_index)
 		record_index
+	end
+    
+	# Vérifier que l'enregistrement est libre 
+    # (aucun autre enregistrement pointe dessus (type Table))
+
+	def record_can_be_destroy?(record_index)
+      # Est-ce que des types référencent cette table ?
+      allow_destroy = true
+      fields = Field.where("items ILIKE '[#{self.name}.%'")
+      if fields.any?
+        fields.each do | field |
+          allow_destroy = !field.values.pluck(:record_index).include?(record_index)
+        end
+      end
+	  allow_destroy
 	end
 
   def role_number(user)

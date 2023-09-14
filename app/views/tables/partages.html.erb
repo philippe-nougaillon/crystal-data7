@@ -31,7 +31,7 @@
 <br><br>
 
 <% if policy(@table).add_user? %>
-  	<%= link_to add_user_path(@table), title:"Ajouter un partage avec un autre utilisateur", class:'btn btn-outline-success' do %>
-  		Ajouter un partage
-  	<% end %>
+  <%= link_to add_user_path(@table), title:"Ajouter un partage avec un autre utilisateur", class:'btn btn-outline-primary' do %>
+    Ajouter un partage
+  <% end %>
 <% end %>
