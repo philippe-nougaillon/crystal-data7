@@ -23,7 +23,6 @@
     <tbody>
       <% if @tables.any? %>
         <% @tables.each do | table | %>
-          <% is_owner = table.is_owner?(@current_user) %>
           <tr>
             <td><%= link_to table.name.humanize, table, class: 'fw-bold text-decoration-none' %></td>
             <td><%= table.field_names %></td>
