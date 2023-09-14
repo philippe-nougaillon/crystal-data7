@@ -29,8 +29,17 @@ class TablesController < ApplicationController
     @td_style = []
 
     # recherche les lignes 
-    unless params.permit![:search].blank?
-      @values = @table.values.where("data ILIKE ?", "%#{params.permit![:search].strip}%")
+    unless params.permit(:search).blank?
+      search = "%#{ params[:search].strip }%"
+      @values = @table.values.where("data ILIKE ?", search)
+      # Est-ce qu'il y a des Tables liées ?
+      @table.fields.Table.each do | field_table |
+        # Rchercher dans les values de ce champ lié si valeurs recherchées
+        s = /#{ params[:search].strip }/i
+        results = field_table.populate_linked_table.select{|k,v| v.match(s)}
+        # Ajouter les clés trouvées
+        @values = @values + field_table.values.where(data: results.keys)
+      end
     else
       @values = @table.values
     end
