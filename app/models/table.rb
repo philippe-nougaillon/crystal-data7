@@ -39,9 +39,13 @@ class Table < ApplicationRecord
 	end
 
 	def shared_with(user)
-		users = self.users.pluck(:name)
-		users -= [user.name]
-		return users.map{|u| u.humanize}.join(', ')
+    users_infos = ""
+    self.tables_users.each do |tables_user|
+      unless tables_user.user == user
+        users_infos += "#{tables_user.user.name}(#{tables_user.role}) "
+      end
+    end
+    return users_infos
 	end
 
 	def value_datas_listable(record_index)
