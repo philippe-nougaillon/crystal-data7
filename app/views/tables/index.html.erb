@@ -10,11 +10,10 @@
     <thead>
       <tr>
         <th>Nom</th>
-        <th>Colonnes</th>
+        <th class="col-md-4">Colonnes</th>
         <th>Rôle</th>
         <th class="col-md-2">Partagée avec</th>
         <th>MÀJ</th>
-        <th>Lignes</th>
         <th></th>
         <th></th>
       </tr>
@@ -24,7 +23,7 @@
       <% if @tables.any? %>
         <% @tables.each do | table | %>
           <tr>
-            <td><%= link_to table.name.humanize, table, class: 'fw-bold text-decoration-none' %></td>
+            <td><%= link_to table.name.upcase, table, class: 'fw-bold' %></td>
             <td><%= table.field_names %></td>
             <td><%= table.role_name(current_user) %></td>
             <td>
@@ -36,7 +35,6 @@
               <% end %>
             </td>
             <td><%= "il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" unless table.size.zero? %></td>
-            <td style="text-align: right"><%= table.size %></td>
             <td>
               <% if policy(table).show_attrs? %>
                 <%= link_to 'Modifier', show_attrs_path(id: table.slug), title:"Modifier les colonnes de '#{table.name}'", class: 'btn btn-outline-warning btn-sm' %>
@@ -64,10 +62,12 @@
   </table>
 </div>
 
-<%= link_to new_table_path, class: 'btn btn-outline-primary' do %>
-  Nouvelle Table
-<% end %>
+<div class="mt-3">
+  <%= link_to new_table_path, class: 'btn btn-outline-primary' do %>
+    Nouvelle Table
+  <% end %>
 
-<%= link_to import_path, class: 'btn btn-outline-dark' do %>
-  Importer
-<% end %>
+  <%= link_to import_path, class: 'btn btn-outline-warning' do %>
+    Importer
+  <% end %>
+</div>
