@@ -79,27 +79,22 @@ group :test do
 end
 
 gem "simple_form", ">= 5.0.0"
-gem 'autoprefixer-rails'
-
-gem "groupdate"
-gem "chartkick", ">= 3.2.0"
-
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
-
-gem 'ranked-model'
-# gem 'signature-pad-rails'
-
 gem 'friendly_id', '~> 5.2.4'
 gem "audited"
-
-gem 'sucker_punch', '~> 2.0'
-
 gem "aws-sdk-s3", require: false
-
 gem 'exception_notification'
-
 gem "devise", "~> 4.9"
-
 gem "pundit", "~> 2.3"
 gem "dotenv-rails", "~> 2.8"
+
+
+# ??
+# gem 'ranked-model' 
+# gem 'sucker_punch', '~> 2.0'
+# gem "groupdate"
+# gem "chartkick", ">= 3.2.0"
+# gem 'autoprefixer-rails'
+
+# gem 'signature-pad-rails'
