@@ -6,7 +6,7 @@
   </li>
   <li class="nav-item mx-auto">
     <%= link_to a_propos_path, title: "À Propos de CrystalData" do %>
-      <i class="fa-solid fa-circle-question text-white"></i>
+      <i class="fa-solid fa-circle-question text-info"></i>
     <% end %>
   </li>
   <% if current_user %>
@@ -15,15 +15,6 @@
         <i class="fa-solid fa-circle-user fa-2xl text-primary"></i>
       <% end %>
     </li>
-    <%
-=begin%>
- <li class="nav-item mx-auto">
-      <%= link_to root_path, title: "Paramètres" do %>
-        <i class="fa-solid fa-gear text-white"></i>
-      <% end %>
-    </li> 
-<%
-=end%>
     <li class="nav-item mx-auto">
       <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-accent btn-outline !normal-case', 'data-turbo': false, title: 'Se déconnecter' do %>
         <i class="fa-solid fa-right-from-bracket text-warning"></i>
