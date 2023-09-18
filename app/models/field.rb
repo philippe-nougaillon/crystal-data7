@@ -100,6 +100,10 @@ class Field < ApplicationRecord
 		return table_data.join(', ') 
 	end
 
+	def visibility_polished
+		self.visibility.gsub('_', ' ') 
+	end
+
 private
 
 	def slug_candidates
