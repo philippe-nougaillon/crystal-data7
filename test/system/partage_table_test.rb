@@ -3,7 +3,7 @@ require "application_system_test_case"
 class PartageTableTest < ApplicationSystemTestCase
 
   test "partager une table à un lecteur et vérifier l'accès" do
-    login_user
+    login_propriétaire
     @user = User.create(email: 'crystaldata-lecteur@gmail.com', name:"CDLecteur", password: 'AZERTYUIOP', password_confirmation: 'AZERTYUIOP')
     @stocks = tables(:stocks)
 

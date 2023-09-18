@@ -1,9 +1,9 @@
 require "application_system_test_case"
 
-class CreatorFlowTest < ApplicationSystemTestCase
+class ProprietaireFlowTest < ApplicationSystemTestCase
 
   setup do
-    login_user
+    login_propriétaire
   end
   
   # Tables
@@ -271,6 +271,34 @@ class CreatorFlowTest < ApplicationSystemTestCase
       assert_text "Paris"
       assert_text "25/12/2023"
     end
+  end
+
+  test "create utilisateur type field" do
+    user = users(:user_proriétaire)
+    user_lecteur = users(:user_lecteur)
+
+    visit tables_url
+    click_on "Interventions"
+    click_on "Modifier Structure"
+
+    fill_in "Nom", with: "Assigné à"
+    page.select "Utilisateur", from: "Type de données"
+    click_button "Ajouter cette nouvelle colonne"
+    assert_text "Nouvelle colonne ajoutée."
+
+    click_on "Voir la table de données", match: :first
+    click_on "+ Ajouter"
+    field = find('[data-testid="Assigné à"]')
+    field.select user.name
+    click_button "Enregistrer"
+    assert_text "Données ajoutées avec succès :)"
+
+    click_on "+ Ajouter"
+    field = find('[data-testid="Assigné à"]')
+    field.select user_lecteur.name
+    click_button "Enregistrer"
+    assert_text "Données ajoutées avec succès :)"
+
   end
 
   # Values

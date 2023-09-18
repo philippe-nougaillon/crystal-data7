@@ -39,7 +39,7 @@
             <td style="text-align: right"><%= table.size %></td>
             <td>
               <% if policy(table).show_attrs? %>
-                <%= link_to 'Modifier', show_attrs_path(id: table.slug), title:"Modifier les colonnes", class: 'btn btn-outline-warning btn-sm' %>
+                <%= link_to 'Modifier', show_attrs_path(id: table.slug), title:"Modifier les colonnes de '#{table.name}'", class: 'btn btn-outline-warning btn-sm' %>
               <% end %>
             </td>
             <td>

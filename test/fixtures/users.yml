@@ -1,4 +1,10 @@
-user_demo:
+user_proriétaire:
   id: 1
-  email: 'crystaldata-demo@gmail.com'
-  name: 'CrystaldataDemo'
+  email: crystaldata.proprietaire@gmail.com
+  name: CrystaldataDemo
+
+user_lecteur:
+  id: 2
+  email: crystaldata.lecteur@gmail.com
+  name: CDLecteur
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'AZERTYUIOP') %>
