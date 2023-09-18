@@ -112,6 +112,8 @@
                         <% linked_value = field.get_linked_table_record(value.to_i) %>
                         <% linked_table = Table.find_by(name: field.items.tr('[]','').split('.')) %>
                         <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value) %>
+                      <% when 'Utilisateur' %>
+                        <%= value %>
                       <% else %>
                         <%= value %>
                       <% end %>

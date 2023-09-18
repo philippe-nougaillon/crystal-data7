@@ -1,5 +1,10 @@
+require 'dotenv/load'
+
 User.create!([
-  {name: "Démo", email: "philippe.nougaillon@gmail.com", password: "CDPassword", password_confirmation: "CDPassword"}
+  {name: "Démo", email: "philippe.nougaillon@gmail.com", password: ENV['DEMO_PASSWORD'], password_confirmation: ENV['DEMO_PASSWORD']},
+  {name: "CDLecteur", email: "crystaldata.lecteur@gmail.com", password: ENV['LECTEUR_PASSWORD'], password_confirmation: ENV['LECTEUR_PASSWORD']},
+  {name: "CDAjouteur", email: "crystaldata.ajouteur@gmail.com", password: ENV['AJOUTEUR_PASSWORD'], password_confirmation: ENV['AJOUTEUR_PASSWORD']},
+  {name: "CDÉditeur", email: "crystaldata.editeur@gmail.com", password: ENV['EDITEUR_PASSWORD'], password_confirmation: ENV['EDITEUR_PASSWORD']}
 ])
 
 Table.create!([
@@ -11,7 +16,10 @@ Table.create!([
 TablesUser.create!([
   {table_id: 1, user_id: 1, role: "Propriétaire"},
   {table_id: 2, user_id: 1, role: "Propriétaire"},
-  {table_id: 3, user_id: 1, role: "Propriétaire"}
+  {table_id: 3, user_id: 1, role: "Propriétaire"},
+  {table_id: 2, user_id: 2, role: "Lecteur"},
+  {table_id: 2, user_id: 3, role: "Ajouteur"},
+  {table_id: 2, user_id: 4, role: "Éditeur"}
 ])
 
 Field.create!([

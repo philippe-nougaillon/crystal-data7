@@ -5,16 +5,15 @@ class UsersController < ApplicationController
 
   	def show
   		@user = current_user
-      @total_tables, @total_lignes, @fichiers, @total_fichiers = 0, 0, 0, 0
+      @total_tables, @total_lignes = 0, 0
 
       @user.tables.each do |table|
         if table.propriétaire?(@user)
            @total_tables += 1
            @total_lignes += table.size
-           @fichiers += table.files_count
-          #  @total_fichiers += table.files_size
         end
       end
+      @tables_users = TablesUser.where(user_id: current_user.id).where.not(role: 'Propriétaire')
   	end
 
     def new

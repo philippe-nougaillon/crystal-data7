@@ -16,7 +16,7 @@ class Field < ApplicationRecord
 	validates_presence_of :name
 	validates_presence_of :datatype
 
-	enum datatype: [:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Table, :Texte_riche]
+	enum datatype: [:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Table, :Texte_riche, :Utilisateur]
 	enum operation: [:Somme, :Moyenne]
 	enum visibility: [:Liste_et_Détails, :Vue_Liste, :Vue_Détails]
 
@@ -98,6 +98,10 @@ class Field < ApplicationRecord
 			table_data << value.data if (source_fields.include?(value.field.name))
 		end
 		return table_data.join(', ') 
+	end
+
+	def visibility_polished
+		self.visibility.gsub('_', ' ') 
 	end
 
 private

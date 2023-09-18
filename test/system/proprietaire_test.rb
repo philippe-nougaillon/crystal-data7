@@ -1,9 +1,9 @@
 require "application_system_test_case"
 
-class CreatorFlowTest < ApplicationSystemTestCase
+class ProprietaireFlowTest < ApplicationSystemTestCase
 
   setup do
-    login_user
+    login_propriétaire
   end
   
   # Tables
@@ -43,7 +43,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
     fill_in "Nom", with: "Type"
     click_button "Modifier"
 
-    assert_text "Colonne modifiée."
+    assert_text "Colonne modifiée avec succès."
   end
 
   test "destroying a Table" do
@@ -76,7 +76,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "creating a Field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     # Ajout d'un field
     fill_in "Nom", with: "Désignation"
@@ -104,19 +104,19 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "updating a Field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
     click_on "Modifier", match: :first
     
     fill_in "Nom", with: "Description"
     click_button "Modifier"
     
-    assert_text "Colonne modifiée."
+    assert_text "Colonne modifiée avec succès."
   end
   
   test "destroying a Field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
     page.accept_confirm do
       click_on "X", match: :first
     end
@@ -127,7 +127,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create workflow field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "État"
     page.select "Workflow", from: "Type de données"
@@ -147,7 +147,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create url field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "Url"
     page.select "URL", from: "Type de données"
@@ -166,7 +166,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create color field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "Couleur"
     page.select "Couleur", from: "Type de données"
@@ -185,7 +185,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create gps field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "Coordonnées"
     page.select "GPS", from: "Type de données"
@@ -207,7 +207,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create image field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "Image"
     page.select "Image", from: "Type de données"
@@ -227,7 +227,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create pdf field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "PDF"
     page.select "PDF", from: "Type de données"
@@ -247,7 +247,7 @@ class CreatorFlowTest < ApplicationSystemTestCase
   test "create table type field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier structure"
+    click_on "Modifier Structure"
 
     fill_in "Nom", with: "Interventions"
     page.select "Table", from: "Type de données"
@@ -271,6 +271,34 @@ class CreatorFlowTest < ApplicationSystemTestCase
       assert_text "Paris"
       assert_text "25/12/2023"
     end
+  end
+
+  test "create utilisateur type field" do
+    user = users(:user_proriétaire)
+    user_lecteur = users(:user_lecteur)
+
+    visit tables_url
+    click_on "Interventions"
+    click_on "Modifier Structure"
+
+    fill_in "Nom", with: "Assigné à"
+    page.select "Utilisateur", from: "Type de données"
+    click_button "Ajouter cette nouvelle colonne"
+    assert_text "Nouvelle colonne ajoutée."
+
+    click_on "Voir la table de données", match: :first
+    click_on "+ Ajouter"
+    field = find('[data-testid="Assigné à"]')
+    field.select user.name
+    click_button "Enregistrer"
+    assert_text "Données ajoutées avec succès :)"
+
+    click_on "+ Ajouter"
+    field = find('[data-testid="Assigné à"]')
+    field.select user_lecteur.name
+    click_button "Enregistrer"
+    assert_text "Données ajoutées avec succès :)"
+
   end
 
   # Values
