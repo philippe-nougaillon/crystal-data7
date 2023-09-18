@@ -81,6 +81,8 @@
           <% if field.is_valid_table_params %>
             <%= select_tag field_name, options_for_select(field.populate_linked_table.invert, field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %> 
           <% end %>
+        <% when 'Utilisateur' %>
+          <%= select_tag field_name, options_for_select(@table.users.pluck(:name), field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %>
         <% end %>
       </fieldset>
     <% end %>
