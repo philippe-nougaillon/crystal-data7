@@ -49,7 +49,7 @@
     <table class="table table-striped table-hover sticky">
       <thead>
         <tr style="vertical-align: middle">
-          <% @table.fields.listable.each_with_index do | field,index | %>
+          <% @table.fields.listable.each_with_index do | field, index | %>
             <th>
               <%= link_to url_for(params.permit!.merge(sort_by: field.id)), class:'text-decoration-none' do %>
                 <span class="text-nowrap">
@@ -89,7 +89,9 @@
                       <% when 'Signature' %>
                         <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>
                       <% when 'Date' %>
-                        <%= l(value.to_date) unless value.blank? %>
+                        <% unless value.blank? %>
+                          <%= link_to_if index == 0, l(value.to_date), details_path(@table.slug, record_index: record_index) %>
+                        <% end %>
                       <% when 'Texte_long' %>
                         <%= truncate(value, length: 80) %>
                       <% when 'Texte_riche' %>
@@ -115,9 +117,9 @@
                       <% when 'Utilisateur' %>
                         <%= value %>
                       <% else %>
-                        <%= value %>
+                        <%= link_to_if index == 0, value, details_path(@table.slug, record_index: record_index) %>
                       <% end %>
-
+                      
                       <% if field.operation %>
                         <% @sum[field.id] += value.to_f %>
                       <% end %>
