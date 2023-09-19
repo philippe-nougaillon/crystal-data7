@@ -30,13 +30,19 @@
         <div>
           <%= label_tag "select[#{field.id}]", field.name.humanize %>
           <% default_value = params.permit![:select] ? params[:select][field.id.to_s] : 'nil' %>
-          <%= select_tag "select[#{field.id}]", 
-                options_for_select(
-                  field.values.records_at(@records).where.not(data: nil).pluck(:data).uniq.sort,
-                  default_value), 
-                include_blank: true, 
-                class: "form-select", 
-                onchange: 'this.form.submit()' %>
+          <% if field.datatype == 'Table' %>
+            <%= select_tag "select[#{field.id}]", 
+                  options_for_select(field.populate_linked_table.invert, default_value), 
+                  include_blank: true, 
+                  class: 'form-select', 
+                  onchange: 'this.form.submit()' %> 
+          <% else %>
+            <%= select_tag "select[#{field.id}]", 
+                  options_for_select(field.values.records_at(@records).where.not(data: nil).pluck(:data).uniq.sort, default_value), 
+                  include_blank: true, 
+                  class: 'form-select', 
+                  onchange: 'this.form.submit()' %>
+            <% end %>
         </div>
       <% end %>
       <% if policy(@table).fill? %>

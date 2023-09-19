@@ -35,7 +35,7 @@ Field.create!([
   {name: "Type",            table_id: 2, datatype: "Liste", items: "Dépose,Installation,Réparation", filtre: true, obligatoire: false, row_order: 3, operation: nil, slug: "ad18e6da-5474-4216-b508-7b9ded8fa54f"},
   {name: "Description",     table_id: 2, datatype: "Texte_long", items: nil, filtre: false, obligatoire: false, row_order: 4, operation: nil, slug: "0ebb2d39-055b-4b09-8aef-28ff4f7f75c1"},
   {name: "Prévoir escabeau?",table_id: 2, datatype: "Oui_non?", items: nil, filtre: false, obligatoire: false, row_order: 5, operation: nil, slug: "8c1aa55b-3ee0-4295-90bb-c4475a5f1049"},
-  {name: "Technicien",      table_id: 2, datatype: "Table", items: "[Techniciens.\"Nom,Prénom\"]", filtre: false, obligatoire: false, row_order: 6, operation: nil, slug: "a028f718-ce14-42ec-8ed6-e7a7d92c8f43"},
+  {name: "Technicien",      table_id: 2, datatype: "Table", items: "[Techniciens.\"Nom,Prénom\"]", filtre: true, obligatoire: false, row_order: 6, operation: nil, slug: "a028f718-ce14-42ec-8ed6-e7a7d92c8f43"},
   {name: "Observations",    table_id: 2, datatype: "Texte_riche", items: nil, filtre: false, obligatoire: false, row_order: 7, operation: nil, slug: "f4088f22-ce58-4738-836e-a503f9bffe43"},
   {name: "Temps passé",     table_id: 2, datatype: "Nombre", items: nil, filtre: false, obligatoire: false, row_order: 8, operation: nil, slug: "0962d1b7-382e-4484-aa28-560bae2c5cbf"},
   {name: "Localisation",    table_id: 2, datatype: "GPS", items: nil, filtre: false, obligatoire: false, row_order: 9, operation: nil, visibility: 2, slug: "0962d1b7-382e-4484-aa28-560bae2cffff"},
