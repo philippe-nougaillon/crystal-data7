@@ -77,56 +77,8 @@
               <% records_size += 1 %>
               <tr>
                 <% @table.fields.listable.each_with_index do | field, index | %>
-                  <% if value = values[index]%>
-                    <td style="<%= @td_style[index] %>">
-                      <% case field.datatype when 'Fichier' %>
-                        <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
-                      <% when 'Image', 'PDF' %>
-                        <% blob = Blob.find(value) %>
-                        <% if blob.file.representable? %>
-                          <%= link_to image_tag(blob.file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file), title: blob.file.filename %>
-                        <% end %>
-                      <% when 'Signature' %>
-                        <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>
-                      <% when 'Date' %>
-                        <% unless value.blank? %>
-                          <%= link_to_if index == 0, l(value.to_date), details_path(@table.slug, record_index: record_index) %>
-                        <% end %>
-                      <% when 'Texte_long' %>
-                        <%= truncate(value, length: 80) %>
-                      <% when 'Texte_riche' %>
-                        <%= simple_format(value) %>
-                      <% when 'Euros' %>
-                        <%= number_to_currency(value) %>
-                      <% when 'Formule' %>
-                        <%= field.evaluate(@table, record_index) %>
-                      <% when 'Workflow' %>
-                        <% items = field.items.split(',').map{|i| i.split(':')}.to_h %>
-                        <% color = items[value] %>
-                        <span class="badge bg-<%= color %>"><%= value %></span>
-                      <% when 'URL' %>
-                        <%= link_to URI.parse(value).host, value, target: "_blank" %>
-                      <% when 'Couleur' %>
-                        <span style="background-color: <%= value %>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                      <% when 'GPS' %>
-                        <%= value %>
-                      <% when 'Table' %>
-                        <% linked_value = field.get_linked_table_record(value.to_i) %>
-                        <% linked_table = Table.find(field.relation.relation_with_id) %>
-                        <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value) %>
-                      <% when 'Utilisateur' %>
-                        <%= value %>
-                      <% else %>
-                        <%= link_to_if index == 0, value, details_path(@table.slug, record_index: record_index) %>
-                      <% end %>
-                      
-                      <% if field.operation %>
-                        <% @sum[field.id] += value.to_f %>
-                      <% end %>
-                    </td>
-                  <% else %>
-                    <td></td>
-                  <% end %>  
+                  <%= render partial: 'partials/table_cell',
+                  locals: {table: @table, record_index: record_index, field: field, is_link: (index == 0), value: values[index], td_style: @td_style[index]} %>
                 <% end %>
 
                 <td>
