@@ -1,0 +1,30 @@
+<% values = table.value_datas_listable(record_index) %>
+
+<% if not values.empty? %>
+  <% records_size += 1 %>
+  <tr>
+    <% table.fields.listable.each_with_index do | field, index | %>
+      <%= render partial: 'partials/table_cell', locals: {table:, record_index:, field:, is_link: (index == 0), value: values[index], td_style: @td_style[index]} %>
+    <% end %>
+
+    <td>
+      il y a <%= time_ago_in_words(table.last_update_at(record_index)) %>
+    </td>
+
+    <td>
+      <% if policy(table).show_details? %>
+        <%= link_to "Voir", details_path(table.slug, record_index:), class: 'btn btn-outline-primary btn-sm', 'data-testid': "Voir ligne n°#{record_index}" %>
+      <% end %>
+    </td>
+    <td>
+      <% if policy(table).fill? %>
+        <%= link_to "Modifier", fill_url(table.slug, record_index:), class: 'btn btn-outline-warning btn-sm', 'data-testid': "Modifier ligne n°#{record_index}" %>
+      <% end %>
+    </td>
+    <td>
+      <% if policy(table).delete_record? %>
+        <%= link_to "X", delete_record_url(table.slug, record_index:), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm', 'data-testid': "Supprimer ligne n°#{record_index}" %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
