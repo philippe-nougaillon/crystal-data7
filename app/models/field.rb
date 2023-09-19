@@ -12,9 +12,12 @@ class Field < ApplicationRecord
 	belongs_to :table
 	has_many :values, dependent: :destroy
 	has_many :logs, dependent: :destroy
+  has_one :relation, dependent: :destroy
 
 	validates_presence_of :name
 	validates_presence_of :datatype
+
+	after_create :add_new_relation
 
 	enum datatype: [:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Table, :Texte_riche, :Utilisateur]
 	enum operation: [:Somme, :Moyenne]
@@ -68,11 +71,9 @@ class Field < ApplicationRecord
 		self.items.include?('[') && self.items.include?(']')
 	end
 
-	def populate_linked_table
-		sources = self.items.tr('[]','').split('.')
-		source_fields = sources.last.tr('"','').split(',')
-		table = self.table.users.first.tables.find_by(name: sources.first)
-		
+	def populate_linked_table		
+    table = Table.find(self.relation.relation_with_id)
+    source_fields = self.relation.items
 		table_data = {}
 		
 		table.values.includes(:field).each do |value| 
@@ -88,9 +89,8 @@ class Field < ApplicationRecord
 	end
 
 	def get_linked_table_record(index)
-		sources = self.items.tr('[]','').split('.')
-		source_fields = sources.last.tr('"','').split(',')
-		table = self.table.users.first.tables.find_by(name: sources.first)
+		table = Table.find(self.relation.relation_with_id)
+    source_fields = self.relation.items
 		
 		table_data = []
 		
@@ -108,6 +108,15 @@ private
 
 	def slug_candidates
 		[SecureRandom.uuid]
+	end
+
+	def add_new_relation
+		if self.datatype == 'Table'
+      sources = self.items.tr('[]','').split('.')
+      source_fields = sources.last.tr('"','').split(',')
+      source_table = self.table.users.first.tables.find_by(name: sources.first)
+      Relation.create(field: self, table_id: self.table.id, relation_with_id: source_table.id, items: source_fields)
+		end
 	end
 
 end
