@@ -4,7 +4,7 @@
   <%= render partial: 'partials/détails', locals: {table: @table, record_index: @record_index} %>
 </div>
 
-<div class="mt-3">
+<div class="mt-3 float-end">
   <% if policy(@table).fill? %>
     <%= link_to "Modifier", fill_url(@table.slug, record_index: @record_index), 'data-testid': "Modifier ligne n°#{ @record_index }" %>
     |
@@ -13,8 +13,22 @@
     <%= link_to "Audit Trail", logs_path(record_index: @record_index), title:"Audit des modifications", data: { turbo_frame: "main_frame" } %>
     |
   <% end %>
-  <%= link_to "Retour", request.referrer %>
+  <%= link_to "Retour", table_path(@table) %>
 </div>
+
+<ul class="nav nav-tabs w-100">
+  <% Relation.where(relation_with_id: @table.id).each do |relation| %>
+    <li class="nav-item">
+      <%= link_to relation.table.name, related_tables_path(relation:, record_index: @record_index), class:'nav-link fw-bold active', data: { turbo_frame: "related_tables_frame" } %>
+    </li>
+  <% end %>
+</ul>
+
+<%= turbo_frame_tag "related_tables_frame" do %>
+  <div class="card p-3">
+    <%= render partial: 'partials/table', locals: {table: @relation.table, records: @records } %>
+  </div>
+<% end %>
 
 <div class="mt-4">
   <%= turbo_frame_tag "main_frame" do %>

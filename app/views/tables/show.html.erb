@@ -45,69 +45,7 @@
     </div>
   <% end %>
 
-  <div class="overflow-x-auto">
-    <table class="table table-striped table-hover sticky">
-      <thead>
-        <tr style="vertical-align: middle">
-          <% @table.fields.listable.each_with_index do | field, index | %>
-            <th>
-              <%= link_to url_for(params.permit!.merge(sort_by: field.id)), class:'text-decoration-none' do %>
-                <span class="text-nowrap">
-                  <%= field.name.humanize %>
-                  <% if params[:sort_by] == field.id.to_s %>
-                    <span class="text-decoration-none text-warning "><%= (session[:order_by] == 'ASC') ? '△' : '▽' %></span>
-                  <% end %>
-                </span>
-              <% end %>
-            </th>
-            <% @td_style[index] = @numeric_types.include?(field.datatype) ? 'text-align: right;' : nil %>
-          <% end %>
-          <th>MÀJ</th>
-          <th colspan=3></th>
-        </tr>
-      </thead>
-
-      <% unless @records.size.zero? %>
-        <% records_size = 0 %>
-        <tbody>
-          <% @records.each do | record_index | %>
-            <%= render partial: 'partials/table_row', locals: {table: @table, record_index:, records_size:}  %>
-          <% end %>
-        </tbody>
-
-        <% if @table.fields.listable.where.not(operation: nil).any? %>
-          <tfoot>
-            <tr>
-              <% @table.fields.listable.each do |field| %>
-                <% if field.operation %>
-                  <td class="text-primary" style="text-align: right">
-                    <% if field.Somme? %>
-                      <% if field.datatype == "Euros" %>
-                        <%= number_to_currency(@sum[field.id]) %>
-                      <% else %>
-                        <%= number_with_precision(@sum[field.id], precision: 2) %>
-                      <% end %>
-                    <% elsif field.Moyenne? %>
-                      <% if field.datatype == "Euros" %>
-                        <%= number_to_currency(@sum[field.id] / @records.count) %>
-                      <% else %>
-                        <%= number_with_precision(@sum[field.id] / @records.count, precision: 2) %>
-                      <% end %>
-                    <% end %>
-                  </td>
-                <% else %>
-                  <td></td>
-                <% end %>
-              <% end %>
-              <td colspan=4></td>
-            </tr>
-          </tfoot>
-        <% end %>
-        
-      <% end %>
-    </table>
-    <p>Affichage de <%= records_size %> <%= @table.name %> sur <%= @table.size %> au total <p>
-  </div>
+  <%= render partial: 'partials/table', locals: {records: @records, table: @table} %>
 <% else %>
   <% unless params[:attrs] %>
     Cette table ne contient aucune colonne<br><br>

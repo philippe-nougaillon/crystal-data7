@@ -444,9 +444,23 @@ class TablesController < ApplicationController
   def show_details
     unless params[:record_index].blank?
       @record_index = params[:record_index]
+      @relation = Relation.where(relation_with_id: @table.id).first
+      @numeric_types = ['Formule','Euros','Nombre']
+      @td_style = []
+      @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
+      @sum = Hash.new(0)
     else
       redirect_to @table, alert: "donnée non existante"
     end
+  end
+  
+  def related_tables
+    @relation = Relation.find(params[:relation])
+    @record_index = params[:record_index]
+    @numeric_types = ['Formule','Euros','Nombre']
+    @td_style = []
+    @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
+    @sum = Hash.new(0)
   end
 
   private

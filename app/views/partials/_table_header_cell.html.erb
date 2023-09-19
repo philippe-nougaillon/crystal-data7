@@ -1,0 +1,11 @@
+<th>
+  <%= link_to url_for(params.permit!.merge(sort_by: field.id)), class:'text-decoration-none' do %>
+    <span class="text-nowrap">
+      <%= field.name.humanize %>
+      <% if params[:sort_by] == field.id.to_s %>
+        <span class="text-decoration-none text-warning "><%= (session[:order_by] == 'ASC') ? '△' : '▽' %></span>
+      <% end %>
+    </span>
+  <% end %>
+</th>
+<% @td_style[index] = @numeric_types.include?(field.datatype) ? 'text-align: right;' : nil %>

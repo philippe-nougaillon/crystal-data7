@@ -1,0 +1,19 @@
+<% if field.operation %>
+  <td class="text-primary" style="text-align: right">
+    <% if field.Somme? %>
+      <% if field.datatype == "Euros" %>
+        <%= number_to_currency(@sum[field.id]) %>
+      <% else %>
+        <%= number_with_precision(@sum[field.id], precision: 2) %>
+      <% end %>
+    <% elsif field.Moyenne? %>
+      <% if field.datatype == "Euros" %>
+        <%= number_to_currency(@sum[field.id] / @records.count) %>
+      <% else %>
+        <%= number_with_precision(@sum[field.id] / @records.count, precision: 2) %>
+      <% end %>
+    <% end %>
+  </td>
+<% else %>
+  <td></td>
+<% end %>
