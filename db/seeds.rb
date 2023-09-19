@@ -47,10 +47,6 @@ Field.create!([
   {name: "Mémo",        table_id: 3, datatype: "Texte_riche", items: nil, filtre: false, obligatoire: false, row_order: 4, operation: nil, slug: "5cab5a0f-f312-417d-8995-cb63fa816449"}
 ])
 
-Relation.create!([
-  {field_id: 12, table_id: 2, relation_with_id: 3, items: ["Nom", "Prénom"]}
-])
-
 Value.create!([
   {record_index: 1, field_id: 1, data: "Câble"},
   {record_index: 1, field_id: 2, data: "Nexans"},
