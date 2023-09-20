@@ -80,9 +80,9 @@ class Field < ApplicationRecord
 		  if source_fields.include?(value.field.name)
 				if value.field.datatype == 'Table' 
 					unless table_data.key?(value.record_index) 
-						table_data[value.record_index] = value.field.name + '(' + value.field.populate_linked_table.values[value.data.to_i] + ')'
+						table_data[value.record_index] = "#{ value.field.name }=(#{ value.field.populate_linked_table[value.data.to_i] })"
 					else 
-						table_data[value.record_index] << ', ' + value.field.name + '(' + value.field.populate_linked_table.values[value.data.to_i] + ')'
+						table_data[value.record_index] << ", #{ value.field.name }=(#{value.field.populate_linked_table[value.data.to_i]})"
 					end
 				else
 					unless table_data.key?(value.record_index) 
@@ -98,7 +98,7 @@ class Field < ApplicationRecord
 
 	def get_linked_table_record(index)
 		table = Table.find(self.relation.relation_with_id)
-    source_fields = self.relation.items
+    	source_fields = self.relation.items
 		
 		table_data = []
 		
