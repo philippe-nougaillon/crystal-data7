@@ -98,12 +98,18 @@ class Field < ApplicationRecord
 
 	def get_linked_table_record(index)
 		table = Table.find(self.relation.relation_with_id)
-    	source_fields = self.relation.items
+    source_fields = self.relation.items
 		
 		table_data = []
 		
 		table.values.where(record_index: index).includes(:field).each do |value| 
-			table_data << value.data if (source_fields.include?(value.field.name))
+      if (source_fields.include?(value.field.name)) 
+        if value.field.datatype == 'Table'
+          table_data << "#{ value.field.name }=(#{value.field.get_linked_table_record(value.record_index)})"
+        else
+          table_data << value.data
+        end
+      end
 		end
 		return table_data.join(', ') 
 	end
