@@ -10,7 +10,8 @@ User.create!([
 Table.create!([
   {name: "Stocks",        notification: false, lifo: true, record_index: 2, slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"},
   {name: "Interventions", notification: false, lifo: true, record_index: 3, slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"},
-  {name: "Techniciens",   notification: false, lifo: true, record_index: 3, slug: "e108afdb-362a-4395-ad09-867e44f2a5b0"}
+  {name: "Techniciens",   notification: false, lifo: true, record_index: 3, slug: "e108afdb-362a-4395-ad09-867e44f2a5b0"},
+  {name: 'Frais',         notification: false, lifo: true, record_index: 2, slug: '7d75f3ca-a4e4-4280-917f-0f43f63318e2'}
 ])
 
 TablesUser.create!([
@@ -19,7 +20,8 @@ TablesUser.create!([
   {table_id: 3, user_id: 1, role: "Propriétaire"},
   {table_id: 2, user_id: 2, role: "Lecteur"},
   {table_id: 2, user_id: 3, role: "Ajouteur"},
-  {table_id: 2, user_id: 4, role: "Éditeur"}
+  {table_id: 2, user_id: 4, role: "Éditeur"},
+  {table_id: 4, user_id: 1, role: "Propriétaire"},
 ])
 
 Field.create!([
@@ -44,7 +46,12 @@ Field.create!([
   {name: "Nom",         table_id: 3, datatype: "Texte", items: nil, filtre: false, obligatoire: true, row_order: 1, operation: nil, slug: "1c75abf6-5736-4fc7-8c55-20a08b43f414"},
   {name: "Prénom",      table_id: 3, datatype: "Texte", items: nil, filtre: false, obligatoire: true, row_order: 2, operation: nil, slug: "5edf0f5f-25a8-4d36-adc4-3f71d67aa21d"},
   {name: "Embauché le", table_id: 3, datatype: "Date", items: nil, filtre: false, obligatoire: false, row_order: 3, operation: nil, slug: "c803b5ca-8832-4421-a991-dfcdaade349d"},
-  {name: "Mémo",        table_id: 3, datatype: "Texte_riche", items: nil, filtre: false, obligatoire: false, row_order: 4, operation: nil, slug: "5cab5a0f-f312-417d-8995-cb63fa816449"}
+  {name: "Mémo",        table_id: 3, datatype: "Texte_riche", items: nil, filtre: false, obligatoire: false, row_order: 4, operation: nil, slug: "5cab5a0f-f312-417d-8995-cb63fa816449"},
+
+  {name: "Date",         table_id: 4, datatype: "Date", items: nil, filtre: false, obligatoire: true, row_order: 1, operation: nil, slug: "fd35beda-0a77-4dc6-a1e8-17e0630e9236"},
+  {name: "Désignation",  table_id: 4, datatype: "Texte", items: nil, filtre: false, obligatoire: true, row_order: 2, operation: nil, slug: "65597fab-3140-4ff2-9661-bda5226fd3f0"},
+  {name: "Montant",      table_id: 4, datatype: "Euros", items: nil, filtre: false, obligatoire: true, row_order: 3, operation: "Somme", slug: "01513e99-8422-4885-8c24-e9f2cd0d7cf5"},
+  {name: 'Intervention', table_id: 4, datatype: 'Table', items: '[Interventions."Date,Client,Type,Etat"]', filtre: false, obligatoire: true, row_order: 4, operation: nil, slug: '4d9d1981-524a-4e0b-aab5-7fa81511b444'}  
 ])
 
 Value.create!([
@@ -110,7 +117,6 @@ Value.create!([
   {record_index: 3, field_id: 18, data: "Michel"},
   {record_index: 3, field_id: 19, data: "2022-09-01"},
   {record_index: 3, field_id: 20, data: ""},
-
 ])
 
 Audited::Audit.delete_all
