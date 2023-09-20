@@ -11,7 +11,7 @@ Table.create!([
   {name: "Stocks",        notification: false, lifo: true, record_index: 2, slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"},
   {name: "Interventions", notification: false, lifo: true, record_index: 3, slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"},
   {name: "Techniciens",   notification: false, lifo: true, record_index: 3, slug: "e108afdb-362a-4395-ad09-867e44f2a5b0"},
-  {name: 'Frais',         notification: false, lifo: true, record_index: 2, slug: '7d75f3ca-a4e4-4280-917f-0f43f63318e2'}
+  {name: 'Frais',         notification: false, lifo: true, record_index: 1, slug: '7d75f3ca-a4e4-4280-917f-0f43f63318e2'}
 ])
 
 TablesUser.create!([
@@ -51,7 +51,7 @@ Field.create!([
   {name: "Date",         table_id: 4, datatype: "Date", items: nil, filtre: false, obligatoire: true, row_order: 1, operation: nil, slug: "fd35beda-0a77-4dc6-a1e8-17e0630e9236"},
   {name: "Désignation",  table_id: 4, datatype: "Texte", items: nil, filtre: false, obligatoire: true, row_order: 2, operation: nil, slug: "65597fab-3140-4ff2-9661-bda5226fd3f0"},
   {name: "Montant",      table_id: 4, datatype: "Euros", items: nil, filtre: false, obligatoire: true, row_order: 3, operation: "Somme", slug: "01513e99-8422-4885-8c24-e9f2cd0d7cf5"},
-  {name: 'Intervention', table_id: 4, datatype: 'Table', items: '[Interventions."Date,Client,Type,Etat"]', filtre: false, obligatoire: true, row_order: 4, operation: nil, slug: '4d9d1981-524a-4e0b-aab5-7fa81511b444'}  
+  {name: 'Intervention', table_id: 4, datatype: 'Table', items: "[Interventions.\"Date,\"Client,\"Type,\"Etat,\"Technicien\"]", filtre: false, obligatoire: true, row_order: 4, operation: nil, slug: '4d9d1981-524a-4e0b-aab5-7fa81511b444'}  
 ])
 
 Value.create!([
@@ -117,6 +117,12 @@ Value.create!([
   {record_index: 3, field_id: 18, data: "Michel"},
   {record_index: 3, field_id: 19, data: "2022-09-01"},
   {record_index: 3, field_id: 20, data: ""},
+
+  {record_index: 1, field_id: 21, data: "2023-08-30"},
+  {record_index: 1, field_id: 22, data: "Essence"},
+  {record_index: 1, field_id: 23, data: "82"},
+  {record_index: 1, field_id: 24, data: "2"},
+  
 ])
 
 Audited::Audit.delete_all

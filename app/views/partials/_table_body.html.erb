@@ -13,12 +13,12 @@
 
     <td>
       <% if policy(table).show_details? %>
-        <%= link_to "Voir", details_path(table.slug, record_index:), class: 'btn btn-outline-primary btn-sm', 'data-testid': "Voir ligne n°#{record_index}" %>
+        <%= link_to "Voir", details_path(table.slug, record_index:), class: 'btn btn-outline-primary btn-sm', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } %>
       <% end %>
     </td>
     <td>
       <% if policy(table).fill? %>
-        <%= link_to "Modifier", fill_url(table.slug, record_index:), class: 'btn btn-outline-warning btn-sm', 'data-testid': "Modifier ligne n°#{record_index}" %>
+        <%= link_to "Modifier", fill_url(table.slug, record_index:), class: 'btn btn-outline-warning btn-sm', 'data-testid': "Modifier ligne n°#{record_index}", data: { turbo_frame: "_top" } %>
       <% end %>
     </td>
     <td>
