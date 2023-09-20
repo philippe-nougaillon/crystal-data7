@@ -4,7 +4,9 @@
   <% @records_size += 1 %>
   <tr>
     <% table.fields.listable.each_with_index do | field, index | %>
-      <%= render partial: 'partials/table_cell', locals: {table:, record_index:, field:, is_link: (index == 0), value: values[index], td_style: @td_style[index]} %>
+      <% unless action_name == 'show_details' && field.datatype == 'Table' && @relation.field == field %>
+        <%= render partial: 'partials/table_cell', locals: {table:, record_index:, field:, is_link: (index == 0), value: values[index], td_style: @td_style[index]} %>
+      <% end %>
     <% end %>
 
     <td>

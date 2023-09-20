@@ -1,40 +1,42 @@
 <div class="overflow-x-auto">
-    <table class="table table-striped table-hover sticky">
-      <thead>
-        <tr style="vertical-align: middle">
-          <% table.fields.listable.each_with_index do | field, index | %>
+  <table class="table table-striped table-hover sticky">
+    <thead>
+      <tr style="vertical-align: middle">
+        <% table.fields.listable.each_with_index do | field, index | %>
+          <% unless action_name == 'show_details' && field.datatype == 'Table' && @relation.field == field %>
             <%= render partial: 'partials/table_header_cell', locals: {table:, field:, index:} %>
           <% end %>
-          <th>MÀJ</th>
-          <th colspan=3></th>
-        </tr>
-      </thead>
-
-      <% unless records.size.zero? %>
-        <% @records_size = 0 %>
-        <tbody>
-          <% records.each do | record_index | %>
-            <%= render partial: 'partials/table_body', locals: {table:, record_index:}  %>
-          <% end %>
-        </tbody>
-
-        <% if table.fields.listable.where.not(operation: nil).any? %>
-          <tfoot>
-            <tr>
-              <% table.fields.listable.each do |field| %>
-                <%= render partial: 'partials/table_footer_cell', locals: {field:} %>
-              <% end %>
-              <td colspan=4></td>
-            </tr>
-          </tfoot>
         <% end %>
-        
+        <th>MÀJ</th>
+        <th colspan=3></th>
+      </tr>
+    </thead>
+
+    <% unless records.size.zero? %>
+      <% @records_size = 0 %>
+      <tbody>
+        <% records.each do | record_index | %>
+          <%= render partial: 'partials/table_row', locals: {table:, record_index:}  %>
+        <% end %>
+      </tbody>
+
+      <% if table.fields.listable.where.not(operation: nil).any? %>
+        <tfoot>
+          <tr>
+            <% table.fields.listable.each do |field| %>
+              <%= render partial: 'partials/table_footer_cell', locals: {field:} %>
+            <% end %>
+            <td colspan=4></td>
+          </tr>
+        </tfoot>
       <% end %>
-    </table>
-    <p>
-      Affichage de <%= @records_size %> <%= table.name %>
-      <% if action_name == 'show' %>
-        sur <%= table.size %> au total
-      <% end %>
-    </p>
-  </div>
+      
+    <% end %>
+  </table>
+  <p>
+    Affichage de <%= @records_size %> <%= table.name %>
+    <% if action_name == 'show' %>
+      sur <%= table.size %> au total
+    <% end %>
+  </p>
+</div>
