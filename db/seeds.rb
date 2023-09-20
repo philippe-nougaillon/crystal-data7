@@ -11,7 +11,7 @@ Table.create!([
   {name: "Stocks",        notification: false, lifo: true, record_index: 2, slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"},
   {name: "Interventions", notification: false, lifo: true, record_index: 3, slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"},
   {name: "Techniciens",   notification: false, lifo: true, record_index: 3, slug: "e108afdb-362a-4395-ad09-867e44f2a5b0"},
-  {name: 'Frais',         notification: false, lifo: true, record_index: 4, slug: '7d75f3ca-a4e4-4280-917f-0f43f63318e2'}
+  {name: 'Frais',         notification: false, lifo: true, record_index: 7, slug: '7d75f3ca-a4e4-4280-917f-0f43f63318e2'}
 ])
 
 TablesUser.create!([
@@ -143,6 +143,26 @@ Value.create!([
   {record_index: 4, field_id: 23, data: "15"},
   {record_index: 4, field_id: 24, data: "1"},
   {record_index: 4, field_id: 25, data: "2"},
+
+  {record_index: 5, field_id: 21, data: "2023-09-23"},
+  {record_index: 5, field_id: 22, data: "SNCF"},
+  {record_index: 5, field_id: 23, data: "115"},
+  {record_index: 5, field_id: 24, data: "3"},
+  {record_index: 5, field_id: 25, data: "3"},
+  
+  {record_index: 6, field_id: 21, data: "2023-09-13"},
+  {record_index: 6, field_id: 22, data: "Repas"},
+  {record_index: 6, field_id: 23, data: "50"},
+  {record_index: 6, field_id: 24, data: "3"},
+  {record_index: 6, field_id: 25, data: "3"},
+
+  {record_index: 7, field_id: 21, data: "2023-09-13"},
+  {record_index: 7, field_id: 22, data: "Hotel"},
+  {record_index: 7, field_id: 23, data: "150"},
+  {record_index: 7, field_id: 24, data: "3"},
+  {record_index: 7, field_id: 25, data: "3"},
+
+
 
 ])
 
