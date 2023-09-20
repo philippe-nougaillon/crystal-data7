@@ -447,7 +447,9 @@ class TablesController < ApplicationController
       @relation = Relation.where(relation_with_id: @table.id).first
       @numeric_types = ['Formule','Euros','Nombre']
       @td_style = []
-      @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
+      if @relation
+        @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
+      end
       @sum = Hash.new(0)
     else
       redirect_to @table, alert: "donnée non existante"
