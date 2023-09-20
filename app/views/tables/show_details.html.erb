@@ -16,21 +16,29 @@
   <%= link_to "Retour", table_path(@table) %>
 </div>
 
-<ul class="nav nav-tabs w-100">
-  <% Relation.where(relation_with_id: @table.id).each do |relation| %>
-    <li class="nav-item">
-      <%= link_to relation.table.name, related_tables_path(relation:, record_index: @record_index), class:'nav-link fw-bold active', data: { turbo_frame: "related_tables_frame" } %>
-    </li>
-  <% end %>
-</ul>
+<% if @records %>
+  <ul class="nav nav-tabs w-100">
+    <% Relation.where(relation_with_id: @table.id).each do |relation| %>
+      <li class="nav-item">
+        <%= link_to relation.table.name, related_tables_path(relation:, record_index: @record_index), class:"nav-link fw-bold #{relation == Relation.where(relation_with_id: @table.id).first ? 'active' : ''}", data: { turbo_frame: "related_tables_frame" }, onclick:'activeLink();' %>
+      </li>
+    <% end %>
+  </ul>
 
-<%= turbo_frame_tag "related_tables_frame" do %>
-  <div class="card p-3">
-    <%= render partial: 'partials/table', locals: {table: @relation.table, records: @records } %>
+  <%= render partial: 'partials/related_tables', locals: {table: @relation.table, records: @records} %>
+
+  <div class="mt-4">
+    <%= turbo_frame_tag "main_frame" do %>
+    <% end %>
   </div>
-<% end %>
 
-<div class="mt-4">
-  <%= turbo_frame_tag "main_frame" do %>
-  <% end %>
-</div>
+  <script>
+    function activeLink() {
+      const links = document.querySelectorAll('.nav-link');
+      links.forEach(link => {
+        link.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    }
+  </script>
+<% end %>
