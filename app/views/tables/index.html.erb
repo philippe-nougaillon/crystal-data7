@@ -37,7 +37,7 @@
             <td><%= "il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" unless table.size.zero? %></td>
             <td>
               <% if policy(table).show_attrs? %>
-                <%= link_to 'Modifier', show_attrs_path(id: table.slug), title:"Modifier les colonnes de '#{table.name}'", class: 'btn btn-outline-warning btn-sm' %>
+                <%= link_to 'Modifier Structure', show_attrs_path(id: table.slug), title:"Modifier les colonnes de '#{table.name}'", class: 'btn btn-outline-warning btn-sm' %>
               <% end %>
             </td>
             <td>
