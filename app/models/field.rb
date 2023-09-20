@@ -77,12 +77,20 @@ class Field < ApplicationRecord
 		table_data = {}
 		
 		table.values.includes(:field).each do |value| 
-		  if source_fields.include?(value.field.name) 
-			unless table_data.key?(value.record_index) 
-				table_data[value.record_index] = value.data 
-			else 
-				table_data[value.record_index] << ', ' << value.data 
-			end 
+		  if source_fields.include?(value.field.name)
+				if value.field.datatype == 'Table' 
+					unless table_data.key?(value.record_index) 
+						table_data[value.record_index] = value.field.name + '(' + value.field.populate_linked_table.values[value.data.to_i] + ')'
+					else 
+						table_data[value.record_index] << ', ' + value.field.name + '(' + value.field.populate_linked_table.values[value.data.to_i] + ')'
+					end
+				else
+					unless table_data.key?(value.record_index) 
+						table_data[value.record_index] = value.data 
+					else 
+						table_data[value.record_index] << ', ' + value.data 
+					end
+				end
 		  end 
 		end
 		return table_data 
