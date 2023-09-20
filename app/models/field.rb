@@ -17,7 +17,7 @@ class Field < ApplicationRecord
 	validates_presence_of :name
 	validates_presence_of :datatype
 
-	after_create :add_new_relation
+	after_save :add_or_update_relation, if: Proc.new { |field| field.Table? }
 
 	enum datatype: [:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Table, :Texte_riche, :Utilisateur]
 	enum operation: [:Somme, :Moyenne]
@@ -124,13 +124,19 @@ private
 		[SecureRandom.uuid]
 	end
 
-	def add_new_relation
-		if self.datatype == 'Table'
-      sources = self.items.tr('[]','').split('.')
-      source_fields = sources.last.tr('"','').split(',')
-      source_table = self.table.users.first.tables.find_by(name: sources.first)
-      Relation.create(field: self, table_id: self.table.id, relation_with_id: source_table.id, items: source_fields)
+	def add_or_update_relation
+		sources = self.items.tr('[]','').split('.')
+		source_fields = sources.last.tr('"','').split(',')
+		source_table = self.table.users.first.tables.find_by(name: sources.first)
+
+		Relation.find_or_initialize_by(field_id: self.id).tap do |relation|
+			relation.table_id = self.table.id
+			relation.relation_with_id = source_table.id
+			relation.items = source_fields
+			relation.save
 		end
+		# Logger.debug relation.inspect
+			# raise
 	end
 
 end

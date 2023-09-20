@@ -51,7 +51,7 @@ Field.create!([
   {name: "Date",         table_id: 4, datatype: "Date", items: nil, filtre: false, obligatoire: true, row_order: 1, operation: nil, slug: "fd35beda-0a77-4dc6-a1e8-17e0630e9236"},
   {name: "Désignation",  table_id: 4, datatype: "Texte", items: nil, filtre: false, obligatoire: true, row_order: 2, operation: nil, slug: "65597fab-3140-4ff2-9661-bda5226fd3f0"},
   {name: "Montant",      table_id: 4, datatype: "Euros", items: nil, filtre: false, obligatoire: true, row_order: 3, operation: "Somme", slug: "01513e99-8422-4885-8c24-e9f2cd0d7cf5"},
-  {name: 'Intervention', table_id: 4, datatype: 'Table', items: "[Interventions.\"Date,\"Client,\"Type,\"Etat,\"Technicien\"]", filtre: false, obligatoire: true, row_order: 4, operation: nil, slug: '4d9d1981-524a-4e0b-aab5-7fa81511b444'}  
+  {name: 'Intervention', table_id: 4, datatype: 'Table', items: "[Interventions.\"Date,Client,Type,Etat,Technicien\"]", filtre: false, obligatoire: true, row_order: 4, operation: nil, slug: '4d9d1981-524a-4e0b-aab5-7fa81511b444'}  
 ])
 
 Value.create!([
