@@ -29,4 +29,5 @@ intervention_date:
   table_id: <%= ActiveRecord::FixtureSet.identify(:interventions) %>
   name: Date
   datatype: Date
+  filtre: true
   slug: abcdef
