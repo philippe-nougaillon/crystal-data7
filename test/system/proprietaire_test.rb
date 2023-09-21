@@ -347,7 +347,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_on @table.name.upcase
     assert_selector 'h1', text: 'Stocks'
 
-    # fill_in 'Rechercher', with: 'RJ45'
+    fill_in 'Rechercher', with: 'RJ45'
     select 'Électronique', from: 'Catégorie'
     send_keys(:return)
     assert_selector 'p', text: 'Affichage de 2 Stocks sur 3 au total'

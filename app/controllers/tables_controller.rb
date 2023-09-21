@@ -26,7 +26,7 @@ class TablesController < ApplicationController
       search = "%#{ params[:search].strip }%"
       @values = @table.values.where("data ILIKE ?", search)
       # Est-ce qu'il y a des Tables liées ?
-      @table.fields.Table.each do | field_table |
+      @table.fields.Collection.each do | field_table |
         # Rchercher dans les values de ce champ lié si valeurs recherchées
         s = /#{ params[:search].strip }/i
         results = field_table.populate_linked_table.select{|k,v| v.match(s)}
@@ -40,7 +40,7 @@ class TablesController < ApplicationController
 
     # applique les filtres
     @records_filter = []
-    if params[:select]
+    unless params[:select].blank?
       params[:select].each do | option | 
         unless option.last.blank? 
           field = Field.find(option.first)
@@ -50,6 +50,25 @@ class TablesController < ApplicationController
           else
             @records_filter = @records_filter & filter_records 
           end  
+        end
+      end
+    end
+
+    unless params[:du].blank? || params[:au].blank?
+      params[:du].each do | option |
+        field_id = option.first
+        if params[:au].keys.include?(field_id)
+          start_date = option.last
+          end_date = params[:au][field_id]
+          unless start_date.blank? || end_date.blank?
+            field = Field.find(field_id)
+            filter_records = @table.values.where(field: field).where("DATE(data) BETWEEN ? AND ?", start_date, end_date).pluck(:record_index) 
+            if @records_filter.empty?
+              @records_filter = filter_records 
+            else
+              @records_filter = @records_filter & filter_records 
+            end
+          end
         end
       end
     end
