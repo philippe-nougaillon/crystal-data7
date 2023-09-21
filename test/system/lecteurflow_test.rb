@@ -54,7 +54,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
 
   #   # Ajout d'un field
   #   fill_in "Nom", with: "Désignation"
-  #   click_button "Ajouter ce nouvel attribut"
+  #   click_button "Ajouter cet attribut"
   #   assert_text "Nouvel attribut ajouté."
   #   assert_text "Désignation"
   #   # TODO: checker si le type du field est un string
@@ -62,7 +62,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
 
   #   fill_in "Nom", with: "Prix"
   #   page.select "Nombre", from: "Type de données"
-  #   click_button "Ajouter ce nouvel attribut"
+  #   click_button "Ajouter cet attribut"
   #   assert_text "Nouvel attribut ajouté."
   #   assert_text "Nombre"
 
@@ -70,7 +70,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
   #   fill_in "Nom", with: "Lieu"
   #   page.select "Liste", from: "Type de données"
   #   fill_in "Paramètres", with: "[Interventions.Lieu]"
-  #   click_button "Ajouter ce nouvel attribut"
+  #   click_button "Ajouter cet attribut"
   #   assert_text "Nouvel attribut ajouté."
   #   assert_text "Liste"
   # end
@@ -106,7 +106,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
   #   fill_in "Nom", with: "État"
   #   page.select "Workflow", from: "Type de données"
   #   fill_in "Paramètres", with: "Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary"
-  #   click_button "Ajouter ce nouvel attribut"
+  #   click_button "Ajouter cet attribut"
   #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
@@ -125,7 +125,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
 
   #   fill_in "Nom", with: "Url"
   #   page.select "URL", from: "Type de données"
-  #   click_button "Ajouter ce nouvel attribut"
+  #   click_button "Ajouter cet attribut"
   #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
@@ -144,7 +144,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
 
   #   fill_in "Nom", with: "Couleur"
   #   page.select "Couleur", from: "Type de données"
-  #   click_button "Ajouter ce nouvel attribut"
+  #   click_button "Ajouter cet attribut"
   #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
@@ -163,7 +163,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
 
   #   fill_in "Nom", with: "Coordonnées"
   #   page.select "GPS", from: "Type de données"
-  #   click_button "Ajouter ce nouvel attribut"
+  #   click_button "Ajouter cet attribut"
   #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
@@ -185,7 +185,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
 
   #   fill_in "Nom", with: "Image"
   #   page.select "Image", from: "Type de données"
-  #   click_button "Ajouter ce nouvel attribut"
+  #   click_button "Ajouter cet attribut"
   #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
@@ -205,7 +205,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
 
   #   fill_in "Nom", with: "PDF"
   #   page.select "PDF", from: "Type de données"
-  #   click_button "Ajouter ce nouvel attribut"
+  #   click_button "Ajouter cet attribut"
   #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
@@ -226,7 +226,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
   #   fill_in "Nom", with: "Interventions"
   #   page.select "Table", from: "Type de données"
   #   fill_in "Paramètres", with: "[Interventions.\"Lieu,Date\"]"
-  #   click_button "Ajouter ce nouvel attribut"
+  #   click_button "Ajouter cet attribut"
   #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
