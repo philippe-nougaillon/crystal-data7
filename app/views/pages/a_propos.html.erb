@@ -45,15 +45,14 @@
 	<h3 class="mt-5 text-warning">Principales fonctionnalités</h3>
 
 	<ul class="list-group list-group-flush mb-5 w-75">
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Créez vos collections d'Objets simplement à partir de feuilles Excel</li>
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Ajoutez des attibuts de types variés: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Image, PDF, Position GPS...</li>
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Ajoutez, éditez vos enregistrements dans un formulaire</li>
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Audit: chaque modification est consignée dans un historique (qui, quand, quoi)</li>
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Recherchez, filtrez et triez vos données</li> 
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Partagez vos données avec d'autres utilisateurs</li>		
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Exportez vos données vers un tableur</li> 
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Notification après chaque ajout de nouvelles données</li>
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Accédez à vos données en mobilité (Les écrans s'adaptent automatiquement à la taille d'un écran de smartphone)</li> 
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Créez des Objets constitués d'attributs variés <br>(Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Fichier, Image, PDF, Position GPS, Lien vers un Objet dans une autre Collection)</li>
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Ajoutez, éditez vos objets dans un formulaire</li>
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Audit trail: chaque modification d'un objet est consignée dans un historique (quand, qui, quoi, valeur avant, valeur après)</li>
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Recherchez, filtrez et triez vos objets</li> 
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Partagez vos collections d'objet avec d'autres utilisateurs</li>		
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Exportez vos collections vers un tableur</li> 
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Soyez notifié après chaque ajout d'objet dans une collection'</li>
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Accédez à toutes vos collections en mobilité (Les écrans s'adaptent automatiquement aux écrans de smartphones/tablettes)</li> 
 	</ul>
 
 	<% if false %>
@@ -155,14 +154,15 @@
 
 	<% end %>
 
-	<h3 class="text-warning">Les types de données</h3>
+	<h3 class="text-warning">Les Types d'attribut</h3>
 
 	<p>
-		Une table de données est constituée d'attributs (ex: Marque, Couleur, Prix, Qté en stock...) et chaque attribut peut avoir un type de données spécifique afin de s'adapter au mieux aux données contenues dans chaque attribut.
-		Les types de données disponibles sont : 
+		Un objet est constitué d'attributs (ex: Marque, Couleur, Prix, Qté en stock...) et 
+		chaque attribut peut avoir un type spécifique afin de s'adapter au mieux aux données qu'il contiendra. 
+		Les types disponibles sont : 
 		<ul class="list-group list-group-flush mb-5 m-3">
 			<li>
-				Types de textes :
+				Texte :
 				<ul>
 					<li><b>Texte</b> : peut contenir une chaine de 255 caractères maximum. L'option 'Filtre ?' permet de créer une liste déroulante contenant les valeurs distinctes. </li>
 					<li><b>Texte long</b> : permet de faire des gros messages</li>
