@@ -57,8 +57,8 @@
 
     <div class="d-flex flex-wrap align-items-center gap-2">
       <% if @field.new_record? %>
-        <%= f.submit "Ajouter cette nouvelle colonne", class: 'btn btn-outline-primary' %>
-        <%= link_to "Voir la table de données", @field.table %>
+        <%= f.submit "Ajouter cet attribut", class: 'btn btn-outline-primary' %>
+        <%= link_to "Voir la collection d'objets", @field.table %>
       <% else %>
         <%= f.submit "Modifier", class: 'btn btn-outline-primary' %>
         <%= link_to 'Retour', show_attrs_path(id: @field.table) %>

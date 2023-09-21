@@ -1,8 +1,8 @@
 <%= form_for(@table) do |f| %>
 
-  <%= f.label :name, "Nom de la table" %>
+  <%= f.label :name, "Nom du nouveau Type d'Objet" %>
   <%= f.text_field :name, required: true, 
-                    placeholder: 'Ex: Articles, Interventions, Chantiers...', 
+                    placeholder: 'Ex: Article, Intervention, Technicien, Chantier...', 
                     autofocus: true, 
                     class: 'form-control mb-4 w-25' %>
 
@@ -10,7 +10,7 @@
     <%= f.check_box :lifo %>
     <%= f.label :lifo, "Trier ?" %>
     <div id="lifo" class="form-text">
-      Afficher le contenu de la table trié par date de modification (le dernier élément modifié apparaît en haut de la liste)
+      Trier la collection par date de modification (le dernier objet modifié apparaît en haut de la liste)
     </div>
   </div>
 
@@ -18,9 +18,9 @@
     <%= f.check_box :notification %>
     <%= f.label :notification, "Notification ?" %>
     <div class="form-text">
-      Si vous voulez être notifié à chaque nouvel ajout d'un nouvel élément dans la collection
+      Si vous voulez être notifié à chaque ajout d'un nouvel objet dans la collection
     </div>
   </div>
 
-  <%= f.submit @table.new_record? ? "Continuer" : "Modifier cette table", class: 'btn btn-outline-primary' %>
+  <%= f.submit @table.new_record? ? "Continuer" : "Modifier cet objet", class: 'btn btn-outline-primary' %>
 <% end %>

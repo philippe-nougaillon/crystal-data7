@@ -54,9 +54,9 @@
   <%= render partial: 'partials/table', locals: {records: @records, table: @table} %>
 <% else %>
   <% unless params[:attrs] %>
-    Cette table ne contient aucune colonne<br><br>
+    Cet objet ne contient aucun attribut pour l'instant<br><br>
     <%= link_to show_attrs_path(id:@table), class: 'btn btn-outline-primary' do %>
-      Ajouter une colonne
+      Ajouter un attribut
     <% end %> 
   <% end %>
 <% end %>
