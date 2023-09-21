@@ -53,8 +53,17 @@
 
 <% end %>
 
+<div class="my-5">
+  <h2>Activité du compte</h2>
+
+  <div class="mb-4">
+    <p>Nombre d'objets créés : <span class="badge text-bg-primary"><%= @total_tables %></span></p>
+    <p>Nombre total d'objets dans vos collections : <span class="badge text-bg-primary"><%= @total_lignes %></span></p>
+  </div>
+</div>
+
 <div class="my-5 w-50">
-  <h2>Vos Objets partagés</h2>
+  <h2>Vos objets partagés</h2>
   <table class="table table striped table-sm table-hover">
     <thead>
       <th>Objet</th>
@@ -71,11 +80,3 @@
   </table>
 </div>
 
-<div class="my-5">
-  <h2>Activité du compte</h2>
-
-  <div class="mb-4">
-    <p>Nombre de tables créées: <span class="badge text-bg-primary"><%= @total_tables %></span></p>
-    <p>Nombre total d'enregistrements: <span class="badge text-bg-primary"><%= @total_lignes %></span></p>
-  </div>
-</div>
