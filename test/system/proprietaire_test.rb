@@ -9,21 +9,21 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   # Tables
   test "visiting the index" do
     visit tables_url
-    assert_selector "h1", text: "Tables"
+    assert_selector "h1", text: "Types d'Objet"
   end
   
   test "creating a Table" do
     visit tables_url
-    click_on "Nouvelle Table"
+    click_on "Nouveau Type d'Objet"
 
-    fill_in "Nom de la table", with: "Interventions"
+    fill_in "Nom du nouveau Type d'Objet", with: "Interventions"
     click_button "Continuer"
     assert_text "Objet créé. Vous pouvez maintenant y ajouter des attributs"
 
     # Ajout de fields
     fill_in "Nom", with: "Titre"
     check "Obligatoire ?"
-    click_button "Ajouter ce nouvel attribut"
+    click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
     # TODO: checker si le type du field est un string
     # TODO: checker si le field est obligatoire
@@ -31,7 +31,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     sleep(1) # Pour éviter que ça aille trop vite et que ça plante
     fill_in "Nom", with: "Prix"
     page.select "Nombre", from: "Type de données"
-    click_button "Ajouter ce nouvel attribut"
+    click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
   end
 
@@ -59,7 +59,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     @table = tables(:stocks)
 
     visit tables_url
-    click_on @table.name
+    click_on @table.name.upcase
     assert_selector 'h1', text: 'Stocks'
     fill_in 'Rechercher', with: 'RJ45'
     send_keys(:return)
@@ -69,18 +69,18 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   # Fields
   test "visiting the stocks show" do
     visit tables_url
-    click_on "Stocks"
+    click_on "STOCKS", match: :first
     assert_selector "h1", text: "Stocks"
   end
   
   test "creating a Field" do
     visit tables_url
-    click_on "Stocks"
+    click_on "STOCKS", match: :first
     click_on "Modifier Attributs"
 
     # Ajout d'un field
     fill_in "Nom", with: "Désignation"
-    click_button "Ajouter ce nouvel attribut"
+    click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
     assert_text "Désignation"
     # TODO: checker si le type du field est un string
@@ -88,7 +88,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
     fill_in "Nom", with: "Prix"
     page.select "Nombre", from: "Type de données"
-    click_button "Ajouter ce nouvel attribut"
+    click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
     assert_text "Nombre"
 
@@ -96,14 +96,14 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     fill_in "Nom", with: "Lieu"
     page.select "Liste", from: "Type de données"
     fill_in "Paramètres", with: "[Interventions.Lieu]"
-    click_button "Ajouter ce nouvel attribut"
+    click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
     assert_text "Liste"
   end
 
   test "updating a Field" do
     visit tables_url
-    click_on "Stocks"
+    click_on "STOCKS", match: :first
     click_on "Modifier Attributs"
     click_on "Modifier", match: :first
     
@@ -115,7 +115,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   
   test "destroying a Field" do
     visit tables_url
-    click_on "Stocks"
+    click_on "STOCKS", match: :first
     click_on "Modifier Attributs"
     page.accept_confirm do
       click_on "X", match: :first
@@ -126,17 +126,17 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create workflow field" do
     visit tables_url
-    click_on "Stocks"
+    click_on "STOCKS", match: :first
     click_on "Modifier Attributs"
 
     fill_in "Nom", with: "État"
     page.select "Workflow", from: "Type de données"
     fill_in "Paramètres", with: "Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary"
-    click_button "Ajouter ce nouvel attribut"
+    click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la table de données", match: :first
-    click_on "+ Ajouter"
+    click_on "Voir la collection d'objets", match: :first
+    click_on "(+) Stock"
     field = find('[data-testid="État"]')
     field.select "Nouveau"
     click_button "Enregistrer"
@@ -146,16 +146,16 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create url field" do
     visit tables_url
-    click_on "Stocks"
+    click_on "STOCKS", match: :first
     click_on "Modifier Attributs"
 
     fill_in "Nom", with: "Url"
     page.select "URL", from: "Type de données"
-    click_button "Ajouter ce nouvel attribut"
+    click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la table de données", match: :first
-    click_on "+ Ajouter"
+    click_on "Voir la collection d'objets", match: :first
+    click_on "(+) Stock"
     field = find('[data-testid="Url"]')
     field.fill_in with: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     click_button "Enregistrer"
@@ -165,16 +165,16 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create color field" do
     visit tables_url
-    click_on "Stocks"
+    click_on "STOCKS", match: :first
     click_on "Modifier Attributs"
 
     fill_in "Nom", with: "Couleur"
     page.select "Couleur", from: "Type de données"
-    click_button "Ajouter ce nouvel attribut"
+    click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la table de données", match: :first
-    click_on "+ Ajouter"
+    click_on "Voir la collection d'objets", match: :first
+    click_on "(+) Stock"
     field = find('[data-testid="Couleur"]')
     field.set("#FF0000")
     click_button "Enregistrer"
@@ -184,16 +184,16 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create gps field" do
     visit tables_url
-    click_on "Stocks"
+    click_on "STOCKS", match: :first
     click_on "Modifier Attributs"
 
     fill_in "Nom", with: "Coordonnées"
     page.select "GPS", from: "Type de données"
-    click_button "Ajouter ce nouvel attribut"
+    click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la table de données", match: :first
-    click_on "+ Ajouter"
+    click_on "Voir la collection d'objets", match: :first
+    click_on "(+) Stock"
     field = find('[data-testid="Coordonnées"]')
     field.fill_in with: '48.85879287621989, 2.294761243572842'
     click_button "Enregistrer"
@@ -206,16 +206,16 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create image field" do
     visit tables_url
-    click_on "Stocks"
+    click_on "STOCKS", match: :first
     click_on "Modifier Attributs"
 
     fill_in "Nom", with: "Image"
     page.select "Image", from: "Type de données"
-    click_button "Ajouter ce nouvel attribut"
+    click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la table de données", match: :first
-    click_on "+ Ajouter"
+    click_on "Voir la collection d'objets", match: :first
+    click_on "(+) Stock"
     field = find('[data-testid="Image"]')
     field.attach_file(Rails.root.join("test/fixtures/files/sample.jpg"))
     click_button "Enregistrer"
@@ -226,16 +226,16 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create pdf field" do
     visit tables_url
-    click_on "Stocks"
+    click_on "STOCKS", match: :first
     click_on "Modifier Attributs"
 
     fill_in "Nom", with: "PDF"
     page.select "PDF", from: "Type de données"
-    click_button "Ajouter ce nouvel attribut"
+    click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la table de données", match: :first
-    click_on "+ Ajouter"
+    click_on "Voir la collection d'objets", match: :first
+    click_on "(+) Stock"
     field = find('[data-testid="PDF"]')
     field.attach_file(Rails.root.join("test/fixtures/files/sample.pdf"))
     click_button "Enregistrer"
@@ -246,17 +246,17 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create table type field" do
     visit tables_url
-    click_on "Stocks"
+    click_on "STOCKS", match: :first
     click_on "Modifier Attributs"
 
     fill_in "Nom", with: "Interventions"
     page.select "Table", from: "Type de données"
     fill_in "Paramètres", with: "[Interventions.\"Lieu,Date\"]"
-    click_button "Ajouter ce nouvel attribut"
+    click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la table de données", match: :first
-    click_on "+ Ajouter"
+    click_on "Voir la collection d'objets", match: :first
+    click_on "(+) Stock"
     field = find('[data-testid="Interventions"]')
     field.select "Paris, 2023-12-25"
     click_button "Enregistrer"
@@ -278,22 +278,22 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     user_lecteur = users(:user_lecteur)
 
     visit tables_url
-    click_on "Interventions"
+    click_on "INTERVENTIONS", match: :first
     click_on "Modifier Attributs"
 
     fill_in "Nom", with: "Assigné à"
     page.select "Utilisateur", from: "Type de données"
-    click_button "Ajouter ce nouvel attribut"
+    click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la table de données", match: :first
-    click_on "+ Ajouter"
+    click_on "Voir la collection d'objets", match: :first
+    click_on "(+) Intervention"
     field = find('[data-testid="Assigné à"]')
     field.select user.name
     click_button "Enregistrer"
     assert_text "Données ajoutées avec succès :)"
 
-    click_on "+ Ajouter"
+    click_on "(+) Intervention"
     field = find('[data-testid="Assigné à"]')
     field.select user_lecteur.name
     click_button "Enregistrer"
@@ -305,8 +305,8 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "creating values" do
     visit tables_url
-    click_on "Stocks"
-    click_on "+ Ajouter"
+    click_on "STOCKS", match: :first
+    click_on "(+) Stock"
 
     # Ajout des values
     field = find('[data-testid="Marque"]')
@@ -318,10 +318,10 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "updating a Value" do
     visit tables_url
-    click_on "Stocks"
+    click_on "STOCKS", match: :first
     update_link = find('[data-testid="Modifier ligne n°1"]')
     update_link.click
-    assert_text "Formulaire 'Stocks'"
+    assert_text "Modification 'Stocks'"
     field = find('[data-testid="Marque"]')
     field.fill_in with: "RJ23"
     click_button "Enregistrer"
@@ -331,7 +331,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   
   test "destroying a Value" do
     visit tables_url
-    click_on "Stocks"
+    click_on "STOCKS", match: :first
     delete_button = find('[data-testid="Supprimer ligne n°1"]')
     page.accept_confirm do
       delete_button.click
@@ -344,7 +344,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     @table = tables(:stocks)
 
     visit tables_url
-    click_on @table.name
+    click_on @table.name.upcase
     assert_selector 'h1', text: 'Stocks'
 
     # fill_in 'Rechercher', with: 'RJ45'
