@@ -20,10 +20,10 @@ class FieldsController < ApplicationController
         @field.table.size.times do |index|
           @field.values.create(record_index: (index + 1))
         end   
-        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Nouvelle colonne ajoutée.' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Nouvel attribut ajouté.' }
         format.json { render :show, status: :created, location: @field }
       else
-        format.html { redirect_to show_attrs_path(id: @field.table.slug), alert: 'Veuillez donner un nom à cette colonne' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), alert: 'Veuillez donner un nom à cet attribut' }
         format.json { render json: @field.errors, status: :unprocessable_entity }
       end
     end
@@ -34,7 +34,7 @@ class FieldsController < ApplicationController
   def update
     respond_to do |format|
       if @field.update(field_params)
-        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Colonne modifiée avec succès.' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Attribut modifié avec succès.' }
         format.json { render :show, status: :ok, location: @field }
       else
         format.html { render :edit }
@@ -50,7 +50,7 @@ class FieldsController < ApplicationController
     @table.values.where(field_id:@field.id).destroy_all
     @field.destroy
     respond_to do |format|
-      format.html { redirect_to show_attrs_path(id: @field.table), notice: 'Colonne supprimée.' }
+      format.html { redirect_to show_attrs_path(id: @field.table), notice: 'Attribut supprimé.' }
       format.json { head :no_content }
     end
   end

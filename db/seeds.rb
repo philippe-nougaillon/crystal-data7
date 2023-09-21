@@ -1,17 +1,17 @@
 require 'dotenv/load'
 
 User.create!([
-  {name: "Démo", email: "philippe.nougaillon@gmail.com", password: ENV['DEMO_PASSWORD'], password_confirmation: ENV['DEMO_PASSWORD']},
+  {name: "Démo",      email: "philippe.nougaillon@gmail.com", password: ENV['DEMO_PASSWORD'], password_confirmation: ENV['DEMO_PASSWORD']},
   {name: "CDLecteur", email: "crystaldata.lecteur@gmail.com", password: ENV['LECTEUR_PASSWORD'], password_confirmation: ENV['LECTEUR_PASSWORD']},
-  {name: "CDAjouteur", email: "crystaldata.ajouteur@gmail.com", password: ENV['AJOUTEUR_PASSWORD'], password_confirmation: ENV['AJOUTEUR_PASSWORD']},
+  {name: "CDAjouteur",email: "crystaldata.ajouteur@gmail.com", password: ENV['AJOUTEUR_PASSWORD'], password_confirmation: ENV['AJOUTEUR_PASSWORD']},
   {name: "CDÉditeur", email: "crystaldata.editeur@gmail.com", password: ENV['EDITEUR_PASSWORD'], password_confirmation: ENV['EDITEUR_PASSWORD']}
 ])
 
 Table.create!([
-  {name: "Stocks",        notification: false, lifo: true, record_index: 2, slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"},
-  {name: "Interventions", notification: false, lifo: true, record_index: 3, slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"},
-  {name: "Techniciens",   notification: false, lifo: true, record_index: 3, slug: "e108afdb-362a-4395-ad09-867e44f2a5b0"},
-  {name: 'Frais',         notification: false, lifo: true, record_index: 7, slug: '7d75f3ca-a4e4-4280-917f-0f43f63318e2'}
+  {name: "Article",      notification: false, lifo: true, record_index: 2, slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"},
+  {name: "Intervention", notification: false, lifo: true, record_index: 3, slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"},
+  {name: "Technicien",   notification: false, lifo: true, record_index: 3, slug: "e108afdb-362a-4395-ad09-867e44f2a5b0"},
+  {name: 'Frais',        notification: false, lifo: true, record_index: 7, slug: '7d75f3ca-a4e4-4280-917f-0f43f63318e2'}
 ])
 
 TablesUser.create!([
@@ -37,7 +37,7 @@ Field.create!([
   {name: "Type",            table_id: 2, datatype: "Liste", items: "Dépose,Installation,Réparation", filtre: true, obligatoire: false, row_order: 3, operation: nil, slug: "ad18e6da-5474-4216-b508-7b9ded8fa54f"},
   {name: "Description",     table_id: 2, datatype: "Texte_long", items: nil, filtre: false, obligatoire: false, row_order: 4, operation: nil, slug: "0ebb2d39-055b-4b09-8aef-28ff4f7f75c1"},
   {name: "Prévoir escabeau?",table_id: 2, datatype: "Oui_non?", items: nil, filtre: false, obligatoire: false, row_order: 5, operation: nil, slug: "8c1aa55b-3ee0-4295-90bb-c4475a5f1049"},
-  {name: "Technicien",      table_id: 2, datatype: "Table", items: "[Techniciens.\"Nom,Prénom\"]", filtre: true, obligatoire: true, row_order: 6, operation: nil, slug: "a028f718-ce14-42ec-8ed6-e7a7d92c8f43"},
+  {name: "Technicien",      table_id: 2, datatype: "Table", items: "[Technicien.\"Nom,Prénom\"]", filtre: true, obligatoire: true, row_order: 6, operation: nil, slug: "a028f718-ce14-42ec-8ed6-e7a7d92c8f43"},
   {name: "Observations",    table_id: 2, datatype: "Texte_riche", items: nil, filtre: false, obligatoire: false, row_order: 7, operation: nil, slug: "f4088f22-ce58-4738-836e-a503f9bffe43"},
   {name: "Temps passé",     table_id: 2, datatype: "Nombre", items: nil, filtre: false, obligatoire: false, row_order: 8, operation: nil, slug: "0962d1b7-382e-4484-aa28-560bae2c5cbf"},
   {name: "Localisation",    table_id: 2, datatype: "GPS", items: nil, filtre: false, obligatoire: false, row_order: 9, operation: nil, visibility: 2, slug: "0962d1b7-382e-4484-aa28-560bae2cffff"},
@@ -51,8 +51,8 @@ Field.create!([
   {name: "Date",         table_id: 4, datatype: "Date", items: nil, filtre: false, obligatoire: true, row_order: 1, operation: nil, slug: "fd35beda-0a77-4dc6-a1e8-17e0630e9236"},
   {name: "Désignation",  table_id: 4, datatype: "Texte", items: nil, filtre: true, obligatoire: true, row_order: 2, operation: nil, slug: "65597fab-3140-4ff2-9661-bda5226fd3f0"},
   {name: "Montant",      table_id: 4, datatype: "Euros", items: nil, filtre: false, obligatoire: true, row_order: 3, operation: "Somme", slug: "01513e99-8422-4885-8c24-e9f2cd0d7cf5"},
-  {name: 'Intervention', table_id: 4, datatype: 'Table', items: "[Interventions.\"Date,Client,Type,Etat,Technicien\"]", filtre: false, obligatoire: true, row_order: 4, operation: nil, slug: '4d9d1981-524a-4e0b-aab5-7fa81511b444'},
-  {name: "Technicien",   table_id: 4, datatype: "Table", items: "[Techniciens.\"Nom,Prénom\"]", filtre: true, obligatoire: true, row_order: 5, operation: nil, slug: "c0e37920-9ec9-455a-846e-8a2d1ff42e39"},
+  {name: 'Intervention', table_id: 4, datatype: 'Table', items: "[Intervention.\"Date,Client,Type,Etat,Technicien\"]", filtre: false, obligatoire: true, row_order: 4, operation: nil, slug: '4d9d1981-524a-4e0b-aab5-7fa81511b444'},
+  {name: "Technicien",   table_id: 4, datatype: "Table", items: "[Technicien.\"Nom,Prénom\"]", filtre: true, obligatoire: true, row_order: 5, operation: nil, slug: "c0e37920-9ec9-455a-846e-8a2d1ff42e39"},
   
 ])
 
@@ -161,8 +161,6 @@ Value.create!([
   {record_index: 7, field_id: 23, data: "150"},
   {record_index: 7, field_id: 24, data: "3"},
   {record_index: 7, field_id: 25, data: "3"},
-
-
 
 ])
 

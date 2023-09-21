@@ -26,7 +26,7 @@
       <% color = items[value] %>
       <span class="badge bg-<%= color %>"><%= value %></span>
     <% when 'URL' %>
-      <%= link_to URI.parse(value).host, value, target: "_blank" %>
+      <%= link_to URI.parse(value).host, value, target: "_blank", data: { turbo_frame: "_top" } %>
     <% when 'Couleur' %>
       <span style="background-color: <%= value %>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
     <% when 'GPS' %>
@@ -34,7 +34,7 @@
     <% when 'Table' %>
       <% linked_value = field.get_linked_table_record(value.to_i) %>
       <% linked_table = Table.find(field.relation.relation_with_id) %>
-      <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value) %>
+      <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" } %>
     <% when 'Utilisateur' %>
       <%= value %>
     <% else %>

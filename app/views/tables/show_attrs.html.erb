@@ -1,11 +1,11 @@
 <div class="mb-4">
   <h1 class="text-primary">
     <span class="fa fa-gears"></span>
-    Structure de la table '<%= @table.name.humanize %>'
+    Structure de l'Objet '<%= @table.name.humanize %>'
   </h1>
 
   <div class="float-end mt-3">
-    <%= link_to 'Voir la table de données', @field.table, title:"Voir la table de données" %> 
+    <%= link_to "Voir la collection d'objets", @field.table, title: "Voir la collection d'objets" %> 
   </div>
 </div>
 
@@ -37,7 +37,7 @@
 <% end %>
 <br>
 
-<h3 class="mb-4">Ajouter une nouvelle colonne</h3>
+<h3 class="mb-4">Ajouter un nouvel attribut</h3>
 
 <% if @field %>	
 	<%= render partial:'fields/form' %>
