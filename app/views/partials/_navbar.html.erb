@@ -9,7 +9,7 @@
       <i class="fa-solid fa-circle-question text-info"></i>
     <% end %>
   </li>
-  <% if current_user %>
+  <% if user_signed_in? %>
     <li class="nav-item mx-auto">
       <%= link_to current_user, title: "Profil utilisateur" do %>
         <i class="fa-solid fa-circle-user fa-2xl text-primary"></i>
@@ -21,4 +21,47 @@
       <% end %>
     </li>
   <% end %>
+</nav>
+
+<nav class="navbar d-flex d-sm-none navbar-expand-lg fixed-top bg-secondary">
+  <div class="container-fluid">
+    <h1 class="navbar-brand mb-0">CrystalData</h1>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to root_path, title: "Liste des tables", class: 'nav-link text-white' do %>
+            <i class="fa-solid fa-house"></i>
+            <% if user_signed_in? %>
+              Tables
+            <% else%>
+              Accueil
+            <% end %>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to a_propos_path, title: "À Propos de CrystalData", class: 'nav-link text-info' do %>
+            <i class="fa-solid fa-circle-question"></i>
+            À Propos
+          <% end %>
+        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to current_user, title: "Profil utilisateur", class: 'nav-link text-primary' do %>
+              <i class="fa-solid fa-circle-user"></i>
+              Profil
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= button_to destroy_user_session_path, method: :delete, class:'nav-link btn btn-accent btn-outline !normal-case text-warning', 'data-turbo': false, title: 'Se déconnecter' do %>
+              <i class="fa-solid fa-right-from-bracket"></i>
+              Déconnexion
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 </nav>
