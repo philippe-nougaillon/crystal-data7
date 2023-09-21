@@ -4,7 +4,7 @@
       <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
     <% when 'Image', 'PDF' %>
       <% blob = Blob.find(value) %>
-      <% if blob.file.representable? %>
+      <% if blob.file.represenCollection? %>
         <%= link_to image_tag(blob.file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file), title: blob.file.filename %>
       <% end %>
     <% when 'Signature' %>
@@ -31,7 +31,7 @@
       <span style="background-color: <%= value %>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
     <% when 'GPS' %>
       <%= value %>
-    <% when 'Table' %>
+    <% when 'Collection' %>
       <% linked_value = field.get_linked_table_record(value.to_i) %>
       <% linked_table = Table.find(field.relation.relation_with_id) %>
       <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" } %>

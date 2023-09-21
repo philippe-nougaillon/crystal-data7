@@ -78,7 +78,7 @@
               <i class="fa-solid fa-location-crosshairs"></i>
             </button>
           </div>
-        <% when 'Table' %>
+        <% when 'Collection' %>
           <%# Checker si la liste vient d'une autre table %>
           <% if field.is_valid_table_params %>
             <%= select_tag field_name, options_for_select(field.populate_linked_table.invert, field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %> 

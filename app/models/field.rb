@@ -12,14 +12,14 @@ class Field < ApplicationRecord
 	belongs_to :table
 	has_many :values, dependent: :destroy
 	has_many :logs, dependent: :destroy
-  has_one :relation, dependent: :destroy
+	has_one :relation, dependent: :destroy
 
 	validates_presence_of :name
 	validates_presence_of :datatype
 
-	after_save :add_or_update_relation, if: Proc.new { |field| field.Table? }
+	after_save :add_or_update_relation, if: Proc.new { |field| field.Collection? }
 
-	enum datatype: [:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Table, :Texte_riche, :Utilisateur]
+	enum datatype: [:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur]
 	enum operation: [:Somme, :Moyenne]
 	enum visibility: [:Liste_et_Détails, :Vue_Liste, :Vue_Détails]
 
@@ -78,7 +78,7 @@ class Field < ApplicationRecord
 		
 		table.values.includes(:field).each do |value| 
 		  if source_fields.include?(value.field.name)
-				if value.field.datatype == 'Table' 
+				if value.field.datatype == 'Collection' 
 					unless table_data.key?(value.record_index) 
 						table_data[value.record_index] = "#{ value.field.name }=(#{ value.field.populate_linked_table[value.data.to_i] })"
 					else 
@@ -104,7 +104,7 @@ class Field < ApplicationRecord
 		
 		table.values.where(record_index: index).includes(:field).each do |value| 
       if (source_fields.include?(value.field.name)) 
-        if value.field.datatype == 'Table'
+        if value.field.datatype == 'Collection'
           table_data << "#{ value.field.name }=(#{value.field.get_linked_table_record(value.record_index)})"
         else
           table_data << value.data

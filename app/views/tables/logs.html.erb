@@ -42,14 +42,14 @@
             <td><%= record_index %></td>
             <td><%= field.name %></td>
             <td>
-              <% if field.Table? %>
+              <% if field.Collection? %>
                 <%= field.get_linked_table_record(value.to_i) %>
               <% else %>
                 <%= value %>
               <% end %>
             </td>
             <td>
-              <% if field.Table? %>
+              <% if field.Collection? %>
                 <%= field.get_linked_table_record(old_value.to_i) %>
               <% else %>
                 <%= old_value %>

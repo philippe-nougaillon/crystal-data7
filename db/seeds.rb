@@ -37,7 +37,7 @@ Field.create!([
   {name: "Type",            table_id: 2, datatype: "Liste", items: "Dépose,Installation,Réparation", filtre: true, obligatoire: false, row_order: 3, operation: nil, slug: "ad18e6da-5474-4216-b508-7b9ded8fa54f"},
   {name: "Description",     table_id: 2, datatype: "Texte_long", items: nil, filtre: false, obligatoire: false, row_order: 4, operation: nil, slug: "0ebb2d39-055b-4b09-8aef-28ff4f7f75c1"},
   {name: "Prévoir escabeau?",table_id: 2, datatype: "Oui_non?", items: nil, filtre: false, obligatoire: false, row_order: 5, operation: nil, slug: "8c1aa55b-3ee0-4295-90bb-c4475a5f1049"},
-  {name: "Technicien",      table_id: 2, datatype: "Table", items: "[Technicien.\"Nom,Prénom\"]", filtre: true, obligatoire: true, row_order: 6, operation: nil, slug: "a028f718-ce14-42ec-8ed6-e7a7d92c8f43"},
+  {name: "Technicien",      table_id: 2, datatype: "Collection", items: "[Technicien.\"Nom,Prénom\"]", filtre: true, obligatoire: true, row_order: 6, operation: nil, slug: "a028f718-ce14-42ec-8ed6-e7a7d92c8f43"},
   {name: "Observations",    table_id: 2, datatype: "Texte_riche", items: nil, filtre: false, obligatoire: false, row_order: 7, operation: nil, slug: "f4088f22-ce58-4738-836e-a503f9bffe43"},
   {name: "Temps passé",     table_id: 2, datatype: "Nombre", items: nil, filtre: false, obligatoire: false, row_order: 8, operation: nil, slug: "0962d1b7-382e-4484-aa28-560bae2c5cbf"},
   {name: "Localisation",    table_id: 2, datatype: "GPS", items: nil, filtre: false, obligatoire: false, row_order: 9, operation: nil, visibility: 2, slug: "0962d1b7-382e-4484-aa28-560bae2cffff"},
@@ -51,8 +51,8 @@ Field.create!([
   {name: "Date",         table_id: 4, datatype: "Date", items: nil, filtre: false, obligatoire: true, row_order: 1, operation: nil, slug: "fd35beda-0a77-4dc6-a1e8-17e0630e9236"},
   {name: "Désignation",  table_id: 4, datatype: "Texte", items: nil, filtre: true, obligatoire: true, row_order: 2, operation: nil, slug: "65597fab-3140-4ff2-9661-bda5226fd3f0"},
   {name: "Montant",      table_id: 4, datatype: "Euros", items: nil, filtre: false, obligatoire: true, row_order: 3, operation: "Somme", slug: "01513e99-8422-4885-8c24-e9f2cd0d7cf5"},
-  {name: 'Intervention', table_id: 4, datatype: 'Table', items: "[Intervention.\"Date,Client,Type,Etat,Technicien\"]", filtre: false, obligatoire: true, row_order: 4, operation: nil, slug: '4d9d1981-524a-4e0b-aab5-7fa81511b444'},
-  {name: "Technicien",   table_id: 4, datatype: "Table", items: "[Technicien.\"Nom,Prénom\"]", filtre: true, obligatoire: true, row_order: 5, operation: nil, slug: "c0e37920-9ec9-455a-846e-8a2d1ff42e39"},
+  {name: 'Intervention', table_id: 4, datatype: 'Collection', items: "[Intervention.\"Date,Client,Type,Etat,Technicien\"]", filtre: false, obligatoire: true, row_order: 4, operation: nil, slug: '4d9d1981-524a-4e0b-aab5-7fa81511b444'},
+  {name: "Technicien",   table_id: 4, datatype: "Collection", items: "[Technicien.\"Nom,Prénom\"]", filtre: true, obligatoire: true, row_order: 5, operation: nil, slug: "c0e37920-9ec9-455a-846e-8a2d1ff42e39"},
   
 ])
 

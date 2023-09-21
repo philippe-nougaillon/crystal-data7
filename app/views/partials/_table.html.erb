@@ -3,7 +3,7 @@
     <thead>
       <tr style="vertical-align: middle">
         <% table.fields.listable.each_with_index do | field, index | %>
-          <% unless action_name == 'show_details' && field.datatype == 'Table' && @relation.field == field %>
+          <% unless action_name == 'show_details' && field.datatype == 'Collection' && @relation.field == field %>
             <%= render partial: 'partials/table_header_cell', locals: {table:, field:, index:} %>
           <% end %>
         <% end %>

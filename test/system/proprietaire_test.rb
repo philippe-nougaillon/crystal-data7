@@ -250,7 +250,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_on "Modifier Attributs"
 
     fill_in "Nom", with: "Interventions"
-    page.select "Table", from: "Type de données"
+    page.select "Collection", from: "Type de données"
     fill_in "Paramètres", with: "[Interventions.\"Lieu,Date\"]"
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."

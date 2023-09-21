@@ -30,7 +30,7 @@
         <div>
           <%= label_tag "select[#{field.id}]", field.name.humanize %>
           <% default_value = params.permit![:select] ? params[:select][field.id.to_s] : 'nil' %>
-          <% if field.datatype == 'Table' %>
+          <% if field.datatype == 'Collection' %>
             <%= select_tag "select[#{field.id}]", 
                   options_for_select(field.populate_linked_table.invert, default_value), 
                   include_blank: true, 
