@@ -357,4 +357,22 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     send_keys(:return)
     assert_selector 'p', text: 'Affichage de 1 Stocks sur 3 au total'
   end
+
+  test 'filter les valeurs par date dans une table' do
+    @table = tables(:interventions)
+
+    visit tables_url
+    click_on @table.name.upcase
+    assert_selector 'h1', text: 'Interventions'
+
+    fill_in 'Du (Date)', with: '2023-12-24'
+    send_keys(:return)
+    fill_in 'Au (Date)', with: '2024-01-10'
+    send_keys(:return)
+    assert_selector 'p', text: 'Affichage de 1 Interventions sur 2 au total'
+
+    fill_in 'Au (Date)', with: ''
+    send_keys(:return)
+    assert_selector 'p', text: 'Affichage de 2 Interventions sur 2 au total'
+  end
 end
