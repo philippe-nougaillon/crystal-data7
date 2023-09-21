@@ -135,7 +135,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la collection d'objets", match: :first
+    click_on "Voir la Collection d'Objets", match: :first
     click_on "(+) Stock"
     field = find('[data-testid="État"]')
     field.select "Nouveau"
@@ -154,7 +154,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la collection d'objets", match: :first
+    click_on "Voir la Collection d'Objets", match: :first
     click_on "(+) Stock"
     field = find('[data-testid="Url"]')
     field.fill_in with: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
@@ -173,7 +173,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la collection d'objets", match: :first
+    click_on "Voir la Collection d'Objets", match: :first
     click_on "(+) Stock"
     field = find('[data-testid="Couleur"]')
     field.set("#FF0000")
@@ -192,7 +192,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la collection d'objets", match: :first
+    click_on "Voir la Collection d'Objets", match: :first
     click_on "(+) Stock"
     field = find('[data-testid="Coordonnées"]')
     field.fill_in with: '48.85879287621989, 2.294761243572842'
@@ -214,7 +214,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la collection d'objets", match: :first
+    click_on "Voir la Collection d'Objets", match: :first
     click_on "(+) Stock"
     field = find('[data-testid="Image"]')
     field.attach_file(Rails.root.join("test/fixtures/files/sample.jpg"))
@@ -234,7 +234,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la collection d'objets", match: :first
+    click_on "Voir la Collection d'Objets", match: :first
     click_on "(+) Stock"
     field = find('[data-testid="PDF"]')
     field.attach_file(Rails.root.join("test/fixtures/files/sample.pdf"))
@@ -255,7 +255,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la collection d'objets", match: :first
+    click_on "Voir la Collection d'Objets", match: :first
     click_on "(+) Stock"
     field = find('[data-testid="Interventions"]')
     field.select "Paris, 2023-12-25"
@@ -286,7 +286,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la collection d'objets", match: :first
+    click_on "Voir la Collection d'Objets", match: :first
     click_on "(+) Intervention"
     field = find('[data-testid="Assigné à"]')
     field.select user.name
