@@ -1,7 +1,7 @@
 <div class="container px-3">
 	<h1 class="text-primary">CrystalData</h1>
 	<h2 class="fw-normal text-secondary">Application NO-CODE de base de données<h2> 
-	<h2 class="fw-normal text-secondary">Créez des tables de données variées et partagez-les en ligne avec vos collaborateurs</h2>
+	<h2 class="fw-normal text-secondary">Créez des collections d'Objets variés et partagez-les en ligne avec vos collaborateurs</h2>
 	<h3 class="mt-5 text-warning">Motivation</h3>
 
 	<p>
@@ -45,8 +45,8 @@
 	<h3 class="mt-5 text-warning">Principales fonctionnalités</h3>
 
 	<ul class="list-group list-group-flush mb-5 w-75">
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Créez vos tables de données simplement à partir de feuilles Excel</li>
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Ajoutez des colonnes de types variés: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Image, PDF, Position GPS...</li>
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Créez vos collections d'Objets simplement à partir de feuilles Excel</li>
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Ajoutez des attibuts de types variés: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Image, PDF, Position GPS...</li>
 		<li class="list-group-item"><i class="fa fa-check text-success"></i> Ajoutez, éditez vos enregistrements dans un formulaire</li>
 		<li class="list-group-item"><i class="fa fa-check text-success"></i> Audit: chaque modification est consignée dans un historique (qui, quand, quoi)</li>
 		<li class="list-group-item"><i class="fa fa-check text-success"></i> Recherchez, filtrez et triez vos données</li> 
@@ -64,10 +64,10 @@
 			<div class="col">
 				<h4 class="mt-3">
 					<i class="fa fa-check"></i>
-					Créer des tables de données<br>
+					Créer des collections d'Objets<br>
 				</h4>
 
-				<p>Créez vos tables de donnée simplement à partir de feuilles Excel (exportées au format CSV)</p>
+				<p>Créez vos collections d'Objets simplement à partir de feuilles Excel (exportées au format CSV)</p>
 
 				<%= link_to image_path 'screen-lg.png' do %>
 					<%= image_tag 'screen-lg.png', class: 'img-thumbnail w-100' %>
@@ -77,11 +77,11 @@
 			<div class="col">
 				<h4 class="mt-3">
 					<i class="fa fa-check"></i>
-					Ajoutez de nouvelles colonnes 
+					Ajoutez de nouveaux attributs 
 				</h4>
 				
 				<p>
-					Ajoutez des colonnes de type: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, 
+					Ajoutez des attributs de type: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, 
 					Champ calculé (formule <%= link_to "Ruby","https://www.ruby-lang.org/fr/documentation/quickstart/", :target => "_blank" %>), 
 					Fichier, Image, 
 					Signature manuscrite, Coordonnées GPS, Météo locale
@@ -158,7 +158,7 @@
 	<h3 class="text-warning">Les types de données</h3>
 
 	<p>
-		Une table de données est constituée de colonne (ex: Marque, Couleur, Prix, Qté en stock) et chaque colonne peut avoir un type de données spécifique afin de s'adapter au mieux aux données contenues dans chaque colonne.
+		Une table de données est constituée d'attributs (ex: Marque, Couleur, Prix, Qté en stock...) et chaque attribut peut avoir un type de données spécifique afin de s'adapter au mieux aux données contenues dans chaque attribut.
 		Les types de données disponibles sont : 
 		<ul class="list-group list-group-flush mb-5 m-3">
 			<li>
@@ -172,7 +172,7 @@
 			<li>
 				Chiffres :
 				<ul>
-					<li><b>Nombre</b> : pour saisir des valeurs numériques, avec ou sans décimales. L'option 'Opération en bas de page', calculera la moyenne ou la somme des valeurs de la colonne.</li>
+					<li><b>Nombre</b> : pour saisir des valeurs numériques, avec ou sans décimales. L'option 'Opération en bas de page', calculera la moyenne ou la somme des valeurs de l'attribut.</li>
 					<li><b>Euros</b> : idem 'Nombre' mais affiche la valeur avec le symbole euros (€).</li>
 					<li><b>Formule</b> : champ calculé à partir de champs existants ou d'une formule en langage Ruby, ex: '[Temps Passé] * [Coût horaire]' ou '[Prix HT] * 1.2'
 				</ul>
@@ -185,7 +185,7 @@
 						pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.
 					</li>
 					<li>
-						pour contenir une liste de valeurs venant d'une autre table, en utilisant la syntaxe suivante : '[nom_table.nom_colonne]', ex: '[Utilisateurs.Nom]'. (Attention aux min/Majuscules)
+						pour contenir une liste de valeurs venant d'une autre table, en utilisant la syntaxe suivante : '[nom_table.nom_attribut]', ex: '[Utilisateurs.Nom]'. (Attention aux min/Majuscules)
 					</li>
 				</ol>
 			</li>

@@ -1,20 +1,20 @@
 <div class="mb-4">
   <h1 class="text-primary">
-    <%= @table.name.humanize %>
+    <%= @table.name.humanize.pluralize %>
   </h1>
 
   <div class="d-flex justify-content-end gap-2">
     <% if policy(@table).show_attrs? %>
-      <%= link_to 'Modifier Structure', show_attrs_path(id:@table), title:"Modifier la structure de la table ou des colonnes" %> 
+      <%= link_to 'Modifier Attributs', show_attrs_path(id:@table), title:"Modifier les attributs de l'Objet '#{@table.name}'" %> 
     <% end %>
     <% if policy(@table).partages? %>
-      <%= link_to "Partager", partages_path(@table), title:"Voir les utilisateurs qui partagent cette table" %>
+      <%= link_to "Partages", partages_path(@table), title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" %>
     <% end %>
     <% if policy(@table).export? %>
-      <%= link_to 'Exporter', export_path(@table), title:"Exporter les données" %>
+      <%= link_to 'Exporter', export_path(@table), title:"Exporter les données de l'Objet '#{@table.name}'" %>
     <% end %>
     <% if policy(@table).logs? %>
-      <%= link_to 'Audit Trail', logs_path(id:@table), title:"Historique des modifications" %>
+      <%= link_to 'Audit Trail', logs_path(id:@table), title:"Historique des modifications de l'Objet '#{@table.name}'" %>
     <% end %>
   </div>
 </div>
@@ -46,7 +46,7 @@
         </div>
       <% end %>
       <% if policy(@table).fill? %>
-        <%= link_to "+ Ajouter", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
+        <%= link_to "(+) #{@table.name}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
       <% end %>
     </div>
   <% end %>

@@ -18,21 +18,21 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
     fill_in "Nom de la table", with: "Interventions"
     click_button "Continuer"
-    assert_text "Table créée. Vous pouvez maintenant y ajouter des colonnes"
+    assert_text "Objet créé. Vous pouvez maintenant y ajouter des attributs"
 
     # Ajout de fields
     fill_in "Nom", with: "Titre"
     check "Obligatoire ?"
-    click_button "Ajouter cette nouvelle colonne"
-    assert_text "Nouvelle colonne ajoutée."
+    click_button "Ajouter ce nouvel attribut"
+    assert_text "Nouvel attribut ajouté."
     # TODO: checker si le type du field est un string
     # TODO: checker si le field est obligatoire
 
     sleep(1) # Pour éviter que ça aille trop vite et que ça plante
     fill_in "Nom", with: "Prix"
     page.select "Nombre", from: "Type de données"
-    click_button "Ajouter cette nouvelle colonne"
-    assert_text "Nouvelle colonne ajoutée."
+    click_button "Ajouter ce nouvel attribut"
+    assert_text "Nouvel attribut ajouté."
   end
 
   test "updating a Table" do
@@ -43,7 +43,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     fill_in "Nom", with: "Type"
     click_button "Modifier"
 
-    assert_text "Colonne modifiée avec succès."
+    assert_text "Attribut modifié avec succès."
   end
 
   test "destroying a Table" do
@@ -76,64 +76,64 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   test "creating a Field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier Structure"
+    click_on "Modifier Attributs"
 
     # Ajout d'un field
     fill_in "Nom", with: "Désignation"
-    click_button "Ajouter cette nouvelle colonne"
-    assert_text "Nouvelle colonne ajoutée."
+    click_button "Ajouter ce nouvel attribut"
+    assert_text "Nouvel attribut ajouté."
     assert_text "Désignation"
     # TODO: checker si le type du field est un string
     # TODO: checker si le field est obligatoire
 
     fill_in "Nom", with: "Prix"
     page.select "Nombre", from: "Type de données"
-    click_button "Ajouter cette nouvelle colonne"
-    assert_text "Nouvelle colonne ajoutée."
+    click_button "Ajouter ce nouvel attribut"
+    assert_text "Nouvel attribut ajouté."
     assert_text "Nombre"
 
     sleep(1)
     fill_in "Nom", with: "Lieu"
     page.select "Liste", from: "Type de données"
     fill_in "Paramètres", with: "[Interventions.Lieu]"
-    click_button "Ajouter cette nouvelle colonne"
-    assert_text "Nouvelle colonne ajoutée."
+    click_button "Ajouter ce nouvel attribut"
+    assert_text "Nouvel attribut ajouté."
     assert_text "Liste"
   end
 
   test "updating a Field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier Structure"
+    click_on "Modifier Attributs"
     click_on "Modifier", match: :first
     
     fill_in "Nom", with: "Description"
     click_button "Modifier"
     
-    assert_text "Colonne modifiée avec succès."
+    assert_text "Attribut modifié avec succès."
   end
   
   test "destroying a Field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier Structure"
+    click_on "Modifier Attributs"
     page.accept_confirm do
       click_on "X", match: :first
     end
 
-    assert_text "Colonne supprimée."
+    assert_text "Attribut supprimé."
   end
 
   test "create workflow field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier Structure"
+    click_on "Modifier Attributs"
 
     fill_in "Nom", with: "État"
     page.select "Workflow", from: "Type de données"
     fill_in "Paramètres", with: "Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary"
-    click_button "Ajouter cette nouvelle colonne"
-    assert_text "Nouvelle colonne ajoutée."
+    click_button "Ajouter ce nouvel attribut"
+    assert_text "Nouvel attribut ajouté."
 
     click_on "Voir la table de données", match: :first
     click_on "+ Ajouter"
@@ -147,12 +147,12 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   test "create url field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier Structure"
+    click_on "Modifier Attributs"
 
     fill_in "Nom", with: "Url"
     page.select "URL", from: "Type de données"
-    click_button "Ajouter cette nouvelle colonne"
-    assert_text "Nouvelle colonne ajoutée."
+    click_button "Ajouter ce nouvel attribut"
+    assert_text "Nouvel attribut ajouté."
 
     click_on "Voir la table de données", match: :first
     click_on "+ Ajouter"
@@ -166,12 +166,12 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   test "create color field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier Structure"
+    click_on "Modifier Attributs"
 
     fill_in "Nom", with: "Couleur"
     page.select "Couleur", from: "Type de données"
-    click_button "Ajouter cette nouvelle colonne"
-    assert_text "Nouvelle colonne ajoutée."
+    click_button "Ajouter ce nouvel attribut"
+    assert_text "Nouvel attribut ajouté."
 
     click_on "Voir la table de données", match: :first
     click_on "+ Ajouter"
@@ -185,12 +185,12 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   test "create gps field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier Structure"
+    click_on "Modifier Attributs"
 
     fill_in "Nom", with: "Coordonnées"
     page.select "GPS", from: "Type de données"
-    click_button "Ajouter cette nouvelle colonne"
-    assert_text "Nouvelle colonne ajoutée."
+    click_button "Ajouter ce nouvel attribut"
+    assert_text "Nouvel attribut ajouté."
 
     click_on "Voir la table de données", match: :first
     click_on "+ Ajouter"
@@ -207,12 +207,12 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   test "create image field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier Structure"
+    click_on "Modifier Attributs"
 
     fill_in "Nom", with: "Image"
     page.select "Image", from: "Type de données"
-    click_button "Ajouter cette nouvelle colonne"
-    assert_text "Nouvelle colonne ajoutée."
+    click_button "Ajouter ce nouvel attribut"
+    assert_text "Nouvel attribut ajouté."
 
     click_on "Voir la table de données", match: :first
     click_on "+ Ajouter"
@@ -227,12 +227,12 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   test "create pdf field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier Structure"
+    click_on "Modifier Attributs"
 
     fill_in "Nom", with: "PDF"
     page.select "PDF", from: "Type de données"
-    click_button "Ajouter cette nouvelle colonne"
-    assert_text "Nouvelle colonne ajoutée."
+    click_button "Ajouter ce nouvel attribut"
+    assert_text "Nouvel attribut ajouté."
 
     click_on "Voir la table de données", match: :first
     click_on "+ Ajouter"
@@ -247,13 +247,13 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   test "create table type field" do
     visit tables_url
     click_on "Stocks"
-    click_on "Modifier Structure"
+    click_on "Modifier Attributs"
 
     fill_in "Nom", with: "Interventions"
     page.select "Table", from: "Type de données"
     fill_in "Paramètres", with: "[Interventions.\"Lieu,Date\"]"
-    click_button "Ajouter cette nouvelle colonne"
-    assert_text "Nouvelle colonne ajoutée."
+    click_button "Ajouter ce nouvel attribut"
+    assert_text "Nouvel attribut ajouté."
 
     click_on "Voir la table de données", match: :first
     click_on "+ Ajouter"
@@ -279,12 +279,12 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
     visit tables_url
     click_on "Interventions"
-    click_on "Modifier Structure"
+    click_on "Modifier Attributs"
 
     fill_in "Nom", with: "Assigné à"
     page.select "Utilisateur", from: "Type de données"
-    click_button "Ajouter cette nouvelle colonne"
-    assert_text "Nouvelle colonne ajoutée."
+    click_button "Ajouter ce nouvel attribut"
+    assert_text "Nouvel attribut ajouté."
 
     click_on "Voir la table de données", match: :first
     click_on "+ Ajouter"

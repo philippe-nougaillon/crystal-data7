@@ -163,5 +163,3 @@ Value.create!([
   {record_index: 7, field_id: 25, data: "3"},
 
 ])
-
-Audited::Audit.delete_all

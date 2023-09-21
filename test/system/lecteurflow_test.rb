@@ -14,7 +14,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
 
   test "can't updating the Table" do
     visit tables_url
-    assert_no_selector "button[title='Modifier les colonnes de Intervention']"
+    assert_no_selector "button[title='Modifier les attributs de Intervention']"
     assert_raises(NoMethodError) do
       visit show_attrs_url(id: tables(:interventions).id)
     end
@@ -50,64 +50,64 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "creating a Field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Structure"
+  #   click_on "Modifier Attributs"
 
   #   # Ajout d'un field
   #   fill_in "Nom", with: "Désignation"
-  #   click_button "Ajouter cette nouvelle colonne"
-  #   assert_text "Nouvelle colonne ajoutée."
+  #   click_button "Ajouter ce nouvel attribut"
+  #   assert_text "Nouvel attribut ajouté."
   #   assert_text "Désignation"
   #   # TODO: checker si le type du field est un string
   #   # TODO: checker si le field est obligatoire
 
   #   fill_in "Nom", with: "Prix"
   #   page.select "Nombre", from: "Type de données"
-  #   click_button "Ajouter cette nouvelle colonne"
-  #   assert_text "Nouvelle colonne ajoutée."
+  #   click_button "Ajouter ce nouvel attribut"
+  #   assert_text "Nouvel attribut ajouté."
   #   assert_text "Nombre"
 
   #   sleep(1)
   #   fill_in "Nom", with: "Lieu"
   #   page.select "Liste", from: "Type de données"
   #   fill_in "Paramètres", with: "[Interventions.Lieu]"
-  #   click_button "Ajouter cette nouvelle colonne"
-  #   assert_text "Nouvelle colonne ajoutée."
+  #   click_button "Ajouter ce nouvel attribut"
+  #   assert_text "Nouvel attribut ajouté."
   #   assert_text "Liste"
   # end
 
   # test "updating a Field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Structure"
+  #   click_on "Modifier Attributs"
   #   click_on "Modifier", match: :first
     
   #   fill_in "Nom", with: "Description"
   #   click_button "Modifier"
     
-  #   assert_text "Colonne modifiée avec succès."
+  #   assert_text "Attribut modifié avec succès."
   # end
   
   # test "destroying a Field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Structure"
+  #   click_on "Modifier Attributs"
   #   page.accept_confirm do
   #     click_on "X", match: :first
   #   end
 
-  #   assert_text "Colonne supprimée."
+  #   assert_text "Attribut supprimé."
   # end
 
   # test "create workflow field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Structure"
+  #   click_on "Modifier Attributs"
 
   #   fill_in "Nom", with: "État"
   #   page.select "Workflow", from: "Type de données"
   #   fill_in "Paramètres", with: "Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary"
-  #   click_button "Ajouter cette nouvelle colonne"
-  #   assert_text "Nouvelle colonne ajoutée."
+  #   click_button "Ajouter ce nouvel attribut"
+  #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
   #   click_on "+ Ajouter"
@@ -121,12 +121,12 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "create url field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Structure"
+  #   click_on "Modifier Attributs"
 
   #   fill_in "Nom", with: "Url"
   #   page.select "URL", from: "Type de données"
-  #   click_button "Ajouter cette nouvelle colonne"
-  #   assert_text "Nouvelle colonne ajoutée."
+  #   click_button "Ajouter ce nouvel attribut"
+  #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
   #   click_on "+ Ajouter"
@@ -140,12 +140,12 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "create color field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Structure"
+  #   click_on "Modifier Attributs"
 
   #   fill_in "Nom", with: "Couleur"
   #   page.select "Couleur", from: "Type de données"
-  #   click_button "Ajouter cette nouvelle colonne"
-  #   assert_text "Nouvelle colonne ajoutée."
+  #   click_button "Ajouter ce nouvel attribut"
+  #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
   #   click_on "+ Ajouter"
@@ -159,12 +159,12 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "create gps field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Structure"
+  #   click_on "Modifier Attributs"
 
   #   fill_in "Nom", with: "Coordonnées"
   #   page.select "GPS", from: "Type de données"
-  #   click_button "Ajouter cette nouvelle colonne"
-  #   assert_text "Nouvelle colonne ajoutée."
+  #   click_button "Ajouter ce nouvel attribut"
+  #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
   #   click_on "+ Ajouter"
@@ -181,12 +181,12 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "create image field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Structure"
+  #   click_on "Modifier Attributs"
 
   #   fill_in "Nom", with: "Image"
   #   page.select "Image", from: "Type de données"
-  #   click_button "Ajouter cette nouvelle colonne"
-  #   assert_text "Nouvelle colonne ajoutée."
+  #   click_button "Ajouter ce nouvel attribut"
+  #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
   #   click_on "+ Ajouter"
@@ -201,12 +201,12 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "create pdf field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Structure"
+  #   click_on "Modifier Attributs"
 
   #   fill_in "Nom", with: "PDF"
   #   page.select "PDF", from: "Type de données"
-  #   click_button "Ajouter cette nouvelle colonne"
-  #   assert_text "Nouvelle colonne ajoutée."
+  #   click_button "Ajouter ce nouvel attribut"
+  #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
   #   click_on "+ Ajouter"
@@ -221,13 +221,13 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "create table type field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Structure"
+  #   click_on "Modifier Attributs"
 
   #   fill_in "Nom", with: "Interventions"
   #   page.select "Table", from: "Type de données"
   #   fill_in "Paramètres", with: "[Interventions.\"Lieu,Date\"]"
-  #   click_button "Ajouter cette nouvelle colonne"
-  #   assert_text "Nouvelle colonne ajoutée."
+  #   click_button "Ajouter ce nouvel attribut"
+  #   assert_text "Nouvel attribut ajouté."
 
   #   click_on "Voir la table de données", match: :first
   #   click_on "+ Ajouter"

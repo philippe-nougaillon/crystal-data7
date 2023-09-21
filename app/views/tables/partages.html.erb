@@ -1,13 +1,13 @@
 <h1 class="text-primary mb-4">
-	Liste des partages de '<%= @table.name.humanize %>'
+	Liste des partages de l'Objet '<%= @table.name.humanize %>'
 </h1>
 
 <div class="overflow-x-auto">
   <table class="table table-striped table-hover table-bordered table-responsive">
 		<thead>
 			<tr>
-				<th>Nom utilisateur</th>
-				<th>Adresse mail</th>
+				<th>Utilisateur</th>
+				<th>Email</th>
 				<th>Rôle</th><th />
 			</tr>
 		</thead>
@@ -27,7 +27,7 @@
 		<% end %>
   </table>
 </div>
-<i><small>Seul les utilisateurs propriétaires peuvent modifier la structure de la table</small></i>
+<i><small>Seuls les utilisateurs propriétaires peuvent modifier les attributs de l'Objets</small></i>
 <br><br>
 
 <% if policy(@table).add_user? %>

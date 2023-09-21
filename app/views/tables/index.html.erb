@@ -12,7 +12,7 @@
         <th>Nom</th>
         <th class="col-md-4">Attributs</th>
         <th>Rôle</th>
-        <th class="col-md-2">Partagée avec</th>
+        <th class="col-md-2">Partagé avec</th>
         <th>MÀJ</th>
         <th></th>
         <th></th>
@@ -29,20 +29,20 @@
             <td>
               <%= table.shared_with(current_user) %>
               <% if policy(table).partages? %>
-                <%= link_to partages_path(table), title: "Partager avec un autre utilisateur" do %>
-                  +
+                <%= link_to partages_path(table), title: "Partager avec un autre utilisateur", class: 'text-decoration-none' do %>
+                  (+)
                 <% end %>
               <% end %>
             </td>
             <td><%= "il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" unless table.size.zero? %></td>
             <td>
               <% if policy(table).show_attrs? %>
-                <%= link_to 'Modifier Structure', show_attrs_path(id: table.slug), title:"Modifier les colonnes de '#{table.name}'", class: 'btn btn-outline-warning btn-sm' %>
+                <%= link_to 'Modifier Attributs', show_attrs_path(id: table.slug), title:"Modifier les attributs de l'Objet '#{table.name}'", class: 'btn btn-outline-warning btn-sm' %>
               <% end %>
             </td>
             <td>
               <% if policy(table).destroy? %>
-                <%= link_to 'X', table, data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm' %>
+                <%= link_to 'X', table, title: "Supprimer l'Objet #{table.name}", 'data-turbo-method': :delete, 'data-turbo-confirm': "Êtes-vous certain.e de vouloir supprimer l'Objet #{table.name} ? Toutes les données enregistrées dedans seront perdues !", class: 'btn btn-outline-danger btn-sm' %>
               <% end %>
             </td>
           </tr>
@@ -67,7 +67,7 @@
     Nouveau Type d'Objet
   <% end %>
 
-  <%= link_to import_path, class: 'btn btn-outline-warning' do %>
+  <% link_to import_path, class: 'btn btn-outline-warning' do %>
     Importer
   <% end %>
 </div>

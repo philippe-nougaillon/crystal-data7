@@ -23,7 +23,7 @@ class FieldsController < ApplicationController
         format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Nouvel attribut ajouté.' }
         format.json { render :show, status: :created, location: @field }
       else
-        format.html { redirect_to show_attrs_path(id: @field.table.slug), alert: 'Veuillez donner un nom à cet attribut' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), alert: 'Un problème est survenu lors de la création de l\'attribut' }
         format.json { render json: @field.errors, status: :unprocessable_entity }
       end
     end

@@ -1,4 +1,6 @@
-<h1 class="text-primary mb-4">Formulaire '<%= @table.name.humanize %>'</h1>
+<h1 class="text-primary mb-4">
+  <%= "#{params[:record_index] ? 'Modification' : 'Ajout'} '#{@table.name.humanize}'" %>
+</h1>
 
 <%= form_tag fill_do_path, multipart: true do %>
 
@@ -90,6 +92,6 @@
 
   <div class="d-flex flex-wrap align-items-center gap-2">
     <%= submit_tag "Enregistrer", class: 'btn btn-outline-primary'%>
-    <%= link_to "Voir la collection '#{@table.name}'", @table %>
+    <%= link_to "Voir la collection '#{@table.name.pluralize}'", @table, title: "Voir la collection d'objets" %>
   </div>
 <% end %>

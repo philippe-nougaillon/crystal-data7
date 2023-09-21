@@ -14,7 +14,14 @@
     <% end %>
     <%= link_to "Retour", table_path(@table) %>
   </div>
+
+  <div class="mt-4">
+    <%= turbo_frame_tag "main_frame" do %>
+    <% end %>
+  </div>
 </div>
+
+
 
 <% if @records %>
   <ul class="nav nav-tabs w-100 mt-4">
@@ -26,11 +33,6 @@
   </ul>
 
   <%= render partial: 'partials/related_tables', locals: {table: @relation.table, records: @records} %>
-
-  <div class="mt-4">
-    <%= turbo_frame_tag "main_frame" do %>
-    <% end %>
-  </div>
 
   <script>
     function activeLink() {

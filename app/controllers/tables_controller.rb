@@ -234,7 +234,7 @@ class TablesController < ApplicationController
     respond_to do |format|
       if @table.save
         @table.tables_users << TablesUser.create(table_id: @table.id, user_id: current_user.id, role: "Propriétaire")
-        format.html { redirect_to show_attrs_path(id: @table), notice: "Table créée. Vous pouvez maintenant y ajouter des colonnes" }
+        format.html { redirect_to show_attrs_path(id: @table), notice: "Objet créé. Vous pouvez maintenant y ajouter des attributs" }
         format.json { render :show, status: :created, location: @table }
       else
         format.html { render :new }

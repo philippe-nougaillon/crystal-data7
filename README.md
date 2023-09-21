@@ -2,7 +2,7 @@
 
 # Vos données métier, en ligne et en mobilité 
 
-Cette application Web vous permet de créer des tables de données à partir de feuilles Excel, de les partager en ligne et en mobilité
+Cette application Web vous permet de créer des collections d'Objets à partir de feuilles Excel, de les partager en ligne et en mobilité
 
 # Motivation
 
@@ -28,7 +28,7 @@ intégrant les liens entre les données, les règles métiers et les vues person
 # Fonctionnalités
 
 * Créez vos tables de donnée simplement à partir de feuilles Excel (exportées au format CSV)
-* Ajoutez des colonnes de type: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Champ calculé, Fichier, Signature manuscrite, Coordonnées GPS, Météo locale
+* Ajoutez des attributs de type: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Champ calculé, Fichier, Signature manuscrite, Coordonnées GPS, Météo locale
 * Ajoutez, éditez vos enregistrements dans un formulaire
 * Un formulaire permet de saisir vos données, sur PC ou sur mobile
 * Audit: chaque modification est consignée dans un historique (qui, quand, quoi)
