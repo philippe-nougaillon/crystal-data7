@@ -492,7 +492,7 @@ class TablesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def table_params
-      params.require(:table).permit(:name, :record_index, :lifo, :notification)
+      params.require(:table).permit(:name, :record_index, :lifo, :notification, :show_on_startup_screen)
     end
 
     def is_user_authorized?

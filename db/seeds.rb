@@ -8,10 +8,10 @@ User.create!([
 ])
 
 Table.create!([
-  {name: "Article",      notification: false, lifo: true, record_index: 2, slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"},
-  {name: "Intervention", notification: false, lifo: true, record_index: 3, slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"},
-  {name: "Technicien",   notification: false, lifo: true, record_index: 3, slug: "e108afdb-362a-4395-ad09-867e44f2a5b0"},
-  {name: 'Frais',        notification: false, lifo: true, record_index: 7, slug: '7d75f3ca-a4e4-4280-917f-0f43f63318e2'}
+  {name: "Article",      notification: false, lifo: true, show_on_startup_screen: false, record_index: 2, slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"},
+  {name: "Intervention", notification: false, lifo: true, show_on_startup_screen: true, record_index: 3, slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"},
+  {name: "Technicien",   notification: false, lifo: true, show_on_startup_screen: false, record_index: 3, slug: "e108afdb-362a-4395-ad09-867e44f2a5b0"},
+  {name: 'Frais',        notification: false, lifo: true, show_on_startup_screen: false, record_index: 7, slug: '7d75f3ca-a4e4-4280-917f-0f43f63318e2'}
 ])
 
 TablesUser.create!([

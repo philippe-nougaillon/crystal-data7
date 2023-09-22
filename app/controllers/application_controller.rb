@@ -12,6 +12,14 @@ class ApplicationController < ActionController::Base
   before_action :prepare_exception_notifier
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  def after_sign_in_path_for(user)
+    if user.favorite_table.present?
+      table_path(user.favorite_table)
+    else
+      tables_path
+    end
+  end
+
 private
 
   def detect_device_format

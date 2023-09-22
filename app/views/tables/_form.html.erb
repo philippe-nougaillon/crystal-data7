@@ -1,25 +1,34 @@
 <%= form_for(@table) do |f| %>
 
-  <%= f.label :name, "Nom du nouveau Type d'Objet" %>
+  <%= f.label :name, "Nom de l'Objet" %>
   <%= f.text_field :name, required: true, 
                     placeholder: 'Ex: Article, Intervention, Technicien, Chantier...', 
                     autofocus: true, 
-                    class: 'form-control mb-4 w-25' %>
+                    class: 'form-control mb-4 w-25',
+                    disabled: action_name == "edit" %>
 
-  <div class="mb-4">
-    <%= f.check_box :lifo %>
-    <%= f.label :lifo, "Trier ?" %>
-    <div id="lifo" class="form-text">
+  <div class="form-check mb-4">
+    <%= f.check_box :lifo, class: 'form-check-input' %>
+    <%= f.label :lifo, "Trier ?", class: 'form-check-label' %>
+    <p class="form-text">
       Trier la collection par date de modification (le dernier objet modifié apparaît en haut de la liste)
-    </div>
+    </p>
   </div>
 
-  <div class="mb-4">
-    <%= f.check_box :notification %>
-    <%= f.label :notification, "Notification ?" %>
-    <div class="form-text">
+  <div class="form-check mb-4">
+    <%= f.check_box :notification, class: 'form-check-input' %>
+    <%= f.label :notification, "Notification ?", class: 'form-check-label' %>
+    <p class="form-text">
       Si vous voulez être notifié à chaque ajout d'un nouvel objet dans la collection
-    </div>
+    </p>
+  </div>
+
+  <div class="form-check mb-4">
+    <%= f.check_box :show_on_startup_screen, class: 'form-check-input' %>
+    <%= f.label :show_on_startup_screen, "Voir cette collection d'Objets sur la page d'accueil", class: 'form-check-label' %>
+    <p class="form-text">
+      Trier la collection par date de modification (le dernier objet modifié apparaît en haut de la liste)
+    </p>
   </div>
 
   <%= f.submit @table.new_record? ? "Continuer" : "Modifier cet objet", class: 'btn btn-outline-primary' %>

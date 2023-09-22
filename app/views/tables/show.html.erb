@@ -10,6 +10,9 @@
     <% if policy(@table).partages? %>
       <%= link_to "Partages", partages_path(@table), title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" %>
     <% end %>
+    <% if policy(@table).edit? %>
+      <%= link_to 'Modifier Objet', edit_table_path(id:@table), title:"Modifier l'Objet '#{@table.name}'" %> 
+    <% end %>
     <% if policy(@table).export? %>
       <%= link_to 'Exporter', export_path(@table), title:"Exporter les données de l'Objet '#{@table.name}'" %>
     <% end %>
@@ -27,15 +30,19 @@
         <%= text_field_tag :search, params[:search], onchange:'this.form.submit()', class:'form-control' %>
       </div>
       <% @table.fields.filtres.each do | field | %>
-        <div>
-          <% if field.datatype == 'Date' %>
-            <% default_value_du = params.permit![:du] ? params[:du][field.id.to_s] : 'nil' %>
-            <% default_value_au = params.permit![:au] ? params[:au][field.id.to_s] : 'nil' %>
+        <% if field.datatype == 'Date' %>
+          <% default_value_du = params.permit![:du] ? params[:du][field.id.to_s] : 'nil' %>
+          <% default_value_au = params.permit![:au] ? params[:au][field.id.to_s] : 'nil' %>
+          <div>
             <%= label_tag "du[#{field.id}]", "Du (#{field.name.humanize})" %>
             <%= date_field_tag "du[#{field.id}]", default_value_du, class: 'form-control', onchange: 'this.form.submit()' %>
+          </div>
+          <div>
             <%= label_tag "au[#{field.id}]","Au (#{field.name.humanize})" %>
             <%= date_field_tag "au[#{field.id}]", default_value_au, class: 'form-control', onchange: 'this.form.submit()' %>
-          <% else %>
+          </div>
+        <% else %>
+          <div>
             <%= label_tag "select[#{field.id}]", field.name.humanize %>
             <% default_value = params.permit![:select] ? params[:select][field.id.to_s] : 'nil' %>
             <% if field.datatype == 'Collection' %>
@@ -51,8 +58,8 @@
                     class: 'form-select', 
                     onchange: 'this.form.submit()' %>
             <% end %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       <% end %>
       <% if policy(@table).fill? %>
         <%= link_to "(+) #{@table.name}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
