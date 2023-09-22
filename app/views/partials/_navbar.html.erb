@@ -54,6 +54,30 @@
             Mes Objets
           <% end %>
         </li>
+        <% if controller_name == "tables" && action_name != "index" %>
+          <li class="nav-item dropdown">
+            <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <%= @table.name %>
+            </span>
+            <ul class="dropdown-menu">
+              <% if policy(@table).show_attrs? %>
+                <li><%= link_to 'Modifier Attributs', show_attrs_path(id:@table), class:'dropdown-item', title:"Modifier les attributs de l'Objet '#{@table.name}'" %> </li>
+              <% end %>
+              <% if policy(@table).edit? %>
+                <li><%= link_to 'Modifier Objet', edit_table_path(id:@table), class:'dropdown-item', title:"Modifier l'Objet '#{@table.name}'" %> </li>
+              <% end %>
+              <% if policy(@table).partages? %>
+                <li><%= link_to "Partages", partages_path(@table), class:'dropdown-item', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" %></li>
+              <% end %>
+              <% if policy(@table).export? %>
+                <li><%= link_to 'Exporter', export_path(@table), class:'dropdown-item', title:"Exporter les données de l'Objet '#{@table.name}'" %></li>
+              <% end %>
+              <% if policy(@table).logs? %>
+                <li><%= link_to 'Audit Trail', logs_path(id:@table), class:'dropdown-item', title:"Historique des modifications de l'Objet '#{@table.name}'" %></li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
         <li class="nav-item">
           <%= link_to a_propos_path, title: "À Propos de CrystalData", class: 'nav-link text-info' do %>
             <i class="fa-solid fa-circle-question"></i>

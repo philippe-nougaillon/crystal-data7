@@ -3,7 +3,7 @@
     <%= @table.name.humanize.pluralize %>
   </h1>
 
-  <div class="d-flex justify-content-end gap-2">
+  <div class="d-none d-sm-flex justify-content-end gap-2">
     <% if policy(@table).show_attrs? %>
       <%= link_to 'Modifier Attributs', show_attrs_path(id:@table), title:"Modifier les attributs de l'Objet '#{@table.name}'" %> 
     <% end %>
