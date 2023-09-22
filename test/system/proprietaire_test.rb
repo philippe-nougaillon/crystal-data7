@@ -14,9 +14,9 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   
   # test "creating a Table" do
   #   visit tables_url
-  #   click_on "Nouveau Type d'Objet"
+  #   click_on "Nouvel Objet"
 
-  #   fill_in "Nom du nouveau Type d'Objet", with: "Interventions"
+  #   fill_in "Nom du Nouvel Objet", with: "Interventions"
   #   click_button "Continuer"
   #   assert_text "Objet créé. Vous pouvez maintenant y ajouter des attributs"
 
