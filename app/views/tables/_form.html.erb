@@ -2,16 +2,16 @@
 
   <%= f.label :name, "Nom de l'Objet" %>
   <%= f.text_field :name, required: true, 
-                    placeholder: 'Ex: Article, Intervention, Technicien, Chantier...', 
+                    placeholder: 'Ex: Article, Intervention, Technicien, Chantier, Site...', 
                     autofocus: true, 
-                    class: 'form-control mb-4 w-25',
+                    class: 'form-control mb-4 w-sm-50',
                     disabled: action_name == "edit" %>
 
   <div class="form-check mb-4">
     <%= f.check_box :lifo, class: 'form-check-input' %>
     <%= f.label :lifo, "Trier ?", class: 'form-check-label' %>
     <p class="form-text">
-      Trier la collection par date de modification (le dernier objet modifié apparaît en haut de la liste)
+      Trier la collection par date de modification (le dernier objet modifié apparaît en haut de la collection)
     </p>
   </div>
 
@@ -19,15 +19,15 @@
     <%= f.check_box :notification, class: 'form-check-input' %>
     <%= f.label :notification, "Notification ?", class: 'form-check-label' %>
     <p class="form-text">
-      Si vous voulez être notifié à chaque ajout d'un nouvel objet dans la collection
+      Si vous voulez être notifié à chaque ajout d'un nouvel objet dans cette collection
     </p>
   </div>
 
   <div class="form-check mb-4">
     <%= f.check_box :show_on_startup_screen, class: 'form-check-input' %>
-    <%= f.label :show_on_startup_screen, "Voir cette collection d'Objets sur la page d'accueil", class: 'form-check-label' %>
+    <%= f.label :show_on_startup_screen, "Collection préférée ?", class: 'form-check-label' %>
     <p class="form-text">
-      Trier la collection par date de modification (le dernier objet modifié apparaît en haut de la liste)
+      Pour voir cette collection directement après s'être connecté
     </p>
   </div>
 

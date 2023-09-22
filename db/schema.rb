@@ -141,7 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_074842) do
     t.boolean "lifo", default: false
     t.string "slug"
     t.integer "record_index", default: 0, null: false
-    t.boolean "show_on_startup_screen"
+    t.boolean "show_on_startup_screen", default: false
     t.index ["slug"], name: "index_tables_on_slug", unique: true
   end
 
