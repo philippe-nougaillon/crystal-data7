@@ -1,24 +1,29 @@
-<h1 class="text-primary">
-  Partager l'Objet '<%= @table.name.humanize %>' avec un autre utilisateur
-</h1>
-<br>
+<%= turbo_frame_tag "partage_frame" do %>
+  <h1 class="text-primary">
+    Partager l'Objet '<%= @table.name.humanize %>' avec un autre utilisateur
+  </h1>
+  <br>
 
-<%= form_for :user, url: '/add_user_do' do %>
+  <%= form_for :user, url: '/add_user_do' do %>
 
-  <%= hidden_field_tag :id, params[:id] %>
+    <%= hidden_field_tag :id, params[:id] %>
 
-  <h4>Entrez l'adresse mail de l'utilisateur avec qui vous souhaitez partager cet Objet.</h4>
+    <h4>Entrez l'adresse mail de l'utilisateur avec qui vous souhaitez partager cet Objet.</h4>
 
-  <div>
-    <div class="col-sm-5">
-      <i><small>Si l'utilisateur n'a pas de compte,  <%# link_to "créez-lui un compte maintenant", new_registration_path(user) %></small></i>
-      <br><br>
-      <%= label_tag :email %>
-      <%= text_field_tag :email, nil, class:'form-control w-100', required: true %>
-      <%= label_tag :role %>
-      <%= select_tag :role, options_for_select(TablesUser.roles.keys.reject { |i| i == "Propriétaire" }), class:'form-select', required: true %>
-      <br>
-      <%= submit_tag "Partager", class: 'btn btn-outline-primary' %>
+    <div>
+      <div class="col-sm-5">
+        <i><small>Si l'utilisateur n'a pas de compte,  <%# link_to "créez-lui un compte maintenant", new_registration_path(user) %></small></i>
+        <br><br>
+        <%= label_tag :email %>
+        <%= text_field_tag :email, nil, class:'form-control w-100' %>
+        <span> ou </span>
+        <% users_not_in = User.where.not(id: @table.users.pluck(:id)).where(id: current_user.tables.map { |t| t.users.pluck(:id)}.flatten.uniq).pluck(:email) %>
+        <%= select_tag :email, options_for_select(users_not_in), include_blank: true, class: 'form-select w-100 mb-4' %>
+        <%= label_tag :role %>
+        <%= select_tag :role, options_for_select(TablesUser.roles.keys.reject { |i| i == "Propriétaire" }), class:'form-select', required: true %>
+        <br>
+        <%= submit_tag "Partager", class: 'btn btn-outline-primary', 'data-turbo-frame': "_top" %>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>

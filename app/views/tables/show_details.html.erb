@@ -9,7 +9,7 @@
       |
     <% end %>
     <% if policy(@table).logs? %>
-      <%= link_to "Audit Trail", logs_path(record_index: @record_index), title:"Audit des modifications", data: { turbo_frame: "main_frame" } %>
+      <%= link_to "Audit Trail", logs_path(record_index: @record_index), title:"Audit des modifications", data: { turbo_frame: "audit_frame" } %>
       |
     <% end %>
     <%= link_to "Retour", table_path(@table) %>
