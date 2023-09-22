@@ -7,11 +7,11 @@
     <% if policy(@table).show_attrs? %>
       <%= link_to 'Modifier Attributs', show_attrs_path(id:@table), title:"Modifier les attributs de l'Objet '#{@table.name}'" %> 
     <% end %>
-    <% if policy(@table).partages? %>
-      <%= link_to "Partages", partages_path(@table), title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" %>
-    <% end %>
     <% if policy(@table).edit? %>
       <%= link_to 'Modifier Objet', edit_table_path(id:@table), title:"Modifier l'Objet '#{@table.name}'" %> 
+    <% end %>
+    <% if policy(@table).partages? %>
+      <%= link_to "Partages", partages_path(@table), title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" %>
     <% end %>
     <% if policy(@table).export? %>
       <%= link_to 'Exporter', export_path(@table), title:"Exporter les données de l'Objet '#{@table.name}'" %>

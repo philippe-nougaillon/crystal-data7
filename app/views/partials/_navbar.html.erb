@@ -1,8 +1,8 @@
-<nav class="nav d-none d-sm-flex flex-column bg-secondary gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100 align-items-center">
+<nav class="nav d-none d-sm-flex flex-column bg-white shadow gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100 align-items-center">
   <div class="flex-fill d-flex flex-column gap-5 mt-2">
     <li class="nav-item">
       <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Page d'accueil" do %>
-        <i class="fa-solid fa-house text-white"></i>
+        <i class="fa-solid fa-house text-primary"></i>
       <% end %>
     </li>
     <li class="nav-item">
@@ -19,7 +19,7 @@
   <% if user_signed_in? %>
     <li class="nav-item">
       <%= link_to current_user, title: "Profil utilisateur" do %>
-        <i class="fa-solid fa-circle-user fa-2xl text-primary"></i>
+        <i class="fa-solid fa-circle-user fa-2xl text-success"></i>
       <% end %>
     </li>
     <li class="nav-item">
@@ -30,7 +30,7 @@
   <% end %>
 </nav>
 
-<nav class="navbar d-flex d-sm-none navbar-expand-lg fixed-top bg-secondary">
+<nav class="navbar d-flex d-sm-none navbar-expand-lg fixed-top bg-white shadow-sm">
   <div class="container-fluid">
     <h1 class="navbar-brand mb-0">CrystalData</h1>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,10 +39,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'nav-link text-white' do %>
+          <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'nav-link text-primary' do %>
             <i class="fa-solid fa-house"></i>
             <% if user_signed_in? %>
-              Objet Principal  
+              Ma collection favorite  
             <% else%>
               Accueil
             <% end %>
@@ -51,7 +51,7 @@
         <li class="nav-item">
           <%= link_to tables_path, title: "Liste des tables", class: 'nav-link text-muted' do %>
             <i class="fa-solid fa-cubes"></i>
-            Tables
+            Mes Objets
           <% end %>
         </li>
         <li class="nav-item">
@@ -62,7 +62,7 @@
         </li>
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to current_user, title: "Profil utilisateur", class: 'nav-link text-primary' do %>
+            <%= link_to current_user, title: "Profil utilisateur", class: 'nav-link text-success' do %>
               <i class="fa-solid fa-circle-user"></i>
               Profil
             <% end %>

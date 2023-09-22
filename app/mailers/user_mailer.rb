@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class UserMailer < ApplicationMailer
-	default from: '"crystalData" <crystaldata@philnoug.com>'
+	default from: '"CrystalData" <crystaldata@philnoug.com>'
 
 	def notification(table, items)
 		@items = items
