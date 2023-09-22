@@ -2,39 +2,39 @@
 	Liste des partages de l'Objet '<%= @table.name.humanize %>'
 </h1>
 
-<%= turbo_frame_tag 'partage_main_frame' %>
-	<div class="overflow-x-auto">
-		<table class="table table-striped table-hover table-bordered table-responsive">
-			<thead>
-				<tr>
-					<th>Utilisateur</th>
-					<th>Email</th>
-					<th>Rôle</th><th />
-				</tr>
-			</thead>
+<div class="overflow-x-auto">
+	<table class="table table-striped table-hover table-bordered table-responsive">
+		<thead>
+			<tr>
+				<th>Utilisateur</th>
+				<th>Email</th>
+				<th>Rôle</th><th />
+			</tr>
+		</thead>
 
-			<% @table.users.each do |user| %>
-				<tr>
-					<td><b><%= user.name %></b></td>
-					<td><%= user.email %></td>
-					<td><%= @table.role_name(user) %></td>
-					<td>
-						<% unless @table.users[0] == user %>
-							<%= link_to "Annuler le partage", annuler_partage_path(@table, user_id:user.id), title:"Annuler ce partage", 
-								data: { confirm: 'Vraiment ??' }, class: 'btn btn-outline-danger btn-sm' %>
-						<% end %>
-					</td>
-				</tr>
-			<% end %>
-		</table>
-	</div>
-	<i><small>Seuls les utilisateurs propriétaires peuvent modifier les attributs de l'Objets</small></i>
-	<br><br>
+		<% @table.users.each do |user| %>
+			<tr>
+				<td><b><%= user.name %></b></td>
+				<td><%= user.email %></td>
+				<td><%= @table.role_name(user) %></td>
+				<td>
+					<% unless @table.users[0] == user %>
+						<%= link_to "Annuler le partage", annuler_partage_path(@table, user_id:user.id), title:"Annuler ce partage", 
+							data: { confirm: 'Vraiment ??' }, class: 'btn btn-outline-danger btn-sm' %>
+					<% end %>
+				</td>
+			</tr>
+		<% end %>
+	</table>
+</div>
 
-<% if policy(@table).add_user? %>
-  <%= link_to add_user_path(@table), title:"Ajouter un partage avec un autre utilisateur", class:'btn btn-outline-primary', data: { turbo_frame: "partage_frame" } do %>
-		Ajouter un partage
-  <% end %>
-	<%= turbo_frame_tag "partage_frame" do %>
+<i><small>Seuls les utilisateurs propriétaires peuvent modifier les attributs de l'Objet</small></i>
+<br><br>
+
+<%= turbo_frame_tag "partage_frame" do %>
+	<% if policy(@table).add_user? %>
+		<%= link_to add_user_path(@table), title:"Ajouter un partage avec un autre utilisateur", class:'btn btn-outline-primary', data: { turbo_frame: "partage_frame" } do %>
+				Ajouter un partage
+		<% end %>
 	<% end %>
 <% end %>
