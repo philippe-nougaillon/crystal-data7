@@ -5,47 +5,16 @@ class Table < ApplicationRecord
 	audited
 
 	has_many :tables_users, dependent: :destroy
-  has_many :users, through: :tables_users
+  	has_many :users, through: :tables_users
 	has_many :fields, dependent: :destroy
 	has_many :values, through: :fields, dependent: :destroy
 	has_many :logs, through: :fields, dependent: :destroy
 
 	validates :name, presence: true
 
-	# Donne le nombre de ligne exact de la table 
+	# Donne le nombre de lignes de la table 
 	def size
-		# self.values.group("values.id, values.record_index").reorder(:id).count.size
 		self.values.where.not(data: nil).pluck(:record_index).uniq.count
-	end
-
-	def files_size
-		sizeInMB = 0.00
-		self.fields.Fichier.each do |f| 
-			f.values.each do |v| 
-				sizeInMB += (File.size("public/table_files/#{v.data}").to_f / 2**20) if v.data
-			end
-		end
-		return sizeInMB.round(2)
-	end
-
-	def files_count
-		i = 0
-		self.fields.Fichier.each do |f| 
-			f.values.each do |v| 
-				i += 1 if v.data
-			end
-		end
-		return i
-	end
-
-	def shared_with(user)
-    users_infos = ""
-    self.tables_users.each do |tables_user|
-      unless tables_user.user == user
-        users_infos += "#{tables_user.user.name}(#{tables_user.role}) "
-      end
-    end
-    return users_infos
 	end
 
 	def value_datas_listable(record_index)
@@ -72,7 +41,6 @@ class Table < ApplicationRecord
     
 	# Vérifier que l'enregistrement est libre 
     # (aucun autre enregistrement pointe dessus (type Table))
-
 	def record_can_be_destroy?(record_index)
       # Est-ce que des types référencent cette table ?
       allow_destroy = true
@@ -85,35 +53,44 @@ class Table < ApplicationRecord
 	  allow_destroy
 	end
 
-  def role_number(user)
-    TablesUser.roles[self.tables_users.find_by(user_id: user.id).role]
-  end
+	def shared_with(user)
+		users_infos = ""
+		self.tables_users.each do |tables_user|
+			unless tables_user.user == user
+				users_infos += "#{tables_user.user.name}(#{tables_user.role}) "
+			end
+		end
+		return users_infos
+	end
 
-  def role_name(user)
-    self.tables_users.find_by(user_id: user.id).role
-  end
+	def role_number(user)
+		TablesUser.roles[self.tables_users.find_by(user_id: user.id).role]
+	end
 
-  def lecteur?(user)
-    self.tables_users.find_by(user_id: user.id).role == 'Lecteur'
-  end
+	def role_name(user)
+		self.tables_users.find_by(user_id: user.id).role
+	end
 
-  def ajouteur?(user)
-    self.tables_users.find_by(user_id: user.id).role == 'Ajouteur'
-  end
+	def lecteur?(user)
+		self.tables_users.find_by(user_id: user.id).role == 'Lecteur'
+	end
 
-  def éditeur?(user)
-    self.tables_users.find_by(user_id: user.id).role == 'Éditeur'
-  end
+	def ajouteur?(user)
+		self.tables_users.find_by(user_id: user.id).role == 'Ajouteur'
+	end
 
-  def propriétaire?(user)
-    self.tables_users.find_by(user_id: user.id).role == 'Propriétaire'
-  end
+	def éditeur?(user)
+		self.tables_users.find_by(user_id: user.id).role == 'Éditeur'
+	end
+
+	def propriétaire?(user)
+		self.tables_users.find_by(user_id: user.id).role == 'Propriétaire'
+	end
 
 private
 	# only one candidate for an nice id; one random UDID
 	def slug_candidates
 		[SecureRandom.uuid]
 	end
-
 
 end

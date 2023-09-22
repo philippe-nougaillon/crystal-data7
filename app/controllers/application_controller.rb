@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   
   before_action :authenticate_user!
-  before_action :detect_device_format
+  #before_action :detect_device_format
   before_action :set_layout_variables
   before_action :prepare_exception_notifier
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -21,15 +21,6 @@ class ApplicationController < ActionController::Base
   end
 
 private
-
-  def detect_device_format
-    case request.user_agent
-    when /iPhone/i, /Android/i && /mobile/i, /Windows Phone/i
-      request.variant = :phone
-    else
-      request.variant = :desktop
-    end
-  end
 
   def set_layout_variables
     @sitename ||= "CrystalData"
@@ -46,6 +37,15 @@ private
     flash[:alert] = "Vous n'êtes pas autorisé à effectuer cette action."
     redirect_to(request.referrer || root_path)
   end
+
+  # def detect_device_format
+  #   case request.user_agent
+  #   when /iPhone/i, /Android/i && /mobile/i, /Windows Phone/i
+  #     request.variant = :phone
+  #   else
+  #     request.variant = :desktop
+  #   end
+  # end
 
 protected
   def configure_permitted_parameters

@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class FieldsController < ApplicationController
   before_action :set_field, only: [:edit, :update, :destroy]
   before_action :is_user_authorized?
@@ -64,7 +62,6 @@ class FieldsController < ApplicationController
     render nothing: true # this is a POST action, updates sent via AJAX, no view rendered
   end
 
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_field
@@ -76,6 +73,7 @@ class FieldsController < ApplicationController
       params.require(:field).permit(:name, :table_id, :datatype, :filtre, :items, :obligatoire, :operation, :field_id, :row_order_position, :visibility)
     end
 
+    # ????
     def is_user_authorized?
       if ['create'].include?(action_name)
         @field = Field.new(field_params)

@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class TablesController < ApplicationController
   before_action :set_table, except: [:new, :create, :import, :import_do, :index]
   before_action :is_user_authorized?
@@ -125,7 +123,6 @@ class TablesController < ApplicationController
 
   # formulaire d'ajout / modification
   def fill
-    
     if params[:record_index]
       # modification ligne existante
       @record_index = params[:record_index]
@@ -282,11 +279,12 @@ class TablesController < ApplicationController
     # supprime les champs
     @table.fields.destroy_all
 
-    # supprime les fichiers liés
-    @table.values.each do | value |
-        value.field.delete_file(value.data) if value.field and value.field.Fichier? and value.data
-        value.destroy
-      end
+    # ????
+    # # supprime les fichiers liés
+    # @table.values.each do | value |
+    #     value.field.delete_file(value.data) if value.field and value.field.Fichier? and value.data
+    #     value.destroy
+    #   end
     @table.destroy
 
     respond_to do |format|
@@ -417,48 +415,49 @@ class TablesController < ApplicationController
     @audits = @audits.reorder('created_at DESC').paginate(page: params[:page])
   end
 
-  def activity
-    unless params[:type_action].blank?
-      @logs = @table.logs.where(action:params[:type_action].to_i)
-    else
-      @logs = @table.logs.all
-    end
+  # ????
+  # def activity
+  #   unless params[:type_action].blank?
+  #     @logs = @table.logs.where(action:params[:type_action].to_i)
+  #   else
+  #     @logs = @table.logs.all
+  #   end
 
-    unless params[:user_id].blank?
-      @logs = @logs.where(user_id:params[:user_id])
-    end
+  #   unless params[:user_id].blank?
+  #     @logs = @logs.where(user_id:params[:user_id])
+  #   end
 
-    # applique les filtres
-    @records_filter = []
-    if params[:select]
-      params[:select].each do | option | 
-        unless option.last.blank? 
-          field = Field.find(option.first)
-          filter_records = @table.values.where(field:field, data:option.last).pluck(:record_index) 
-          if @records_filter.empty?
-            @records_filter = filter_records 
-          else
-            @records_filter = @records_filter & filter_records 
-          end  
-        end
-      end
-      @logs = @logs.where(record_index:@records_filter) if @records_filter.any?
-    end
+  #   # applique les filtres
+  #   @records_filter = []
+  #   if params[:select]
+  #     params[:select].each do | option | 
+  #       unless option.last.blank? 
+  #         field = Field.find(option.first)
+  #         filter_records = @table.values.where(field:field, data:option.last).pluck(:record_index) 
+  #         if @records_filter.empty?
+  #           @records_filter = filter_records 
+  #         else
+  #           @records_filter = @records_filter & filter_records 
+  #         end  
+  #       end
+  #     end
+  #     @logs = @logs.where(record_index:@records_filter) if @records_filter.any?
+  #   end
 
-    @hash = @logs.group_by_day("logs.created_at").count
-    fields_count = @table.fields.count
+  #   @hash = @logs.group_by_day("logs.created_at").count
+  #   fields_count = @table.fields.count
 
-    # arroudir au multiple du nombre de champs supérieur
-    @hash.each do |key,value| 
-      if value % fields_count == 0 
-        r = value / fields_count
-      else
-        r = value + fields_count - (value % fields_count) 
-      end 
-      #logger.debug "[DEBUG] value:#{value} fields:#{fields_count} r:#{r}"
-      @hash[key] = r / fields_count
-    end  
-  end
+  #   # arroudir au multiple du nombre de champs supérieur
+  #   @hash.each do |key,value| 
+  #     if value % fields_count == 0 
+  #       r = value / fields_count
+  #     else
+  #       r = value + fields_count - (value % fields_count) 
+  #     end 
+  #     #logger.debug "[DEBUG] value:#{value} fields:#{fields_count} r:#{r}"
+  #     @hash[key] = r / fields_count
+  #   end  
+  # end
 
   def show_details
     unless params[:record_index].blank?

@@ -1,7 +1,5 @@
-# encoding: utf-8
-
 class UsersController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[connect_guest_user]
+    skip_before_action :authenticate_user!, only: %i[connect_guest_user]
 
   	def show
   		@user = current_user
