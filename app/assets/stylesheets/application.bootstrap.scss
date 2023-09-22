@@ -4,10 +4,12 @@
 #content{
   padding-right: 1rem;
   padding-left: 1rem;
+  margin-top: 56px;
   @media (min-width: 576px) {
     margin-left: 80px;
     padding-right: 2rem;
     padding-left: 2rem;
+    margin-top: 0px;
   }
 }
 

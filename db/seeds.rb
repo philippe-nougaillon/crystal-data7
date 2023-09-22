@@ -1,7 +1,7 @@
 require 'dotenv/load'
 
 User.create!([
-  {name: "Démo",      email: "philippe.nougaillon@gmail.com", password: ENV['DEMO_PASSWORD'], password_confirmation: ENV['DEMO_PASSWORD']},
+  {name: "Démo",      email: "crystaldata.demo@gmail.com", password: ENV['DEMO_PASSWORD'], password_confirmation: ENV['DEMO_PASSWORD']},
   {name: "CDLecteur", email: "crystaldata.lecteur@gmail.com", password: ENV['LECTEUR_PASSWORD'], password_confirmation: ENV['LECTEUR_PASSWORD']},
   {name: "CDAjouteur",email: "crystaldata.ajouteur@gmail.com", password: ENV['AJOUTEUR_PASSWORD'], password_confirmation: ENV['AJOUTEUR_PASSWORD']},
   {name: "CDÉditeur", email: "crystaldata.editeur@gmail.com", password: ENV['EDITEUR_PASSWORD'], password_confirmation: ENV['EDITEUR_PASSWORD']}

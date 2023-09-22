@@ -39,13 +39,19 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <%= link_to root_path, title: "Liste des tables", class: 'nav-link text-white' do %>
+          <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'nav-link text-white' do %>
             <i class="fa-solid fa-house"></i>
             <% if user_signed_in? %>
-              Tables
+              Objet Principal  
             <% else%>
               Accueil
             <% end %>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to tables_path, title: "Liste des tables", class: 'nav-link text-muted' do %>
+            <i class="fa-solid fa-cubes"></i>
+            Tables
           <% end %>
         </li>
         <li class="nav-item">
