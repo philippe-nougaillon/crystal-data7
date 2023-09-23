@@ -3,9 +3,7 @@
     <thead>
       <tr style="vertical-align: middle">
         <% table.fields.listable.each_with_index do | field, index | %>
-          <% unless action_name == 'show_details' && field.datatype == 'Collection' && @relation.field == field %>
-            <%= render partial: 'partials/table_header_cell', locals: {table:, field:, index:} %>
-          <% end %>
+          <%= render partial: 'partials/table_header_cell', locals: {table:, field:, index:} %>
         <% end %>
         <th>MÀJ</th>
         <th colspan=3></th>
@@ -30,9 +28,9 @@
           </tr>
         </tfoot>
       <% end %>
-      
     <% end %>
   </table>
+
   <p>
     Affichage de <%= @records_size %> <%= table.name.pluralize %>
     <% if action_name == 'show' %>

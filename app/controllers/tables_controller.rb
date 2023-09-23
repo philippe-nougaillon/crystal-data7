@@ -16,8 +16,6 @@ class TablesController < ApplicationController
   # GET /tables/1.json
   def show
     @sum = Hash.new(0)
-    @numeric_types = ['Formule','Euros','Nombre']
-    @td_style = []
 
     # recherche les lignes 
     unless params.permit(:search).blank?
@@ -463,8 +461,6 @@ class TablesController < ApplicationController
     unless params[:record_index].blank?
       @record_index = params[:record_index]
       @relation = Relation.where(relation_with_id: @table.id).first
-      @numeric_types = ['Formule','Euros','Nombre']
-      @td_style = []
       if @relation
         @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
       end
@@ -477,8 +473,6 @@ class TablesController < ApplicationController
   def related_tables
     @relation = Relation.find(params[:relation])
     @record_index = params[:record_index]
-    @numeric_types = ['Formule','Euros','Nombre']
-    @td_style = []
     @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
     @sum = Hash.new(0)
   end

@@ -6,6 +6,7 @@ class Field < ApplicationRecord
 	friendly_id :slug_candidates, use: :slugged
 
 	belongs_to :table
+
 	has_many :values, dependent: :destroy
 	has_many :logs, dependent: :destroy
 	has_one :relation, dependent: :destroy
@@ -63,7 +64,7 @@ class Field < ApplicationRecord
 		
 		table.values.includes(:field).each do |value| 
 		  	if source_fields.include?(value.field.name)
-				if value.field.datatype == 'Collection' 
+				if value.field.Collection? 
 					unless table_data.key?(value.record_index) 
 						table_data[value.record_index] = "#{ value.field.name }=(#{ value.field.populate_linked_table[value.data.to_i] })"
 					else 
@@ -89,7 +90,7 @@ class Field < ApplicationRecord
 		
 		table.values.where(record_index: index).includes(:field).each do |value| 
 			if (source_fields.include?(value.field.name)) 
-				if value.field.datatype == 'Collection'
+				if value.field.Collection?
 					table_data << "#{ value.field.name }=(#{value.field.get_linked_table_record(value.record_index)})"
 				else
 					table_data << value.data
@@ -99,8 +100,16 @@ class Field < ApplicationRecord
 		return table_data.join(', ') 
 	end
 
+	def populate_select_filter(records)
+		self.values.records_at(records).where.not(data: nil).pluck(:data).uniq.sort 
+	end
+
 	def visibility_polished
 		self.visibility.gsub('_', ' ') 
+	end
+
+	def is_numeric
+		self.Nombre? || self.Euros? || self.Formule?
 	end
 
 private
