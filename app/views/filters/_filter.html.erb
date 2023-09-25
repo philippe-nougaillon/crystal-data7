@@ -1,0 +1,6 @@
+<div id="<%= dom_id filter %>" class="mb-5">
+  <div class="fs-3">
+    <%= link_to "#{filter.name} (#{filter.table.name.pluralize})", query_filter_path(filter) %>
+    <%= button_to "X", filter, method: :delete, class: 'btn btn-sm btn-outline-danger float-end' %>
+  </div>
+</div>

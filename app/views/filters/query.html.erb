@@ -1,0 +1,24 @@
+<div class="mb-4">
+  <h1 class="text-muted">
+    <span class="fa fa-filter"></span>
+    <%= @filter.name %>
+  </h1>
+</div>
+
+<%= form_tag query_filter_path, method: :get do %>
+  <div class="row gap-3 mb-5">
+    <% @filter.table.fields.each do |field| %>
+      <div class="row gap-3 align-items-center">
+        <%= label_tag field.id, field.name, class:'col-2 fw-bold' %>
+        <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3' %>
+      </div>
+    <% end %>
+    <div class="row gap-3 align-items-center">
+      <%= submit_tag 'Appliquer le filtre', class: 'btn btn-outline-success' %>
+    </div>
+  </div >
+<% end %>
+
+<% if @records %>
+  <%= render partial: 'partials/table', locals: { table: @filter.table, records: @records} %>
+<% end %>

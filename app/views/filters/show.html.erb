@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @filter %>
+
+<div>
+  <%= link_to "Edit this filter", edit_filter_path(@filter) %> |
+  <%= link_to "Back to filters", filters_path %>
+
+  <%= button_to "Destroy this filter", @filter, method: :delete %>
+</div>

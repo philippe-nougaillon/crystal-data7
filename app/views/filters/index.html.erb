@@ -1,0 +1,12 @@
+<div class="mb-4">
+  <h1 class="text-muted">
+    <span class="fa fa-filter"></span>
+    Filtres
+  </h1>
+</div>
+
+<% @filters.each do |filter| %>
+  <%= render filter %>
+<% end %>
+
+<%= link_to "Nouveau Filtre", new_filter_path %>

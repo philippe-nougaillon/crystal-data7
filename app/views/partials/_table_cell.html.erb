@@ -19,7 +19,7 @@
       <% when 'Texte_riche' %>
         <%= simple_format(value) %>
       <% when 'Euros' %>
-        <%= number_to_currency(value) %>
+        <span style="white-space: nowrap"><%= number_to_currency(value) %></span>
       <% when 'Formule' %>
         <%= field.evaluate(table, record_index) %>
       <% when 'Workflow' %>
