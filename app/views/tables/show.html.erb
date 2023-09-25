@@ -22,9 +22,6 @@
   </div>
 </div>
 
-<%= @filters %>
-
-
 <% if @table.fields.any? %>
   <%= form_tag table_path(@table.slug), {method: :get, class: 'd-flex gap-4 mb-4'} do |f| %>
     <div class="d-flex gap-4 flex-wrap mb-4">
@@ -34,15 +31,15 @@
       </div>
       <% @table.fields.filtres.each do | field | %>
         <% if field.Date? %>
-          <% default_value_du = params.permit![:du] ? params[:du][field.id.to_s] : 'nil' %>
-          <% default_value_au = params.permit![:au] ? params[:au][field.id.to_s] : 'nil' %>
+          <% default_start_date = params.permit![:date].try(:[], field.id.to_s).try(:[], :start) ? params[:date][field.id.to_s][:start] : 'nil' %>
+          <% default_end_date = params.permit![:date].try(:[], field.id.to_s).try(:[], :start) ? params[:date][field.id.to_s][:end] : 'nil' %>
           <div>
-            <%= label_tag "du[#{field.id}]", "#{field.name.humanize} : Du" %>
-            <%= date_field_tag "du[#{field.id}]", default_value_du, class: 'form-control', onchange: 'this.form.submit()' %>
+            <%= label_tag "date[#{field.id}]", "#{field.name.humanize} : Du" %>
+            <%= date_field_tag "date[#{field.id}][start]", default_start_date, class: 'form-control', onchange: 'this.form.submit()' %>
           </div>
           <div>
-            <%= label_tag "au[#{field.id}]","Au" %>
-            <%= date_field_tag "au[#{field.id}]", default_value_au, class: 'form-control', onchange: 'this.form.submit()' %>
+            <%= label_tag "date[#{field.id}]","Au" %>
+            <%= date_field_tag "date[#{field.id}][end]", default_end_date, class: 'form-control', onchange: 'this.form.submit()' %>
           </div>
         <% else %>
           <div>

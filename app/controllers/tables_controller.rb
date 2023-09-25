@@ -16,8 +16,8 @@ class TablesController < ApplicationController
   # GET /tables/1.json
   def show
     @sum = Hash.new(0)
-
     @filters = {}
+    @filter_results = {}
 
     # recherche les lignes 
     unless params.permit(:search).blank?
@@ -34,33 +34,36 @@ class TablesController < ApplicationController
     else
       @values = @table.values
     end
-    @filters[:search] = @values.pluck(:record_index).uniq
+    @filters[:search] = search
+    @filter_results[:search] = @values.pluck(:record_index).uniq
 
-    # applique les filtres
+    # Applique les filtres de type SELECT_TAG
     unless params[:select].blank?
       params[:select].each do | option | 
         unless option.last.blank? 
           field = Field.find(option.first)
           filter_records = @table.values.where(field: field, data: option.last).pluck(:record_index) 
-          @filters[option.first] = filter_records
+          @filters[option.first] = option.last
+          @filter_results[option.first] = filter_records
         end
       end
     end
 
-    unless params[:du].blank? || params[:au].blank?
-      params[:du].each do | option |
-        field_id = option.first
-        if params[:au].keys.include?(field_id)
-          start_date = option.last.blank? ? Date.today : option.last
-          end_date = params[:au][field_id].blank? ? start_date : params[:au][field_id]
+    # Applique les filtres de type DATE
+    unless params[:date].blank?
+      params[:date].keys.each do | field_id |
+        unless params[:date][field_id][:start].blank?
+          start_date = params[:date][field_id][:start].blank? ? Date.today : params[:date][field_id][:start]
+          end_date = params[:date][field_id][:end].blank? ? start_date : params[:date][field_id][:end]
           field = Field.find(field_id)
           filter_records = @table.values.where(field: field).where("DATE(data) BETWEEN ? AND ?", start_date, end_date).pluck(:record_index) 
-          @filters[option.first] = filter_records
+          @filters[field_id] = [start_date, end_date]
+          @filter_results[field_id] = filter_records
         end
       end
     end
 
-    @records = @filters.values.reduce(:&)
+    @records = @filter_results.values.reduce(:&)
 
     if @table.lifo 
      # calcule la date maximum de chaque ligne d'enregistrement 
