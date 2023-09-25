@@ -17,6 +17,8 @@ class TablesController < ApplicationController
   def show
     @sum = Hash.new(0)
 
+    @filters = {}
+
     # recherche les lignes 
     unless params.permit(:search).blank?
       search = "%#{ params[:search].strip }%"
@@ -32,20 +34,15 @@ class TablesController < ApplicationController
     else
       @values = @table.values
     end
-    @records_search = @values.pluck(:record_index).uniq
+    @filters[:search] = @values.pluck(:record_index).uniq
 
     # applique les filtres
-    @records_filter = []
     unless params[:select].blank?
       params[:select].each do | option | 
         unless option.last.blank? 
           field = Field.find(option.first)
           filter_records = @table.values.where(field: field, data: option.last).pluck(:record_index) 
-          if @records_filter.empty?
-            @records_filter = filter_records 
-          else
-            @records_filter = @records_filter & filter_records 
-          end  
+          @filters[option.first] = filter_records
         end
       end
     end
@@ -54,39 +51,16 @@ class TablesController < ApplicationController
       params[:du].each do | option |
         field_id = option.first
         if params[:au].keys.include?(field_id)
-          start_date = option.last
-          end_date = params[:au][field_id]
-          unless start_date.blank? || end_date.blank?
-            field = Field.find(field_id)
-            filter_records = @table.values.where(field: field).where("DATE(data) BETWEEN ? AND ?", start_date, end_date).pluck(:record_index) 
-            if @records_filter.empty?
-              @records_filter = filter_records 
-            else
-              @records_filter = @records_filter & filter_records 
-            end
-          end
+          start_date = option.last.blank? ? Date.today : option.last
+          end_date = params[:au][field_id].blank? ? start_date : params[:au][field_id]
+          field = Field.find(field_id)
+          filter_records = @table.values.where(field: field).where("DATE(data) BETWEEN ? AND ?", start_date, end_date).pluck(:record_index) 
+          @filters[option.first] = filter_records
         end
       end
     end
 
-    # renvoyer les id des lignes cherchées puis filtrées 
-    unless @records_filter.empty? 
-      @records = @records_search & @records_filter
-    else
-      @records = @records_search
-    end  
-
-    unless params[:debut].blank? and params[:fin].blank?
-      @debut = Time.parse(params[:debut]).strftime("%Y-%m-%d")
-      @fin = Time.parse(params[:fin]).strftime("%Y-%m-%d")
-
-      # calcule la date maximum de chaque ligne d'enregistrement 
-      h = @table.values.group(:record_index).maximum(:updated_at)
-      # selectionne les lignes modifées dans la période
-      hash = h.select{|record| h[record].between?(@debut,@fin) }
-      # retourne que les clés
-      @records = hash.keys
-    end
+    @records = @filters.values.reduce(:&)
 
     if @table.lifo 
      # calcule la date maximum de chaque ligne d'enregistrement 
