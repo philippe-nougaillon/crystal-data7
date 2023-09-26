@@ -338,7 +338,7 @@ class TablesController < ApplicationController
   end
 
   def add_user_do
-    if not TablesUser.roles.keys.reject { |i| i == "Propriétaire" }.include?(params[:role])
+    if not TablesUser.roles.keys.reject { |e| e == "Propriétaire" }.include?(params[:role])
       redirect_to add_user_path(@table), alert: "Rôle indisponible"
     elsif @user = User.find_by(email:params[:email])
       unless @table.users.include?(@user)

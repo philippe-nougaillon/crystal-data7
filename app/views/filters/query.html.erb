@@ -18,8 +18,8 @@
           <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3', autofocus: index.zero? %>
           <% hint = '' %>
         <% elsif field.Liste? || field.Workflow? %>
-          <%= select_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3', autofocus: index.zero? %>
-          <% hint = 'Appuyez sur CTRL pour faire un choix multiple' %>
+          <%= select_tag "[query][#{field.id}]", options_for_select(field.items_splitted, params[:query].try(:[], field.id.to_s)), class: 'form-select col-3', autofocus: index.zero?, multiple: true %>
+          <% hint = 'Appuyez sur MAJ ou CTRL pour faire un choix multiple' %>
         <% else %>
           <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3', autofocus: index.zero? %>
           <% hint = 'ex: %john%  ou  john (pour une égalité)' %>

@@ -23,7 +23,7 @@
       <% when 'Formule' %>
         <%= field.evaluate(table, record_index) %>
       <% when 'Workflow' %>
-        <% items = field.items.split(',').map{|i| i.split(':')}.to_h %>
+        <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
         <% color = items[value] %>
         <span class="badge bg-<%= color %>"><%= value %></span>
       <% when 'URL' %>

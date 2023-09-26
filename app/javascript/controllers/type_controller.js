@@ -22,11 +22,11 @@ export default class extends Controller {
     } else if (type.value == "Liste" ) {
       this.paramsTarget.style.display = 'block';
       this.numberTarget.style.dispaly = 'none';
-      this.paramsTarget.children[2].innerHTML = "ex : À faire,Fait,Annulé ou [Utilisateurs.Nom]"
+      this.paramsTarget.children[2].innerHTML = "ex : À faire,Fait,Annulé ou Monsieur, Madame, Mademoiselle"
     } else if (type.value == "Workflow") {
       this.paramsTarget.style.display = 'block';
       this.numberTarget.style.dispaly = 'none';
-      this.paramsTarget.children[2].innerHTML = "ex : Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary"
+      this.paramsTarget.children[2].innerHTML = "ex : Nouveau:primary, Confirmé:success, Annulé:danger, Archivé:secondary"
     } else if (type.value == "Collection") {
       this.paramsTarget.style.display = 'block';
       this.numberTarget.style.dispaly = 'none';
