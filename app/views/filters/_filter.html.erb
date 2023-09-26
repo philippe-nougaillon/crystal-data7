@@ -1,6 +1,7 @@
-<div id="<%= dom_id filter %>" class="mb-5">
-  <div class="fs-3">
+<div id="<%= dom_id filter %>" class="mb-3">
+  <div class="fs-4 d-flex justify-content-between">
     <%= link_to "#{filter.name} (#{filter.table.name.pluralize})", query_filter_path(filter) %>
-    <%= button_to "X", filter, method: :delete, class: 'btn btn-sm btn-outline-danger float-end' %>
+    <%= button_to "X", filter, method: :delete, 'data-turbo-confirm': "Êtes-vous certain.e", class: 'btn btn-sm btn-outline-danger' %>
   </div>
+  <hr>
 </div>

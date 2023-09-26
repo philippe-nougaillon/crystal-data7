@@ -6,14 +6,33 @@
 </div>
 
 <%= form_tag query_filter_path, method: :get do %>
-  <div class="row gap-3 mb-5">
-    <% @filter.table.fields.each do |field| %>
+  <div class="row mb-3">
+    <% @filter.table.fields.each_with_index do |field, index| %>
       <div class="row gap-3 align-items-center">
         <%= label_tag field.id, field.name, class:'col-2 fw-bold' %>
-        <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3' %>
+        <% if field.is_numeric %>
+          <%= number_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3', autofocus: index.zero? %>
+          <% hint = 'ex: >= 30  ou  30 (pour une égalité)' %>
+        <% elsif field.Date? %>
+          <%= date_field_tag "[query][#{field.id}][start]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3', autofocus: index.zero? %>
+          <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3', autofocus: index.zero? %>
+          <% hint = '' %>
+        <% elsif field.Liste? || field.Workflow? %>
+          <%= select_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3', autofocus: index.zero? %>
+          <% hint = 'Appuyez sur CTRL pour faire un choix multiple' %>
+        <% else %>
+          <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3', autofocus: index.zero? %>
+          <% hint = 'ex: %john%  ou  john (pour une égalité)' %>
+        <% end %>
+      </div>
+      <div class="row mb-0">
+        <div class="col-2"></div>
+        <p class="form-text col-3">
+          <%= hint %>
+        </p>
       </div>
     <% end %>
-    <div class="row gap-3 align-items-center">
+    <div>
       <%= submit_tag 'Appliquer le filtre', class: 'btn btn-outline-success' %>
     </div>
   </div >
