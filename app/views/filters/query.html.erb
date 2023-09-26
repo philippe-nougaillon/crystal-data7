@@ -10,24 +10,32 @@
     <% @filter.table.fields.each_with_index do |field, index| %>
       <div class="row gap-3 align-items-center">
         <%= label_tag field.id, field.name, class:'col-2 fw-bold' %>
-        <% if field.is_numeric %>
-          <%= number_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3', autofocus: index.zero? %>
-          <% hint = 'ex: >= 30  ou  30 (pour une égalité)' %>
-        <% elsif field.Date? %>
-          <%= date_field_tag "[query][#{field.id}][start]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3', autofocus: index.zero? %>
-          <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3', autofocus: index.zero? %>
-          <% hint = '' %>
-        <% elsif field.Liste? || field.Workflow? %>
-          <%= select_tag "[query][#{field.id}]", options_for_select(field.items_splitted, params[:query].try(:[], field.id.to_s)), class: 'form-select col-3', autofocus: index.zero?, multiple: true %>
-          <% hint = 'Appuyez sur MAJ ou CTRL pour faire un choix multiple' %>
-        <% else %>
-          <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control col-3', autofocus: index.zero? %>
-          <% hint = 'ex: %john%  ou  john (pour une égalité)' %>
-        <% end %>
+        <div class="col-4">
+          <% if field.is_numeric %>
+            <%= number_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
+            <% hint = 'ex: >= 30  ou  30 (pour une égalité)' %>
+          <% elsif field.Date? %>
+            <%= date_field_tag "[query][#{field.id}][start]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100 mb-4', autofocus: index.zero? %>
+            <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
+            <% hint = '' %>
+          <% elsif field.Liste? || field.Workflow? %>
+            <%= select_tag "[query][#{field.id}]", options_for_select(field.items_splitted, params[:query].try(:[], field.id.to_s)), class: 'form-select w-100', autofocus: index.zero?, multiple: true %>
+            <% hint = 'Appuyez sur MAJ ou CTRL pour faire un choix multiple' %>
+          <% elsif field.Collection? %>
+            <%# Checker si la liste vient d'une autre table %>
+            <% if field.is_valid_table_params %>
+              <%= select_tag "[query][#{field.id}]", options_for_select(field.populate_linked_table.invert, params[:query].try(:[], field.id.to_s)), class: 'form-select w-100', autofocus: index.zero?, multiple: true %>
+              <% hint = 'Appuyez sur MAJ ou CTRL pour faire un choix multiple' %>
+            <% end %>
+          <% else %>
+            <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
+            <% hint = 'ex: %john%  ou  john (pour une égalité)' %>
+          <% end %>
+        </div>
       </div>
-      <div class="row mb-0">
+      <div class="row gap-3 mb-0">
         <div class="col-2"></div>
-        <p class="form-text col-3">
+        <p class="form-text col-4">
           <%= hint %>
         </p>
       </div>
