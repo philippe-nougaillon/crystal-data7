@@ -1,11 +1,11 @@
 <div class="mb-4">
   <h1 class="text-primary">
     <span class="fa fa-gears"></span>
-    Structure de la table '<%= @table.name.humanize %>'
+    Attributs de l'Objet '<%= @table.name.humanize %>'
   </h1>
 
   <div class="float-end mt-3">
-    <%= link_to 'Voir la table de données', @field.table, title:"Voir la table de données" %> 
+    <%= link_to "Voir la Collection d'Objets", @field.table, title: "Voir la Collection d'Objets" %> 
   </div>
 </div>
 
@@ -18,11 +18,11 @@
 <br>
 <% if @table.fields.any? %>
 	<div class="overflow-x-auto">
-		<table class="table table-hover table-condensed">
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th class="col-md-1">#</th>
-					<th>Nom de la colonne</th>
+					<th>Nom de l'attribut</th>
 					<th>Type</th>
 					<th>Options</th>
 					<th>Visibilité</th>
@@ -37,7 +37,7 @@
 <% end %>
 <br>
 
-<h3 class="mb-4">Ajouter une nouvelle colonne</h3>
+<h3 class="mb-4">Ajouter un nouvel attribut</h3>
 
 <% if @field %>	
 	<%= render partial:'fields/form' %>

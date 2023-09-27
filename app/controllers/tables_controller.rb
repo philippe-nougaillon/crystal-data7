@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class TablesController < ApplicationController
   before_action :set_table, except: [:new, :create, :import, :import_do, :index]
   before_action :is_user_authorized?
@@ -18,15 +16,15 @@ class TablesController < ApplicationController
   # GET /tables/1.json
   def show
     @sum = Hash.new(0)
-    @numeric_types = ['Formule','Euros','Nombre']
-    @td_style = []
+    @filters = {}
+    @filter_results = {}
 
     # recherche les lignes 
     unless params.permit(:search).blank?
       search = "%#{ params[:search].strip }%"
       @values = @table.values.where("data ILIKE ?", search)
       # Est-ce qu'il y a des Tables liées ?
-      @table.fields.Table.each do | field_table |
+      @table.fields.Collection.each do | field_table |
         # Rchercher dans les values de ce champ lié si valeurs recherchées
         s = /#{ params[:search].strip }/i
         results = field_table.populate_linked_table.select{|k,v| v.match(s)}
@@ -36,42 +34,36 @@ class TablesController < ApplicationController
     else
       @values = @table.values
     end
-    @records_search = @values.pluck(:record_index).uniq
+    @filters[:search] = search
+    @filter_results[:search] = @values.pluck(:record_index).uniq
 
-    # applique les filtres
-    @records_filter = []
-    if params[:select]
+    # Applique les filtres de type SELECT_TAG
+    unless params[:select].blank?
       params[:select].each do | option | 
         unless option.last.blank? 
           field = Field.find(option.first)
           filter_records = @table.values.where(field: field, data: option.last).pluck(:record_index) 
-          if @records_filter.empty?
-            @records_filter = filter_records 
-          else
-            @records_filter = @records_filter & filter_records 
-          end  
+          @filters[option.first] = option.last
+          @filter_results[option.first] = filter_records
         end
       end
     end
 
-    # renvoyer les id des lignes cherchées puis filtrées 
-    unless @records_filter.empty? 
-      @records = @records_search & @records_filter
-    else
-      @records = @records_search
-    end  
-
-    unless params[:debut].blank? and params[:fin].blank?
-      @debut = Time.parse(params[:debut]).strftime("%Y-%m-%d")
-      @fin = Time.parse(params[:fin]).strftime("%Y-%m-%d")
-
-      # calcule la date maximum de chaque ligne d'enregistrement 
-      h = @table.values.group(:record_index).maximum(:updated_at)
-      # selectionne les lignes modifées dans la période
-      hash = h.select{|record| h[record].between?(@debut,@fin) }
-      # retourne que les clés
-      @records = hash.keys
+    # Applique les filtres de type DATE
+    unless params[:date].blank?
+      params[:date].keys.each do | field_id |
+        unless params[:date][field_id][:start].blank?
+          start_date = params[:date][field_id][:start].blank? ? Date.today : params[:date][field_id][:start]
+          end_date = params[:date][field_id][:end].blank? ? start_date : params[:date][field_id][:end]
+          field = Field.find(field_id)
+          filter_records = @table.values.where(field: field).where("DATE(data) BETWEEN ? AND ?", start_date, end_date).pluck(:record_index) 
+          @filters[field_id] = [start_date, end_date]
+          @filter_results[field_id] = filter_records
+        end
+      end
     end
+
+    @records = @filter_results.values.reduce(:&)
 
     if @table.lifo 
      # calcule la date maximum de chaque ligne d'enregistrement 
@@ -106,7 +98,6 @@ class TablesController < ApplicationController
 
   # formulaire d'ajout / modification
   def fill
-    
     if params[:record_index]
       # modification ligne existante
       @record_index = params[:record_index]
@@ -234,7 +225,7 @@ class TablesController < ApplicationController
     respond_to do |format|
       if @table.save
         @table.tables_users << TablesUser.create(table_id: @table.id, user_id: current_user.id, role: "Propriétaire")
-        format.html { redirect_to show_attrs_path(id: @table), notice: "Table créée. Vous pouvez maintenant y ajouter des colonnes" }
+        format.html { redirect_to show_attrs_path(id: @table), notice: "Objet créé. Vous pouvez maintenant y ajouter des attributs" }
         format.json { render :show, status: :created, location: @table }
       else
         format.html { render :new }
@@ -263,11 +254,12 @@ class TablesController < ApplicationController
     # supprime les champs
     @table.fields.destroy_all
 
-    # supprime les fichiers liés
-    @table.values.each do | value |
-        value.field.delete_file(value.data) if value.field and value.field.Fichier? and value.data
-        value.destroy
-      end
+    # ????
+    # # supprime les fichiers liés
+    # @table.values.each do | value |
+    #     value.field.delete_file(value.data) if value.field and value.field.Fichier? and value.data
+    #     value.destroy
+    #   end
     @table.destroy
 
     respond_to do |format|
@@ -398,55 +390,68 @@ class TablesController < ApplicationController
     @audits = @audits.reorder('created_at DESC').paginate(page: params[:page])
   end
 
-  def activity
-    unless params[:type_action].blank?
-      @logs = @table.logs.where(action:params[:type_action].to_i)
-    else
-      @logs = @table.logs.all
-    end
+  # ????
+  # def activity
+  #   unless params[:type_action].blank?
+  #     @logs = @table.logs.where(action:params[:type_action].to_i)
+  #   else
+  #     @logs = @table.logs.all
+  #   end
 
-    unless params[:user_id].blank?
-      @logs = @logs.where(user_id:params[:user_id])
-    end
+  #   unless params[:user_id].blank?
+  #     @logs = @logs.where(user_id:params[:user_id])
+  #   end
 
-    # applique les filtres
-    @records_filter = []
-    if params[:select]
-      params[:select].each do | option | 
-        unless option.last.blank? 
-          field = Field.find(option.first)
-          filter_records = @table.values.where(field:field, data:option.last).pluck(:record_index) 
-          if @records_filter.empty?
-            @records_filter = filter_records 
-          else
-            @records_filter = @records_filter & filter_records 
-          end  
-        end
-      end
-      @logs = @logs.where(record_index:@records_filter) if @records_filter.any?
-    end
+  #   # applique les filtres
+  #   @records_filter = []
+  #   if params[:select]
+  #     params[:select].each do | option | 
+  #       unless option.last.blank? 
+  #         field = Field.find(option.first)
+  #         filter_records = @table.values.where(field:field, data:option.last).pluck(:record_index) 
+  #         if @records_filter.empty?
+  #           @records_filter = filter_records 
+  #         else
+  #           @records_filter = @records_filter & filter_records 
+  #         end  
+  #       end
+  #     end
+  #     @logs = @logs.where(record_index:@records_filter) if @records_filter.any?
+  #   end
 
-    @hash = @logs.group_by_day("logs.created_at").count
-    fields_count = @table.fields.count
+  #   @hash = @logs.group_by_day("logs.created_at").count
+  #   fields_count = @table.fields.count
 
-    # arroudir au multiple du nombre de champs supérieur
-    @hash.each do |key,value| 
-      if value % fields_count == 0 
-        r = value / fields_count
-      else
-        r = value + fields_count - (value % fields_count) 
-      end 
-      #logger.debug "[DEBUG] value:#{value} fields:#{fields_count} r:#{r}"
-      @hash[key] = r / fields_count
-    end  
-  end
+  #   # arroudir au multiple du nombre de champs supérieur
+  #   @hash.each do |key,value| 
+  #     if value % fields_count == 0 
+  #       r = value / fields_count
+  #     else
+  #       r = value + fields_count - (value % fields_count) 
+  #     end 
+  #     #logger.debug "[DEBUG] value:#{value} fields:#{fields_count} r:#{r}"
+  #     @hash[key] = r / fields_count
+  #   end  
+  # end
 
   def show_details
     unless params[:record_index].blank?
       @record_index = params[:record_index]
+      @relation = Relation.where(relation_with_id: @table.id).first
+      if @relation
+        @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
+      end
+      @sum = Hash.new(0)
     else
       redirect_to @table, alert: "donnée non existante"
     end
+  end
+  
+  def related_tables
+    @relation = Relation.find(params[:relation])
+    @record_index = params[:record_index]
+    @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
+    @sum = Hash.new(0)
   end
 
   private
@@ -457,7 +462,7 @@ class TablesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def table_params
-      params.require(:table).permit(:name, :record_index, :lifo, :notification)
+      params.require(:table).permit(:name, :record_index, :lifo, :notification, :show_on_startup_screen)
     end
 
     def is_user_authorized?

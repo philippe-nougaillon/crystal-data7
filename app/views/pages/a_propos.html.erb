@@ -1,8 +1,10 @@
-<div class="container px-5">
-	<h1 class="text-primary">CrystalData 7</h1>
-	<h2 class="fw-normal text-secondary">Vos données métier, en ligne et en mobilité</h2>
+<div class="container px-3">
+	<h1 class="text-primary">CrystalData</h1>
 
-	<h3 class="mt-5 text-info">Motivation</h3>
+	<h2 class="fw-normal text-primary mt-3">Application NO-CODE de base de données<h2> 
+	<h2 class="fw-bold text-secondary mt-5">Créez des collections d'Objets variés et partagez-les en ligne avec vos collaborateurs</h2>
+
+	<h3 class="fw-bold text-warning mt-5">Motivation</h3>
 
 	<p>
 		Développeur d'applications métiers depuis plus de 30 ans, j'ai souvent aidé mes clients à passer 
@@ -16,7 +18,7 @@
 		se déroulait selon un process de création à peu près toujours le même :
 	</p>
 
-	<ul class="list-group list-group-numbered list-group-flush mb-3">
+	<ul class="list-group list-group-numbered list-group-flush mb-3 w-sm-50">
 		<li class="list-group-item">Importer les données d'Excel</li>
 		<li class="list-group-item">Accéder aux données de n'importe où</li>
 		<li class="list-group-item">Rechercher, trier, filtrer et exporter les données</li>
@@ -42,32 +44,31 @@
 		collaborative et centrée sur les objectifs. 
 	</p>
 
-	<h3 class="mt-5 text-info">Principales fonctionnalités de CrystalData</h3>
+	<h3 class="fw-bold text-warning mt-5">Principales fonctionnalités</h3>
 
-	<ul class="list-group list-group-flush mb-5">
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Créez vos tables de données simplement à partir de feuilles Excel</li>
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Ajoutez des colonnes de type: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Champ calculé (formule Ruby), Fichier, Image, PDF, etc.</li>
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Ajoutez, éditez vos enregistrements dans un formulaire</li>
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Audit: chaque modification est consignée dans un historique (qui, quand, quoi)</li>
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Recherchez, filtrez et triez vos données</li> 
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Partagez vos données avec d'autres utilisateurs</li>		
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Exportez vos données vers un tableur</li> 
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Notification après chaque ajout de nouvelles données</li>
-		<li class="list-group-item"><i class="fa fa-check text-success"></i> Accédez à vos données en mobilité (Les écrans s'adaptent automatiquement à la taille d'un écran de smartphone)</li> 
+	<ul class="list-group list-group-flush mb-5 w-sm-75">
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Créez des Objets constitués d'attributs variés <br>(Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Fichier, Image, PDF, Position GPS, Lien vers un Objet dans une autre Collection)</li>
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Ajoutez, éditez vos objets dans un formulaire</li>
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Audit trail: chaque modification d'un objet est consignée dans un historique (quand, qui, quoi, valeur avant, valeur après)</li>
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Recherchez, filtrez et triez vos objets</li> 
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Partagez vos collections d'objet avec d'autres utilisateurs</li>		
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Exportez vos collections vers un tableur</li> 
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Soyez notifié après chaque ajout d'objet dans une collection'</li>
+		<li class="list-group-item"><i class="fa fa-check text-success"></i> Accédez à toutes vos collections en mobilité (Les écrans s'adaptent automatiquement aux écrans de smartphones/tablettes)</li> 
 	</ul>
 
 	<% if false %>
 
-		<h3 class="text-info">Toutes les fonctionnalités de CrystalData en détails</h3>
+		<h3 class="text-warning">Toutes les fonctionnalités de CrystalData en détails</h3>
 
 		<div class="row">
 			<div class="col">
 				<h4 class="mt-3">
 					<i class="fa fa-check"></i>
-					Créer des tables de données<br>
+					Créer des collections d'Objets<br>
 				</h4>
 
-				<p>Créez vos tables de donnée simplement à partir de feuilles Excel (exportées au format CSV)</p>
+				<p>Créez vos collections d'Objets simplement à partir de feuilles Excel (exportées au format CSV)</p>
 
 				<%= link_to image_path 'screen-lg.png' do %>
 					<%= image_tag 'screen-lg.png', class: 'img-thumbnail w-100' %>
@@ -77,11 +78,11 @@
 			<div class="col">
 				<h4 class="mt-3">
 					<i class="fa fa-check"></i>
-					Ajoutez de nouvelles colonnes 
+					Ajoutez de nouveaux attributs 
 				</h4>
 				
 				<p>
-					Ajoutez des colonnes de type: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, 
+					Ajoutez des attributs de type: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, 
 					Champ calculé (formule <%= link_to "Ruby","https://www.ruby-lang.org/fr/documentation/quickstart/", :target => "_blank" %>), 
 					Fichier, Image, 
 					Signature manuscrite, Coordonnées GPS, Météo locale
@@ -155,14 +156,15 @@
 
 	<% end %>
 
-	<h3 class="text-info">Les types de données à la loupe</h3>
+	<h3 class="fw-bold text-warning mt-5">L'Objet et ses Attributs</h3>
 
 	<p>
-		Une table de données est constituée de colonne (ex: Marque, Couleur, Prix, Qté en stock) et chaque colonne peut avoir un type de données spécifique afin de s'adapter au mieux aux données contenues dans chaque colonne.
-		Les types de données disponibles sont : 
-		<ul class="list-group list-group-flush mb-5">
+		Un objet est constitué d'attributs (ex: Marque, Couleur, Prix, Qté en stock...) et 
+		chaque attribut peut avoir un type spécifique afin de s'adapter au mieux aux données qu'il contiendra. 
+		Les types disponibles sont : 
+		<ul class="list-group list-group-flush mb-5 m-3">
 			<li>
-				Types de textes :
+				Texte :
 				<ul>
 					<li><b>Texte</b> : peut contenir une chaine de 255 caractères maximum. L'option 'Filtre ?' permet de créer une liste déroulante contenant les valeurs distinctes. </li>
 					<li><b>Texte long</b> : permet de faire des gros messages</li>
@@ -172,7 +174,7 @@
 			<li>
 				Chiffres :
 				<ul>
-					<li><b>Nombre</b> : pour saisir des valeurs numériques, avec ou sans décimales. L'option 'Opération en bas de page', calculera la moyenne ou la somme des valeurs de la colonne.</li>
+					<li><b>Nombre</b> : pour saisir des valeurs numériques, avec ou sans décimales. L'option 'Opération en bas de page', calculera la moyenne ou la somme des valeurs de l'attribut.</li>
 					<li><b>Euros</b> : idem 'Nombre' mais affiche la valeur avec le symbole euros (€).</li>
 					<li><b>Formule</b> : champ calculé à partir de champs existants ou d'une formule en langage Ruby, ex: '[Temps Passé] * [Coût horaire]' ou '[Prix HT] * 1.2'
 				</ul>
@@ -185,13 +187,13 @@
 						pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.
 					</li>
 					<li>
-						pour contenir une liste de valeurs venant d'une autre table, en utilisant la syntaxe suivante : '[nom_table.nom_colonne]', ex: '[Utilisateurs.Nom]'. (Attention aux min/Majuscules)
+						pour contenir une liste de valeurs venant d'une autre table, en utilisant la syntaxe suivante : '[nom_table.nom_attribut]', ex: '[Utilisateurs.Nom]'. (Attention aux min/Majuscules)
 					</li>
 				</ol>
 			</li>
-			<li><b>Table</b> : pour afficher les enregistrements d'une table liée. ex: '[Plombiers."Nom,Expérience"]'</li>
+			<li><b>Collection</b> : pour afficher les objets d'une autre collection. ex: '[Technicien."Nom,Prénom,Expérience"]'</li>
 			<li>
-				Fichiers:
+				Fichier :
 				<ul>
 					<li><b>Fichier</b> : permet de lier et de stocker un fichier (document, image, etc...).</li>
 					<li><b>Image</b> : idem 'Fichier' mais affiche un aperçu de l'image ou l'image d'origine selon le contexte.</li>
@@ -206,7 +208,8 @@
 					<li>Affiche une position sur une carte aux coordonnées indiquées au format "lng, lat". ex: '48.85879287621989, 2.294761243572842' pour pointer sur la tour Eiffel.</li>
 				</ol>
 			</li>
-			<li><b>Workflow</b> : contient l'état d'un objet (enregistrement) associé à une couleur. ex: 'Nouveau:primary, Confirmé:success, Annulé:danger, Archivé:secondary'.
+			<li><b>Utilisateur</b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table</li>
+			<li><b>Workflow</b> : contient l'état d'un objet associé à une couleur. ex: 'Nouveau:primary, Confirmé:success, Annulé:danger, Archivé:secondary'.
 				<br>
 				Couleurs disponibles:
 				<span class="badge bg-primary">Primary</span>
@@ -221,9 +224,16 @@
 		</ul>
 	</p>
 
-	<h3 class="my-5 text-info">Développement, support et services</h3>
-	<p class="mb-5">
+	<h3 class="fw-bold text-warning mt-5">Développement, support et services</h3>
+	
+	<p class="mt-3">
 		CrystalData est développé et maintenu par 
 		<%= link_to 'Philnoug & Partners', 'https://www.philnoug.com', target: '_blank' %>
 	</p>
+	<p class="mt-3">
+		Besoin d'une fonctionnalité sur mesure ? Nous vous la développons !
+	    Pour en savoir plus,
+    	<%= link_to "contactez-nous", 'https://www.philnoug.com/contact', target: '_blank', class: 'link' %>
+    </p>
+
 </div>

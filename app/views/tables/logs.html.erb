@@ -1,7 +1,7 @@
-<%= turbo_frame_tag "main_frame" do %>
-  <h1 class="text-primary">
+<%= turbo_frame_tag "audit_frame" do %>
+  <h3 class="text-primary">
     Audit Trail
-  </h1>
+  </h3>
 
   <% if params[:record_index].blank? %>
     <%= form_tag(request.path, method: :get, class: 'd-flex mb-4 gap-4 align-items-center') do %>
@@ -22,7 +22,7 @@
           <th>IP</th>
           <th>Action</th>
           <th>Ligne</th>
-          <th>Colonne</th>
+          <th>Attribut</th>
           <th>Valeur</th>
           <th>Remplace</th>
         </tr>
@@ -36,20 +36,20 @@
             <% value = log.audited_changes['data'] %>
             <% old_value = log.audited_changes['old_value'] %>
             <td><%= "#{ l log.created_at } (il y a #{ time_ago_in_words(log.created_at) })" %></td>
-            <td><%= log.user.name.humanize if log.user %></td>
+            <td><%= log.user ? log.user.name.humanize : 'Administrateur' %></td>
             <td><%= log.remote_address %></td>
             <td><%= log.audited_changes['old_value'] ? 'Modification' : 'Création' %>
             <td><%= record_index %></td>
             <td><%= field.name %></td>
             <td>
-              <% if field.Table? %>
+              <% if field.Collection? %>
                 <%= field.get_linked_table_record(value.to_i) %>
               <% else %>
                 <%= value %>
               <% end %>
             </td>
             <td>
-              <% if field.Table? %>
+              <% if field.Collection? %>
                 <%= field.get_linked_table_record(old_value.to_i) %>
               <% else %>
                 <%= old_value %>

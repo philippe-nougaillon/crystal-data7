@@ -1,7 +1,7 @@
 <div class="mb-4">
-  <h1 class="text-primary">
-    <span class="fa fa-database"></span>
-    Tables
+  <h1 class="text-muted">
+    <span class="fa fa-cubes"></span>
+    Mes Objets
   </h1>
 </div>
 
@@ -10,11 +10,10 @@
     <thead>
       <tr>
         <th>Nom</th>
-        <th>Colonnes</th>
+        <th class="col-md-4">Attributs</th>
         <th>Rôle</th>
-        <th class="col-md-2">Partagée avec</th>
+        <th class="col-md-2">Partagé avec</th>
         <th>MÀJ</th>
-        <th>Lignes</th>
         <th></th>
         <th></th>
       </tr>
@@ -24,27 +23,26 @@
       <% if @tables.any? %>
         <% @tables.each do | table | %>
           <tr>
-            <td><%= link_to table.name.humanize, table, class: 'fw-bold text-decoration-none' %></td>
+            <td><%= link_to table.name.upcase, table, class: 'fw-bold' %></td>
             <td><%= table.field_names %></td>
             <td><%= table.role_name(current_user) %></td>
             <td>
               <%= table.shared_with(current_user) %>
               <% if policy(table).partages? %>
-                <%= link_to partages_path(table), title: "Partager avec un autre utilisateur" do %>
-                  +
+                <%= link_to partages_path(table), title: "Partager avec un autre utilisateur", class: 'text-decoration-none' do %>
+                  (+)
                 <% end %>
               <% end %>
             </td>
             <td><%= "il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" unless table.size.zero? %></td>
-            <td style="text-align: right"><%= table.size %></td>
             <td>
               <% if policy(table).show_attrs? %>
-                <%= link_to 'Modifier', show_attrs_path(id: table.slug), title:"Modifier les colonnes", class: 'btn btn-outline-warning btn-sm' %>
+                <%= link_to 'Modifier Attributs', show_attrs_path(id: table.slug), title:"Modifier les attributs de l'Objet '#{table.name}'", class: 'btn btn-outline-warning btn-sm' %>
               <% end %>
             </td>
             <td>
               <% if policy(table).destroy? %>
-                <%= link_to 'X', table, data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm' %>
+                <%= link_to 'X', table, title: "Supprimer l'Objet #{table.name}", 'data-turbo-method': :delete, 'data-turbo-confirm': "Êtes-vous certain.e de vouloir supprimer l'Objet #{table.name} ? Toutes les données enregistrées dedans seront perdues !", class: 'btn btn-outline-danger btn-sm' %>
               <% end %>
             </td>
           </tr>
@@ -64,10 +62,12 @@
   </table>
 </div>
 
-<%= link_to new_table_path, class: 'btn btn-outline-primary' do %>
-  Nouvelle Table
-<% end %>
+<div class="mt-3">
+  <%= link_to new_table_path, class: 'btn btn-outline-primary' do %>
+    Nouvel Objet
+  <% end %>
 
-<%= link_to import_path, class: 'btn btn-outline-dark' do %>
-  Importer
-<% end %>
+  <% link_to import_path, class: 'btn btn-outline-warning' do %>
+    Importer
+  <% end %>
+</div>

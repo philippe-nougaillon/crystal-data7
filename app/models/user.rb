@@ -11,4 +11,20 @@ class User < ApplicationRecord
   validates :name, :email, :password, :password_confirmation, presence:true
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create	
 
+  after_create :new_user_notification
+
+  def favorite_table
+    if self.tables.where(show_on_startup_screen: true).present?
+      self.tables.where(show_on_startup_screen: true).first
+    else
+      self.tables.last
+    end
+  end
+
+  private
+
+  def new_user_notification
+    UserMailer.with(user: self).new_user_notification.deliver_now
+  end
+
 end

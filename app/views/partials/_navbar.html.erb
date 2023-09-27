@@ -1,34 +1,108 @@
-<nav class="nav d-none d-sm-flex flex-column bg-secondary gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100">
-  <li class="nav-item flex-fill mx-auto mt-2">
-    <%= link_to root_path, title: "Liste des tables" do %>
-      <i class="fa-solid fa-house text-white"></i>
-    <% end %>
-  </li>
-  <% if current_user %>
-    <li class="nav-item mx-auto">
-      <%= link_to current_user, title: "Profil utilisateur" do %>
-        <i class="fa-solid fa-circle-user fa-2xl text-primary"></i>
+<nav class="nav d-none d-sm-flex flex-column bg-white shadow gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100 align-items-center">
+  <div class="flex-fill d-flex flex-column gap-5 mt-2">
+    <li class="nav-item">
+      <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Page d'accueil" do %>
+        <i class="fa-solid fa-house text-primary"></i>
       <% end %>
     </li>
-    <%
-=begin%>
- <li class="nav-item mx-auto">
-      <%= link_to root_path, title: "Paramètres" do %>
-        <i class="fa-solid fa-gear text-white"></i>
+    <% if user_signed_in? %>
+      <li class="nav-item">
+        <%= link_to tables_path, title: "Liste des tables" do %>
+          <i class="fa-solid fa-cubes text-muted"></i>
+        <% end %>
+      </li>
+    <% end %>
+  </div>
+  <li class="nav-item">
+    <%= link_to a_propos_path, title: "À Propos de CrystalData" do %>
+      <i class="fa-solid fa-circle-question text-info"></i>
+    <% end %>
+  </li>
+  <% if user_signed_in? %>
+    <li class="nav-item">
+      <%= link_to current_user, title: "Profil utilisateur" do %>
+        <i class="fa-solid fa-circle-user fa-2xl text-success"></i>
       <% end %>
-    </li> 
-<%
-=end%>
-    <li class="nav-item mx-auto">
-      <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-accent btn-outline !normal-case', 'data-turbo': false do %>
+    </li>
+    <li class="nav-item">
+      <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-accent btn-outline !normal-case', 'data-turbo': false, title: 'Se déconnecter' do %>
         <i class="fa-solid fa-right-from-bracket text-warning"></i>
       <% end %>
     </li>
-  <% else %>
-    <li class="nav-item mx-auto">
-      <%= link_to a_propos_path, title: "À Propos de CrystalData" do %>
-        <i class="fa-solid fa-circle-question text-white"></i>
-      <% end %>
-    </li>
   <% end %>
+</nav>
+
+<nav class="navbar d-flex d-sm-none navbar-expand-lg fixed-top bg-white shadow-sm">
+  <div class="container-fluid">
+    <h1 class="navbar-brand mb-0">CrystalData</h1>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'nav-link text-primary' do %>
+            <i class="fa-solid fa-house"></i>
+            <% if user_signed_in? %>
+              Ma collection favorite  
+            <% else%>
+              Accueil
+            <% end %>
+          <% end %>
+        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to tables_path, title: "Liste des tables", class: 'nav-link text-muted' do %>
+              <i class="fa-solid fa-cubes"></i>
+              Mes Objets
+            <% end %>
+          </li>
+        <% end %>
+        <% if controller_name == "tables" && action_name != "index" %>
+          <li class="nav-item dropdown">
+            <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              --- <%= @table.name.upcase %>
+            </span>
+            <ul class="dropdown-menu">
+              <% if policy(@table).show_attrs? %>
+                <li><%= link_to 'Modifier Attributs', show_attrs_path(id:@table), class:'dropdown-item', title:"Modifier les attributs de l'Objet '#{@table.name}'" %> </li>
+              <% end %>
+              <% if policy(@table).edit? %>
+                <li><%= link_to 'Modifier Objet', edit_table_path(id:@table), class:'dropdown-item', title:"Modifier l'Objet '#{@table.name}'" %> </li>
+              <% end %>
+              <% if policy(@table).partages? %>
+                <li><%= link_to "Partages", partages_path(@table), class:'dropdown-item', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" %></li>
+              <% end %>
+              <% if policy(@table).export? %>
+                <li><%= link_to 'Exporter', export_path(@table), class:'dropdown-item', title:"Exporter les données de l'Objet '#{@table.name}'" %></li>
+              <% end %>
+              <% if policy(@table).logs? %>
+                <li><%= link_to 'Audit Trail', logs_path(id:@table), class:'dropdown-item', title:"Historique des modifications de l'Objet '#{@table.name}'" %></li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+        <li class="nav-item">
+          <%= link_to a_propos_path, title: "À Propos de CrystalData", class: 'nav-link text-info' do %>
+            <i class="fa-solid fa-circle-question"></i>
+            À Propos
+          <% end %>
+        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to current_user, title: "Profil utilisateur", class: 'nav-link text-success' do %>
+              <i class="fa-solid fa-circle-user"></i>
+              Profil
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= button_to destroy_user_session_path, method: :delete, class:'nav-link btn btn-accent btn-outline !normal-case text-warning', 'data-turbo': false, title: 'Se déconnecter' do %>
+              <i class="fa-solid fa-right-from-bracket"></i>
+              Déconnexion
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 </nav>

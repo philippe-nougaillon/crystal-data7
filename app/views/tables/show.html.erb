@@ -1,20 +1,23 @@
 <div class="mb-4">
   <h1 class="text-primary">
-    <%= @table.name.humanize %>
+    <%= @table.name.humanize.pluralize %>
   </h1>
 
-  <div class="d-flex justify-content-end gap-2">
+  <div class="d-none d-sm-flex justify-content-end gap-2">
     <% if policy(@table).show_attrs? %>
-      <%= link_to 'Modifier Structure', show_attrs_path(id:@table), title:"Modifier la structure de la table ou des colonnes" %> 
+      <%= link_to 'Modifier Attributs', show_attrs_path(id:@table), title:"Modifier les attributs de l'Objet '#{@table.name}'" %> 
+    <% end %>
+    <% if policy(@table).edit? %>
+      <%= link_to 'Modifier Objet', edit_table_path(id:@table), title:"Modifier l'Objet '#{@table.name}'" %> 
     <% end %>
     <% if policy(@table).partages? %>
-      <%= link_to "Partager", partages_path(@table), title:"Voir les utilisateurs qui partagent cette table" %>
+      <%= link_to "Partages", partages_path(@table), title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" %>
     <% end %>
     <% if policy(@table).export? %>
-      <%= link_to 'Exporter', export_path(@table), title:"Exporter les données" %>
+      <%= link_to 'Exporter', export_path(@table), title:"Exporter les données de l'Objet '#{@table.name}'" %>
     <% end %>
     <% if policy(@table).logs? %>
-      <%= link_to 'Audit Trail', logs_path(id:@table), title:"Historique des modifications" %>
+      <%= link_to 'Audit Trail', logs_path(id:@table), title:"Historique des modifications de l'Objet '#{@table.name}'" %>
     <% end %>
   </div>
 </div>
@@ -27,166 +30,50 @@
         <%= text_field_tag :search, params[:search], onchange:'this.form.submit()', class:'form-control' %>
       </div>
       <% @table.fields.filtres.each do | field | %>
-        <div>
-          <%= label_tag "select[#{field.id}]", field.name.humanize %>
-          <% default_value = params.permit![:select] ? params[:select][field.id.to_s] : 'nil' %>
-          <%= select_tag "select[#{field.id}]", 
-                options_for_select(
-                  field.values.records_at(@records).where.not(data: nil).pluck(:data).uniq.sort,
-                  default_value), 
-                include_blank: true, 
-                class: "form-select", 
-                onchange: 'this.form.submit()' %>
-        </div>
+        <% if field.Date? %>
+          <% default_start_date = params.permit![:date].try(:[], field.id.to_s).try(:[], :start) ? params[:date][field.id.to_s][:start] : 'nil' %>
+          <% default_end_date = params.permit![:date].try(:[], field.id.to_s).try(:[], :start) ? params[:date][field.id.to_s][:end] : 'nil' %>
+          <div>
+            <%= label_tag "date[#{field.id}]", "#{field.name.humanize} : Du" %>
+            <%= date_field_tag "date[#{field.id}][start]", default_start_date, class: 'form-control', onchange: 'this.form.submit()' %>
+          </div>
+          <div>
+            <%= label_tag "date[#{field.id}]","Au" %>
+            <%= date_field_tag "date[#{field.id}][end]", default_end_date, class: 'form-control', onchange: 'this.form.submit()' %>
+          </div>
+        <% else %>
+          <div>
+            <%= label_tag "select[#{field.id}]", field.name.humanize %>
+            <% default_value = params.permit![:select] ? params[:select][field.id.to_s] : 'nil' %>
+            <% if field.Collection? %>
+              <%= select_tag "select[#{field.id}]", 
+                    options_for_select(field.populate_linked_table.invert, default_value), 
+                    include_blank: true, 
+                    class: 'form-select', 
+                    onchange: 'this.form.submit()' %>
+            <% else %>
+              <%= select_tag "select[#{field.id}]", 
+                    options_for_select(field.populate_select_filter(@records), default_value), 
+                    include_blank: true, 
+                    class: 'form-select', 
+                    onchange: 'this.form.submit()' %>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
       <% if policy(@table).fill? %>
-        <%= link_to "+ Ajouter", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
+        <%= link_to "(+) #{@table.name}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
       <% end %>
     </div>
   <% end %>
 
-  <div class="overflow-x-auto">
-    <table class="table table-striped table-hover sticky">
-      <thead>
-        <tr style="vertical-align: middle">
-          <% @table.fields.listable.each_with_index do | field,index | %>
-            <th>
-              <%= link_to url_for(params.permit!.merge(sort_by: field.id)), class:'text-decoration-none' do %>
-                <span class="text-nowrap">
-                  <%= field.name.humanize %>
-                  <% if params[:sort_by] == field.id.to_s %>
-                    <span class="text-decoration-none text-warning "><%= (session[:order_by] == 'ASC') ? '△' : '▽' %></span>
-                  <% end %>
-                </span>
-              <% end %>
-            </th>
-            <% @td_style[index] = @numeric_types.include?(field.datatype) ? 'text-align: right;' : nil %>
-          <% end %>
-          <th>MÀJ</th>
-          <th colspan=3></th>
-        </tr>
-      </thead>
+  <%= render partial: 'partials/table', locals: { table: @table, records: @records} %>
 
-      <% unless @records.size.zero? %>
-        <% records_size = 0 %>
-        <tbody>
-          <% @records.each do | record_index | %>
-            <% values = @table.value_datas_listable(record_index) %>
-
-            <% if not values.empty? %>
-              <% records_size += 1 %>
-              <tr>
-                <% @table.fields.listable.each_with_index do | field, index | %>
-                  <% if value = values[index]%>
-                    <td style="<%= @td_style[index] %>">
-                      <% case field.datatype when 'Fichier' %>
-                        <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
-                      <% when 'Image', 'PDF' %>
-                        <% blob = Blob.find(value) %>
-                        <% if blob.file.representable? %>
-                          <%= link_to image_tag(blob.file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file), title: blob.file.filename %>
-                        <% end %>
-                      <% when 'Signature' %>
-                        <%= link_to("Oui", values_signature_path(table:@table, field:field, record_index:record_index)) %>
-                      <% when 'Date' %>
-                        <%= l(value.to_date) unless value.blank? %>
-                      <% when 'Texte_long' %>
-                        <%= truncate(value, length: 80) %>
-                      <% when 'Texte_riche' %>
-                        <%= simple_format(value) %>
-                      <% when 'Euros' %>
-                        <%= number_to_currency(value) %>
-                      <% when 'Formule' %>
-                        <%= field.evaluate(@table, record_index) %>
-                      <% when 'Workflow' %>
-                        <% items = field.items.split(',').map{|i| i.split(':')}.to_h %>
-                        <% color = items[value] %>
-                        <span class="badge bg-<%= color %>"><%= value %></span>
-                      <% when 'URL' %>
-                        <%= link_to URI.parse(value).host, value, target: "_blank" %>
-                      <% when 'Couleur' %>
-                        <span style="background-color: <%= value %>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                      <% when 'GPS' %>
-                        <%= value %>
-                      <% when 'Table' %>
-                        <% linked_value = field.get_linked_table_record(value.to_i) %>
-                        <% linked_table = Table.find_by(name: field.items.tr('[]','').split('.')) %>
-                        <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value) %>
-                      <% else %>
-                        <%= value %>
-                      <% end %>
-
-                      <% if field.operation %>
-                        <% @sum[field.id] += value.to_f %>
-                      <% end %>
-                    </td>
-                  <% else %>
-                    <td></td>
-                  <% end %>  
-                <% end %>
-
-                <td>
-                  il y a <%= time_ago_in_words(@table.last_update_at(record_index)) %>
-                </td>
-
-                <td>
-                  <% if policy(@table).show_details? %>
-                    <%= link_to "Voir", details_path(@table.slug, record_index: record_index), class: 'btn btn-outline-primary btn-sm', 'data-testid': "Voir ligne n°#{record_index}" %>
-                  <% end %>
-                </td>
-                <td>
-                  <% if policy(@table).fill? %>
-                    <%= link_to "Modifier", fill_url(@table.slug, record_index: record_index), class: 'btn btn-outline-warning btn-sm', 'data-testid': "Modifier ligne n°#{record_index}" %>
-                  <% end %>
-                </td>
-                <td>
-                  <% if policy(@table).delete_record? %>
-                    <%= link_to "X", delete_record_url(@table.slug, record_index: record_index), data: {'turbo-method': :delete, 'turbo-confirm': 'Confirmez-vous ?'}, class: 'btn btn-outline-danger btn-sm', 'data-testid': "Supprimer ligne n°#{record_index}" %>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          <% end %>
-        </tbody>
-
-        <% if @table.fields.listable.where.not(operation: nil).any? %>
-          <tfoot>
-            <tr>
-              <% @table.fields.listable.each do |field| %>
-                <% if field.operation %>
-                  <td class="text-primary" style="text-align: right">
-                    <% if field.Somme? %>
-                      <% if field.datatype == "Euros" %>
-                        <%= number_to_currency(@sum[field.id]) %>
-                      <% else %>
-                        <%= number_with_precision(@sum[field.id], precision: 2) %>
-                      <% end %>
-                    <% elsif field.Moyenne? %>
-                      <% if field.datatype == "Euros" %>
-                        <%= number_to_currency(@sum[field.id] / @records.count) %>
-                      <% else %>
-                        <%= number_with_precision(@sum[field.id] / @records.count, precision: 2) %>
-                      <% end %>
-                    <% end %>
-                  </td>
-                <% else %>
-                  <td></td>
-                <% end %>
-              <% end %>
-              <td colspan=4></td>
-            </tr>
-          </tfoot>
-        <% end %>
-        
-      <% end %>
-    </table>
-    <p>Affichage de <%= records_size %> <%= @table.name %> sur <%= @table.size %> au total <p>
-  </div>
 <% else %>
   <% unless params[:attrs] %>
-    Cette table ne contient aucune colonne<br><br>
-    <%= link_to show_attrs_path(id:@table), class: 'btn btn-outline-primary' do %>
-      Ajouter une colonne
+    Cet objet ne contient aucun attribut pour l'instant<br><br>
+    <%= link_to show_attrs_path(id: @table.id), class: 'btn btn-outline-primary' do %>
+      Ajouter un attribut
     <% end %> 
   <% end %>
 <% end %>

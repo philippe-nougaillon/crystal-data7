@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class FieldsController < ApplicationController
   before_action :set_field, only: [:edit, :update, :destroy]
   before_action :is_user_authorized?
@@ -20,10 +18,10 @@ class FieldsController < ApplicationController
         @field.table.size.times do |index|
           @field.values.create(record_index: (index + 1))
         end   
-        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Nouvelle colonne ajoutée.' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Nouvel attribut ajouté.' }
         format.json { render :show, status: :created, location: @field }
       else
-        format.html { redirect_to show_attrs_path(id: @field.table.slug), alert: 'Veuillez donner un nom à cette colonne' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), alert: 'Un problème est survenu lors de la création de l\'attribut' }
         format.json { render json: @field.errors, status: :unprocessable_entity }
       end
     end
@@ -34,7 +32,7 @@ class FieldsController < ApplicationController
   def update
     respond_to do |format|
       if @field.update(field_params)
-        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Colonne modifiée avec succès.' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Attribut modifié avec succès.' }
         format.json { render :show, status: :ok, location: @field }
       else
         format.html { render :edit }
@@ -50,7 +48,7 @@ class FieldsController < ApplicationController
     @table.values.where(field_id:@field.id).destroy_all
     @field.destroy
     respond_to do |format|
-      format.html { redirect_to show_attrs_path(id: @field.table), notice: 'Colonne supprimée.' }
+      format.html { redirect_to show_attrs_path(id: @field.table), notice: 'Attribut supprimé.' }
       format.json { head :no_content }
     end
   end
@@ -64,7 +62,6 @@ class FieldsController < ApplicationController
     render nothing: true # this is a POST action, updates sent via AJAX, no view rendered
   end
 
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_field
@@ -76,6 +73,7 @@ class FieldsController < ApplicationController
       params.require(:field).permit(:name, :table_id, :datatype, :filtre, :items, :obligatoire, :operation, :field_id, :row_order_position, :visibility)
     end
 
+    # ????
     def is_user_authorized?
       if ['create'].include?(action_name)
         @field = Field.new(field_params)

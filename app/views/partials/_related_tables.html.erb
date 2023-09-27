@@ -1,0 +1,7 @@
+<%= turbo_frame_tag "related_tables_frame" do %>
+  <% if @records.any? %>
+    <div class="card p-3 shadow">
+      <%= render partial: 'partials/table', locals: { table: @relation.table, records: @records } %>
+    </div>
+  <% end %>
+<% end %>

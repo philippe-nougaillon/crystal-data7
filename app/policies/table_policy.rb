@@ -93,4 +93,8 @@ class TablePolicy < ApplicationPolicy
     record.users.include?(user)
   end
 
+  def related_tables?
+    show_details?
+  end
+
 end

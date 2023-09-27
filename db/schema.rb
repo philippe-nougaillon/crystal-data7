@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_13_085339) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_22_074842) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -121,6 +121,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_085339) do
     t.index ["user_id"], name: "index_logs_on_user_id"
   end
 
+  create_table "relations", force: :cascade do |t|
+    t.bigint "field_id", null: false
+    t.integer "table_id"
+    t.integer "relation_with_id"
+    t.string "items", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["field_id"], name: "index_relations_on_field_id"
+    t.index ["relation_with_id"], name: "index_relations_on_relation_with_id"
+    t.index ["table_id"], name: "index_relations_on_table_id"
+  end
+
   create_table "tables", force: :cascade do |t|
     t.string "name", limit: 255
     t.datetime "created_at", null: false
@@ -129,6 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_085339) do
     t.boolean "lifo", default: false
     t.string "slug"
     t.integer "record_index", default: 0, null: false
+    t.boolean "show_on_startup_screen", default: false
     t.index ["slug"], name: "index_tables_on_slug", unique: true
   end
 
@@ -167,6 +180,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_085339) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "logs", "fields"
   add_foreign_key "logs", "users"
+  add_foreign_key "relations", "fields"
   add_foreign_key "tables_users", "tables"
   add_foreign_key "tables_users", "users"
 end

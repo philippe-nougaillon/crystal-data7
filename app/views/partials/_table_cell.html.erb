@@ -1,0 +1,53 @@
+<% unless action_name == 'show_details' && field.Collection? && @relation.field == field %>
+  <% if value %>
+    <td style="<%= 'text-align: right;' if field.is_numeric %>">
+      <% case field.datatype when 'Fichier' %>
+        <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
+      <% when 'Image', 'PDF' %>
+        <% blob = Blob.find(value) %>
+        <% if blob.file.represenCollection? %>
+          <%= link_to image_tag(blob.file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file), title: blob.file.filename %>
+        <% end %>
+      <% when 'Signature' %>
+        <%= link_to("Oui", values_signature_path(table: table, field: field, record_index: record_index)) %>
+      <% when 'Date' %>
+        <% unless value.blank? %>
+          <%= link_to_if is_link, l(value.to_date), details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" } %>
+        <% end %>
+      <% when 'Texte_long' %>
+        <%= truncate(value, length: 80) %>
+      <% when 'Texte_riche' %>
+        <%= simple_format(value) %>
+      <% when 'Euros' %>
+        <%= number_to_currency(value) %>
+      <% when 'Formule' %>
+        <%= field.evaluate(table, record_index) %>
+      <% when 'Workflow' %>
+        <% items = field.items.split(',').map{|i| i.split(':')}.to_h %>
+        <% color = items[value] %>
+        <span class="badge bg-<%= color %>"><%= value %></span>
+      <% when 'URL' %>
+        <%= link_to URI.parse(value).host, value, target: "_blank", data: { turbo_frame: "_top" } %>
+      <% when 'Couleur' %>
+        <span style="background-color: <%= value %>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <% when 'GPS' %>
+        <%= value %>
+      <% when 'Collection' %>
+        <% linked_value = field.get_linked_table_record(value.to_i) %>
+        <% linked_table = Table.find(field.relation.relation_with_id) %>
+        <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" } %>
+      <% when 'Utilisateur' %>
+        <%= value %>
+      <% else %>
+        <%= link_to_if is_link, value, details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" } %>
+      <% end %>
+      
+      <% if field.operation %>
+        <% @sum[field.id] += value.to_f %>
+      <% end %>
+
+    </td>
+  <% else %>
+    <td></td>
+  <% end %>
+<% end %>

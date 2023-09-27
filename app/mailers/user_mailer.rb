@@ -1,7 +1,5 @@
-# encoding: utf-8
-
 class UserMailer < ApplicationMailer
-	default from: '"crystalData" <crystaldata@philnoug.com>'
+	default from: '"CrystalData" <crystaldata@philnoug.com>'
 
 	def notification(table, items)
 		@items = items
@@ -22,6 +20,12 @@ class UserMailer < ApplicationMailer
 		@table = table
 
 		mail(to: @user.email, subject: "Partage de la table '#{@table.name.humanize}' activé", bcc:"philippe.nougaillon@gmail.com")
+	end
+
+	def new_user_notification
+		@user = params[:user]
+
+		mail(to: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com", subject:"[CrystalData] Un compte a été créé")
 	end
 
 end
