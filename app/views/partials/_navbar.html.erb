@@ -5,11 +5,13 @@
         <i class="fa-solid fa-house text-primary"></i>
       <% end %>
     </li>
-    <li class="nav-item">
-      <%= link_to tables_path, title: "Liste des tables" do %>
-        <i class="fa-solid fa-cubes text-muted"></i>
-      <% end %>
-    </li>
+    <% if user_signed_in? %>
+      <li class="nav-item">
+        <%= link_to tables_path, title: "Liste des tables" do %>
+          <i class="fa-solid fa-cubes text-muted"></i>
+        <% end %>
+      </li>
+    <% end %>
   </div>
   <li class="nav-item">
     <%= link_to a_propos_path, title: "À Propos de CrystalData" do %>
@@ -48,12 +50,14 @@
             <% end %>
           <% end %>
         </li>
-        <li class="nav-item">
-          <%= link_to tables_path, title: "Liste des tables", class: 'nav-link text-muted' do %>
-            <i class="fa-solid fa-cubes"></i>
-            Mes Objets
-          <% end %>
-        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to tables_path, title: "Liste des tables", class: 'nav-link text-muted' do %>
+              <i class="fa-solid fa-cubes"></i>
+              Mes Objets
+            <% end %>
+          </li>
+        <% end %>
         <% if controller_name == "tables" && action_name != "index" %>
           <li class="nav-item dropdown">
             <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
