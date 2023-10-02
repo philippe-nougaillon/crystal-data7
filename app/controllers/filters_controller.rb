@@ -71,7 +71,6 @@ class FiltersController < ApplicationController
             if search_value.to_i.zero?
               # TODO : Beware of SQL Injection
               sql = "CAST(data AS float8) #{search_value}"
-              
             else
               sql = "data = ?", search_value
             end
@@ -82,7 +81,11 @@ class FiltersController < ApplicationController
               sql = "DATE(data) BETWEEN ? AND ? ", start_date, end_date
             end
           else
-            sql = "data ILIKE ? ", search_value
+            if search_value.class == Array
+              sql = "data IN(?) ", search_value
+            else
+              sql = "data ILIKE ? ", search_value
+            end
           end
           @filters[key] = @filter.table.values.where(field_id: key.to_i).where(sql).pluck(:record_index)
         end
