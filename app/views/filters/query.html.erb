@@ -20,7 +20,7 @@
               <%= date_field_tag "[query][#{field.id}][start]", params[:query].try(:[], field.id.to_s)["start"], class: 'form-control w-100', autofocus: index.zero? %>
             </div>
             <div class="col">
-              <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s)["end"], class: 'form-control w-100', autofocus: index.zero? %>
+              <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s)["end"], class: 'form-control w-100' %>
             </div>
           </div>
           <% hint = 'Entrez une date ou une période (date de début / date de fin)' %>
@@ -45,11 +45,11 @@
   <% end %>
   </div>
   
-  <div>
-    <%= submit_tag 'Appliquer le filtre', class: 'btn btn-outline-success' %>
-  </div>
+  <%= submit_tag 'Enregistrer et appliquer le filtre', class: 'btn btn-outline-success' %>
 <% end %>
 
 <% if @records %>
-  <%= render partial: 'partials/table', locals: { table: @filter.table, records: @records} %>
+  <div class="mt-4">
+    <%= render partial: 'partials/table', locals: { table: @filter.table, records: @records} %>
+  </div>
 <% end %>

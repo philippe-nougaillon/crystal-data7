@@ -70,7 +70,8 @@ class FiltersController < ApplicationController
           if field.is_numeric
             if search_value.to_i.zero?
               # TODO : Beware of SQL Injection
-              sql = "CAST(data AS INTEGER) #{search_value}"
+              sql = "CAST(data AS float8) #{search_value}"
+              
             else
               sql = "data = ?", search_value
             end
