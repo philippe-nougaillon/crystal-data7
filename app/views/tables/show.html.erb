@@ -34,11 +34,11 @@
           <% default_start_date = params.permit![:date].try(:[], field.id.to_s).try(:[], :start) ? params[:date][field.id.to_s][:start] : 'nil' %>
           <% default_end_date = params.permit![:date].try(:[], field.id.to_s).try(:[], :start) ? params[:date][field.id.to_s][:end] : 'nil' %>
           <div>
-            <%= label_tag "date[#{field.id}]", "#{field.name.humanize} : Du" %>
+            <%= label_tag "date[#{field.id}][start]", "#{field.name.humanize} : Du" %>
             <%= date_field_tag "date[#{field.id}][start]", default_start_date, class: 'form-control', onchange: 'this.form.submit()' %>
           </div>
           <div>
-            <%= label_tag "date[#{field.id}]","Au" %>
+            <%= label_tag "date[#{field.id}][end]","Au" %>
             <%= date_field_tag "date[#{field.id}][end]", default_end_date, class: 'form-control', onchange: 'this.form.submit()' %>
           </div>
         <% else %>
