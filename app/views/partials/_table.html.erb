@@ -32,7 +32,10 @@
   </table>
 
   <p>
-    Affichage de <%= @records_size %> <%= table.name.pluralize %>
+    Affichage de 
+    <%= @records_size %>
+    <%= table.name.pluralize(@records_size) %>
+    
     <% if action_name == 'show' %>
       sur <%= table.size %> au total
     <% end %>
