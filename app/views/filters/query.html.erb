@@ -41,10 +41,10 @@
           <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
           <% hint = 'ex: %john%  ou  john (pour une égalité)' %>
         <% end %>
+        <p class="form-text">
+          <%= hint %>
+        </p>
       </div>
-      <p class="form-text">
-        <%= hint %>
-      </p>
     </div>
   <% end %>
   </div>

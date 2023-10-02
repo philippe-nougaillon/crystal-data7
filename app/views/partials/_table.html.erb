@@ -31,13 +31,19 @@
     <% end %>
   </table>
 
-  <p>
-    Affichage de 
-    <%= @records_size %>
-    <%= table.name.pluralize(@records_size) %>
-    
-    <% if action_name == 'show' %>
-      sur <%= table.size %> au total
+  <div class="d-flex align-items-center justify-content-between">
+    <p class="mb-0">
+      Affichage de 
+      <%= @records_size %>
+      <%= table.name.pluralize(@records_size) %>
+      
+      <% if action_name == 'show' %>
+        sur <%= table.size %> au total
+      <% end %>
+    </p>
+    <%= link_to url_for(params.merge(format: :xls)), class:'btn btn-outline-success btn-sm', title:"Exporter les données de la collection '#{table.name.humanize}'" do %>
+      <i class="fa fa-file-excel"></i>
+      Export XLS
     <% end %>
-  </p>
+  </div>
 </div>

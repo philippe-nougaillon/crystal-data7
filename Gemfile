@@ -98,3 +98,5 @@ gem "dotenv-rails", "~> 2.8"
 # gem 'autoprefixer-rails'
 
 # gem 'signature-pad-rails'
+
+gem "spreadsheet", "~> 1.3"

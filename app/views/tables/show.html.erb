@@ -22,9 +22,6 @@
           <% if policy(@table).partages? %>
             <%= link_to "Partages", partages_path(@table), class:'nav-link', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" %>
           <% end %>
-          <% if policy(@table).export? %>
-            <%= link_to 'Exporter', export_path(@table), class:'nav-link', title:"Exporter les données de l'Objet '#{@table.name}'" %>
-          <% end %>
           <% if policy(@table).logs? %>
             <%= link_to 'Audit Trail', logs_path(id:@table), class:'nav-link', title:"Historique des modifications de l'Objet '#{@table.name}'" %>
           <% end %>

@@ -16,17 +16,19 @@
       <% end %>
     </li>
   </div>
-  <li class="nav-item">
-    <%= link_to a_propos_path, title: "À Propos de CrystalData" do %>
-      <i class="fa-solid fa-circle-question text-black-50"></i>
-    <% end %>
-  </li>
   <% if user_signed_in? %>
     <li class="nav-item">
       <%= link_to current_user, title: "Profil utilisateur" do %>
         <i class="fa-solid fa-circle-user fa-2xl text-black-50"></i>
       <% end %>
     </li>
+  <% end %>
+  <li class="nav-item">
+    <%= link_to a_propos_path, title: "À Propos de CrystalData" do %>
+      <i class="fa-solid fa-circle-question text-black-50"></i>
+    <% end %>
+  </li>
+  <% if user_signed_in? %>
     <li class="nav-item">
       <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-accent btn-outline !normal-case', 'data-turbo': false, title: 'Se déconnecter' do %>
         <i class="fa-solid fa-right-from-bracket text-black-50"></i>

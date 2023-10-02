@@ -87,7 +87,13 @@ class TablesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"#{@table.name}-#{l(DateTime.now, format: :compact)}\"" }
+      format.xls do
+        book = CollectionToXls.new(@table, @records).call
+        file_contents = StringIO.new
+        book.write file_contents # => Now file_contents contains the rendered file output
+        filename = "Export_#{@table.name.humanize}_#{Date.today.to_s}.xls"
+        send_data file_contents.string.force_encoding('binary'), filename: filename 
+      end
     end 
   end
 
