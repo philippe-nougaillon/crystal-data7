@@ -1,3 +1,6 @@
+<%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger float-end', 'data-turbo': false, title: 'Se déconnecter' do %>
+  Se déconnecter
+<% end %>
 <h1 class="text-primary mb-4">
   <%= @user.name %>
 </h1>
@@ -79,4 +82,3 @@
     </tbody>
   </table>
 </div>
-

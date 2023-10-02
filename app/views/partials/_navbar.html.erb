@@ -28,13 +28,6 @@
       <i class="fa-solid fa-circle-question text-black-50"></i>
     <% end %>
   </li>
-  <% if user_signed_in? %>
-    <li class="nav-item">
-      <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-accent btn-outline !normal-case', 'data-turbo': false, title: 'Se déconnecter' do %>
-        <i class="fa-solid fa-right-from-bracket text-black-50"></i>
-      <% end %>
-    </li>
-  <% end %>
 </nav>
 
 <nav class="navbar d-flex d-lg-none navbar-expand-lg fixed-top bg-white shadow-sm">
@@ -117,12 +110,6 @@
             <%= link_to current_user, title: "Profil utilisateur", class: 'nav-link text-black-50' do %>
               <i class="fa-solid fa-circle-user"></i>
               Profil
-            <% end %>
-          </li>
-          <li class="nav-item">
-            <%= button_to destroy_user_session_path, method: :delete, class:'nav-link btn btn-accent btn-outline !normal-case text-black-50', 'data-turbo': false, title: 'Se déconnecter' do %>
-              <i class="fa-solid fa-right-from-bracket"></i>
-              Déconnexion
             <% end %>
           </li>
         <% end %>

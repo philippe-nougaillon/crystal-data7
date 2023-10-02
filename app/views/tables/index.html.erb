@@ -23,7 +23,7 @@
       <% if @tables.any? %>
         <% @tables.each do | table | %>
           <tr>
-            <td><%= link_to table.name.upcase, table, class: 'fw-bold' %></td>
+            <td><%= link_to table.name.upcase, table, class: 'fw-bold text-black' %></td>
             <td><%= table.field_names %></td>
             <td><%= table.role_name(current_user) %></td>
             <td>
