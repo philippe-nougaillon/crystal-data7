@@ -12,12 +12,18 @@
         <%= label_tag field.id, field.name, class:'col-2 fw-bold' %>
         <div class="col-4">
           <% if field.is_numeric %>
-            <%= number_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
+            <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
             <% hint = 'ex: >= 30  ou  30 (pour une égalité)' %>
           <% elsif field.Date? %>
-            <%= date_field_tag "[query][#{field.id}][start]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100 mb-4', autofocus: index.zero? %>
-            <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
-            <% hint = '' %>
+            <div class="row mb-0">
+              <div class="col">
+                <%= date_field_tag "[query][#{field.id}][start]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
+              </div>
+              <div class="col">
+                <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
+              </div>
+            </div>
+            <% hint = 'Entrez une date ou une période (date de début / date de fin)' %>
           <% elsif field.Liste? || field.Workflow? %>
             <%= select_tag "[query][#{field.id}]", options_for_select(field.items_splitted, params[:query].try(:[], field.id.to_s)), class: 'form-select w-100', autofocus: index.zero?, multiple: true %>
             <% hint = 'Appuyez sur MAJ ou CTRL pour faire un choix multiple' %>

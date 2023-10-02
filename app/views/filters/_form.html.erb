@@ -17,7 +17,7 @@
   </div>
 
   <div class="mb-3">
-    <%= f.label :table_id, class: 'form-label' %>
+    <%= f.label :table_id, 'Collection', class: 'form-label' %>
     <%= f.select :table_id, options_from_collection_for_select(current_user.tables, 'id', 'name'), {include_blank: true}, {required: true, class: 'form-select'} %>
   </div>
 
