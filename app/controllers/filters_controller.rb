@@ -75,9 +75,9 @@ class FiltersController < ApplicationController
               sql = "data = ?", search_value
             end
           elsif field.Date?
-            start_date = query.last['start']
-            end_date = query.last['end'].blank? ? start_date : query.last['end']
-            unless start_date.blank?
+            unless query.last['start'].blank?
+              start_date = query.last['start']
+              end_date = query.last['end'].blank? ? start_date : query.last['end']
               sql = "DATE(data) BETWEEN ? AND ? ", start_date, end_date
             end
           else

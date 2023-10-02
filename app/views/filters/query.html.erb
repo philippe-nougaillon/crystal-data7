@@ -17,10 +17,10 @@
           <% elsif field.Date? %>
             <div class="row mb-0">
               <div class="col">
-                <%= date_field_tag "[query][#{field.id}][start]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
+                <%= date_field_tag "[query][#{field.id}][start]", params[:query].try(:[], field.id.to_s)["start"], class: 'form-control w-100', autofocus: index.zero? %>
               </div>
               <div class="col">
-                <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
+                <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s)["end"], class: 'form-control w-100', autofocus: index.zero? %>
               </div>
             </div>
             <% hint = 'Entrez une date ou une période (date de début / date de fin)' %>
