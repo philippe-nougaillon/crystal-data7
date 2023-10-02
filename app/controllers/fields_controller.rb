@@ -73,11 +73,7 @@ class FieldsController < ApplicationController
       params.require(:field).permit(:name, :table_id, :datatype, :filtre, :items, :obligatoire, :operation, :field_id, :row_order_position, :visibility)
     end
 
-    # ????
     def is_user_authorized?
-      if ['create'].include?(action_name)
-        @field = Field.new(field_params)
-      end
-      authorize @field
+      authorize @field? @field : Field.new(field_params)
     end
 end

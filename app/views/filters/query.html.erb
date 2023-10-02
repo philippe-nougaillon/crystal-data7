@@ -1,0 +1,59 @@
+<div class="mb-4">
+  <h1 class="text-success">
+    <span class="fa fa-filter"></span>
+    <%= @filter.name %>
+  </h1>
+</div>
+
+<%= form_tag query_filter_path, method: :get do %>
+  <div class="row row-cols-sm-2 row-cols-lg-3 gap-3">
+  <% @filter.table.fields.each_with_index do |field, index| %>
+    <div class="row">
+      <div class="col">
+        <%= label_tag field.id, field.name, class:'fw-bold' %>
+        <% if field.is_numeric %>
+          <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
+          <% hint = 'ex: >= 30  ou  30 (pour une égalité)' %>
+        <% elsif field.Date? %>
+          <div class="row gap-4 mb-0">
+            <div class="col">
+              <%= date_field_tag "[query][#{field.id}][start]", params[:query].try(:[], field.id.to_s).try(:[], :start), class: 'form-control w-100', autofocus: index.zero? %>
+            </div>
+            <div class="col">
+              <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s).try(:[], :end), class: 'form-control w-100' %>
+            </div>
+          </div>
+          <% hint = 'Entrez une date ou une période (date de début / date de fin)' %>
+        <% elsif field.Liste? %>
+          <%= select_tag "[query][#{field.id}]", options_for_select(field.items_splitted, params[:query].try(:[], field.id.to_s)), class: 'form-select w-100', autofocus: index.zero?, multiple: true %>
+          <% hint = 'Appuyez sur MAJ ou CTRL pour faire un choix multiple' %>
+        <% elsif field.Collection? %>
+          <%# Checker si la liste vient d'une autre table %>
+          <% if field.is_valid_table_params %>
+            <%= select_tag "[query][#{field.id}]", options_for_select(field.populate_linked_table.invert, params[:query].try(:[], field.id.to_s)), class: 'form-select w-100 overflow-x-auto', autofocus: index.zero?, multiple: true %>
+            <% hint = 'Appuyez sur MAJ ou CTRL pour faire un choix multiple' %>
+          <% end %>
+        <% elsif field.Workflow? %>
+          <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
+          <%= select_tag "[query][#{field.id}]", options_for_select(items.keys, params[:query].try(:[], field.id.to_s)), class: 'form-select w-100', 'data-testid': field.name, autofocus: index.zero?, multiple: true %>
+          <% hint = 'Appuyez sur MAJ ou CTRL pour faire un choix multiple' %>
+        <% else %>
+          <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
+          <% hint = 'ex: %john%  ou  john (pour une égalité)' %>
+        <% end %>
+      </div>
+      <p class="form-text">
+        <%= hint %>
+      </p>
+    </div>
+  <% end %>
+  </div>
+  
+  <%= submit_tag 'Enregistrer et appliquer le filtre', class: 'btn btn-outline-success' %>
+<% end %>
+
+<% if @records %>
+  <div class="mt-4">
+    <%= render partial: 'partials/table', locals: { table: @filter.table, records: @records} %>
+  </div>
+<% end %>

@@ -1,0 +1,25 @@
+<%= form_for(@filter) do |f| %>
+  <% if @filter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t('errors.messages.not_saved', count: @filter.errors.count) %></h2>
+
+      <ul>
+        <% @filter.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :name, 'Nom', class: 'form-label' %>
+    <%= f.text_field :name, class: 'form-control', required: true, autofocus: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :table_id, 'Collection', class: 'form-label' %>
+    <%= f.select :table_id, options_from_collection_for_select(current_user.tables, 'id', 'name'), {include_blank: true}, {required: true, class: 'form-select'} %>
+  </div>
+
+  <%= f.submit 'Continuer', class: 'btn btn-outline-success' %>
+<% end %>

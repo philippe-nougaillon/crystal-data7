@@ -1,0 +1,9 @@
+<div id="<%= dom_id filter %>" class="mb-3">
+  <div class="fs-5 row">
+    <%= link_to filter.name, query_filter_path(filter), class: 'col' %>
+    <span class='col'><%= filter.table.name.pluralize %></span>
+    <span class='col-6'><%= filter.query_humanized %></span>
+    <span class='col-1'><%= button_to "X", filter, method: :delete, 'data-turbo-confirm': "Êtes-vous certain.e", class: 'btn btn-sm btn-outline-danger float-end' %></span>
+  </div>
+  <hr>
+</div>

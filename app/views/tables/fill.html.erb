@@ -32,15 +32,7 @@
           <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui'), 'data-testid': field.name %> Oui 
           <%= radio_button_tag field_name, 'Non', (field_value == 'Non'), 'data-testid': field.name %> Non
         <% when 'Liste' %>
-          <%# Checker si la liste vient d'une autre table %>
-          <% if field.items.include?('[') && field.items.include?(']') %>
-            <% sources = field.items.tr('[]','').split('.') %>
-            <% table = current_user.tables.find_by(name: sources.first) %>
-            <% source_field = table.fields.find_by(name: sources.last) %>
-            <%= select_tag field_name, options_for_select(source_field.values.pluck(:data).sort, field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %>
-          <% else %>
-            <%= select_tag field_name, options_for_select(field.items.split(","), field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %>
-          <% end %>
+          <%= select_tag field_name, options_for_select(field.items_splitted, field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %>
         <% when 'Formule' %>
           <% if params[:record_index].present? %>
             <% field_value = field.evaluate(@table, @record_index) %>
@@ -64,7 +56,7 @@
           <br>
           <%= file_field_tag field_name, class:'w-100', 'data-testid': field.name %>
         <% when 'Workflow' %>
-          <% items = field.items.split(',').map{|i| i.split(':')}.to_h %>
+          <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
           <%= select_tag field_name, options_for_select(items.keys, field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %>
         <% when 'URL' %>
           <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', 'data-testid': field.name %>

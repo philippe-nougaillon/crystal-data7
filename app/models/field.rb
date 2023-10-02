@@ -112,6 +112,10 @@ class Field < ApplicationRecord
 		self.Nombre? || self.Euros? || self.Formule?
 	end
 
+	def items_splitted
+		self.items.split(',').map{|e| e.squish}
+	end
+
 private
 
 	def slug_candidates

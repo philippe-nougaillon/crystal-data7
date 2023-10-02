@@ -239,7 +239,7 @@ class TablesController < ApplicationController
   def update
     respond_to do |format|
       if @table.update(table_params)
-        format.html { redirect_to show_attrs_path(id: @table), notice: 'Table modifiée.' }
+        format.html { redirect_to show_attrs_path(id: @table), notice: 'Objet modifié.' }
         format.json { render :show, status: :ok, location: @table }
       else
         format.html { render :edit }
@@ -263,7 +263,7 @@ class TablesController < ApplicationController
     @table.destroy
 
     respond_to do |format|
-      format.html { redirect_to tables_url, notice: 'Table supprimée.'}
+      format.html { redirect_to tables_url, notice: 'Objet supprimé.'}
       format.json { head :no_content }
     end
   end
@@ -338,7 +338,7 @@ class TablesController < ApplicationController
   end
 
   def add_user_do
-    if not TablesUser.roles.keys.reject { |i| i == "Propriétaire" }.include?(params[:role])
+    if not TablesUser.roles.keys.reject { |e| e == "Propriétaire" }.include?(params[:role])
       redirect_to add_user_path(@table), alert: "Rôle indisponible"
     elsif @user = User.find_by(email:params[:email])
       unless @table.users.include?(@user)

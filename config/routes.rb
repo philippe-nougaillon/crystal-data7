@@ -17,6 +17,12 @@ Rails.application.routes.draw do
     get :a_propos, to: 'pages#a_propos'
   end
 
+  resources :filters do
+    member do
+      get :query
+    end
+  end
+
   get 'show_attrs', to: 'tables#show_attrs' 
   get 'tables/:id/fill', to: 'tables#fill', as: :fill
   get 'tables/:id/add_user', to:'tables#add_user', as: :add_user
