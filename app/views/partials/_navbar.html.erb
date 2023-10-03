@@ -1,12 +1,12 @@
 <nav class="nav d-none d-lg-flex flex-column bg-white shadow gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100 align-items-center">
   <div class="flex-fill d-flex flex-column gap-5 mt-2">
     <li class="nav-item">
-      <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Page d'accueil" do %>
+      <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Ma collection favorite/Page d'accueil" do %>
         <i class="fa-solid fa-house text-primary"></i>
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to tables_path, title: "Liste des tables" do %>
+      <%= link_to tables_path, title: "Liste des Objets" do %>
         <i class="fa-solid fa-cubes text-info"></i>
       <% end %>
     </li>
@@ -64,7 +64,7 @@
           <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to tables_path, title: "Liste des tables", class: 'nav-link text-info' do %>
+          <%= link_to tables_path, title: "Liste des Objets", class: 'nav-link text-info' do %>
             <i class="fa-solid fa-cubes"></i>
             Mes Objets
           <% end %>
