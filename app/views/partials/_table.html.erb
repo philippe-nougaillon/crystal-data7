@@ -31,8 +31,8 @@
     <% end %>
   </table>
 
-  <div class="d-flex align-items-center justify-content-between">
-    <p class="mb-0">
+  <div class="d-flex align-items-center justify-content-end gap-4">
+    <p class="flex-fill mb-0">
       Affichage de 
       <%= @records_size %>
       <%= table.name.pluralize(@records_size) %>
@@ -41,9 +41,13 @@
         sur <%= table.size %> au total
       <% end %>
     </p>
-    <%= link_to url_for(params.merge(format: :xls)), class:'btn btn-outline-success btn-sm', title:"Exporter les données de la collection '#{table.name.humanize}'" do %>
+    <%= link_to url_for(params.merge(format: :xls)), class:'btn btn-outline-success btn-sm', title:"Exporter les données de la collection '#{table.name.humanize} au format XLS'" do %>
       <i class="fa fa-file-excel"></i>
       Export XLS
+    <% end %>
+    <%= link_to url_for(params.merge(format: :csv)), class:'btn btn-outline-primary btn-sm', title:"Exporter les données de la collection '#{table.name.humanize} au format CSV'" do %>
+      <i class="fa fa-file-csv"></i>
+      Export CSV
     <% end %>
   </div>
 </div>

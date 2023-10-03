@@ -57,14 +57,6 @@ class TablePolicy < ApplicationPolicy
     import?
   end
 
-  def export?
-    record.propriétaire?(user)
-  end
-
-  def export_do?
-    export?
-  end
-
   def add_user?
     record.propriétaire?(user)
   end
