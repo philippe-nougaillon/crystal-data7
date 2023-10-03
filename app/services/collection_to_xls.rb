@@ -24,7 +24,11 @@ class CollectionToXls < ApplicationService
       values = @table.values.joins(:field).records_at(record_index).order("fields.row_order").pluck(:data)
       fields_to_export = []
       @table.fields.each_with_index do | field,index |
-        fields_to_export << values[index]
+        if field.Collection?
+          fields_to_export << field.get_linked_table_record(values[index])
+        else
+          fields_to_export << values[index]
+        end
       end
       sheet.row(index).replace fields_to_export
       index += 1
