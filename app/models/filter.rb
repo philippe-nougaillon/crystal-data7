@@ -8,7 +8,9 @@ class Filter < ApplicationRecord
         field_name = Field.find(k).name 
         if v.is_a?(String)
           query_args << "#{field_name} : #{v}" unless v.blank?
-        else
+        elsif v.is_a?(Array)
+          query_args << "#{field_name} : #{v.join(', ')}" unless v.blank?
+        elsif v.is_a?(Hash)
           query_sub_args = []
           v.keys.each do | k |
             query_sub_args << v[k].inspect unless v[k].blank?
@@ -21,4 +23,5 @@ class Filter < ApplicationRecord
       query_args.join(', ')
     end
   end
+  
 end
