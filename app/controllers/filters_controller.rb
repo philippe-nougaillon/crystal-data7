@@ -80,6 +80,18 @@ class FiltersController < ApplicationController
               end_date = query.last['end'].blank? ? start_date : query.last['end']
               sql = "DATE(data) BETWEEN ? AND ? ", start_date, end_date
             end
+          elsif field.datatype == "Oui_non?"
+            unless query.last['yes'].blank?
+              if query.last['no'].blank?
+                sql = "data = 'Oui'"
+              else
+                sql = "data = 'Oui' OR data = 'Non'"
+              end
+            else
+              unless query.last['no'].blank?
+                sql = "data = 'Non'"
+              end
+            end
           else
             if search_value.class == Array
               sql = "data IN(?) ", search_value
