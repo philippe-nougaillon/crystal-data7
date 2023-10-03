@@ -2,7 +2,7 @@
   Se déconnecter
 <% end %>
 
-<h1 class="text-primary my-4">
+<h1 class="text-secondary my-4">
   <%= @user.name %>
 </h1>
 
@@ -28,8 +28,8 @@
   <h2>Activité du compte</h2>
 
   <div class="mb-4">
-    <p>Nombre d'objets créés : <span class="badge text-bg-primary"><%= @total_tables %></span></p>
-    <p>Nombre total d'objets dans vos collections : <span class="badge text-bg-primary"><%= @total_lignes %></span></p>
+    <p>Nombre d'objets créés : <span class="badge text-bg-info"><%= @total_tables %></span></p>
+    <p>Nombre total d'objets dans vos collections : <span class="badge text-bg-info"><%= @total_lignes %></span></p>
   </div>
 </div>
 
@@ -78,7 +78,7 @@
 
   <div>
     <div class="col-sm-10">
-      <%= f.submit "Modifier", class: 'btn btn-outline-primary' %>
+      <%= f.submit "Modifier", class: 'btn btn-outline-secondary' %>
     </div>
   </div>
 
