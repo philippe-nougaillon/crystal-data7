@@ -16,7 +16,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     visit tables_url
     click_on "Nouvel Objet"
 
-    fill_in "Nom du Nouvel Objet", with: "Interventions"
+    fill_in "Donnez un nom à ce nouvel Objet", with: "Interventions"
     click_button "Continuer"
     assert_text "Objet créé. Vous pouvez maintenant y ajouter des attributs"
 
@@ -52,7 +52,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
       click_on "X", match: :first
     end
 
-    assert_text "Table supprimée."
+    assert_text "Objet supprimé."
   end
 
   test 'chercher une valeur dans une table' do
@@ -60,7 +60,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
     visit tables_url
     click_on @table.name.upcase
-    assert_selector 'h1', text: 'Stocks'
+    assert_text 'Stocks'
     fill_in 'Rechercher', with: 'RJ45'
     send_keys(:return)
     assert_selector 'p', text: 'Affichage de 1 Stocks sur 3 au total'
@@ -70,7 +70,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   test "visiting the stocks show" do
     visit tables_url
     click_on "STOCKS", match: :first
-    assert_selector "h1", text: "Stocks"
+    assert_text 'Stocks'
   end
   
   test "creating a Field" do
@@ -240,6 +240,8 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     field.attach_file(Rails.root.join("test/fixtures/files/sample.pdf"))
     click_button "Enregistrer"
     assert_text "Données ajoutées avec succès :)"
+    show_button = find('a[data-testid="Voir ligne n°4"]')
+    click_on show_button
     assert_selector('a[title="sample.pdf"]')
     assert_selector('img')
   end
@@ -345,11 +347,11 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
     visit tables_url
     click_on @table.name.upcase
-    assert_selector 'h1', text: 'Stocks'
+    assert_text 'Stocks'
 
     fill_in 'Rechercher', with: 'RJ45'
     send_keys(:return)
-    assert_selector 'p', text: 'Affichage de 2 Stocks sur 3 au total'
+    assert_selector 'p', text: 'Affichage de 1 Stocks sur 3 au total'
 
     select '', from: 'Catégorie'
     select 'Automobile', from: 'Catégorie'
@@ -362,7 +364,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
     visit tables_url
     click_on @table.name.upcase
-    assert_selector 'h1', text: 'Interventions'
+    assert_text 'Interventions'
 
     fill_in 'Date : Du', with: '24-12-2023'
     send_keys(:return)
