@@ -11,7 +11,7 @@
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to filters_path, title: "Liste des filtres" do %>
+      <%= link_to filters_path, title: "Liste des Filtres" do %>
         <i class="fa-solid fa-filter text-success"></i>
       <% end %>
     </li>
@@ -56,11 +56,7 @@
         <li class="nav-item">
           <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'nav-link text-primary' do %>
             <i class="fa-solid fa-house"></i>
-            <% if user_signed_in? %>
-              Ma collection favorite  
-            <% else%>
-              Accueil
-            <% end %>
+            <%= user_signed_in? ? 'Ma collection favorite' : 'Accueil' %>
           <% end %>
         </li>
         <li class="nav-item">
@@ -72,7 +68,7 @@
         <li class="nav-item">
           <%= link_to filters_path, title: "Liste des filtres", class: 'nav-link text-success' do %>
             <i class="fa-solid fa-filter"></i>
-            Mes Objets
+            Mes Filtres
           <% end %>
         </li>
         <% if controller_name == "tables" && %i[index new].include?(action_name) %>
