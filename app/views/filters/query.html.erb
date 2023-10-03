@@ -11,7 +11,7 @@
   <% @filter.table.fields.each_with_index do |field, index| %>
     <div class="row">
       <div class="col">
-        <%= label_tag field.id, field.name, class:'fw-bold' %>
+        <span class="fw-bold"><%= field.name %></span>
         <% if field.is_numeric %>
           <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
           <% hint = 'ex: >= 30  ou  30 (pour une égalité)' %>
