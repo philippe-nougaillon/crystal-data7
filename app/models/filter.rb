@@ -7,7 +7,8 @@ class Filter < ApplicationRecord
     if self.query
       query_args = []
       self.query.each do | k,v |
-        field_name = Field.find(k).name 
+        field = Field.find(k)
+        field_name = field.name  
         if v.is_a?(String)
           query_args << "#{field_name} : #{v}" unless v.blank?
         elsif v.is_a?(Array)
@@ -15,7 +16,13 @@ class Filter < ApplicationRecord
         elsif v.is_a?(Hash)
           query_sub_args = []
           v.keys.each do | k |
-            query_sub_args << v[k].inspect unless v[k].blank?
+            unless v[k].blank?
+              if field.datatype == "Oui_non?"
+                query_sub_args << ((k == "yes") ? "Oui" : "Non")
+              else
+                query_sub_args << v[k].inspect
+              end
+            end
           end
           if query_sub_args.any?
             query_args << "#{field_name} : #{ query_sub_args.join(', ') }" 
