@@ -7,21 +7,6 @@
 # Emended by Benjamin des Gachons and Patrick Chew : <http://www.fitima.org/docs/fiche.pdf>
 
 fr:
-  will_paginate:
-    previous_label: "&#8592; Précédent"
-    next_label: "Suivant &#8594;"
-    page_gap: "&hellip;"
-    page_entries_info:
-      single_page:
-        zero:  "No %{model} found"
-        one:   "Displaying 1 %{model}"
-        other: "Displaying all %{count} %{model}"
-      single_page_html:
-        zero:  "No %{model} found"
-        one:   "Affichage de <b>1</b> %{model}"
-        other: "Affichage de <b>%{count}</b> %{model}(s)"
-      multi_page: "Affichage de %{model} %{from} - %{to} of %{count} in total"
-      multi_page_html: "Affichage de <b>%{from}&nbsp;-&nbsp;%{to}</b> / <b>%{count}</b> %{model}(s) au total"
   date:
     formats:
       default: "%d/%m/%Y"
@@ -75,7 +60,6 @@ fr:
       - :day
       - :month
       - :year
-
   time:
     formats:
       default: "%d %B %Y %H:%M:%S"
@@ -85,7 +69,6 @@ fr:
       heure: "%H:%M"
     am: 'am'
     pm: 'pm'
-
   datetime:
     distance_in_words:
       half_a_minute: "une demi-minute"
@@ -131,7 +114,6 @@ fr:
       hour:   "Heure"
       minute: "Minute"
       second: "Seconde"
-
   number:
     format:
       separator: ","
@@ -179,13 +161,24 @@ fr:
           billion: "milliard"
           trillion: "billion"
           quadrillion: "million de milliards"
-
   support:
     array:
       words_connector: ", "
       two_words_connector: " et "
       last_word_connector: " et "
-
+  views:
+    pagination:
+      first: "&laquo; Début"
+      last: "Fin &raquo;"
+      previous: "&lsaquo; Précédent"
+      next: "Suivant &rsaquo;"
+      truncate: "&hellip;"
+  pagination:
+    first: "&laquo; Début"
+    last: "Fin &raquo;"
+    previous: "&lsaquo; Précédent"
+    next: "Suivant &rsaquo;"
+    truncate: "&hellip;"
   helpers:
     select:
       prompt: "Veuillez sélectionner"
@@ -193,7 +186,14 @@ fr:
       create: "Créer un(e) %{model}"
       update: "Modifier ce(tte) %{model}"
       submit: "Enregistrer ce(tte) %{model}"
-
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "0 %{entry_name} à afficher"
+          one: "Affichage de <strong>1</strong> %{entry_name}"
+          other: "Affichage de <strong>%{count}</strong> %{entry_name}s"
+      more_pages:
+        display_entries: "Affichage des %{entry_name}s <strong>%{first}&nbsp;à&nbsp;%{last}</strong> sur <strong>%{total}</strong> au total"
   errors: &errors
     format: "%{attribute} %{message}"
     messages: &errors_messages
@@ -228,7 +228,6 @@ fr:
           one: "Impossible d'enregistrer : 1 erreur"
           other: "Impossible d'enregistrer : %{count} erreurs"
       body: "Veuillez vérifier les champs suivants : "
-
   simple_form:
     error_notification:
       user: "A custom message:"
