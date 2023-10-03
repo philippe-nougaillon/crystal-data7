@@ -38,6 +38,12 @@
           <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
           <%= select_tag "[query][#{field.id}]", options_for_select(items.keys, params[:query].try(:[], field.id.to_s)), class: 'form-select w-100', 'data-testid': field.name, autofocus: index.zero?, multiple: true %>
           <% hint = 'Appuyez sur MAJ ou CTRL pour faire un choix multiple' %>
+        <% elsif field.datatype == "Oui_non?" %>
+          <br>
+          <%= label_tag "[query][#{field.id}][yes]", "Oui", class: '' %>
+          <%= check_box_tag "[query][#{field.id}][yes]", params[:query].try(:[], field.id.to_s).try(:[], :yes), params[:query].try(:[], field.id.to_s).try(:[], :yes) %>
+          <%= label_tag "[query][#{field.id}][no]", "Non", class: '' %>
+          <%= check_box_tag "[query][#{field.id}][no]", params[:query].try(:[], field.id.to_s).try(:[], :no), params[:query].try(:[], field.id.to_s).try(:[], :no)%>
         <% else %>
           <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
           <% hint = 'ex: %john%  ou  john (pour une égalité)' %>

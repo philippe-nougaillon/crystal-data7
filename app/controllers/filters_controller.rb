@@ -80,6 +80,18 @@ class FiltersController < ApplicationController
               end_date = query.last['end'].blank? ? start_date : query.last['end']
               sql = "DATE(data) BETWEEN ? AND ? ", start_date, end_date
             end
+          elsif field.datatype == "Oui_non?"
+            unless query.last['yes'].blank?
+              if query.last['no'].blank?
+                sql = "data = 'Oui'"
+              else
+                sql = "data = 'Oui' OR data = 'Non'"
+              end
+            else
+              unless query.last['no'].blank?
+                sql = "data = 'Non'"
+              end
+            end
           else
             if search_value.class == Array
               sql = "data IN(?) ", search_value
@@ -94,6 +106,22 @@ class FiltersController < ApplicationController
     end
 
     @records = @filters.values.reduce(:&)
+
+    respond_to do |format|
+      format.html
+      format.xls do
+        book = CollectionToXls.new(@filter.table, @records).call
+        file_contents = StringIO.new
+        book.write file_contents # => Now file_contents contains the rendered file output
+        filename = "Export_#{@filter.table.name.humanize}_#{Date.today.to_s}.xls"
+        send_data file_contents.string.force_encoding('binary'), filename: filename 
+      end
+      format.csv do
+        csv_string = CollectionToCsv.new(@filter.table, @records).call
+        filename = "Export_#{@filter.table.name.humanize}_#{Date.today.to_s}.csv"
+        send_data csv_string, filename: filename
+      end
+    end 
   end
 
   private
