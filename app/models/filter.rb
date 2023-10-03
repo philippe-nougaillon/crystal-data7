@@ -1,6 +1,8 @@
 class Filter < ApplicationRecord
   belongs_to :table
 
+  scope :ordered, -> { order(updated_at: :desc) }
+
   def query_humanized
     if self.query
       query_args = []

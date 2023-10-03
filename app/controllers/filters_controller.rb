@@ -3,7 +3,7 @@ class FiltersController < ApplicationController
 
   # GET /filters or /filters.json
   def index
-    @filters = Filter.all
+    @filters = Filter.ordered
   end
 
   # GET /filters/1 or /filters/1.json

@@ -283,21 +283,8 @@ class TablesController < ApplicationController
   end
 
   def import_do
-    require 'rake'
-
-    #Save file to local dir
-    filename = params[:upload].original_filename
-    filename_with_path = Rails.root.join('public', 'tmp', filename)
-    File.open(filename_with_path, 'wb') do |file|
-        file.write(params[:upload].read)
-    end
-
-    Rake::Task.clear # necessary to avoid tasks being loaded several times in dev mode
-    CrystalData::Application.load_tasks 
-    Rake::Task['tables:import'].invoke(filename_with_path, filename, current_user.id, request.remote_ip)
-
-    @new_table = Table.last
-    redirect_to tables_path, notice: "Importation terminé. Table '#{Table.last.name.humanize}' créée avec succès."
+    ImportCollection.new(params[:upload], current_user, request).call
+    redirect_to tables_path, notice: "Importation terminée. Table '#{Table.last.name.humanize}' créée avec succès."
   end
 
   def add_user
