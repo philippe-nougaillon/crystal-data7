@@ -23,8 +23,6 @@
   </div>
 </div>
 
-
-
 <% if @records %>
   <ul class="nav nav-tabs w-100 mt-4">
     <% Relation.where(relation_with_id: @table.id).each do |relation| %>
