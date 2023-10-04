@@ -21,7 +21,7 @@
           <tr>
             <% @table.fields.each_with_index do | field,index | %>
               <td>
-                <% if field.datatype == "Signature" and values[index] %>
+                <% if field.Signature? and values[index] %>
                   Signé
                 <% else %>
                   <%= values[index] %>

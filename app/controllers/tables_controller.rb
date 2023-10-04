@@ -146,8 +146,8 @@ class TablesController < ApplicationController
         end  
 
         # enregistre le fichier
-        if field.datatype == 'Fichier' || field.datatype == 'Image' || field.datatype == 'PDF'
-          if value
+        if field.Fichier? || field.Image? || field.PDF?
+          unless value.blank?
             b = Blob.new()
             b.file.attach(value)
             b.save
@@ -160,7 +160,7 @@ class TablesController < ApplicationController
           end
         end
 
-        if field.datatype == 'Formule'
+        if field.Formule?
           value = field.evaluate(table, record_index) # evalue le champ calculé
         end          
     
