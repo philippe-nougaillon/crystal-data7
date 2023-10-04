@@ -165,13 +165,6 @@ Value.create!([
 ])
 
 Filter.create!([
-  {name: "Frais de Repas > 20€", table_id: 4, query: {"21"=>{"start"=>"", "end"=>""}, "22"=>"Repas", "23"=>"> 20"}},
-  {name: "Nouvelles installations pour Carrefour", table_id: 2, query: {"7"=>{"start"=>"", "end"=>""},
-  "8"=>"Carrefour",
-  "9"=>["Installation"],
-  "10"=>"",
-  "13"=>"",
-  "14"=>"",
-  "15"=>"",
-  "16"=>["Nouveau"]}}
+  {name: "Frais de Repas > 20€", table_id: 4, user_id: 1, query: {"21"=>{"start"=>"", "end"=>""}, "22"=>"Repas", "23"=>"> 20"}, slug: "3ac28124-8562-46cb-8b93-dac890c66237"},
+  {name: "Nouvelles installations pour Carrefour", table_id: 2, user_id: 1, query: {"7"=>{"start"=>"", "end"=>""},"8"=>"Carrefour","9"=>["Installation"],"10"=>"","13"=>"","14"=>"","15"=>"","16"=>["Nouveau"]}, slug: "88ef1c15-87a6-44ad-9a81-5aa5ec1b6ebf"}
 ])

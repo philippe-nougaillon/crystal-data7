@@ -1,6 +1,9 @@
 class Filter < ApplicationRecord
   belongs_to :table
 
+  extend FriendlyId
+	friendly_id :slug_candidates, use: :slugged
+
   scope :ordered, -> { order(updated_at: :desc) }
 
   def query_humanized
@@ -32,5 +35,11 @@ class Filter < ApplicationRecord
       query_args.join(', ')
     end
   end
+
+  private
+
+  def slug_candidates
+		[SecureRandom.uuid]
+	end
   
 end

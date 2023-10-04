@@ -1,9 +1,10 @@
 class FiltersController < ApplicationController
   before_action :set_filter, only: %i[ show edit update destroy query]
+  before_action :is_user_authorized?
 
   # GET /filters or /filters.json
   def index
-    @filters = Filter.ordered
+    @filters = current_user.filters.ordered
   end
 
   # GET /filters/1 or /filters/1.json
@@ -22,10 +23,11 @@ class FiltersController < ApplicationController
   # POST /filters or /filters.json
   def create
     @filter = Filter.new(filter_params)
+    @filter.user_id = current_user.id
 
     respond_to do |format|
       if @filter.save
-        format.html { redirect_to query_filter_url(@filter), notice: "Filter was successfully created." }
+        format.html { redirect_to query_filter_url(@filter), notice: "Filtre créé." }
         format.json { render :show, status: :created, location: @filter }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,7 @@ class FiltersController < ApplicationController
   def update
     respond_to do |format|
       if @filter.update(filter_params)
-        format.html { redirect_to filter_url(@filter), notice: "Filter was successfully updated." }
+        format.html { redirect_to filter_url(@filter), notice: "Filtre modifié." }
         format.json { render :show, status: :ok, location: @filter }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +54,7 @@ class FiltersController < ApplicationController
     @filter.destroy
 
     respond_to do |format|
-      format.html { redirect_to filters_url, notice: "Filter was successfully destroyed." }
+      format.html { redirect_to filters_url, notice: "Filtre supprimé." }
       format.json { head :no_content }
     end
   end
@@ -129,11 +131,15 @@ class FiltersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_filter
-      @filter = Filter.find(params[:id])
+      @filter = Filter.find_by(slug: params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def filter_params
       params.require(:filter).permit(:name, :table_id, :query)
+    end
+
+    def is_user_authorized?
+      authorize @filter? @filter : Filter
     end
 end
