@@ -163,3 +163,15 @@ Value.create!([
   {record_index: 7, field_id: 25, data: "3"},
 
 ])
+
+Filter.create!([
+  {name: "Frais de Repas > 20€", table_id: 4, query: {"21"=>{"start"=>"", "end"=>""}, "22"=>"Repas", "23"=>"> 20"}},
+  {name: "Nouvelles installations pour Carrefour", table_id: 2, query: {"7"=>{"start"=>"", "end"=>""},
+  "8"=>"Carrefour",
+  "9"=>["Installation"],
+  "10"=>"",
+  "13"=>"",
+  "14"=>"",
+  "15"=>"",
+  "16"=>["Nouveau"]}}
+])
