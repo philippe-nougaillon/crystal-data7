@@ -3,15 +3,19 @@ require_relative "../config/environment"
 require "rails/test_help"
 
 class ActiveSupport::TestCase
+  include FactoryBot::Syntax::Methods
+  
   # Run tests in parallel with specified workers
   # parallelize(workers: :number_of_processors)
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  fixtures :all
+  # fixtures :all
 
-  def login_propriétaire
+  def login_propriétaire(user)
     visit root_path
-    click_on "Se connecter en tant qu'invité (mode démonstration)"
+    fill_in "user_email", with: user.email
+    fill_in "user_password", with: user.password
+    click_on "S'identifier"
     sleep(1)
   end
 
