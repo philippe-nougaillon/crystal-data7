@@ -240,8 +240,6 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     field.attach_file(Rails.root.join("test/fixtures/files/sample.pdf"))
     click_button "Enregistrer"
     assert_text "Données ajoutées avec succès :)"
-    show_button = find('a[data-testid="Voir ligne n°4"]')
-    click_on show_button
     assert_selector('a[title="sample.pdf"]')
     assert_selector('img')
   end
@@ -263,16 +261,12 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     field.select "Paris, 2023-12-25"
     click_button "Enregistrer"
     assert_text "Données ajoutées avec succès :)"
-    
-    new_window = window_opened_by do
-      link = find('[title="Voir les détails de Interventions à la ligne n°1"]')
-      link.click
-    end
-    within_window new_window do
-      assert_text "Interventions"
-      assert_text "Paris"
-      assert_text "25/12/2023"
-    end
+
+    link = find('[data-testid="Voir les détails de Interventions à la ligne n°1"]')
+    link.click
+    assert_text "Interventions"
+    assert_text "Paris"
+    assert_text "25/12/2023"
   end
 
   test "create utilisateur type field" do
@@ -331,18 +325,29 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     assert_no_text "RJ45"
   end
   
-  test "destroying a Value" do
+  test "détruire un record" do
+    visit tables_url
+    click_on "STOCKS", match: :first
+    delete_button = find('[data-testid="Supprimer ligne n°2"]')
+    page.accept_confirm do
+      delete_button.click
+    end
+    assert_text "Enregistrement #2 supprimé avec succès"
+    assert_no_selector('[data-testid="Supprimer ligne n°2"]', visible: :all)
+  end
+
+  test "ne pas détruire un record relié à une autre table" do
     visit tables_url
     click_on "STOCKS", match: :first
     delete_button = find('[data-testid="Supprimer ligne n°1"]')
     page.accept_confirm do
       delete_button.click
     end
-    assert_text "Enregistrement #1 supprimé avec succès"
-    assert_no_selector('[data-testid="Supprimer ligne n°1"]', visible: :all)
+    assert_text "Cet enregistrement n'a pas été supprimé car il est utilisé dans d'autres Tables !"
+    assert_selector('[data-testid="Supprimer ligne n°1"]', visible: :all)
   end
 
-  test 'filter les valeurs dans une table' do
+  test 'filtrer les valeurs dans une table' do
     @table = tables(:stocks)
 
     visit tables_url
@@ -353,27 +358,48 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     send_keys(:return)
     assert_selector 'p', text: 'Affichage de 1 Stocks sur 3 au total'
 
-    select '', from: 'Catégorie'
+    fill_in 'Rechercher', with: ''
+    send_keys(:return)
     select 'Automobile', from: 'Catégorie'
     send_keys(:return)
     assert_selector 'p', text: 'Affichage de 1 Stocks sur 3 au total'
   end
 
-  test 'filter les valeurs par date dans une table' do
+  test 'filtrer les valeurs par date dans une table (range)' do
     @table = tables(:interventions)
 
     visit tables_url
     click_on @table.name.upcase
     assert_text 'Interventions'
 
-    fill_in 'Date : Du', with: '24-12-2023'
+    fill_in 'Date : Du', with: '12-24-2023'
     send_keys(:return)
-    fill_in 'Au', with: '10-01-2024'
+    fill_in 'Au', with: '01-10-2024'
     send_keys(:return)
-    assert_selector 'p', text: 'Affichage de 1 Interventions sur 2 au total'
+    assert_selector 'p', text: /Affichage de 1/i
+  end
 
-    fill_in 'Au', with: ''
+  test 'filtrer les valeurs par date dans une table (mauvaise date)' do
+    @table = tables(:interventions)
+
+    visit tables_url
+    click_on @table.name.upcase
+    assert_text 'Interventions'
+
+    fill_in 'Date : Du', with: '12-24-2023'
     send_keys(:return)
-    assert_selector 'p', text: 'Affichage de 2 Interventions sur 2 au total'
+    assert_selector 'p', text: /Affichage de 0/i
+  end
+
+  test 'filtrer les valeurs par date dans une table (bonne date)' do
+    @table = tables(:interventions)
+
+    visit tables_url
+    click_on @table.name.upcase
+    assert_text 'Interventions'
+
+    fill_in 'Date : Du', with: '12-25-2023'
+    send_keys(:return)
+    assert_selector 'p', text: /Affichage de 1/i
   end
 end

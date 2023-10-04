@@ -34,7 +34,7 @@
   <div class="d-flex align-items-center justify-content-end gap-4">
     <p class="flex-fill mb-0">
       Affichage de 
-      <%= @records_size %>
+      <%= @records_size || '0' %>
       <%= table.name.pluralize(@records_size) %>
       
       <% if action_name == 'show' %>

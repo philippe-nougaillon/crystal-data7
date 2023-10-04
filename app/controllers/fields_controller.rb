@@ -11,6 +11,7 @@ class FieldsController < ApplicationController
   # POST /fields.json
   def create
     @field = Field.new(field_params)
+    @field.row_order = @field.table.fields.maximum(:row_order).to_i + 1
 
     respond_to do |format|
       if @field.save
