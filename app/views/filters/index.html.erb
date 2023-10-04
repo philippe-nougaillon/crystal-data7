@@ -5,7 +5,7 @@
   </h1>
 </div>
 
-<% @filters.each do |filter| %>
+<% @filters.includes([:table]).each do |filter| %>
   <%= render filter %>
 <% end %>
 
