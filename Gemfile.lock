@@ -327,6 +327,7 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   kaminari (~> 1.2)
+  matrix (~> 0.4.2)
   pg (~> 1.1)
   prawn (~> 2.4)
   prawn-table (~> 0.2.2)
