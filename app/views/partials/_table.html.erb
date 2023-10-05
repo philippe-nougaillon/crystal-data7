@@ -49,5 +49,9 @@
       <i class="fa fa-file-csv"></i>
       Export CSV
     <% end %>
+    <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format PDF" do %>
+      <i class="fa fa-file-pdf"></i>
+      Export PDF
+    <% end %>
   </div>
 </div>

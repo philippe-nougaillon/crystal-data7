@@ -99,6 +99,13 @@ class TablesController < ApplicationController
         filename = "Export_#{@table.name.humanize}_#{Date.today.to_s}.csv"
         send_data csv_string, filename: filename
       end
+      format.pdf do
+        pdf = ExportPdf.new
+        pdf.export_collection(@table, @records)
+        filename = "Export_#{@table.name}.pdf"
+        
+        send_data pdf.render, filename: filename, type: 'application/pdf'
+      end
     end 
   end
 

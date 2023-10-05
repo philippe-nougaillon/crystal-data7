@@ -104,3 +104,7 @@ gem "spreadsheet", "~> 1.3"
 gem "kaminari", "~> 1.2"
 
 gem "bootstrap4-kaminari-views", "~> 1.0"
+
+gem "prawn", "~> 2.4"
+
+gem "prawn-table", "~> 0.2.2"
