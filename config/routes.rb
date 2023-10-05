@@ -17,12 +17,17 @@ Rails.application.routes.draw do
     get :a_propos, to: 'pages#a_propos'
   end
 
+  resources :filters do
+    member do
+      get :query
+    end
+  end
+
   get 'show_attrs', to: 'tables#show_attrs' 
   get 'tables/:id/fill', to: 'tables#fill', as: :fill
   get 'tables/:id/add_user', to:'tables#add_user', as: :add_user
   get 'tables/:id/partages', to:'tables#partages', as: :partages
   get 'tables/:id/partages_delete', to:'tables#partages_delete', as: :annuler_partage
-  get 'tables/:id/export', to: 'tables#export', as: :export
   get 'tables/:id/logs', to: 'tables#logs', as: :logs
   get 'tables/:id/activity', to: 'tables#activity', as: :activity
   get 'tables/:id/details', to: 'tables#show_details', as: :details
@@ -30,7 +35,6 @@ Rails.application.routes.draw do
   get '/import', to: 'tables#import'
 
   post 'tables/:id/fill', to: 'tables#fill_do', as: :fill_do
-  post '/export_do', to: 'tables#export_do'
   post '/add_user_do', to:'tables#add_user_do'
   post '/import_do', to: 'tables#import_do'
 

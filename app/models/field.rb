@@ -58,8 +58,12 @@ class Field < ApplicationRecord
 	end
 
 	def populate_linked_table		
-	    table = Table.find(self.relation.relation_with_id)
-    	source_fields = self.relation.items
+
+		relation = self.relation
+
+		table = Table.find(relation.relation_with_id)
+
+		source_fields = relation.items
 		table_data = {}
 		
 		table.values.includes(:field).each do |value| 
@@ -83,11 +87,11 @@ class Field < ApplicationRecord
 	end
 
 	def get_linked_table_record(index)
-		table = Table.find(self.relation.relation_with_id)
-    	source_fields = self.relation.items
+		relation = self.relation
+		table = Table.find(relation.relation_with_id)
+    	source_fields = relation.items
 		
 		table_data = []
-		
 		table.values.where(record_index: index).includes(:field).each do |value| 
 			if (source_fields.include?(value.field.name)) 
 				if value.field.Collection?
@@ -110,6 +114,10 @@ class Field < ApplicationRecord
 
 	def is_numeric
 		self.Nombre? || self.Euros? || self.Formule?
+	end
+
+	def items_splitted
+		self.items.split(',').map{|e| e.squish}
 	end
 
 private

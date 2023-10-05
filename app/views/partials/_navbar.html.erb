@@ -1,40 +1,53 @@
-<nav class="nav d-none d-sm-flex flex-column bg-white shadow gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100 align-items-center">
+<nav class="nav d-none d-lg-flex flex-column bg-white shadow gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100 align-items-center">
   <div class="flex-fill d-flex flex-column gap-5 mt-2">
     <li class="nav-item">
-      <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Page d'accueil" do %>
+      <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Ma collection favorite/Page d'accueil" do %>
         <i class="fa-solid fa-house text-primary"></i>
       <% end %>
     </li>
-    <% if user_signed_in? %>
-      <li class="nav-item">
-        <%= link_to tables_path, title: "Liste des tables" do %>
-          <i class="fa-solid fa-cubes text-muted"></i>
-        <% end %>
-      </li>
-    <% end %>
+    <li class="nav-item">
+      <%= link_to tables_path, title: "Liste des Objets" do %>
+        <i class="fa-solid fa-cubes text-info"></i>
+      <% end %>
+    </li>
+    <li class="nav-item">
+      <%= link_to filters_path, title: "Liste des Filtres" do %>
+        <i class="fa-solid fa-filter text-success"></i>
+      <% end %>
+    </li>
   </div>
-  <li class="nav-item">
-    <%= link_to a_propos_path, title: "À Propos de CrystalData" do %>
-      <i class="fa-solid fa-circle-question text-info"></i>
-    <% end %>
-  </li>
   <% if user_signed_in? %>
     <li class="nav-item">
       <%= link_to current_user, title: "Profil utilisateur" do %>
-        <i class="fa-solid fa-circle-user fa-2xl text-success"></i>
-      <% end %>
-    </li>
-    <li class="nav-item">
-      <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-accent btn-outline !normal-case', 'data-turbo': false, title: 'Se déconnecter' do %>
-        <i class="fa-solid fa-right-from-bracket text-warning"></i>
+        <i class="fa-solid fa-circle-user fa-2xl text-black-50"></i>
       <% end %>
     </li>
   <% end %>
+  <li class="nav-item">
+    <%= link_to a_propos_path, title: "À Propos de CrystalData" do %>
+      <i class="fa-solid fa-circle-question text-black-50"></i>
+    <% end %>
+  </li>
 </nav>
 
-<nav class="navbar d-flex d-sm-none navbar-expand-lg fixed-top bg-white shadow-sm">
+<nav class="navbar d-flex d-lg-none navbar-expand-lg fixed-top bg-white shadow-sm">
   <div class="container-fluid">
-    <h1 class="navbar-brand mb-0">CrystalData</h1>
+    <% if controller_name == "tables" && action_name == "show" %>
+      <ul class='mb-0 px-0' style='list-style-type: none;'>
+        <li class="nav-item dropdown">
+          <a class="navbar-brand nav-link dropdown-toggle text-primary fs-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= @table.name.humanize.pluralize %>
+          </a>
+          <ul class="dropdown-menu">
+            <% current_user.tables.where.not(name: @table.name).each do |table| %>
+              <li><%= link_to table.name.humanize.pluralize, table_path(table), class: 'dropdown-item fs-5' %></li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+    <% else %>
+      <h1 class="navbar-brand mb-0">CrystalData</h1>
+    <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -43,22 +56,22 @@
         <li class="nav-item">
           <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'nav-link text-primary' do %>
             <i class="fa-solid fa-house"></i>
-            <% if user_signed_in? %>
-              Ma collection favorite  
-            <% else%>
-              Accueil
-            <% end %>
+            <%= user_signed_in? ? 'Ma collection favorite' : 'Accueil' %>
           <% end %>
         </li>
-        <% if user_signed_in? %>
-          <li class="nav-item">
-            <%= link_to tables_path, title: "Liste des tables", class: 'nav-link text-muted' do %>
-              <i class="fa-solid fa-cubes"></i>
-              Mes Objets
-            <% end %>
-          </li>
-        <% end %>
-        <% if controller_name == "tables" && action_name != "index" %>
+        <li class="nav-item">
+          <%= link_to tables_path, title: "Liste des Objets", class: 'nav-link text-info' do %>
+            <i class="fa-solid fa-cubes"></i>
+            Mes Objets
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to filters_path, title: "Liste des filtres", class: 'nav-link text-success' do %>
+            <i class="fa-solid fa-filter"></i>
+            Mes Filtres
+          <% end %>
+        </li>
+        <% if controller_name == "tables" && %i[index new].include?(action_name) %>
           <li class="nav-item dropdown">
             <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               --- <%= @table.name.upcase %>
@@ -73,9 +86,6 @@
               <% if policy(@table).partages? %>
                 <li><%= link_to "Partages", partages_path(@table), class:'dropdown-item', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" %></li>
               <% end %>
-              <% if policy(@table).export? %>
-                <li><%= link_to 'Exporter', export_path(@table), class:'dropdown-item', title:"Exporter les données de l'Objet '#{@table.name}'" %></li>
-              <% end %>
               <% if policy(@table).logs? %>
                 <li><%= link_to 'Audit Trail', logs_path(id:@table), class:'dropdown-item', title:"Historique des modifications de l'Objet '#{@table.name}'" %></li>
               <% end %>
@@ -83,22 +93,16 @@
           </li>
         <% end %>
         <li class="nav-item">
-          <%= link_to a_propos_path, title: "À Propos de CrystalData", class: 'nav-link text-info' do %>
+          <%= link_to a_propos_path, title: "À Propos de CrystalData", class: 'nav-link text-black-50' do %>
             <i class="fa-solid fa-circle-question"></i>
             À Propos
           <% end %>
         </li>
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to current_user, title: "Profil utilisateur", class: 'nav-link text-success' do %>
+            <%= link_to current_user, title: "Profil utilisateur", class: 'nav-link text-black-50' do %>
               <i class="fa-solid fa-circle-user"></i>
               Profil
-            <% end %>
-          </li>
-          <li class="nav-item">
-            <%= button_to destroy_user_session_path, method: :delete, class:'nav-link btn btn-accent btn-outline !normal-case text-warning', 'data-turbo': false, title: 'Se déconnecter' do %>
-              <i class="fa-solid fa-right-from-bracket"></i>
-              Déconnexion
             <% end %>
           </li>
         <% end %>

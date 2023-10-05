@@ -5,7 +5,7 @@
         <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
       <% when 'Image', 'PDF' %>
         <% blob = Blob.find(value) %>
-        <% if blob.file.represenCollection? %>
+        <% if blob.file.representable? %>
           <%= link_to image_tag(blob.file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file), title: blob.file.filename %>
         <% end %>
       <% when 'Signature' %>
@@ -19,11 +19,11 @@
       <% when 'Texte_riche' %>
         <%= simple_format(value) %>
       <% when 'Euros' %>
-        <%= number_to_currency(value) %>
+        <span style="white-space: nowrap"><%= number_to_currency(value) %></span>
       <% when 'Formule' %>
         <%= field.evaluate(table, record_index) %>
       <% when 'Workflow' %>
-        <% items = field.items.split(',').map{|i| i.split(':')}.to_h %>
+        <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
         <% color = items[value] %>
         <span class="badge bg-<%= color %>"><%= value %></span>
       <% when 'URL' %>
@@ -35,7 +35,7 @@
       <% when 'Collection' %>
         <% linked_value = field.get_linked_table_record(value.to_i) %>
         <% linked_table = Table.find(field.relation.relation_with_id) %>
-        <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" } %>
+        <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" }, 'data-testid': "Voir les détails de #{field.items.tr('[]','').split('.').first} à la ligne n°#{value}" %>
       <% when 'Utilisateur' %>
         <%= value %>
       <% else %>

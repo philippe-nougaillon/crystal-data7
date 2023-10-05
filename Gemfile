@@ -79,8 +79,6 @@ group :test do
 end
 
 gem "simple_form", ">= 5.0.0"
-gem 'will_paginate'
-gem 'will_paginate-bootstrap'
 gem 'friendly_id', '~> 5.2.4'
 gem "audited"
 gem "aws-sdk-s3", require: false
@@ -98,3 +96,9 @@ gem "dotenv-rails", "~> 2.8"
 # gem 'autoprefixer-rails'
 
 # gem 'signature-pad-rails'
+
+gem "spreadsheet", "~> 1.3"
+
+gem "kaminari", "~> 1.2"
+
+gem "bootstrap4-kaminari-views", "~> 1.0"

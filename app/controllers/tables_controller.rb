@@ -87,7 +87,18 @@ class TablesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"#{@table.name}-#{l(DateTime.now, format: :compact)}\"" }
+      format.xls do
+        book = CollectionToXls.new(@table, @records).call
+        file_contents = StringIO.new
+        book.write file_contents # => Now file_contents contains the rendered file output
+        filename = "Export_#{@table.name.humanize}_#{Date.today.to_s}.xls"
+        send_data file_contents.string.force_encoding('binary'), filename: filename 
+      end
+      format.csv do
+        csv_string = CollectionToCsv.new(@table, @records).call
+        filename = "Export_#{@table.name.humanize}_#{Date.today.to_s}.csv"
+        send_data csv_string, filename: filename
+      end
     end 
   end
 
@@ -135,8 +146,8 @@ class TablesController < ApplicationController
         end  
 
         # enregistre le fichier
-        if field.datatype == 'Fichier' || field.datatype == 'Image' || field.datatype == 'PDF'
-          if value
+        if field.Fichier? || field.Image? || field.PDF?
+          unless value.blank?
             b = Blob.new()
             b.file.attach(value)
             b.save
@@ -149,7 +160,7 @@ class TablesController < ApplicationController
           end
         end
 
-        if field.datatype == 'Formule'
+        if field.Formule?
           value = field.evaluate(table, record_index) # evalue le champ calculé
         end          
     
@@ -239,7 +250,7 @@ class TablesController < ApplicationController
   def update
     respond_to do |format|
       if @table.update(table_params)
-        format.html { redirect_to show_attrs_path(id: @table), notice: 'Table modifiée.' }
+        format.html { redirect_to show_attrs_path(id: @table), notice: 'Objet modifié.' }
         format.json { render :show, status: :ok, location: @table }
       else
         format.html { render :edit }
@@ -263,7 +274,7 @@ class TablesController < ApplicationController
     @table.destroy
 
     respond_to do |format|
-      format.html { redirect_to tables_url, notice: 'Table supprimée.'}
+      format.html { redirect_to tables_url, notice: 'Objet supprimé.'}
       format.json { head :no_content }
     end
   end
@@ -272,73 +283,15 @@ class TablesController < ApplicationController
   end
 
   def import_do
-    require 'rake'
-
-    #Save file to local dir
-    filename = params[:upload].original_filename
-    filename_with_path = Rails.root.join('public', 'tmp', filename)
-    File.open(filename_with_path, 'wb') do |file|
-        file.write(params[:upload].read)
-    end
-
-    Rake::Task.clear # necessary to avoid tasks being loaded several times in dev mode
-    CrystalData::Application.load_tasks 
-    Rake::Task['tables:import'].invoke(filename_with_path, filename, current_user.id, request.remote_ip)
-
-    @new_table = Table.last
-    redirect_to tables_path, notice: "Importation terminé. Table '#{Table.last.name.humanize}' créée avec succès."
-  end
-
-  def export
-  end
-
-  def export_do
-    require 'csv'
-
-    unless params[:debut].blank? and params[:fin].blank?
-      @debut = params[:debut]
-      @fin = params[:fin]
-    else
-      @debut = '01/01/1900'
-      @fin = '01/01/2100'
-    end
-
-    #updated_at_list = @table.values.group(:record_index).maximum(:updated_at)
-
-    @records = @table.values.pluck(:record_index).uniq
-
-    @csv_string = CSV.generate(col_sep:',') do |csv|
-      csv << @table.fields.pluck(:name)
-
-      @records.each do | index |
-        values = @table.values.joins(:field).records_at(index).order("fields.row_order").pluck(:data)
-        #updated_at = updated_at_list[index]
-        cols = []
-        @table.fields.each_with_index do | field,index |
-          if field.datatype == "Signature" and values[index]
-            cols << "Signé"
-          else
-            cols << (values[index] ? values[index].to_s.gsub("'", " ") : nil) 
-          end
-        end
-        #cols << l(updated_at) 
-        csv << cols
-      end    
-    end
-
-    respond_to do |format|
-      format.csv do
-        headers['Content-Disposition'] = "attachment; filename=\"#{@table.name.humanize + '.csv'}\""
-        headers['Content-Type'] ||= 'text/csv'
-      end
-    end
+    ImportCollection.new(params[:upload], current_user, request).call
+    redirect_to tables_path, notice: "Importation terminée. Table '#{Table.last.name.humanize}' créée avec succès."
   end
 
   def add_user
   end
 
   def add_user_do
-    if not TablesUser.roles.keys.reject { |i| i == "Propriétaire" }.include?(params[:role])
+    if not TablesUser.roles.keys.reject { |e| e == "Propriétaire" }.include?(params[:role])
       redirect_to add_user_path(@table), alert: "Rôle indisponible"
     elsif @user = User.find_by(email:params[:email])
       unless @table.users.include?(@user)
@@ -387,7 +340,7 @@ class TablesController < ApplicationController
     end
     sql = sql + ")"
     @audits = Audited::Audit.where(sql)
-    @audits = @audits.reorder('created_at DESC').paginate(page: params[:page])
+    @audits = @audits.reorder('created_at DESC').page(params[:page])
   end
 
   # ????

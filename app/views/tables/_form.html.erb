@@ -1,6 +1,6 @@
 <%= form_for(@table) do |f| %>
 
-  <%= f.label :name, "Nom de l'Objet" %>
+  <%= f.label :name, "Donnez un nom à ce nouvel Objet" %>
   <%= f.text_field :name, required: true, 
                     placeholder: 'Ex: Article, Intervention, Technicien, Chantier, Site...', 
                     autofocus: true, 
@@ -31,5 +31,5 @@
     </p>
   </div>
 
-  <%= f.submit @table.new_record? ? "Continuer" : "Modifier cet objet", class: 'btn btn-outline-primary' %>
+  <%= f.submit @table.new_record? ? "Continuer" : "Modifier cet objet", class: 'btn btn-outline-info' %>
 <% end %>

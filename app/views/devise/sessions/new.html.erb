@@ -1,16 +1,9 @@
 <div class="d-flex flex-wrap flex-sm-nowrap gap-5 align-items-center">
-  <div class="w-100 w-sm-50 p-4 p-sm-5">
-    <%= image_tag "undraw_Real_time_sync_re_nky7.png", class: "w-100" %>
-    <h1 class="text-primary">CrystalData</h1>
-    <h2 class="fw-normal fs-4">Vos données métier, en ligne et en mobilité</h2>
-    <h3 class="fw-light fs-5">
-      Application NO-CODE de base de données en ligne, qui vous permet de créer et de partager des collections d'Objets variés avec vos collaborateurs
-    </h3>
-    <%= link_to "En savoir plus", a_propos_path, class: "btn btn-outline-primary mt-4" %>
-  </div>
+
+  <%= render 'partials/welcome' %>
 
   <div class="border p-4 p-sm-5">
-    <h2 class="text-center mb-5">Connexion</h2>
+    <h2 class="text-center mb-5 text-secondary">Connexion</h2>
     <%= form_for resource, url: session_path(resource_name) do |f| %>
       <%= f.text_field :email, required: true, class: 'form-control w-100 mb-4', placeholder:'Adresse mail' %>
       <%= f.password_field :password, required: true, class: 'form-control w-100 mb-4', placeholder:'Mot de passe' %>
@@ -21,12 +14,12 @@
 
       <div class='d-flex gap-4 my-4'>
         <%= f.submit "S'identifier", class: 'btn btn-outline-primary' %>
-        <%= link_to "Créer un compte", new_registration_path(resource_name), class: 'btn btn-outline-warning' %> 
+        <%= link_to "Créer un compte", new_registration_path(resource_name), class: 'btn btn-outline-secondary' %> 
       </div>
     <% end %>
 
     <%# render "devise/shared/links" %>
 
-    <%= link_to "Se connecter en tant qu'invité (mode démonstration)", user_connect_guest_user_path(1), class: 'btn btn-outline-primary' %>
+    <%= link_to "Se connecter en tant qu'invité (mode démonstration)", user_connect_guest_user_path(1), class: 'btn btn-outline-success' %>
   </div>
 </div>

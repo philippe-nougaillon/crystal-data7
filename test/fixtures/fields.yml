@@ -2,6 +2,7 @@ stock_marque:
   table_id: <%= ActiveRecord::FixtureSet.identify(:stocks) %>
   name: Marque
   datatype: Texte
+  row_order: 1
   slug: a
 
 stock_catégorie:
@@ -10,6 +11,7 @@ stock_catégorie:
   datatype: Liste
   items: Automobile,Mobilier,Alimentation,Vêtements,Électronique
   filtre: true
+  row_order: 2
   slug: abcde
 
 intervention_marque_outil:
@@ -17,12 +19,14 @@ intervention_marque_outil:
   name: Marque de l'outil
   datatype: Liste
   items: '[Stocks.Marque]'
+  row_order: 1
   slug: abc
 
 intervention_lieu:
   table_id: <%= ActiveRecord::FixtureSet.identify(:interventions) %>
   name: Lieu
   datatype: Texte
+  row_order: 2
   slug: abcd
 
 intervention_date:
@@ -30,4 +34,5 @@ intervention_date:
   name: Date
   datatype: Date
   filtre: true
+  row_order: 3
   slug: abcdef

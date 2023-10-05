@@ -1,26 +1,35 @@
-<div class="mb-4">
-  <h1 class="text-primary">
-    <%= @table.name.humanize.pluralize %>
-  </h1>
-
-  <div class="d-none d-sm-flex justify-content-end gap-2">
-    <% if policy(@table).show_attrs? %>
-      <%= link_to 'Modifier Attributs', show_attrs_path(id:@table), title:"Modifier les attributs de l'Objet '#{@table.name}'" %> 
-    <% end %>
-    <% if policy(@table).edit? %>
-      <%= link_to 'Modifier Objet', edit_table_path(id:@table), title:"Modifier l'Objet '#{@table.name}'" %> 
-    <% end %>
-    <% if policy(@table).partages? %>
-      <%= link_to "Partages", partages_path(@table), title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" %>
-    <% end %>
-    <% if policy(@table).export? %>
-      <%= link_to 'Exporter', export_path(@table), title:"Exporter les données de l'Objet '#{@table.name}'" %>
-    <% end %>
-    <% if policy(@table).logs? %>
-      <%= link_to 'Audit Trail', logs_path(id:@table), title:"Historique des modifications de l'Objet '#{@table.name}'" %>
-    <% end %>
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid px-0">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav w-100 justify-content-between align-items-center">
+        <li class="nav-item dropdown">
+          <a class="navbar-brand nav-link dropdown-toggle text-primary fs-1 px-0 fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= @table.name.humanize.pluralize %>
+          </a>
+          <ul class="dropdown-menu">
+            <% current_user.tables.where.not(name: @table.name).order(:name).each do |table| %>
+              <li><%= link_to table.name.humanize.pluralize, table_path(table), class: 'dropdown-item fs-5' %></li>
+            <% end %>
+          </ul>
+        </li>
+        <div class="d-flex justify-content-end gap-2">
+          <% if policy(@table).show_attrs? %>
+              <%= link_to 'Modifier Attributs', show_attrs_path(id:@table), class:'nav-link', title:"Modifier les attributs de l'Objet '#{@table.name}'" %> 
+          <% end %>
+          <% if policy(@table).edit? %>
+            <%= link_to 'Modifier Objet', edit_table_path(id:@table), class:'nav-link', title:"Modifier l'Objet '#{@table.name}'" %> 
+          <% end %>
+          <% if policy(@table).partages? %>
+            <%= link_to "Partages", partages_path(@table), class:'nav-link', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" %>
+          <% end %>
+          <% if policy(@table).logs? %>
+            <%= link_to 'Audit Trail', logs_path(id:@table), class:'nav-link', title:"Historique des modifications de l'Objet '#{@table.name}'" %>
+          <% end %>
+        </div>
+      </ul>
+    </div>
   </div>
-</div>
+</nav>
 
 <% if @table.fields.any? %>
   <%= form_tag table_path(@table.slug), {method: :get, class: 'd-flex gap-4 mb-4'} do |f| %>
@@ -34,11 +43,11 @@
           <% default_start_date = params.permit![:date].try(:[], field.id.to_s).try(:[], :start) ? params[:date][field.id.to_s][:start] : 'nil' %>
           <% default_end_date = params.permit![:date].try(:[], field.id.to_s).try(:[], :start) ? params[:date][field.id.to_s][:end] : 'nil' %>
           <div>
-            <%= label_tag "date[#{field.id}]", "#{field.name.humanize} : Du" %>
+            <%= label_tag "date[#{field.id}][start]", "#{field.name.humanize} : Du" %>
             <%= date_field_tag "date[#{field.id}][start]", default_start_date, class: 'form-control', onchange: 'this.form.submit()' %>
           </div>
           <div>
-            <%= label_tag "date[#{field.id}]","Au" %>
+            <%= label_tag "date[#{field.id}][end]","Au" %>
             <%= date_field_tag "date[#{field.id}][end]", default_end_date, class: 'form-control', onchange: 'this.form.submit()' %>
           </div>
         <% else %>
@@ -77,4 +86,3 @@
     <% end %> 
   <% end %>
 <% end %>
-<br><br>

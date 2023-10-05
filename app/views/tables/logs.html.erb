@@ -60,9 +60,7 @@
       </tbody>
     </table>
   </div>
-  
-  <%= will_paginate @audits, renderer: BootstrapPagination::Rails %>
 
-  <%= @audits.size.to_s + " modification".pluralize(@audits.size) %>
-
+  <%= page_entries_info @audits, entry_name: 'changement' %>
+  <%= paginate @audits, theme: 'twitter-bootstrap-4' %>
 <% end %>

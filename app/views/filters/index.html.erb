@@ -1,0 +1,12 @@
+<div class="my-4">
+  <h1 class="text-success">
+    <span class="fa fa-filter"></span>
+    Filtres
+  </h1>
+</div>
+
+<% @filters.includes([:table]).each do |filter| %>
+  <%= render filter %>
+<% end %>
+
+<%= link_to "Nouveau Filtre", new_filter_path, class: 'btn btn-outline-success' %>

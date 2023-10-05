@@ -1,4 +1,6 @@
-<h1 class="text-primary mb-4"><%= @table.name.humanize %></h1>
+<h1 class="text-primary my-4">
+  <%= @table.name.humanize %>
+</h1>
 
 <div class="border rounded shadow p-5">
   <%= render partial: 'partials/détails', locals: {table: @table, record_index: @record_index} %>
@@ -20,8 +22,6 @@
     <% end %>
   </div>
 </div>
-
-
 
 <% if @records %>
   <ul class="nav nav-tabs w-100 mt-4">

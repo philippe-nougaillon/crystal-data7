@@ -17,7 +17,7 @@
       <br>
 
       <%= label_tag :role, 'Rôle' %>
-      <%= select_tag :role, options_for_select(TablesUser.roles.keys.reject { |i| i == "Propriétaire" }), class:'form-select', required: true %>
+      <%= select_tag :role, options_for_select(TablesUser.roles.keys.reject { |e| e == "Propriétaire" }), class:'form-select', required: true %>
       <br>
       <%= submit_tag "Partager", class: 'btn btn-outline-primary', 'data-turbo-frame': "_top" %>
     </div>

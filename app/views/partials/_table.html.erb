@@ -31,10 +31,23 @@
     <% end %>
   </table>
 
-  <p>
-    Affichage de <%= @records_size %> <%= table.name.pluralize %>
-    <% if action_name == 'show' %>
-      sur <%= table.size %> au total
+  <div class="d-flex align-items-center justify-content-end gap-4">
+    <p class="flex-fill mb-0">
+      Affichage de 
+      <%= @records_size || '0' %>
+      <%= table.name.pluralize(@records_size) %>
+      
+      <% if action_name == 'show' %>
+        sur <%= table.size %> au total
+      <% end %>
+    </p>
+    <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format XLS" do %>
+      <i class="fa fa-file-excel"></i>
+      Export XLS
     <% end %>
-  </p>
+    <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format CSV" do %>
+      <i class="fa fa-file-csv"></i>
+      Export CSV
+    <% end %>
+  </div>
 </div>
