@@ -227,40 +227,40 @@
 		Les types disponibles sont : 
 		<ul class="list-group list-group-flush mb-5 m-3">
 			<li>
-				Texte :
+				<b>Texte</b> :
 				<ul>
-					<li><b>Texte</b> : peut contenir une chaine de 255 caractères maximum. L'option 'Filtre ?' permet de créer une liste déroulante contenant les valeurs distinctes. </li>
-					<li><b>Texte long</b> : permet de faire des gros messages</li>
-					<li><b>Texte riche</b> : permet de formater du texte (gras, souligné, titre, couleur, taille, liens, listes, etc.), grâce à un éditeur de texte intégré</li>
+					<li>Texte simple : peut contenir une chaine de 255 caractères maximum. L'option 'Filtre ?' permet de créer une liste déroulante contenant les valeurs distinctes. </li>
+					<li>Texte long : permet de faire des gros messages</li>
+					<li>Texte riche : permet de formater du texte (gras, souligné, titre, couleur, taille, liens, listes, etc.), grâce à un éditeur de texte intégré</li>
 				</ul>
 			</i>
 			<li>
-				Chiffres :
+				<b>Chiffres</b> :
 				<ul>
-					<li><b>Nombre</b> : pour saisir des valeurs numériques, avec ou sans décimales. L'option 'Opération en bas de page', calculera la moyenne ou la somme des valeurs de l'attribut.</li>
-					<li><b>Euros</b> : idem 'Nombre' mais affiche la valeur avec le symbole euros (€).</li>
-					<li><b>Formule</b> : champ calculé à partir de champs existants ou d'une formule en langage Ruby, ex: '[Temps Passé] * [Coût horaire]' ou '[Prix HT] * 1.2'
+					<li>Nombre : pour saisir des valeurs numériques, avec ou sans décimales. L'option 'Opération en bas de page', calculera la moyenne ou la somme des valeurs de l'attribut.</li>
+					<li>Euros : idem 'Nombre' mais affiche la valeur avec le symbole euros (€).</li>
+					<li>Formule : champ calculé à partir de champs existants ou d'une formule en langage Ruby, ex: '[Temps Passé] * [Coût horaire]' ou '[Prix HT] * 1.2'
 				</ul>
 			</li>
 			<li><b>Date</b> : une date choisie dans un calendrier.</li>
-			<li><b>Oui_Non?</b> : permet de choisir entre Oui ou Non ou aucun des deux.</li>
+			<li><b>Oui/Non</b> : permet de choisir entre Oui ou Non ou aucun des deux.</li>
 			<li><b>Liste</b> : pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.
 			</li>
 			<li><b>Collection</b> : pour afficher les objets d'une autre collection. ex: '[Technicien."Nom,Prénom,Expérience"]'</li>
 			<li>
-				Fichier :
+				<b>Fichier</b> :
 				<ul>
-					<li><b>Fichier</b> : permet de lier et de stocker un fichier (document, image, etc...).</li>
-					<li><b>Image</b> : idem 'Fichier' mais affiche un aperçu de l'image ou l'image d'origine selon le contexte.</li>
-					<li><b>PDF</b> : idem 'Fichier' mais affiche un aperçu de la première page du document PDF.</li>
+					<li>Fichier : permet de lier et de stocker un fichier (document, image, etc...).</li>
+					<li>Image : idem 'Fichier' mais affiche un aperçu de l'image ou l'image d'origine selon le contexte.</li>
+					<li>PDF : idem 'Fichier' mais affiche un aperçu de la première page du document PDF.</li>
 				</ul>
 			</li>
 			<li><b>URL</b> : permet d'ajouter un lien vers une ressource internet (interne ou externe).</li>
 			<li><b>Couleur</b> : affiche une couleur choisie dans une palette.</li>
 			<li><b>GPS</b> :
 				<ol>
-					<li>Capture la localisation de l'utilisateur s'il le demande [<i class="fa-solid fa-location-crosshairs"></i>]</li>
-					<li>Affiche une position sur une carte aux coordonnées indiquées au format "lng, lat". ex: '48.85879287621989, 2.294761243572842' pour pointer sur la tour Eiffel.</li>
+					<li>Capture la localisation de l'utilisateur, s'il le demande en appuyant sur le bouton <span class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-location-crosshairs"></i></li></span>
+					<li>Affiche la location sur une carte, basée sur les coordonnées indiquées au format "LNG, LAT". (Ex: '48.85879287621989, 2.294761243572842' pour pointer sur la tour Eiffel).</li>
 				</ol>
 			</li>
 			<li><b>Utilisateur</b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table</li>
@@ -302,7 +302,7 @@
 		CrystalData est développé et maintenu par 
 		<%= link_to 'Philnoug & Partners', 'https://www.philnoug.com', target: '_blank' %>
 	</p>
-	
+
 	<p class="mt-3">
 		Besoin d'une fonctionnalité sur mesure ? Nous vous la développons !
 	    Pour en savoir plus,
