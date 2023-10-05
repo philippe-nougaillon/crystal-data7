@@ -39,6 +39,7 @@
       <% when 'Utilisateur' %>
         <%= value %>
       <% else %>
+      
         <%= link_to_if is_link, value, details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" } %>
       <% end %>
       
