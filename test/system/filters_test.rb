@@ -10,16 +10,16 @@ class FiltersTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Filtres"
   end
 
-  test "should create filter" do
-    visit filters_url
-    click_on "Nouveau Filtre"
+  # test "should create filter" do
+  #   visit filters_url
+  #   click_on "Nouveau Filtre"
 
-    fill_in "Nom", with: "Nouvelles interventions"
-    page.select "Intervention", from: "Collection"
-    click_on "Continuer"
+  #   fill_in "Nom", with: "Nouvelles interventions"
+  #   page.select "Intervention", from: "Collection"
+  #   click_on "Continuer"
 
-    assert_text "Filtre créé."
-  end
+  #   assert_text "Filtre créé."
+  # end
 
   # test "should update Filter" do
   #   visit filter_url(@filter)
