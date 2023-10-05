@@ -67,7 +67,6 @@
 		</div>
 	</div>
 
-
 	<p class="w-sm-75">
 		C'est pourquoi j'ai commencé le développement d'un outil NO-CODE et open-source, il y a bientôt 10 ans,  
 		dans le but de couvrir les 5 fonctions de base d'une plateforme d'information ouverte.
@@ -280,12 +279,30 @@
 		</ul>
 	</p>
 
+	<h3 class="fw-bold text-warning mt-5">Relation entre objets</h3>
+	<p class="w-sm-75">
+		Les relations entre objets sont créée avec l'attribut 'Collection'. 
+		Exemple : un objet Intervention aura un attribut 'Technicien' qui permettra de choisir un technicien dans la collection du même nom.
+		Ces relations sont aussi visibles dans la vue détails d'un objet. 
+		Ainsi, quand un objet Technicien est lié a des Interventions, 
+		celles-ci s'afficheront automatiquement dans la vue de détail du Technicien.
+	</p>
+
+	<h3 class="fw-bold text-warning mt-5">Filtres</h3>
+	<p class="w-sm-75">
+		Les Filtres permettent de mémoriser un ensemble de critères de sélection pour obtenir une collection d'objets filtrée.
+		Ces filtres acceptent différents critères selon le type d'attribut.
+		Ex : un attribut de type Texte est filtré avec %TXT% (Filtre tout ce qui contient les 3 lettres TXT) 
+		et un attribut numérique est filtré avec un signe et une valeur (Qté en stock: > 5) 
+	</p>
+
 	<h3 class="fw-bold text-warning mt-5">Développement, support et services</h3>
 	
 	<p class="mt-3">
 		CrystalData est développé et maintenu par 
 		<%= link_to 'Philnoug & Partners', 'https://www.philnoug.com', target: '_blank' %>
 	</p>
+	
 	<p class="mt-3">
 		Besoin d'une fonctionnalité sur mesure ? Nous vous la développons !
 	    Pour en savoir plus,
