@@ -12,9 +12,8 @@
       <% users_not_in = User.where.not(id: @table.users.pluck(:id)).where(id: current_user.tables.map { |t| t.users.pluck(:id)}.flatten.uniq).pluck(:email) %>
       <%= select_tag :email, options_for_select(users_not_in), include_blank: true, class: 'form-select w-100 mb-4' %>
 
-      <%= label_tag :email, "Ou entrez son email s'il n'a pas encore de compte" %>
-      <%= text_field_tag :email, nil, class:'form-control w-100' %>
-      <br>
+      <%= label_tag :email, "Ou entrez son email" %>
+      <%= text_field_tag :email, nil, class:'form-control w-100 mb-4', type: :email %>
 
       <%= label_tag :role, 'Rôle' %>
       <%= select_tag :role, options_for_select(TablesUser.roles.keys.reject { |e| e == "Propriétaire" }), class:'form-select', required: true %>

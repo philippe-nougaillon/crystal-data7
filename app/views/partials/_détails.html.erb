@@ -16,7 +16,7 @@
               <% blob = Blob.find(value) %>
               <% if blob.file.representable? %>
                 <%= link_to url_for(blob.file), {target: "_blank"} do %>
-                  <%= image_tag(blob.file.representation(resize_to_limit: [200, 250]), class: 'shadow-lg') %>
+                  <%= image_tag(blob.file.representation(resize_to_limit: [200, 250]), class: 'shadow') %>
                 <% end %>
               <% end %>
             <% when 'Signature' %>

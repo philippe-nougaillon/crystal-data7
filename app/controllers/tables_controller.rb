@@ -325,9 +325,7 @@ class TablesController < ApplicationController
         flash[:alert] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' déjà existant !"
       end
     else
-      flash[:alert] = "Utilisateur inconnu ! Créez un compte en allant sur 'Créer un compte' dans le menu utilisateur"
-      redirect_to add_user_path(@table)
-      return
+      flash[:alert] = "Utilisateur inconnu ! Demandez-lui de créer un compte depuis la page d'accueil."
     end
     redirect_to partages_path(@table)
   end

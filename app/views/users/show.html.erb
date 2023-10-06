@@ -8,7 +8,7 @@
 </h1>
 
 <div class="w-50">
-  <h3>Vos objets partagés</h3>
+  <h3>Les objets partagés avec vous</h3>
   <table class="table table striped table-sm table-hover">
     <thead>
       <th>Objet</th>
@@ -29,18 +29,17 @@
   <h3>Activité du compte</h3>
 
   <div class="mb-4">
-    <p>Nombre d'objets créés : <span class="badge text-bg-info"><%= @total_tables %></span></p>
-    <p>Nombre total d'objets dans vos collections : <span class="badge text-bg-info"><%= @total_lignes %></span></p>
+    <p>Nombre d'objets créés : <span class="badge bg-secondary"><%= @total_tables %></span></p>
+    <p>Nombre total d'objets dans vos collections : <span class="badge bg-secondary"><%= @total_lignes %></span></p>
   </div>
 </div>
 
 <div class="mb-4">
   <h3>Informations personnelles</h3>  
   <i>Utilisateur depuis <%= time_ago_in_words(@user.created_at) %></i><br>
-  <i>Ce compte a été modifié il y a <%= time_ago_in_words(@user.updated_at) %></i>
 </div>
 
-<%= form_for @user do |f| %>
+<% form_for @user do |f| %>
 
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -64,7 +63,7 @@
   <div class="mb-4">
     <div class="col-sm-3">
       <%= f.label 'Adresse mail' %>
-      <%= f.text_field :email, required:true, class: 'form-control' %>
+      <%= f.text_field :email, required:true, class: 'form-control', type: :email %>
     </div>
   </div> 
 
