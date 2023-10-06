@@ -12,7 +12,7 @@ class ActiveSupport::TestCase
   # fixtures :all
 
   def login_propriétaire(user)
-    visit root_path
+    visit unauthenticated_root_path
     fill_in "user_email", with: user.email
     fill_in "user_password", with: user.password
     click_on "S'identifier"
@@ -20,7 +20,7 @@ class ActiveSupport::TestCase
   end
 
   # def login_lecteur
-  #   visit root_path
+  #   visit unauthenticated_root_path
   #   # email_field = find('[data-testid="Email"]')
   #   fill_in "email", with: users(:user_lecteur).email
   #   fill_in "Password", with: "AZERTYUIOP"
