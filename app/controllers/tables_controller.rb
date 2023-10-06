@@ -181,7 +181,8 @@ class TablesController < ApplicationController
             shape_rendering: "crispEdges",
             module_size: 11,
             standalone: true,
-            use_path: true
+            use_path: true,
+            viewbox: "20 20"
           )
         end
 
