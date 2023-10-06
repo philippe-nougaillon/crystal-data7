@@ -35,7 +35,7 @@ private
 
   def user_not_authorized
     flash[:alert] = "Vous n'êtes pas autorisé à effectuer cette action."
-    redirect_to(request.referrer || root_path)
+    redirect_to(request.referrer || authenticated_root_path)
   end
 
   # def detect_device_format

@@ -99,6 +99,13 @@ class TablesController < ApplicationController
         filename = "Export_#{@table.name.humanize}_#{Date.today.to_s}.csv"
         send_data csv_string, filename: filename
       end
+      format.pdf do
+        pdf = ExportPdf.new
+        pdf.export_collection(@table, @records)
+        filename = "Export_#{@table.name}.pdf"
+        
+        send_data pdf.render, filename: filename, type: 'application/pdf'
+      end
     end 
   end
 
@@ -160,10 +167,25 @@ class TablesController < ApplicationController
           end
         end
 
-        if field.Formule?
+        if field.Formule? 
           value = field.evaluate(table, record_index) # evalue le champ calculé
-        end          
-    
+        end      
+        
+        if field.QRCode?
+          field2 = field.table.fields.find_by(name: field.items.gsub(/\[|\]/, ''))
+          raw_value = field2.values.find_by(record_index: record_index).data
+          qrcode = RQRCode::QRCode.new(raw_value)
+
+          value = qrcode.as_svg(
+            color: "000",
+            shape_rendering: "crispEdges",
+            module_size: 11,
+            standalone: true,
+            use_path: true,
+            viewbox: "20 20"
+          )
+        end
+
         # test si c'est un update ou new record
         old_value = table.values.find_by(record_index:record_index, field:field)
 
@@ -250,7 +272,7 @@ class TablesController < ApplicationController
   def update
     respond_to do |format|
       if @table.update(table_params)
-        format.html { redirect_to show_attrs_path(id: @table), notice: 'Objet modifié.' }
+        format.html { redirect_to table_path(id: @table), notice: 'Objet modifié.' }
         format.json { render :show, status: :ok, location: @table }
       else
         format.html { render :edit }
@@ -303,9 +325,7 @@ class TablesController < ApplicationController
         flash[:alert] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' déjà existant !"
       end
     else
-      flash[:alert] = "Utilisateur inconnu ! Créez un compte en allant sur 'Créer un compte' dans le menu utilisateur"
-      redirect_to add_user_path(@table)
-      return
+      flash[:alert] = "Utilisateur inconnu ! Demandez-lui de créer un compte depuis la page d'accueil."
     end
     redirect_to partages_path(@table)
   end

@@ -1,11 +1,11 @@
-<div class="mb-4">
-  <h1 class="text-primary">
+<div class="my-4">
+  <h1 class="text-secondary">
     <span class="fa fa-gears"></span>
     Attributs de l'Objet '<%= @table.name.humanize %>'
   </h1>
 
   <div class="float-end mt-3">
-    <%= link_to "Voir la Collection d'Objets", @field.table, title: "Voir la Collection d'Objets" %> 
+    <%= link_to "Voir la Collection", @field.table, title: "Voir la Collection d'Objets" %> 
   </div>
 </div>
 
@@ -26,7 +26,7 @@
 					<th>Type</th>
 					<th>Options</th>
 					<th>Visibilité</th>
-					<th colspan=2>
+					<th></th>
 				</tr>
 			</thead>
 			<% @table.fields.each_with_index do | field, index | %>

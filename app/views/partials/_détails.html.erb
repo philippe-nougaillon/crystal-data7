@@ -16,7 +16,7 @@
               <% blob = Blob.find(value) %>
               <% if blob.file.representable? %>
                 <%= link_to url_for(blob.file), {target: "_blank"} do %>
-                  <%= image_tag(blob.file.representation(resize_to_limit: [200, 250]), class: 'shadow-lg') %>
+                  <%= image_tag(blob.file.representation(resize_to_limit: [200, 250]), class: 'shadow') %>
                 <% end %>
               <% end %>
             <% when 'Signature' %>
@@ -48,6 +48,10 @@
               <%= link_to linked_value, details_path(Table.find(field.relation.relation_with_id).slug, record_index: value) %>
             <% when 'Utilisateur' %>
               <%= value %>
+            <% when 'Vidéo_YouTube' %>
+              <iframe width="280" height="157" src="<%= value %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <% when 'QRCode' %>
+              <div class="w-sm-50"><%= raw value %></div>
             <% else %>
               <%= value %>
             <% end %>

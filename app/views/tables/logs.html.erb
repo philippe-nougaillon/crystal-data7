@@ -1,7 +1,11 @@
 <%= turbo_frame_tag "audit_frame" do %>
-  <h3 class="text-primary">
-    Audit Trail
-  </h3>
+
+  <div class="my-4">
+    <h1 class="text-secondary">
+      <span class="fa fa-search"></span>
+      Audit Trail
+    </h1>
+  </div>
 
   <% if params[:record_index].blank? %>
     <%= form_tag(request.path, method: :get, class: 'd-flex mb-4 gap-4 align-items-center') do %>

@@ -3,27 +3,41 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav w-100 justify-content-between align-items-center">
         <li class="nav-item dropdown">
-          <a class="navbar-brand nav-link dropdown-toggle text-primary fs-1 px-0 fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="navbar-brand nav-link text-primary fs-1 px-0 fw-bold <%= current_user.tables.count > 1 ? "dropdown-toggle" : "" %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <%= @table.name.humanize.pluralize %>
           </a>
-          <ul class="dropdown-menu">
-            <% current_user.tables.where.not(name: @table.name).order(:name).each do |table| %>
-              <li><%= link_to table.name.humanize.pluralize, table_path(table), class: 'dropdown-item fs-5' %></li>
-            <% end %>
-          </ul>
+          <% if current_user.tables.count > 1 %>
+            <ul class="dropdown-menu">
+              <% current_user.tables.where.not(name: @table.name).order(:name).each do |table| %>
+                <li><%= link_to table.name.humanize.pluralize, table_path(table), class: 'dropdown-item fs-4 fw-bold' %></li>
+              <% end %>
+            </ul>
+          <% end %>
         </li>
         <div class="d-flex justify-content-end gap-2">
           <% if policy(@table).show_attrs? %>
-              <%= link_to 'Modifier Attributs', show_attrs_path(id:@table), class:'nav-link', title:"Modifier les attributs de l'Objet '#{@table.name}'" %> 
+              <%= link_to show_attrs_path(id:@table), class:'nav-link', title:"Modifier les attributs de l'Objet '#{@table.name}'" do %> 
+              <i class="fa fa-gears"></i>
+              Modifier Attributs
+              <% end %>
           <% end %>
           <% if policy(@table).edit? %>
-            <%= link_to 'Modifier Objet', edit_table_path(id:@table), class:'nav-link', title:"Modifier l'Objet '#{@table.name}'" %> 
+            <%= link_to edit_table_path(id:@table), class:'nav-link', title:"Modifier l'Objet '#{@table.name}'" do %> 
+              <i class="fa fa-cube"></i>
+              Modifier Objet
+            <% end %>
           <% end %>
           <% if policy(@table).partages? %>
-            <%= link_to "Partages", partages_path(@table), class:'nav-link', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" %>
+            <%= link_to partages_path(@table), class:'nav-link', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" do %>
+              <i class="fa fa-share-nodes"></i>
+              Partages
+            <% end %>
           <% end %>
           <% if policy(@table).logs? %>
-            <%= link_to 'Audit Trail', logs_path(id:@table), class:'nav-link', title:"Historique des modifications de l'Objet '#{@table.name}'" %>
+            <%= link_to logs_path(id:@table), class:'nav-link', title:"Historique des modifications de l'Objet '#{@table.name}'" do %>
+              <i class="fa fa-search"></i>
+              Audit Trail
+            <% end %>
           <% end %>
         </div>
       </ul>
@@ -71,7 +85,7 @@
         <% end %>
       <% end %>
       <% if policy(@table).fill? %>
-        <%= link_to "(+) #{@table.name}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
+        <%= link_to "(+) #{@table.name.humanize}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
       <% end %>
     </div>
   <% end %>

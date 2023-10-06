@@ -125,6 +125,13 @@ class FiltersController < ApplicationController
         filename = "Export collection d'objets '#{@filter.table.name.humanize}' du_#{Date.today.to_s}.csv"
         send_data csv_string, filename: filename
       end
+      format.pdf do
+        pdf = ExportPdf.new
+        pdf.export_collection(@filter.table, @records)
+        filename = "Export_#{@filter.table.name}.pdf"
+        
+        send_data pdf.render, filename: filename, type: 'application/pdf'
+      end
     end 
   end
 

@@ -20,7 +20,7 @@
   </div>
   <div class="col-sm-offset-1 col-sm-3">
     <%= f.label :email, "Adresse email" %>
-    <%= f.text_field :email, required:true, class: 'form-control w-100' %>
+    <%= f.text_field :email, required:true, class: 'form-control w-100', type: :email %>
   </div>
   <div class="col-sm-offset-1 col-sm-3">
     <%= f.label :password, "Mot de passe" %>
@@ -32,6 +32,6 @@
   </div>
   <div class="col-sm-offset-1 col-sm-3 mt-4" style="gap: 1rem">
     <%= f.submit "Créer mon compte", class: 'btn btn-outline-primary' %>
-    <%= link_to "Retour", root_path, class:'btn btn-outline-dark' %>
+    <%= link_to "Retour", unauthenticated_root_path, class:'btn btn-outline-dark' %>
   </div>
 <% end %>
