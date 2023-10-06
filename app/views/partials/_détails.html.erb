@@ -48,6 +48,8 @@
               <%= link_to linked_value, details_path(Table.find(field.relation.relation_with_id).slug, record_index: value) %>
             <% when 'Utilisateur' %>
               <%= value %>
+            <% when 'Vidéo_YouTube' %>
+              <iframe width="560" height="315" src="<%= value %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             <% else %>
               <%= value %>
             <% end %>
