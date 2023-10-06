@@ -167,10 +167,24 @@ class TablesController < ApplicationController
           end
         end
 
-        if field.Formule?
+        if field.Formule? 
           value = field.evaluate(table, record_index) # evalue le champ calculé
-        end          
-    
+        end      
+        
+        if field.QRCode?
+          field2 = field.table.fields.find_by(name: field.items.gsub(/\[|\]/, ''))
+          raw_value = field2.values.find_by(record_index: record_index).data
+          qrcode = RQRCode::QRCode.new(raw_value)
+
+          value = qrcode.as_svg(
+            color: "000",
+            shape_rendering: "crispEdges",
+            module_size: 11,
+            standalone: true,
+            use_path: true
+          )
+        end
+
         # test si c'est un update ou new record
         old_value = table.values.find_by(record_index:record_index, field:field)
 

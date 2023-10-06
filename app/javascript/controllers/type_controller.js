@@ -34,6 +34,10 @@ export default class extends Controller {
     } else if (type.value == "Nombre" || type.value == "Euros" ) {
       this.paramsTarget.style.display = 'none';
       this.numberTarget.style.display = 'block';
+    } else if (type.value == "QRCode") {
+      this.paramsTarget.style.display = 'block';
+      this.numberTarget.style.dispaly = 'none';
+      this.paramsTarget.children[2].innerHTML = "ex : [Référence]"
     } else {
       this.paramsTarget.style.display = 'none';
       this.numberTarget.style.display = 'none';

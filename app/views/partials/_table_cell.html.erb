@@ -40,10 +40,12 @@
         <%= value %>
       <% when 'Vidéo_YouTube' %>
         <iframe width="290" height="157" src="<%= value %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <% when 'QRCode' %>
+        <%= raw value %>
       <% else %>
         <%= link_to_if is_link, value, details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" } %>
       <% end %>
-      
+
       <% if field.operation %>
         <% @sum[field.id] += value.to_f %>
       <% end %>
