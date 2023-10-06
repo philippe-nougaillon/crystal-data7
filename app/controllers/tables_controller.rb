@@ -272,7 +272,7 @@ class TablesController < ApplicationController
   def update
     respond_to do |format|
       if @table.update(table_params)
-        format.html { redirect_to show_attrs_path(id: @table), notice: 'Objet modifié.' }
+        format.html { redirect_to table_path(id: @table), notice: 'Objet modifié.' }
         format.json { render :show, status: :ok, location: @table }
       else
         format.html { render :edit }

@@ -18,10 +18,8 @@
     <% end %>
   </td>
   <td><%= field.visibility_polished %></td>
-  <td>
+  <td class="d-flex justify-content-end gap-3">
     <%= link_to 'Modifier', edit_field_path(id: field.slug), title: 'Modifier l\'attribut', class: 'btn btn-outline-warning btn-sm' %>
-  </td>
-  <td>
     <%= link_to 'X', field, title: 'Supprimer l\'attribut', 'data-turbo-method': :delete, 'data-turbo-confirm': 'Confirmez-vous la suppression de l\'attribut ?', class: 'btn btn-outline-danger btn-sm' %>
   </td>
 </tr>

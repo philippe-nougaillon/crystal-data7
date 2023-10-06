@@ -13,8 +13,7 @@
         <th class="col-md-4">Attributs</th>
         <th>Rôle</th>
         <th class="col-md-2">Partagé avec</th>
-        <th>MÀJ</th>
-        <th></th>
+        <th>màj</th>
         <th></th>
       </tr>
     </thead>
@@ -34,13 +33,13 @@
                 <% end %>
               <% end %>
             </td>
-            <td><%= "il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" unless table.size.zero? %></td>
             <td>
+              <%= "il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" unless table.size.zero? %>
+            </td>
+            <td class="d-flex justify-content-end gap-3">
               <% if policy(table).show_attrs? %>
                 <%= link_to 'Modifier Attributs', show_attrs_path(id: table.slug), title:"Modifier les attributs de l'Objet '#{table.name}'", class: 'btn btn-outline-warning btn-sm' %>
               <% end %>
-            </td>
-            <td>
               <% if policy(table).destroy? %>
                 <%= link_to 'X', table, title: "Supprimer l'Objet #{table.name}", 'data-turbo-method': :delete, 'data-turbo-confirm': "Êtes-vous certain.e de vouloir supprimer l'Objet #{table.name} ? Toutes les données enregistrées dedans seront perdues !", class: 'btn btn-outline-danger btn-sm' %>
               <% end %>
@@ -51,9 +50,9 @@
         <tr>
           <td colspan=7>
             <i>
-              Aucune table partagée pour l'instant...
+              Aucun objet pour l'instant...
               <br>
-              Pour en créer une, utilisez le bouton 'Nouvelle Table' ci-dessous
+              Pour en créer un, utilisez le bouton 'Nouvel Objet' ci-dessous
             </i>
           </td>
         </tr>

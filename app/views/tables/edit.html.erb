@@ -1,5 +1,8 @@
-<h1 class="text-primary mb-4">
-  Modification de l'Objet '<%= @table.name %>'
-</h1>
+<div class="my-4">
+	<h1 class="text-secondary">
+		<span class="fa fa-cube"></span>
+    Modification de l'Objet '<%= @table.name.humanize %>'
+	</h1>
+</div>
 
 <%= render 'form' %>
