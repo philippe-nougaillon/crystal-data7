@@ -30,28 +30,27 @@
       <% end %>
     <% end %>
   </table>
-
-  <div class="d-flex align-items-center justify-content-end gap-4">
-    <p class="flex-fill mb-0">
-      Affichage de 
-      <%= @records_size || '0' %>
-      <%= table.name.pluralize(@records_size) %>
-      
-      <% if action_name == 'show' %>
-        sur <%= table.size %> au total
-      <% end %>
-    </p>
-    <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format XLS" do %>
-      <i class="fa fa-file-excel"></i>
-      Export XLS
+</div>
+<div class="d-flex align-items-center justify-content-end gap-4">
+  <p class="flex-fill mb-0">
+    Affichage de 
+    <%= @records_size || '0' %>
+    <%= table.name.pluralize(@records_size) %>
+    
+    <% if action_name == 'show' %>
+      sur <%= table.size %> au total
     <% end %>
-    <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format CSV" do %>
-      <i class="fa fa-file-csv"></i>
-      Export CSV
-    <% end %>
-    <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format PDF" do %>
-      <i class="fa fa-file-pdf"></i>
-      Export PDF
-    <% end %>
-  </div>
+  </p>
+  <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format XLS" do %>
+    <i class="fa fa-file-excel"></i>
+    Export XLS
+  <% end %>
+  <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format CSV" do %>
+    <i class="fa fa-file-csv"></i>
+    Export CSV
+  <% end %>
+  <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format PDF" do %>
+    <i class="fa fa-file-pdf"></i>
+    Export PDF
+  <% end %>
 </div>
