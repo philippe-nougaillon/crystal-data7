@@ -46,7 +46,9 @@
         </li>
       </ul>
     <% else %>
-      <h1 class="navbar-brand mb-0">CrystalData</h1>
+      <h1 class="navbar-brand mb-0">
+        <%= link_to 'CrystalData', user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'text-decoration-none text-black' %>
+      </h1>
     <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
