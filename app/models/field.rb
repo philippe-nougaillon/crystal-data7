@@ -45,7 +45,7 @@ class Field < ApplicationRecord
 				return 'n/a'
 			end
 		end
-		return eval(formule_to_evaluate.delete!('[]'))
+		return eval(formule_to_evaluate.delete('[]'))
 	end
 
 	# def delete_file(filename)
