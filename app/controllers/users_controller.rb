@@ -40,7 +40,7 @@ class UsersController < ApplicationController
 
     def connect_guest_user
       sign_in User.find(1)
-      redirect_to table_path(current_user.favorite_table), notice: "Bienvenue dans la démonstration. Vous pouvez ici tester librement l'application. Merci d'en faire bon usage."
+      redirect_to table_path(current_user.favorite_table), notice: "Bienvenue dans la démonstration. Vous pouvez tester ici librement l'application mais avec quelques limitations. Veuillez créer un compte pour avoir toutes les fonctionnalités."
     end
 
   private
