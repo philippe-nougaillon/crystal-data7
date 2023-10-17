@@ -1,8 +1,7 @@
 <h1 class="text-primary mb-4">
   <%= "#{params[:record_index] ? 'Modification' : 'Ajout'} '#{@table.name.humanize}'" %>
 </h1>
-
-<%= form_tag fill_do_path, multipart: true do %>
+<%= form_tag fill_do_path(relation: params[:relation], value: params[:value]), multipart: true do %>
 
   <%= hidden_field_tag :table_id, @table.id %>
 
@@ -73,6 +72,9 @@
         <% when 'Collection' %>
           <%# Checker si la liste vient d'une autre table %>
           <% if field.is_valid_table_params %>
+            <% if params[:relation].present? && Relation.find(params[:relation]).field_id == field.id %>
+              <% field_value = params[:value] %>
+            <% end %>
             <%= select_tag field_name, options_for_select(field.populate_linked_table.invert, field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %> 
           <% end %>
         <% when 'Utilisateur' %>
@@ -88,6 +90,6 @@
 
   <div class="d-flex flex-wrap align-items-center gap-2 mt-4">
     <%= submit_tag "Enregistrer", class: 'btn btn-outline-primary'%>
-    <%= link_to "Annuler", @table %>
+    <%= link_to "Annuler", request.referer %>
   </div>
 <% end %>

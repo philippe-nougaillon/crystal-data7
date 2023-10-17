@@ -220,8 +220,13 @@ class TablesController < ApplicationController
       if not update and table.notification
         UserMailer.notification(table, notif_items).deliver_later
       end
-
-      redirect_to table, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
+      if params[:relation].present? && params[:value].present?
+        table = Table.find(Relation.find(params[:relation]).relation_with_id)
+        url = details_path(table.slug, record_index: params[:value])
+        redirect_to url, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
+      else
+        redirect_to table, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
+      end
     else
       redirect_to table, alert: "Aucune donnée enregistrée"
     end

@@ -31,6 +31,9 @@
     <% end %>
   </table>
 </div>
+<% if %w[show_details related_tables].include?(action_name) %>
+  <%= link_to "(+) #{table.name.humanize}", fill_path(table, relation: @relation, value: @record_index), class: 'btn btn-outline-primary mb-4', data: { turbo_frame: "_top" }  %>
+<% end %>
 <div class="d-flex align-items-center justify-content-end gap-2">
   <p class="flex-fill mb-0">
     Affichage de 
