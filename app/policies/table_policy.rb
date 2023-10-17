@@ -14,7 +14,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def new?
-    index?
+    index? && !(user.compte_démo?)
   end
 
   def create?
@@ -22,7 +22,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def edit?
-    record.propriétaire?(user)
+    record.propriétaire?(user) && !(user.compte_démo?)
   end
 
   def update?
@@ -30,7 +30,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.propriétaire?(user)
+    record.propriétaire?(user) && !(user.compte_démo?)
   end
   
   def show_attrs?
@@ -46,11 +46,11 @@ class TablePolicy < ApplicationPolicy
   end
 
   def delete_record?
-    record.propriétaire?(user)
+    record.propriétaire?(user) && !(user.compte_démo?)
   end
 
   def import?
-    user
+    user && !(user.compte_démo?)
   end
 
   def import_do?
@@ -62,7 +62,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def add_user_do?
-    add_user?
+    add_user? && !(user.compte_démo?)
   end
 
   def partages?

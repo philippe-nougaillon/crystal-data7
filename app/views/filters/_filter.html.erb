@@ -4,7 +4,11 @@
     <span class='col-3'><%= filter.table.name.pluralize %></span>
     <span class='col-5'><%= filter.query_humanized %></span>
     <span class='col-2'>il y a <%= time_ago_in_words(filter.updated_at) %></span>
-    <span class='col-1'><%= button_to "X", filter, method: :delete, 'data-turbo-confirm': "Êtes-vous certain.e", class: 'btn btn-sm btn-outline-danger float-end' %></span>
+    <span class='col-1'>
+      <% if policy(filter).destroy? %>
+        <%= button_to "X", filter, method: :delete, 'data-turbo-confirm': "Êtes-vous certain.e", class: 'btn btn-sm btn-outline-danger float-end' %>
+      <% end %>
+    </span>
   </div>
 </div>
 <hr>

@@ -6,11 +6,11 @@ class FieldPolicy < ApplicationPolicy
   end
 
   def create?
-    record.table.propriétaire?(user)
+    record.table.propriétaire?(user) && !(user.compte_démo?)
   end
   
   def edit?
-    record.table.propriétaire?(user)
+    record.table.propriétaire?(user) && !(user.compte_démo?)
   end
 
   def update?
@@ -18,7 +18,7 @@ class FieldPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.table.propriétaire?(user)
+    record.table.propriétaire?(user) && !(user.compte_démo?)
   end
 
   def update_row_order?
