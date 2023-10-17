@@ -41,7 +41,7 @@
     <%= table.name.pluralize(@records_size) %>
     
     <% if action_name == 'show' %>
-      sur <%= table.size %> au total
+      sur <%= @records.size %> au total
     <% end %>
   </p>
   <div class="d-none d-sm-block">

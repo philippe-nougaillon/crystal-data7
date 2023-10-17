@@ -5,7 +5,7 @@ class Table < ApplicationRecord
 	audited
 
 	has_many :tables_users, dependent: :destroy
-  	has_many :users, through: :tables_users
+  has_many :users, through: :tables_users
 	has_many :fields, dependent: :destroy
 	has_many :values, through: :fields, dependent: :destroy
 	has_many :logs, through: :fields, dependent: :destroy
@@ -75,8 +75,8 @@ class Table < ApplicationRecord
 		self.tables_users.find_by(user_id: user.id).role == 'Lecteur'
 	end
 
-	def ajouteur?(user)
-		self.tables_users.find_by(user_id: user.id).role == 'Ajouteur'
+	def collecteur?(user)
+		self.tables_users.find_by(user_id: user.id).role == 'Collecteur'
 	end
 
 	def éditeur?(user)

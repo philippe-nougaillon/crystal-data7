@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_04_122104) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_17_114635) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -184,8 +184,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_122104) do
     t.datetime "updated_at", null: false
     t.integer "record_index"
     t.string "old_value"
+    t.bigint "user_id", null: false
     t.index ["field_id"], name: "index_values_on_field_id"
     t.index ["record_index"], name: "index_values_on_record_index"
+    t.index ["user_id"], name: "index_values_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -197,4 +199,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_122104) do
   add_foreign_key "relations", "fields"
   add_foreign_key "tables_users", "tables"
   add_foreign_key "tables_users", "users"
+  add_foreign_key "values", "users"
 end

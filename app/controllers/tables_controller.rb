@@ -18,11 +18,17 @@ class TablesController < ApplicationController
     @sum = Hash.new(0)
     @filters = {}
     @filter_results = {}
+    @values = @table.values
+
+    # Limite les enregistrement aux collecteurs
+    if @table.collecteur?(current_user)
+      @values = @values.where(user_id: current_user.id)
+    end
 
     # recherche les lignes 
     unless params.permit(:search).blank?
       search = "%#{ params[:search].strip }%"
-      @values = @table.values.where("data ILIKE ?", search)
+      @values = @values.where("data ILIKE ?", search)
       # Est-ce qu'il y a des Tables liées ?
       @table.fields.Collection.each do | field_table |
         # Rchercher dans les values de ce champ lié si valeurs recherchées
@@ -31,9 +37,8 @@ class TablesController < ApplicationController
         # Ajouter les clés trouvées
         @values = @values + field_table.values.where(data: results.keys)
       end
-    else
-      @values = @table.values
     end
+    
     @filters[:search] = search
     @filter_results[:search] = @values.pluck(:record_index).uniq
 
@@ -203,6 +208,7 @@ class TablesController < ApplicationController
                             record_index: record_index, 
                             data: value, 
                             old_value: old_value.data,
+                            user_id: old_value.user_id,
                             created_at: created_at_date)
             end
           end
@@ -210,7 +216,8 @@ class TablesController < ApplicationController
           # enregistrer les nouvelles données
           Value.create(field_id: field.id, 
                       record_index: record_index, 
-                      data: value, 
+                      data: value,
+                      user_id: current_user.id,
                       created_at: created_at_date)
 
         end
