@@ -4,7 +4,7 @@ class TablesUser < ApplicationRecord
 
   enum role: {
               Lecteur: 0, 
-              Ajouteur: 1, 
+              Collecteur: 1, 
               Éditeur: 2, 
               Propriétaire: 3
               }
