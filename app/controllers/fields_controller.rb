@@ -17,7 +17,7 @@ class FieldsController < ApplicationController
       if @field.save
         # Remplir le nouveau champs de vide....   
         @field.table.size.times do |index|
-          @field.values.create(record_index: (index + 1))
+          @field.values.create(record_index: (index + 1), user_id: @field.table.values.where(record_index: index + 1).first.user_id)
         end   
         format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Nouvel attribut ajouté.' }
         format.json { render :show, status: :created, location: @field }
