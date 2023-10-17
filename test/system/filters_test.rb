@@ -2,7 +2,8 @@ require "application_system_test_case"
 
 class FiltersTest < ApplicationSystemTestCase
   setup do
-    login_propriétaire
+    login_propriétaire(@user)
+    filter = create(:filter, table_id: @manufacturer_table.id, user_id: @user.id)
   end
 
   test "visiting the index" do
@@ -10,34 +11,28 @@ class FiltersTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Filtres"
   end
 
-  # test "should create filter" do
-  #   visit filters_url
-  #   click_on "Nouveau Filtre"
+  test "should create filter and update filter" do
+    visit filters_url
+    click_on "Nouveau Filtre"
 
-  #   fill_in "Nom", with: "Nouvelles interventions"
-  #   page.select "Intervention", from: "Collection"
-  #   click_on "Continuer"
+    fill_in "Nom", with: "Nouvelles interventions"
+    page.select @manufacturer_table.name.humanize, from: "Collection"
+    click_on "Continuer"
 
-  #   assert_text "Filtre créé."
-  # end
+    assert_text "Filtre créé."
+    fill_in "[query][#{@manufacturer_table.fields.first.id}]", with: "%%"
+    click_on 'Enregistrer et appliquer le filtre'
+    assert_text /Affichage de 3/
+    fill_in "[query][#{@manufacturer_table.fields.first.id}]", with: @manufacturer_name_value_1.data
+    click_on 'Enregistrer et appliquer le filtre'
+    assert_text /Affichage de 1/
+  end
 
-  # test "should update Filter" do
-  #   visit filter_url(@filter)
-  #   click_on "Edit this filter", match: :first
-
-  #   fill_in "Name", with: @filter.name
-  #   fill_in "Query", with: @filter.query
-  #   fill_in "Table", with: @filter.table_id
-  #   click_on "Update Filter"
-
-  #   assert_text "Filter was successfully updated"
-  #   click_on "Back"
-  # end
-
-  # test "should destroy Filter" do
-  #   visit filter_url(@filter)
-  #   click_on "Destroy this filter", match: :first
-
-  #   assert_text "Filter was successfully destroyed"
-  # end
+  test "should destroy Filter" do
+    visit filters_url
+    page.accept_confirm do
+      click_on "X", match: :first
+    end
+    assert_text "Filtre supprimé."
+  end
 end

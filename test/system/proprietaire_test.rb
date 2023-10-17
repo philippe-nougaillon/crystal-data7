@@ -3,46 +3,6 @@ require "application_system_test_case"
 class ProprietaireFlowTest < ApplicationSystemTestCase
 
   setup do
-    # Manufacturer table
-    @manufacturer_table = create(:table, name: "Manufacturer", record_index: 3)
-    manufacturer_propriétaire_tables_user = create(:tables_user, role: "Propriétaire", table: @manufacturer_table)
-    manufacturer_lecteur_tables_user = create(:tables_user, role: "Lecteur", table: @manufacturer_table)
-    @user = manufacturer_propriétaire_tables_user.user
-    @user_lecteur = manufacturer_lecteur_tables_user.user
-
-    # Manufacturer fields
-    manufacturer_name_field = create(:field, table: @manufacturer_table, row_order: 1, datatype: "Texte", name: "Name")
-    manufacturer_build_number_field = create(:field, table: @manufacturer_table, row_order: 2, datatype: "Liste", name: "Build Number", items: "[1,2,3,4,5]", filtre: true)
-
-    # Manufacturer values
-    manufacturer_name_value_1 = create(:value, field: manufacturer_name_field, record_index: 1, data: Faker::Device.manufacturer, user_id: @user.id)
-    manufacturer_name_value_2 = create(:value, field: manufacturer_name_field, record_index: 2, data: Faker::Device.manufacturer, user_id: @user.id)
-    manufacturer_name_value_3 = create(:value, field: manufacturer_name_field, record_index: 3, data: Faker::Device.manufacturer, user_id: @user.id)
-    manufacturer_build_number_value_1 = create(:value, field: manufacturer_build_number_field, record_index: 1, data: 1, user_id: @user.id)
-
-    # Device Table
-    @device_table = create(:table, name: "device", record_index: 3)
-    devices_users_table = create(:tables_user, role: "Propriétaire", table: @device_table, user: manufacturer_propriétaire_tables_user.user)
-
-    # Device fields
-    device_model_name_field = create(:field, table: @device_table, datatype: "Texte", row_order: 1, name: "Model name")
-    device_release_date_field = create(:field, table: @device_table, datatype: "Date", row_order: 2, name: "Release Date", filtre: true)
-    device_manufacturer_field = create(:field, table: @device_table, datatype: "Liste", row_order: 3, name: "Manufacturers", items: "[Manufacturer.Name]")
-
-    # Device values
-    device_model_name_value_1 = create(:value, field: device_model_name_field, record_index: 1, data: Faker::Device.model_name, user_id: @user.id)
-    @device_model_name_value_2 = create(:value, field: device_model_name_field, record_index: 2, data: Faker::Device.model_name, user_id: @user.id)
-    @device_model_name_value_3 = create(:value, field: device_model_name_field, record_index: 3, data: Faker::Device.model_name, user_id: @user.id)
-    device_release_date_value_1 = create(:value, field: device_release_date_field, record_index: 1, data: '2023-12-25', user_id: @user.id)
-    @device_release_date_value_2 = create(:value, field: device_release_date_field, record_index: 2, data: '2023-12-12', user_id: @user.id)
-    @device_release_date_value_3 = create(:value, field: device_release_date_field, record_index: 3, data: '2023-10-02', user_id: @user.id)
-    device_manufacturer_value_1 = create(:value, field: device_manufacturer_field, record_index: 1, data: manufacturer_name_value_1.data, user_id: @user.id)
-
-    # Manufacturer remaining field and values
-    manufacturer_device_field = create(:field, table: @manufacturer_table, row_order: 4, datatype: "Collection", name: "Device", items: "[#{@device_table.name}.\"#{device_model_name_field.name},#{device_release_date_field.name}\"]")
-    manufacturer_device_value_1 = create(:value, field: manufacturer_device_field, record_index: 1, data: "2", user_id: @user.id)
-    manufacturer_device_value_2 = create(:value, field: manufacturer_device_field, record_index: 2, data: "1", user_id: @user.id)
-
     login_propriétaire(@user)
   end
   
