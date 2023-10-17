@@ -31,15 +31,17 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
     # Device values
     device_model_name_value_1 = create(:value, field: device_model_name_field, record_index: 1, data: Faker::Device.model_name, user_id: @user.id)
-    device_model_name_value_2 = create(:value, field: device_model_name_field, record_index: 2, data: Faker::Device.model_name, user_id: @user.id)
+    @device_model_name_value_2 = create(:value, field: device_model_name_field, record_index: 2, data: Faker::Device.model_name, user_id: @user.id)
     @device_model_name_value_3 = create(:value, field: device_model_name_field, record_index: 3, data: Faker::Device.model_name, user_id: @user.id)
     device_release_date_value_1 = create(:value, field: device_release_date_field, record_index: 1, data: '2023-12-25', user_id: @user.id)
-    device_release_date_value_2 = create(:value, field: device_release_date_field, record_index: 2, data: '2023-12-12', user_id: @user.id)
+    @device_release_date_value_2 = create(:value, field: device_release_date_field, record_index: 2, data: '2023-12-12', user_id: @user.id)
     @device_release_date_value_3 = create(:value, field: device_release_date_field, record_index: 3, data: '2023-10-02', user_id: @user.id)
     device_manufacturer_value_1 = create(:value, field: device_manufacturer_field, record_index: 1, data: manufacturer_name_value_1.data, user_id: @user.id)
 
-    # Manufacturer remaining fields
+    # Manufacturer remaining field and values
     manufacturer_device_field = create(:field, table: @manufacturer_table, row_order: 4, datatype: "Collection", name: "Device", items: "[#{@device_table.name}.\"#{device_model_name_field.name},#{device_release_date_field.name}\"]")
+    manufacturer_device_value_1 = create(:value, field: manufacturer_device_field, record_index: 1, data: "2", user_id: @user.id)
+    manufacturer_device_value_2 = create(:value, field: manufacturer_device_field, record_index: 2, data: "1", user_id: @user.id)
 
     login_propriétaire(@user)
   end
@@ -380,6 +382,20 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     end
     assert_text "Cet enregistrement n'a pas été supprimé car il est utilisé dans d'autres Tables !"
     assert_selector('[data-testid="Supprimer ligne n°1"]', visible: :all)
+  end
+
+  test "créer un record à partir d'une relation" do
+    visit tables_url
+    click_on @manufacturer_table.name.upcase
+    link = find("[data-testid='Voir les détails de #{@device_table.name} à la ligne n°#{@device_model_name_value_2.record_index}']")
+    link.click
+    sleep(1)
+    assert_text /Affichage de 1/
+    click_on "(+) #{@manufacturer_table.name.humanize}"
+    assert_text "#{@device_model_name_value_2.data}, #{@device_release_date_value_2.data}"
+    click_on "Enregistrer"
+    assert_text "Données ajoutées avec succès :)"
+    assert_text /Affichage de 2/
   end
 
   # Filtres
