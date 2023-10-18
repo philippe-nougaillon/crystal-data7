@@ -66,15 +66,16 @@ Value.create!([
   {record_index: 1, field_id: 5, data: "15.0", user_id: 1},
   {record_index: 1, field_id: 6, data: "Rouge", user_id: 1},
   {record_index: 1, field_id: 7, data: "7291", user_id: 1},
+  {record_index: 1, field_id: 8, data: "", user_id: 1},
   
   {record_index: 2, field_id: 1, data: "Câble", user_id: 1},
-  {record_index: 1, field_id: 2, data: "ff72c4171b", user_id: 1},
+  {record_index: 2, field_id: 2, data: "ff72c4171b", user_id: 1},
   {record_index: 2, field_id: 3, data: "Nexans", user_id: 1},
   {record_index: 2, field_id: 4, data: "RJ11", user_id: 1},
   {record_index: 2, field_id: 5, data: "10.0", user_id: 1},
   {record_index: 2, field_id: 6, data: "Noir", user_id: 1},
   {record_index: 2, field_id: 7, data: "53", user_id: 1},
-
+  {record_index: 2, field_id: 8, data: "", user_id: 1},
 
   {record_index: 1, field_id: 9, data: "2023-08-24", user_id: 1},
   {record_index: 1, field_id: 10, data: "Carrefour", user_id: 1},
