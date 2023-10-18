@@ -297,14 +297,8 @@ class TablesController < ApplicationController
   # DELETE /tables/1.json
   def destroy
     # supprime les champs
-    @table.fields.destroy_all
+    @table.fields.delete_all
 
-    # ????
-    # # supprime les fichiers liés
-    # @table.values.each do | value |
-    #     value.field.delete_file(value.data) if value.field and value.field.Fichier? and value.data
-    #     value.destroy
-    #   end
     @table.destroy
 
     respond_to do |format|
