@@ -29,7 +29,7 @@
 					<th></th>
 				</tr>
 			</thead>
-			<% @table.fields.each_with_index do | field, index | %>
+			<% @table.fields.ordered.each_with_index do | field, index | %>
 				<%= render partial:'fields/field', locals: {field:field, i:index} %>
 			<% end %>
 		</table>

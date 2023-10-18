@@ -9,7 +9,7 @@ class CollectionToCsv < ApplicationService
 
   def call
     csv_string = CSV.generate(col_sep:',') do |csv|
-      csv << @table.fields.pluck(:name)
+      csv << @table.fields.ordered.pluck(:name)
       @records.each do | index |
         values = @table.values.joins(:field).records_at(index).order("fields.row_order").pluck(:data)
         #updated_at = updated_at_list[index]

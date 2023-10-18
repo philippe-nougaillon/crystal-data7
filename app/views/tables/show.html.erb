@@ -95,7 +95,7 @@
 <% else %>
   <% unless params[:attrs] %>
     Cet objet ne contient aucun attribut pour l'instant<br><br>
-    <%= link_to show_attrs_path(id: @table.id), class: 'btn btn-outline-primary' do %>
+    <%= link_to show_attrs_path(id: @table.slug), class: 'btn btn-outline-primary' do %>
       Ajouter un attribut
     <% end %> 
   <% end %>

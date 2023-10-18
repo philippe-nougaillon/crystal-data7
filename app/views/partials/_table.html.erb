@@ -2,7 +2,7 @@
   <table class="table table-striped table-hover sticky">
     <thead>
       <tr style="vertical-align: middle">
-        <% table.fields.listable.each_with_index do | field, index | %>
+        <% table.fields.listable.ordered.each_with_index do | field, index | %>
           <%= render partial: 'partials/table_header_cell', locals: {table:, field:, index:} %>
         <% end %>
         <th>màj</th>
@@ -21,7 +21,7 @@
       <% if table.fields.listable.where.not(operation: nil).any? %>
         <tfoot>
           <tr>
-            <% table.fields.listable.each do |field| %>
+            <% table.fields.listable.ordered.each do |field| %>
               <%= render partial: 'partials/table_footer_cell', locals: {field:} %>
             <% end %>
             <td colspan=2></td>

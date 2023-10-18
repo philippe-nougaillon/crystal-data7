@@ -30,7 +30,7 @@ class Table < ApplicationRecord
 	end
 
 	def field_names
-		self.fields.pluck(:name).map{|x| x.humanize}.join(', ')
+		self.fields.ordered.pluck(:name).map{|x| x.humanize}.join(', ')
 	end
 
 	def increment_record_index

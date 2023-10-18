@@ -24,6 +24,7 @@ class Field < ApplicationRecord
 	scope :sommes,  	-> { where(sum: true) }
 	scope :listable, 	-> { where(visibility: 'Vue_Liste').or(where(visibility: 'Liste_et_Détails')) }
 	scope :détaillable, -> { where(visibility: 'Vue_Détails').or(where(visibility: 'Liste_et_Détails')) }
+	scope :ordered, -> { order(:row_order) }
 
 	# evaluer [1] + [2] ou [1] * [2]
 	def evaluate(table, record_index)
@@ -45,7 +46,12 @@ class Field < ApplicationRecord
 				return 'n/a'
 			end
 		end
-		return eval(formule_to_evaluate.delete('[]'))
+		begin
+			results = eval(formule_to_evaluate.delete('[]'))
+		rescue => e
+			results = 'Formule erronée'
+		end
+		return results
 	end
 
 	# def delete_file(filename)

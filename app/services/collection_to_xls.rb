@@ -14,7 +14,7 @@ class CollectionToXls < ApplicationService
     sheet = book.create_worksheet name: 'Table'
     bold = Spreadsheet::Format.new :weight => :bold, :size => 11
 
-    headers = @table.fields.pluck(:name)
+    headers = @table.fields.ordered.pluck(:name)
 
     sheet.row(0).concat headers
     sheet.row(0).default_format = bold
