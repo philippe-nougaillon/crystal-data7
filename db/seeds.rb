@@ -32,7 +32,7 @@ Field.create!([
   {name: "Prix",        table_id: 1, datatype: "Euros", items: nil, filtre: false, obligatoire: false, row_order: 5, operation: nil, slug: "38060e19-93f9-4bab-a9fc-00dc165581c6"},
   {name: "Remarques",   table_id: 1, datatype: "Texte", items: nil, filtre: false, obligatoire: false, row_order: 6, operation: nil, slug: "9205be6b-0b54-4cb7-8e41-b6b2d2144d57"},
   {name: "Qté en stock",table_id: 1, datatype: "Nombre", items: nil, filtre: false, obligatoire: false, row_order: 7, operation: "Somme", slug: "c464126c-d848-497c-8f32-046b1bac9130"},
-  {name: "QR Code",   table_id: 1, datatype: "QRCode", items: "[Référence]", filtre: false, obligatoire: false, row_order: 8, operation: nil, slug: "3f8beb5b-fdf9-4ad0-85f3-e558a124be56"},
+  {name: "QR Code",     table_id: 1, datatype: "QRCode", items: "[Référence]", filtre: false, obligatoire: false, row_order: 8, operation: nil, slug: "3f8beb5b-fdf9-4ad0-85f3-e558a124be56"},
 
   {name: "Date",            table_id: 2, datatype: "Date", items: nil, filtre: false, obligatoire: true, row_order: 1, operation: nil, slug: "95371e31-6da2-49c1-9682-a4576bb5c663"},
   {name: "Client",          table_id: 2, datatype: "Texte", items: nil, filtre: false, obligatoire: false, row_order: 2, operation: nil, slug: "e67a87e1-be55-4cab-a5f6-6395bb7d2fe0"},
@@ -170,6 +170,10 @@ Value.create!([
 ])
 
 Filter.create!([
-  {name: "Frais de Repas > 20€", table_id: 4, user_id: 1, query: {"22"=>{"start"=>"", "end"=>""}, "23"=>"Repas", "24"=>"> 20"}, slug: "3ac28124-8562-46cb-8b93-dac890c66237"},
-  {name: "Nouvelles installations pour Carrefour", table_id: 2, user_id: 1, query: {"8"=>{"start"=>"", "end"=>""},"9"=>"Carrefour","10"=>["Installation"],"11"=>"","14"=>"","15"=>"","16"=>"","17"=>["Nouveau"]}, slug: "88ef1c15-87a6-44ad-9a81-5aa5ec1b6ebf"}
+  {name: "Frais de Repas > 20€", table_id: 4, user_id: 1, 
+    query: {"23"=>{"start"=>"", "end"=>""}, "24"=>"Repas", "25"=>"> 20"}, 
+    slug: "3ac28124-8562-46cb-8b93-dac890c66237"},
+  {name: "Nouvelles installations pour Carrefour", table_id: 2, user_id: 1, 
+    query: {"9"=>{"start"=>"", "end"=>""},"10"=>"Carrefour","11"=>["Installation"],"12"=>"","15"=>"","16"=>"","17"=>"","18"=>["Nouveau"]}, 
+    slug: "88ef1c15-87a6-44ad-9a81-5aa5ec1b6ebf"}
 ])
