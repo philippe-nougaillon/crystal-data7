@@ -170,13 +170,9 @@ class TablesController < ApplicationController
             # on passe pour ne pas écraser le fichier existant
             next
           end
-        end
-
-        if field.Formule? 
+        elsif field.Formule? 
           value = field.evaluate(table, record_index) # evalue le champ calculé
-        end      
-        
-        if field.QRCode?
+        elsif field.QRCode?
           field2 = field.table.fields.find_by(name: field.items.gsub(/\[|\]/, ''))
           raw_value = field2.values.find_by(record_index: record_index).data
           qrcode = RQRCode::QRCode.new(raw_value)
@@ -189,6 +185,8 @@ class TablesController < ApplicationController
             use_path: true,
             viewbox: "20 20"
           )
+        elsif field.Distance?
+          value = field.distance(table, record_index)
         end
 
         # test si c'est un update ou new record

@@ -15,29 +15,25 @@ export default class extends Controller {
   change() {
     var type = this.sourceTarget;
 
-    if (type.value == "Formule" ) {
+    if (['Formule', 'Liste', 'Workflow', 'Collection', 'QRCode', 'Distance'].includes(type.value)) {
       this.paramsTarget.style.display = 'block';
       this.numberTarget.style.dispaly = 'none';
-      this.paramsTarget.children[2].innerHTML = "ex: [Temps] * [Coût horaire] ou [Prix HT] * 1.2 "
-    } else if (type.value == "Liste" ) {
-      this.paramsTarget.style.display = 'block';
-      this.numberTarget.style.dispaly = 'none';
-      this.paramsTarget.children[2].innerHTML = "ex : À faire,Fait,Annulé ou Monsieur, Madame, Mademoiselle"
-    } else if (type.value == "Workflow") {
-      this.paramsTarget.style.display = 'block';
-      this.numberTarget.style.dispaly = 'none';
-      this.paramsTarget.children[2].innerHTML = "ex : Nouveau:primary, Confirmé:success, Annulé:danger, Archivé:secondary"
-    } else if (type.value == "Collection") {
-      this.paramsTarget.style.display = 'block';
-      this.numberTarget.style.dispaly = 'none';
-      this.paramsTarget.children[2].innerHTML = "ex : [Technicien.\"Nom,Prénom,Expérience\"]"
+      if (type.value == "Formule" ) {
+        this.paramsTarget.children[2].innerHTML = "ex: [Temps] * [Coût horaire] ou [Prix HT] * 1.2 "
+      } else if (type.value == "Liste" ) {
+        this.paramsTarget.children[2].innerHTML = "ex : À faire,Fait,Annulé ou Monsieur, Madame, Mademoiselle"
+      } else if (type.value == "Workflow") {
+        this.paramsTarget.children[2].innerHTML = "ex : Nouveau:primary, Confirmé:success, Annulé:danger, Archivé:secondary"
+      } else if (type.value == "Collection") {
+        this.paramsTarget.children[2].innerHTML = "ex : [Technicien.\"Nom,Prénom,Expérience\"]"
+      } else if (type.value == "QRCode") {
+        this.paramsTarget.children[2].innerHTML = "ex : [Référence]"
+      } else if (type.value == "Distance") {
+        this.paramsTarget.children[2].innerHTML = "ex : [Lieu]"
+      }
     } else if (type.value == "Nombre" || type.value == "Euros" ) {
       this.paramsTarget.style.display = 'none';
       this.numberTarget.style.display = 'block';
-    } else if (type.value == "QRCode") {
-      this.paramsTarget.style.display = 'block';
-      this.numberTarget.style.dispaly = 'none';
-      this.paramsTarget.children[2].innerHTML = "ex : [Référence]"
     } else {
       this.paramsTarget.style.display = 'none';
       this.numberTarget.style.display = 'none';

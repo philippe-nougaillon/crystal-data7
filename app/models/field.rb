@@ -16,7 +16,7 @@ class Field < ApplicationRecord
 
 	after_save :add_or_update_relation, if: Proc.new { |field| field.Collection? }
 
-	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode]
+	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance]
 	enum operation: [:Somme, :Moyenne]
 	enum visibility:[:Liste_et_Détails, :Vue_Liste, :Vue_Détails]
 
@@ -124,6 +124,32 @@ class Field < ApplicationRecord
 
 	def items_splitted
 		self.items.split(',').map{|e| e.squish}
+	end
+
+	def distance(table, record_index)
+		fields = self.items # ex: "[Temps passé] - [prix Heure]"
+		formule = self.items.gsub(/\[|\]/, '')
+		pattern = /[\-\*]+/
+		coordinates = formule.split(pattern) # ex: ["Temps passé", "prix Heure"]
+		
+		lon = []
+		lat = []
+		coordinates.each_with_index do |coordinate, index|
+			field = self.table.fields.find_by(name: coordinate)
+			value = field.values.find_by(record_index: record_index)
+			lon[index] = value.data.split(',').first.to_f
+			lat[index] = value.data.split(',').last.to_f
+		end
+
+		r = 6371000
+		phi_1 = lat[0] * (Math::PI / 180)
+		phi_2 = lat[1] * (Math::PI / 180)
+		delta_phi = (lat[1] - lat[0]) * (Math::PI / 180)
+		delta_lambda = (lon[1] - lon[0]) * (Math::PI / 180)
+
+		a = Math.sin(delta_phi/2.0)**2 + Math.cos(phi_1) * Math.cos(phi_2) * Math.sin(delta_lambda/2.0)**2
+		c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+		return (r * c / 1000.0).round(2)
 	end
 
 private
