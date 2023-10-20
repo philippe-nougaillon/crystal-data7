@@ -32,7 +32,9 @@
   </table>
 </div>
 <% if %w[show_details related_tables].include?(action_name) %>
-  <%= link_to "(+) #{table.name.humanize}", fill_path(table, relation: @relation, value: @record_index), class: 'btn btn-outline-primary mb-4', data: { turbo_frame: "_top" }  %>
+  <% if policy(table).fill? %>
+    <%= link_to "(+) #{table.name.humanize}", fill_path(table, relation: @relation, value: @record_index), class: 'btn btn-outline-primary mb-4', data: { turbo_frame: "_top" }  %>
+  <% end %>
 <% end %>
 <div class="d-flex align-items-center justify-content-end gap-2">
   <p class="flex-fill mb-0">
@@ -46,15 +48,12 @@
   </p>
   <div class="d-none d-sm-block">
     <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format XLS" do %>
-      <i class="fa fa-file-excel"></i>
       XLS
     <% end %>
     <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format CSV" do %>
-      <i class="fa fa-file-csv"></i>
       CSV
     <% end %>
     <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format PDF" do %>
-      <i class="fa fa-file-pdf"></i>
       PDF
     <% end %>
   </div>

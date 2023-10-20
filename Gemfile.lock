@@ -124,6 +124,7 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     erubi (1.12.0)
+    evil_icons (1.10.1)
     exception_notification (4.5.0)
       actionmailer (>= 5.2, < 8)
       activesupport (>= 5.2, < 8)
@@ -324,6 +325,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9)
   dotenv-rails (~> 2.8)
+  evil_icons (~> 1.10)
   exception_notification
   factory_bot_rails
   faker

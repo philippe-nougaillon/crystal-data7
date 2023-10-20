@@ -2,10 +2,12 @@
   Se déconnecter
 <% end %>
 
-<h1 class="text-secondary my-4">
-  <span class="fa fa-circle-user"></span>
-  <%= @user.name %>
-</h1>
+<div class="d-flex align-items-center text-secondary">
+  <%= evil_icon 'ei-user', size: :m %>
+  <h1 class="my-4">
+    <%= @user.name %>
+  </h1>
+</div>
 
 <div class="w-sm-50">
   <h3>Les objets partagés avec vous</h3>
