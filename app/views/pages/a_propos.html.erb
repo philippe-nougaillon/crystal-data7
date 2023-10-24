@@ -239,14 +239,14 @@
 				<ul>
 					<li>Nombre : pour saisir des valeurs numériques, avec ou sans décimales. L'option 'Opération en bas de page', calculera la moyenne ou la somme des valeurs de l'attribut.</li>
 					<li>Euros : idem 'Nombre' mais affiche la valeur avec le symbole euros (€).</li>
-					<li>Formule : champ calculé à partir de champs existants ou d'une formule en langage Ruby, ex: '[Temps Passé] * [Coût horaire]' ou '[Prix HT] * 1.2'
+					<li>Formule : champ calculé à partir de champs existants ou d'une formule en langage Ruby. (Ex: <i>[Temps Passé] * [Coût horaire]</i> OU <i>[Prix HT] * 1.2</i>)
 				</ul>
 			</li>
 			<li><b>Date</b> : une date choisie dans un calendrier.</li>
 			<li><b>Oui/Non</b> : permet de choisir entre Oui ou Non ou aucun des deux.</li>
 			<li><b>Liste</b> : pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.
 			</li>
-			<li><b>Collection</b> : pour afficher les objets d'une autre collection. ex: '[Technicien."Nom,Prénom,Expérience"]'</li>
+			<li><b>Collection</b> : pour afficher les objets d'une autre collection.(Ex: <i>[Technicien."Nom,Prénom,Expérience"]</i>)</li>
 			<li>
 				<b>Fichier</b> :
 				<ul>
@@ -258,13 +258,14 @@
 			<li><b>URL</b> : permet d'ajouter un lien vers une ressource internet (interne ou externe).</li>
 			<li><b>Couleur</b> : affiche une couleur choisie dans une palette.</li>
 			<li><b>GPS</b> :
-				<ol>
+				<ul>
 					<li>Capture la localisation de l'utilisateur, s'il le demande en appuyant sur le bouton <span class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-location-crosshairs"></i></li></span>
-					<li>Affiche la location sur une carte, basée sur les coordonnées indiquées au format "LNG, LAT". (Ex: '48.85879287621989, 2.294761243572842' pour pointer sur la tour Eiffel).</li>
-				</ol>
+					<li>Affiche la location sur une carte, basée sur les coordonnées indiquées au format "LNG, LAT". (Ex: <i>48.85879287621989, 2.294761243572842</i> pour pointer sur la tour Eiffel).</li>
+					<li>Distance : Permet de calculer la distance à vol d'oiseau entre deux positions GPS. (Ex: <i>[Chantier(GPS)] - [Maison(GPS)]</i> OU <i>[Chantier(GPS)] - 48.85879287621989, 2.294761243572842</i>)</li>
+				</ul>
 			</li>
 			<li><b>Utilisateur</b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table</li>
-			<li><b>Workflow</b> : contient l'état d'un objet associé à une couleur. ex: 'Nouveau:primary, Confirmé:success, Annulé:danger, Archivé:secondary'.
+			<li><b>Workflow</b> : contient l'état d'un objet associé à une couleur. (Ex: <i>Nouveau:primary, Confirmé:success, Annulé:danger, Archivé:secondary</i>)
 				<ul><li>
 					Couleurs disponibles:
 					<span class="badge bg-primary">Primary</span>
@@ -278,7 +279,7 @@
 				</li></ul>
 			</li>
 			<li>
-				<b>QR Code</b> : pour générer un QR Code à partir d'un autre attribut. Ex: [N°deSérie],[Reference],[url site web]
+				<b>QR Code</b> : pour générer un QR Code à partir d'un autre attribut. (Ex: <i>[N°deSérie],[Reference],[url site web]</i>)
 			</li>
 			<li>
 				<b>Vidéo YouTube</b> : affiche l'aperçu d'une vidéo YouTube.  

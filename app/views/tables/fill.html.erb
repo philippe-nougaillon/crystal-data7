@@ -81,7 +81,7 @@
           <%= select_tag field_name, options_for_select(@table.users.pluck(:name), field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Vidéo_YouTube' %>
           <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
-        <% when 'QRCode'%>
+        <% when 'QRCode', 'Distance' %>
           <%= text_field_tag field_name, field_value, class: 'form-control form-control-sm w-100', disabled: true %>
         <% end %>
       </fieldset>

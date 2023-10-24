@@ -136,20 +136,36 @@ class Field < ApplicationRecord
 		lat = []
 		coordinates.each_with_index do |coordinate, index|
 			field = self.table.fields.find_by(name: coordinate)
-			value = field.values.find_by(record_index: record_index)
-			lon[index] = value.data.split(',').first.to_f
-			lat[index] = value.data.split(',').last.to_f
+			if field
+				value = field.values.find_by(record_index: record_index)
+				lon[index+1] = value.data.split(',').first.to_f
+				lat[index+1] = value.data.split(',').last.to_f
+			else
+				lon[index+1] = coordinate.split(',').first.to_f
+				lat[index+1] = coordinate.split(',').last.to_f
+			end
 		end
 
-		r = 6371000
-		phi_1 = lat[0] * (Math::PI / 180)
-		phi_2 = lat[1] * (Math::PI / 180)
-		delta_phi = (lat[1] - lat[0]) * (Math::PI / 180)
-		delta_lambda = (lon[1] - lon[0]) * (Math::PI / 180)
+		r = 6371
+		phi_1 = lat[1] * (Math::PI / 180)
+		phi_2 = lat[2] * (Math::PI / 180)
+		delta_phi = (lat[2] - lat[1]) * (Math::PI / 180)
+		delta_lambda = (lon[2] - lon[1]) * (Math::PI / 180)
 
 		a = Math.sin(delta_phi/2.0)**2 + Math.cos(phi_1) * Math.cos(phi_2) * Math.sin(delta_lambda/2.0)**2
 		c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-		return (r * c / 1000.0).round(2)
+		return (r * c).to_i
+
+		# radlat1 = Math::PI * lat[1]/180;
+  	# radlat2 = Math::PI * lat[2]/180;
+    # theta = lon[1]-lon[2];
+    # radtheta = Math::PI * theta/180;
+    # dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta)
+		# dist = Math.acos(dist);
+		# dist = dist * 180/Math::PI;
+		# dist = dist * 60 * 1.1515;
+    # dist = dist * 1.609344
+		# return dist
 	end
 
 private
