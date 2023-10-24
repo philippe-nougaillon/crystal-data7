@@ -16,7 +16,7 @@ class Field < ApplicationRecord
 
 	after_save :add_or_update_relation, if: Proc.new { |field| field.Collection? }
 
-	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance]
+	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID]
 	enum operation: [:Somme, :Moyenne]
 	enum visibility:[:Liste_et_Détails, :Vue_Liste, :Vue_Détails]
 
@@ -124,6 +124,21 @@ class Field < ApplicationRecord
 
 	def items_splitted
 		self.items.split(',').map{|e| e.squish}
+	end
+
+	def generate_qrcode(record_index)
+		source_field = self.table.fields.find_by(name: self.items.gsub(/\[|\]/, ''))
+		source_data = source_field.values.find_by(record_index: record_index).data
+		qrcode = RQRCode::QRCode.new(source_data)
+
+		qrcode.as_svg(
+			color: "000",
+			shape_rendering: "crispEdges",
+			module_size: 11,
+			standalone: true,
+			use_path: true,
+			viewbox: "20 20"
+		)
 	end
 
 	def distance(table, record_index)

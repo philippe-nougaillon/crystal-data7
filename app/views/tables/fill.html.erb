@@ -83,6 +83,8 @@
           <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'QRCode', 'Distance' %>
           <%= text_field_tag field_name, field_value, class: 'form-control form-control-sm w-100', disabled: true %>
+        <% when 'UUID' %>
+          <%= text_field_tag field_name, field_value || SecureRandom.uuid, class: 'form-control form-control-sm w-100' %>
         <% end %>
       </fieldset>
     <% end %>

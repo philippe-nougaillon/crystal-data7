@@ -173,18 +173,7 @@ class TablesController < ApplicationController
         elsif field.Formule? 
           value = field.evaluate(table, record_index) # evalue le champ calculé
         elsif field.QRCode?
-          field2 = field.table.fields.find_by(name: field.items.gsub(/\[|\]/, ''))
-          raw_value = field2.values.find_by(record_index: record_index).data
-          qrcode = RQRCode::QRCode.new(raw_value)
-
-          value = qrcode.as_svg(
-            color: "000",
-            shape_rendering: "crispEdges",
-            module_size: 11,
-            standalone: true,
-            use_path: true,
-            viewbox: "20 20"
-          )
+          value = field.generate_qrcode(record_index)
         elsif field.Distance?
           value = field.distance(table, record_index)
         end
