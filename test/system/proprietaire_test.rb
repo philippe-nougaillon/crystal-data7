@@ -3,35 +3,6 @@ require "application_system_test_case"
 class ProprietaireFlowTest < ApplicationSystemTestCase
 
   setup do
-    @manufacturer_table = create(:table, name: "Manufacturer", record_index: 3)
-    manufacturer_propriétaire_tables_user = create(:tables_user, role: "Propriétaire", table: @manufacturer_table)
-    manufacturer_lecteur_tables_user = create(:tables_user, role: "Lecteur", table: @manufacturer_table)
-    @user = manufacturer_propriétaire_tables_user.user
-    @user_lecteur = manufacturer_lecteur_tables_user.user
-
-    manufacturer_name_field = create(:field, table: @manufacturer_table, row_order: 1, datatype: "Texte", name: "Name")
-    manufacturer_build_number_field = create(:field, table: @manufacturer_table, row_order: 2, datatype: "Liste", name: "Build Number", items: "[1,2,3,4,5]", filtre: true)
-
-    manufacturer_name_value_1 = create(:value, field: manufacturer_name_field, record_index: 1, data: Faker::Device.manufacturer)
-    manufacturer_name_value_2 = create(:value, field: manufacturer_name_field, record_index: 2, data: Faker::Device.manufacturer)
-    manufacturer_name_value_3 = create(:value, field: manufacturer_name_field, record_index: 3, data: Faker::Device.manufacturer)
-    manufacturer_build_number_value_1 = create(:value, field: manufacturer_build_number_field, record_index: 1, data: 1)
-
-    @device_table = create(:table, name: "device", record_index: 3)
-    devices_users_table = create(:tables_user, role: "Propriétaire", table: @device_table, user: manufacturer_propriétaire_tables_user.user)
-
-    device_model_name_field = create(:field, table: @device_table, datatype: "Texte", row_order: 1, name: "Model name")
-    device_release_date_field = create(:field, table: @device_table, datatype: "Date", row_order: 2, name: "Release Date", filtre: true)
-    device_manufacturer_field = create(:field, table: @device_table, datatype: "Liste", row_order: 3, name: "Manufacturers", items: "[Manufacturer.Name]")
-
-    device_model_name_value_1 = create(:value, field: device_model_name_field, record_index: 1, data: Faker::Device.model_name)
-    device_model_name_value_2 = create(:value, field: device_model_name_field, record_index: 2, data: Faker::Device.model_name)
-    @device_model_name_value_3 = create(:value, field: device_model_name_field, record_index: 3, data: Faker::Device.model_name)
-    device_release_date_value_1 = create(:value, field: device_release_date_field, record_index: 1, data: '2023-12-25' )
-    device_release_date_value_2 = create(:value, field: device_release_date_field, record_index: 2, data: '2023-12-12' )
-    @device_release_date_value_3 = create(:value, field: device_release_date_field, record_index: 3, data: '2023-10-02')
-    device_manufacturer_value_1 = create(:value, field: device_manufacturer_field, record_index: 1, data: manufacturer_name_value_1.data)
-
     login_propriétaire(@user)
   end
   
@@ -373,6 +344,21 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     assert_selector('[data-testid="Supprimer ligne n°1"]', visible: :all)
   end
 
+  test "créer un record à partir d'une relation" do
+    visit tables_url
+    click_on @manufacturer_table.name.upcase
+    link = find("[data-testid='Voir les détails de #{@device_table.name} à la ligne n°#{@device_model_name_value_2.record_index}']")
+    link.click
+    sleep(1)
+    assert_text /Affichage de 1/
+    click_on "(+) #{@manufacturer_table.name.humanize}"
+    assert_text "#{@device_model_name_value_2.data}, #{@device_release_date_value_2.data}"
+    click_on "Enregistrer"
+    assert_text "Données ajoutées avec succès :)"
+    assert_text /Affichage de 2/
+  end
+
+  # Filtres
   test 'filtrer les valeurs dans une table' do
     visit tables_url
     click_on @manufacturer_table.name.upcase

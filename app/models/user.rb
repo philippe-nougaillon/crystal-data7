@@ -22,6 +22,10 @@ class User < ApplicationRecord
     end
   end
 
+  def compte_démo?
+    self.id == 1
+  end
+
   private
 
   def new_user_notification

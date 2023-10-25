@@ -13,17 +13,18 @@ FactoryBot.define do
     slug { SecureRandom.hex(8) }
   end
 
-  factory :value do
-    field
-    record_index { 1 }
-    data { SecureRandom.hex(5) }
-  end
-
   factory :user do
     name { Faker::Name::first_name }
     email { "#{SecureRandom.hex(4)}@example.org" }
     password { SecureRandom.hex(8) }
     password_confirmation { password }
+  end
+
+  factory :value do
+    field
+    record_index { 1 }
+    data { SecureRandom.hex(5) }
+    user
   end
 
   factory :tables_user do

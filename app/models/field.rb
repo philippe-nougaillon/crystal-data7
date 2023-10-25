@@ -16,7 +16,7 @@ class Field < ApplicationRecord
 
 	after_save :add_or_update_relation, if: Proc.new { |field| field.Collection? }
 
-	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode]
+	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID]
 	enum operation: [:Somme, :Moyenne]
 	enum visibility:[:Liste_et_Détails, :Vue_Liste, :Vue_Détails]
 
@@ -24,6 +24,7 @@ class Field < ApplicationRecord
 	scope :sommes,  	-> { where(sum: true) }
 	scope :listable, 	-> { where(visibility: 'Vue_Liste').or(where(visibility: 'Liste_et_Détails')) }
 	scope :détaillable, -> { where(visibility: 'Vue_Détails').or(where(visibility: 'Liste_et_Détails')) }
+	scope :ordered, -> { order(:row_order) }
 
 	# evaluer [1] + [2] ou [1] * [2]
 	def evaluate(table, record_index)
@@ -45,7 +46,12 @@ class Field < ApplicationRecord
 				return 'n/a'
 			end
 		end
-		return eval(formule_to_evaluate.delete!('[]'))
+		begin
+			results = eval(formule_to_evaluate.delete('[]'))
+		rescue => e
+			results = 'Formule erronée'
+		end
+		return results
 	end
 
 	# def delete_file(filename)
@@ -118,6 +124,63 @@ class Field < ApplicationRecord
 
 	def items_splitted
 		self.items.split(',').map{|e| e.squish}
+	end
+
+	def generate_qrcode(record_index)
+		source_field = self.table.fields.find_by(name: self.items.gsub(/\[|\]/, ''))
+		source_data = source_field.values.find_by(record_index: record_index).data
+		qrcode = RQRCode::QRCode.new(source_data)
+
+		qrcode.as_svg(
+			color: "000",
+			shape_rendering: "crispEdges",
+			module_size: 11,
+			standalone: true,
+			use_path: true,
+			viewbox: "20 20"
+		)
+	end
+
+	def distance(table, record_index)
+		fields = self.items # ex: "[Temps passé] - [prix Heure]"
+		formule = self.items.gsub(/\[|\]/, '')
+		pattern = /[\-\*]+/
+		coordinates = formule.split(pattern) # ex: ["Temps passé", "prix Heure"]
+		
+		lon = []
+		lat = []
+		coordinates.each_with_index do |coordinate, index|
+			field = self.table.fields.find_by(name: coordinate)
+			if field
+				value = field.values.find_by(record_index: record_index)
+				lon[index+1] = value.data.split(',').first.to_f
+				lat[index+1] = value.data.split(',').last.to_f
+			else
+				lon[index+1] = coordinate.split(',').first.to_f
+				lat[index+1] = coordinate.split(',').last.to_f
+			end
+		end
+
+		r = 6371
+		phi_1 = lat[1] * (Math::PI / 180)
+		phi_2 = lat[2] * (Math::PI / 180)
+		delta_phi = (lat[2] - lat[1]) * (Math::PI / 180)
+		delta_lambda = (lon[2] - lon[1]) * (Math::PI / 180)
+
+		a = Math.sin(delta_phi/2.0)**2 + Math.cos(phi_1) * Math.cos(phi_2) * Math.sin(delta_lambda/2.0)**2
+		c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+		return (r * c).to_i
+
+		# radlat1 = Math::PI * lat[1]/180;
+  	# radlat2 = Math::PI * lat[2]/180;
+    # theta = lon[1]-lon[2];
+    # radtheta = Math::PI * theta/180;
+    # dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta)
+		# dist = Math.acos(dist);
+		# dist = dist * 180/Math::PI;
+		# dist = dist * 60 * 1.1515;
+    # dist = dist * 1.609344
+		# return dist
 	end
 
 private

@@ -17,25 +17,21 @@
         <div class="d-flex justify-content-end gap-2">
           <% if policy(@table).show_attrs? %>
               <%= link_to show_attrs_path(id:@table), class:'nav-link', title:"Modifier les attributs de l'Objet '#{@table.name}'" do %> 
-              <i class="fa fa-gears"></i>
               Modifier Attributs
               <% end %>
           <% end %>
           <% if policy(@table).edit? %>
             <%= link_to edit_table_path(id:@table), class:'nav-link', title:"Modifier l'Objet '#{@table.name}'" do %> 
-              <i class="fa fa-cube"></i>
               Modifier Objet
             <% end %>
           <% end %>
           <% if policy(@table).partages? %>
             <%= link_to partages_path(@table), class:'nav-link', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" do %>
-              <i class="fa fa-share-nodes"></i>
               Partages
             <% end %>
           <% end %>
           <% if policy(@table).logs? %>
             <%= link_to logs_path(id:@table), class:'nav-link', title:"Historique des modifications de l'Objet '#{@table.name}'" do %>
-              <i class="fa fa-search"></i>
               Audit Trail
             <% end %>
           <% end %>
@@ -95,7 +91,7 @@
 <% else %>
   <% unless params[:attrs] %>
     Cet objet ne contient aucun attribut pour l'instant<br><br>
-    <%= link_to show_attrs_path(id: @table.id), class: 'btn btn-outline-primary' do %>
+    <%= link_to show_attrs_path(id: @table.slug), class: 'btn btn-outline-primary' do %>
       Ajouter un attribut
     <% end %> 
   <% end %>

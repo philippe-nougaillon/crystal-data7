@@ -24,7 +24,7 @@ class ExportPdf
     font "Courier"
     font_size 8
 
-    data_table = [table.fields.pluck(:name)]
+    data_table = [table.fields.ordered.pluck(:name)]
 
     index = 1
     records.each do | record_index |

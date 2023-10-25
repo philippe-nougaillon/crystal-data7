@@ -1,6 +1,6 @@
-<div class="my-4">
-  <h1 class="text-success">
-    <span class="fa fa-filter"></span>
+<div class="my-4 d-flex align-items-center text-success gap-2">
+  <%= evil_icon 'ei-search', size: :m %>
+  <h1 class="mb-0 d-inline">
     <%= @filter.name %>
     [<%= @filter.table.name.pluralize %>]
   </h1>
@@ -8,7 +8,7 @@
 
 <%= form_tag query_filter_path, method: :get do %>
   <div class="row row-cols-sm-2 row-cols-lg-3 gap-3">
-  <% @filter.table.fields.each_with_index do |field, index| %>
+  <% @filter.table.fields.ordered.each_with_index do |field, index| %>
     <div class="row">
       <div class="col">
         <span class="fw-bold"><%= field.name %></span>

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
-  # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -24,7 +24,7 @@ private
 
   def set_layout_variables
     @sitename ||= "CrystalData"
-    @sitename.concat(" v0.11 ")
+    @sitename.concat(" v0.12 ")
   end
 
   def prepare_exception_notifier
@@ -34,7 +34,12 @@ private
   end
 
   def user_not_authorized
-    flash[:alert] = "Vous n'êtes pas autorisé à effectuer cette action."
+    if current_user.compte_démo?
+      msg = "Vous n'êtes pas autorisé à effectuer cette action avec le compte démonstration. Veuillez créer un compte pour avoir toutes les fonctionnalités."
+    else
+      msg = "Vous n'êtes pas autorisé à effectuer cette action."
+    end
+    flash[:alert] = msg
     redirect_to(request.referrer || authenticated_root_path)
   end
 

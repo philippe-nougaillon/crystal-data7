@@ -18,11 +18,17 @@ class TablesController < ApplicationController
     @sum = Hash.new(0)
     @filters = {}
     @filter_results = {}
+    @values = @table.values
+
+    # Limite les enregistrement aux collecteurs
+    if @table.collecteur?(current_user)
+      @values = @values.where(user_id: current_user.id)
+    end
 
     # recherche les lignes 
     unless params.permit(:search).blank?
       search = "%#{ params[:search].strip }%"
-      @values = @table.values.where("data ILIKE ?", search)
+      @values = @values.where("data ILIKE ?", search)
       # Est-ce qu'il y a des Tables liées ?
       @table.fields.Collection.each do | field_table |
         # Rchercher dans les values de ce champ lié si valeurs recherchées
@@ -31,9 +37,8 @@ class TablesController < ApplicationController
         # Ajouter les clés trouvées
         @values = @values + field_table.values.where(data: results.keys)
       end
-    else
-      @values = @table.values
     end
+    
     @filters[:search] = search
     @filter_results[:search] = @values.pluck(:record_index).uniq
 
@@ -165,25 +170,12 @@ class TablesController < ApplicationController
             # on passe pour ne pas écraser le fichier existant
             next
           end
-        end
-
-        if field.Formule? 
+        elsif field.Formule? 
           value = field.evaluate(table, record_index) # evalue le champ calculé
-        end      
-        
-        if field.QRCode?
-          field2 = field.table.fields.find_by(name: field.items.gsub(/\[|\]/, ''))
-          raw_value = field2.values.find_by(record_index: record_index).data
-          qrcode = RQRCode::QRCode.new(raw_value)
-
-          value = qrcode.as_svg(
-            color: "000",
-            shape_rendering: "crispEdges",
-            module_size: 11,
-            standalone: true,
-            use_path: true,
-            viewbox: "20 20"
-          )
+        elsif field.QRCode?
+          value = field.generate_qrcode(record_index)
+        elsif field.Distance?
+          value = field.distance(table, record_index)
         end
 
         # test si c'est un update ou new record
@@ -203,6 +195,7 @@ class TablesController < ApplicationController
                             record_index: record_index, 
                             data: value, 
                             old_value: old_value.data,
+                            user_id: old_value.user_id,
                             created_at: created_at_date)
             end
           end
@@ -210,7 +203,8 @@ class TablesController < ApplicationController
           # enregistrer les nouvelles données
           Value.create(field_id: field.id, 
                       record_index: record_index, 
-                      data: value, 
+                      data: value,
+                      user_id: current_user.id,
                       created_at: created_at_date)
 
         end
@@ -220,8 +214,13 @@ class TablesController < ApplicationController
       if not update and table.notification
         UserMailer.notification(table, notif_items).deliver_later
       end
-
-      redirect_to table, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
+      if params[:relation].present? && params[:value].present?
+        table = Table.find(Relation.find(params[:relation]).relation_with_id)
+        url = details_path(table.slug, record_index: params[:value])
+        redirect_to url, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
+      else
+        redirect_to table, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
+      end
     else
       redirect_to table, alert: "Aucune donnée enregistrée"
     end
@@ -285,14 +284,8 @@ class TablesController < ApplicationController
   # DELETE /tables/1.json
   def destroy
     # supprime les champs
-    @table.fields.destroy_all
+    @table.fields.delete_all
 
-    # ????
-    # # supprime les fichiers liés
-    # @table.values.each do | value |
-    #     value.field.delete_file(value.data) if value.field and value.field.Fichier? and value.data
-    #     value.destroy
-    #   end
     @table.destroy
 
     respond_to do |format|

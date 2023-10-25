@@ -10,7 +10,7 @@ class FilterPolicy < ApplicationPolicy
   end
 
   def new?
-    user
+    user && !(user.compte_démo?)
   end
 
   def create?
@@ -26,7 +26,7 @@ class FilterPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.user_id == user.id
+    record.user_id == user.id && !(user.compte_démo?)
   end
 
   def query?

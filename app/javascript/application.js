@@ -4,3 +4,5 @@ import "./controllers"
 import * as bootstrap from "bootstrap"
 import "trix"
 import "@rails/actiontext"
+
+Turbo.session.drive = false

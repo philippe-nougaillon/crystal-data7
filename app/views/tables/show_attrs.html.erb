@@ -1,12 +1,12 @@
-<div class="my-4">
-  <h1 class="text-secondary">
-    <span class="fa fa-gears"></span>
-    Attributs de l'Objet '<%= @table.name.humanize %>'
-  </h1>
+<div class="mt-4 d-flex align-items-center text-secondary gap-2">
+	<%= evil_icon 'ei-gear', size: :m %>
+	<h1 class="mb-0 d-inline">
+		Attributs de l'Objet '<%= @table.name.humanize %>'
+	</h1>
+</div>
 
-  <div class="float-end mt-3">
-    <%= link_to "Voir la Collection", @field.table, title: "Voir la Collection d'Objets" %> 
-  </div>
+<div class="float-end">
+	<%= link_to "Voir la Collection", @field.table, title: "Voir la Collection d'Objets" %> 
 </div>
 
 <!--
@@ -29,7 +29,7 @@
 					<th></th>
 				</tr>
 			</thead>
-			<% @table.fields.each_with_index do | field, index | %>
+			<% @table.fields.ordered.each_with_index do | field, index | %>
 				<%= render partial:'fields/field', locals: {field:field, i:index} %>
 			<% end %>
 		</table>

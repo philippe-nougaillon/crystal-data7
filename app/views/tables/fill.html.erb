@@ -1,13 +1,12 @@
 <h1 class="text-primary mb-4">
   <%= "#{params[:record_index] ? 'Modification' : 'Ajout'} '#{@table.name.humanize}'" %>
 </h1>
-
-<%= form_tag fill_do_path, multipart: true do %>
+<%= form_tag fill_do_path(relation: params[:relation], value: params[:value]), multipart: true do %>
 
   <%= hidden_field_tag :table_id, @table.id %>
 
   <div class="w-md-50">
-    <% @table.fields.each_with_index do |field, index| %>
+    <% @table.fields.ordered.each_with_index do |field, index| %>
       <% field_name = "[data][#{@record_index}][#{field.id}]" %> 
       <% value = field.values.find_by(record_index: @record_index) %> 
       <% field_value = value.data if value %>
@@ -20,26 +19,26 @@
 
         <% case field.datatype 
           when 'Texte' %>
-          <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', 'data-testid': field.name %>
+          <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Nombre' %>
-          <%= number_field_tag field_name, field_value, class: 'form-control w-100', 'data-testid': field.name %>
+          <%= number_field_tag field_name, field_value, class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Euros' %>
-          <%= number_field_tag field_name, field_value, step: 'any', class: 'form-control w-100', placeholder: "€", 'data-testid': field.name %>
+          <%= number_field_tag field_name, field_value, step: 'any', class: 'form-control w-100', placeholder: "€", required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Date' %>
-          <%= text_field_tag field_name, field_value, class: 'form-control w-100', type: 'date', 'data-testid': field.name %>
+          <%= text_field_tag field_name, field_value, class: 'form-control w-100', type: 'date', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Oui_non?' %>
           <br>
           <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui'), 'data-testid': field.name %> Oui 
           <%= radio_button_tag field_name, 'Non', (field_value == 'Non'), 'data-testid': field.name %> Non
         <% when 'Liste' %>
-          <%= select_tag field_name, options_for_select(field.items_splitted, field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %>
+          <%= select_tag field_name, options_for_select(field.items_splitted, field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Formule' %>
           <% if params[:record_index].present? %>
             <% field_value = field.evaluate(@table, @record_index) %>
           <% else %>
             <% field_value = 'n/a' %>
           <% end %>
-          <%= text_field_tag field_name, field_value, disabled: true, class: 'form-control w-100', 'data-testid': field.name %>
+          <%= text_field_tag field_name, field_value, disabled: true, class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Signature' %>
           <div class="sig" disabled=true>
             <canvas class="pad" width="400" height="53"></canvas>
@@ -48,39 +47,44 @@
         <% when 'Texte_long' %>
           <%= text_area_tag field_name, field_value, autofocus: (index == 0),col: 10, row: 10, class: 'form-control w-100', 'data-testid': field.name %>
         <% when 'Texte_riche' %>
-          <%= rich_text_area_tag field_name, field_value %>
+          <%= rich_text_area_tag field_name, field_value, required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Fichier', 'Image', 'PDF' %>
           <% if field_value %>
-            <%= link_to Blob.find(field_value).file_attachment.filename, url_for(Blob.find(field_value).file), class:'w-100', 'data-testid': field.name %>
+            <%= link_to Blob.find(field_value).file_attachment.filename, url_for(Blob.find(field_value).file), class:'w-100', required: field.obligatoire, 'data-testid': field.name %>
           <% end %>
           <br>
-          <%= file_field_tag field_name, class:'w-100', 'data-testid': field.name %>
+          <%= file_field_tag field_name, class:'w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Workflow' %>
           <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
-          <%= select_tag field_name, options_for_select(items.keys, field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %>
+          <%= select_tag field_name, options_for_select(items.keys, field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'URL' %>
-          <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', 'data-testid': field.name %>
+          <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Couleur' %>
           <br>
-          <%= color_field_tag field_name, field_value, class: 'form-control w-100', 'data-testid': field.name %>
+          <%= color_field_tag field_name, field_value, class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'GPS' %>
           <div data-controller="geolocation" class="input-group">
-            <%= text_field_tag field_name, field_value, class: 'form-control form-control-sm', 'data-geolocation-target': 'gpstextfield', 'data-testid': field.name %>
+            <%= text_field_tag field_name, field_value, class: 'form-control form-control-sm', 'data-geolocation-target': 'gpstextfield', required: field.obligatoire, 'data-testid': field.name %>
             <button type="button" data-action="click->geolocation#search" class="btn btn-outline-primary" title="Position actuelle">
-              <i class="fa-solid fa-location-crosshairs"></i>
+              <%= evil_icon 'ei-location', class:'mt-1' %>
             </button>
           </div>
         <% when 'Collection' %>
           <%# Checker si la liste vient d'une autre table %>
           <% if field.is_valid_table_params %>
-            <%= select_tag field_name, options_for_select(field.populate_linked_table.invert, field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %> 
+            <% if params[:relation].present? && Relation.find(params[:relation]).field_id == field.id %>
+              <% field_value = params[:value] %>
+            <% end %>
+            <%= select_tag field_name, options_for_select(field.populate_linked_table.invert, field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %> 
           <% end %>
         <% when 'Utilisateur' %>
-          <%= select_tag field_name, options_for_select(@table.users.pluck(:name), field_value), include_blank: true, class: 'form-select w-100', 'data-testid': field.name %>
+          <%= select_tag field_name, options_for_select(@table.users.pluck(:name), field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Vidéo_YouTube' %>
-          <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', 'data-testid': field.name %>
-        <% when 'QRCode'%>
+          <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
+        <% when 'QRCode', 'Distance' %>
           <%= text_field_tag field_name, field_value, class: 'form-control form-control-sm w-100', disabled: true %>
+        <% when 'UUID' %>
+          <%= text_field_tag field_name, field_value || SecureRandom.uuid, class: 'form-control form-control-sm w-100' %>
         <% end %>
       </fieldset>
     <% end %>
@@ -88,6 +92,6 @@
 
   <div class="d-flex flex-wrap align-items-center gap-2 mt-4">
     <%= submit_tag "Enregistrer", class: 'btn btn-outline-primary'%>
-    <%= link_to "Annuler", @table %>
+    <%= link_to "Annuler", request.referer %>
   </div>
 <% end %>

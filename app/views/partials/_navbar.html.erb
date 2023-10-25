@@ -1,31 +1,31 @@
-<nav class="nav d-none d-lg-flex flex-column bg-white shadow gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100 align-items-center">
+<nav class="nav d-none d-lg-flex flex-column shadow gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100 align-items-center" data-turbo="false">
   <div class="flex-fill d-flex flex-column gap-5 mt-4">
     <li class="nav-item">
       <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Ma collection favorite/Page d'accueil" do %>
-        <i class="fa-solid fa-star text-primary"></i>
+        <%= evil_icon 'ei-star', size: :m, class: 'text-primary' %>
       <% end %>
     </li>
     <li class="nav-item">
       <%= link_to tables_path, title: "Liste des Objets" do %>
-        <i class="fa-solid fa-cubes text-info"></i>
+        <%= evil_icon 'ei-archive', size: :m, class: 'text-info' %>
       <% end %>
     </li>
     <li class="nav-item">
       <%= link_to filters_path, title: "Liste des Filtres" do %>
-        <i class="fa-solid fa-filter text-success"></i>
+        <%= evil_icon 'ei-search', size: :m, class: 'text-success' %>
       <% end %>
     </li>
   </div>
   <% if user_signed_in? %>
     <li class="nav-item">
       <%= link_to current_user, title: "Profil utilisateur" do %>
-        <i class="fa-solid fa-circle-user fa-2xl text-black-50"></i>
+        <%= evil_icon 'ei-user', size: :m, class: 'text-black-50' %>
       <% end %>
     </li>
   <% end %>
   <li class="nav-item">
     <%= link_to a_propos_path, title: "À Propos de CrystalData" do %>
-      <i class="fa-solid fa-circle-question text-black-50"></i>
+      <%= evil_icon 'ei-question', size: :m, class: 'text-black-50' %>
     <% end %>
   </li>
 </nav>
@@ -56,20 +56,20 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'nav-link text-primary' do %>
-            <i class="fa-solid fa-star"></i>
+          <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'nav-link text-primary d-flex align-items-center gap-1' do %>
+            <%= evil_icon 'ei-star' %>
             <%= user_signed_in? ? 'Ma collection favorite' : 'Accueil' %>
           <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to tables_path, title: "Liste des Objets", class: 'nav-link text-info' do %>
-            <i class="fa-solid fa-cubes"></i>
-            Mes Objets
+          <%= link_to tables_path, title: "Liste des Objets", class: 'nav-link text-info d-flex align-items-center gap-1' do %>
+            <%= evil_icon 'ei-archive' %>
+            Objets
           <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to filters_path, title: "Liste des filtres", class: 'nav-link text-success' do %>
-            <i class="fa-solid fa-filter"></i>
+          <%= link_to filters_path, title: "Liste des filtres", class: 'nav-link text-success d-flex align-items-center gap-1' do %>
+            <%= evil_icon 'ei-search' %>
             Mes Filtres
           <% end %>
         </li>
@@ -95,15 +95,15 @@
           </li>
         <% end %>
         <li class="nav-item">
-          <%= link_to a_propos_path, title: "À Propos de CrystalData", class: 'nav-link text-black-50' do %>
-            <i class="fa-solid fa-circle-question"></i>
+          <%= link_to a_propos_path, title: "À Propos de CrystalData", class: 'nav-link text-black-50 d-flex align-items-center gap-1' do %>
+            <%= evil_icon 'ei-question' %>
             À Propos
           <% end %>
         </li>
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to current_user, title: "Profil utilisateur", class: 'nav-link text-black-50' do %>
-              <i class="fa-solid fa-circle-user"></i>
+            <%= link_to current_user, title: "Profil utilisateur", class: 'nav-link text-black-50 d-flex align-items-center gap-1' do %>
+              <%= evil_icon 'ei-user' %>
               Profil
             <% end %>
           </li>

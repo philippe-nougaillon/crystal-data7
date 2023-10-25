@@ -26,7 +26,7 @@ class ImportTableJob < ActiveJob::Base
 			@record_index += 1
 			row.each_with_index do | key, index |
 				#field = @new_table.fields.find_by(name:key.first)
-				@new_table.values.create(field_id:@fields[index].id, data:key.last, record_index:@record_index)
+				@new_table.values.create(field_id:@fields[index].id, data:key.last, record_index:@record_index, user_id: current_user.id)
 			end
 		  	@lignes += 1
 		end
