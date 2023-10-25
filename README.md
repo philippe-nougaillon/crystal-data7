@@ -126,6 +126,6 @@ Un <b>éditeur</b> peut voir et modifier toutes les données.
 
 CrystalData a été développé par [Studio 'Philnoug & Partners'](https://www.philnoug.com)
 
-### Besoin d'une fonctionnalité sur mesure ? Nous vous la développons !
+### Besoin d'une nouvelle fonctionnalité ou d'une application sur mesure ? Nous vous la développons !
 
 Pour en savoir plus, [contactez-nous](https://www.philnoug.com/contact)
