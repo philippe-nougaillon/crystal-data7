@@ -18,10 +18,10 @@
 		dans des feuilles Excel, à un système de type plateforme où les données sont centralisées et 
 		partagées entre les services depuis une source unique de confiance (<b>Single Source Of Truth</b>). 
 		<br><br>
-		A force de mettre en place ce type de solution tout au cours de ma carrière, j'ai rapidement remarqué 
-		que même si les clients domaine d'ativité de mes clients ne se resemnlait pas du tout 
-		(Loueur, Social, Telcos, Pharma) des motifs se répétaient et que chaque nouveau projet 
-		se déroulait selon un process de création à peu près toujours le même :
+		A force de mettre en place ce type de solution, force était de constater  
+		que même si les clients et les domaines d'ativités de mes clients ne se ressemblaient pas du tout 
+		(Loueur, Social, Telcos, Pharma), des motifs se répétaient et chaque nouveau projet 
+		se déroulait selon un process de création à peu près identique :
 	</p>
 
 	<div class="row my-5 w-sm-75">
@@ -69,7 +69,7 @@
 
 	<p class="w-sm-75">
 		C'est pourquoi j'ai commencé le développement d'un outil NO-CODE et open-source, il y a bientôt 10 ans,  
-		dans le but de couvrir les 5 fonctions de base d'une plateforme d'information ouverte.
+		dans le but de couvrir les fonctions de base d'une plateforme d'information ouverte.
 		<br><br>
 		Fort d'une expérience de plus de 30 ans sur les SGDB les plus intéressants de leurs époques 
 		(SuperBase 64, Yes You Can, SuperDB, FoxPro, dBase 3/4, Paradox 3/4, Access, Delphi, VB4/5/6/SQL Server,
@@ -77,9 +77,9 @@
 		le pas vers le décloisonnement de leurs données, avec pour objectif une informatique de gestion plus efficace, 
 		collaborative et centrée sur les objectifs. 
 		<br><br>
-		CrystalData a donc pour ambition d'être un concentré de toute mon expérience dans les L4G/SGBD/AGL, 
-		et aussi de poser les fondations d'une future application sur mesure, la vôtre, 
-		intégrant toutes vos spécificités, Workflow, et règles métier.
+		CrystalData a donc pour ambition d'être un petit concentré de toute mon expérience dans les L4G/SGBD/AGL, 
+		et, pourquoi pas, de poser les fondations d'une future application sur mesure, la vôtre, 
+		intégrant toutes vos spécificités, règles métier, Workflow, etc...
 	</p>
 
 	<h3 class="fw-bold text-warning mt-5">Principales fonctionnalités</h3>
@@ -130,7 +130,7 @@
 					Créer des collections d'Objets<br>
 				</h4>
 
-				<p>Créez vos collections d'Objets simplement à partir de feuilles Excel (exportées au format CSV)</p>
+				<p>Créez vos collections d'Objets simplement à partir d'une feuille Excel (exportée au format CSV)</p>
 
 				<%= link_to image_path 'screen-lg.png' do %>
 					<%= image_tag 'screen-lg.png', class: 'img-thumbnail w-100' %>
@@ -259,9 +259,9 @@
 			<li><b>Couleur</b> : affiche une couleur choisie dans une palette.</li>
 			<li><b>GPS</b> :
 				<ul>
-					<li>Capture la localisation de l'utilisateur, s'il le demande en appuyant sur le bouton <span class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-location-crosshairs"></i></li></span>
+					<li>Capture la localisation de l'utilisateur, s'il le demande, en appuyant sur le bouton <span class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-location-crosshairs"></i></li></span>
 					<li>Affiche la location sur une carte, basée sur les coordonnées indiquées au format "LNG, LAT". (Ex: <i>48.85879287621989, 2.294761243572842</i> pour pointer sur la tour Eiffel).</li>
-					<li>Distance : Permet de calculer la distance à vol d'oiseau entre deux positions GPS. (Ex: <i>[Chantier(GPS)] - [Maison(GPS)]</i> OU <i>[Chantier(GPS)] - 48.85879287621989, 2.294761243572842</i>)</li>
+					<li>Distance : Permet de calculer la distance (à vol d'oiseau) entre deux positions GPS. (Ex: <i>[Chantier(GPS)] - [Maison(GPS)]</i> OU <i>[Chantier(GPS)] - 48.85879287621989, 2.294761243572842</i>)</li>
 				</ul>
 			</li>
 			<li><b>Utilisateur</b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table</li>
@@ -293,16 +293,16 @@
 
 	<h3 class="fw-bold text-warning mt-5">Relation entre objets</h3>
 	<p class="w-sm-75">
-		Les relations entre objets sont créée avec l'attribut 'Collection'. 
+		Les relations entre objets sont créées avec l'attribut 'Collection'. 
 		Exemple : un objet Intervention aura un attribut 'Technicien' qui permettra de choisir un technicien dans la collection du même nom.
 		Ces relations sont aussi visibles dans la vue détails d'un objet. 
-		Ainsi, quand un objet Technicien est lié a des Interventions, 
+		Ainsi, quand un objet Technicien est lié à des Interventions, 
 		celles-ci s'afficheront automatiquement dans la vue de détail du Technicien.
 	</p>
 
 	<h3 class="fw-bold text-warning mt-5">Filtres</h3>
 	<p class="w-sm-75">
-		Les Filtres permettent de mémoriser un ensemble de critères de sélection pour obtenir une collection d'objets filtrée.
+		Les Filtres permettent de mémoriser un ensemble de critères de sélection pour obtenir une collection filtrée d'objets.
 		Ces filtres acceptent différents critères selon le type d'attribut.
 		Ex : un attribut de type Texte est filtré avec %TXT% (Filtre tout ce qui contient les 3 lettres TXT) 
 		et un attribut numérique est filtré avec un signe et une valeur (Qté en stock: > 5) 
@@ -313,13 +313,13 @@
 		Vous pouvez partager vos collections avec d'autres utilisateurs en leur donnant un rôle (Lecteur, Collecteur, Éditeur).
 		<ul class="list-group mb-5 m-3 gap-2">
 			<li>
-				Un lecteur peut seulement consulter les données.
+				Un <b>lecteur</b> peut seulement consulter les données.
 			</li>
 			<li>
-				Un collecteur peut ajouter des données mais il ne voit que ses données.
+				Un <b>collecteur</b> peut ajouter des données mais il ne voit que ses données.
 			</li>
 			<li>
-				Un éditeur peut voir et modifier toutes les données.
+				Un <b>éditeur</b> peut voir et modifier toutes les données.
 			</li>
 		</ul>
 	</p>
@@ -327,12 +327,13 @@
 	<h3 class="fw-bold text-warning mt-5">Développement, support et services</h3>
 	
 	<p class="mt-3">
-		CrystalData est développé et maintenu par 
-		<%= link_to 'Philnoug & Partners', 'https://www.philnoug.com', target: '_blank' %>
+		CrystalData a été développé par 
+		<%= link_to "Studio 'Philnoug & Partners'", 'https://www.philnoug.com', target: '_blank' %>
 	</p>
 
 	<p class="mt-3">
 		Besoin d'une fonctionnalité sur mesure ? Nous vous la développons !
+		<br><br>
 	    Pour en savoir plus,
     	<%= link_to "contactez-nous", 'https://www.philnoug.com/contact', target: '_blank', class: 'link' %>
     </p>
