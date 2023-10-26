@@ -14,7 +14,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def new?
-    index? && !(user.compte_démo?)
+    index? && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def create?
@@ -22,7 +22,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def edit?
-    record.propriétaire?(user) && !(user.compte_démo?)
+    record.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def update?
@@ -30,7 +30,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.propriétaire?(user) && !(user.compte_démo?)
+    record.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
   end
   
   def show_attrs?
@@ -46,11 +46,11 @@ class TablePolicy < ApplicationPolicy
   end
 
   def delete_record?
-    record.propriétaire?(user) && !(user.compte_démo?)
+    record.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def import?
-    user && !(user.compte_démo?)
+    user && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def import_do?
@@ -62,7 +62,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def add_user_do?
-    add_user? && !(user.compte_démo?)
+    add_user? && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def partages?

@@ -10,7 +10,7 @@ class FilterPolicy < ApplicationPolicy
   end
 
   def new?
-    user && !(user.compte_démo?)
+    user && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def create?
@@ -26,7 +26,7 @@ class FilterPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.user_id == user.id && !(user.compte_démo?)
+    record.user_id == user.id && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def query?
