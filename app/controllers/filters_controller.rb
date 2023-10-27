@@ -68,40 +68,42 @@ class FiltersController < ApplicationController
         key = query.first
         search_value = query.last
         unless search_value.blank? 
-          field = Field.find(key)
-          if field.is_numeric
-            if search_value.to_i.zero?
-              # TODO : Beware of SQL Injection
-              sql = "CAST(data AS float8) #{search_value}"
-            else
-              sql = "data = ?", search_value
-            end
-          elsif field.Date?
-            unless query.last['start'].blank?
-              start_date = query.last['start']
-              end_date = query.last['end'].blank? ? start_date : query.last['end']
-              sql = "DATE(data) BETWEEN ? AND ? ", start_date, end_date
-            end
-          elsif field.datatype == "Oui_non?"
-            unless query.last['yes'].blank?
-              if query.last['no'].blank?
-                sql = "data = 'Oui'"
+          if Field.exists?(id: key)
+            field = Field.find(key)
+            if field.is_numeric
+              if search_value.to_i.zero?
+                # TODO : Beware of SQL Injection
+                sql = "CAST(data AS float8) #{search_value}"
               else
-                sql = "data = 'Oui' OR data = 'Non'"
+                sql = "data = ?", search_value
+              end
+            elsif field.Date?
+              unless query.last['start'].blank?
+                start_date = query.last['start']
+                end_date = query.last['end'].blank? ? start_date : query.last['end']
+                sql = "DATE(data) BETWEEN ? AND ? ", start_date, end_date
+              end
+            elsif field.datatype == "Oui_non?"
+              unless query.last['yes'].blank?
+                if query.last['no'].blank?
+                  sql = "data = 'Oui'"
+                else
+                  sql = "data = 'Oui' OR data = 'Non'"
+                end
+              else
+                unless query.last['no'].blank?
+                  sql = "data = 'Non'"
+                end
               end
             else
-              unless query.last['no'].blank?
-                sql = "data = 'Non'"
+              if search_value.class == Array
+                sql = "data IN(?) ", search_value
+              else
+                sql = "data ILIKE ? ", search_value
               end
             end
-          else
-            if search_value.class == Array
-              sql = "data IN(?) ", search_value
-            else
-              sql = "data ILIKE ? ", search_value
-            end
+            @filters[key] = @filter.table.values.where(field_id: key.to_i).where(sql).pluck(:record_index)
           end
-          @filters[key] = @filter.table.values.where(field_id: key.to_i).where(sql).pluck(:record_index)
         end
       end
       @filter.update(query: params[:query])
