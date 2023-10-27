@@ -7,14 +7,14 @@
             <%= @table.name.humanize.pluralize %>
           </a>
           <% if current_user.tables.count > 1 %>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu w-100">
               <% current_user.tables.where.not(name: @table.name).order(:name).each do |table| %>
-                <li><%= link_to table.name.humanize.pluralize, table_path(table), class: 'dropdown-item fs-4 fw-bold' %></li>
+                <li><%= link_to table.name.humanize.pluralize, table_path(table), class: 'dropdown-item fs-4', style: 'font-weight: 500' %></li>
               <% end %>
             </ul>
           <% end %>
         </li>
-        <div class="d-flex justify-content-end gap-2">
+        <div class="d-flex gap-2">
           <% if policy(@table).show_attrs? %>
               <%= link_to show_attrs_path(id:@table), class:'nav-link', title:"Modifier les attributs de l'Objet '#{@table.name}'" do %> 
               Modifier Attributs
