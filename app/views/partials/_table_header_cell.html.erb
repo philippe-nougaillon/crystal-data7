@@ -1,6 +1,6 @@
 <% unless ['show_details', 'related_tables'].include?(action_name) && @relation.field == field %>
   <th>
-    <%= link_to url_for(params.permit!.merge(sort_by: field.id)), class:'text-decoration-none' do %>
+    <%= link_to url_for(params.permit!.merge(sort_by: field.id)), class:'text-decoration-none text-black' do %>
       <span class="text-nowrap">
         <%= field.name.humanize %>
         <% if params[:sort_by] == field.id.to_s %>
