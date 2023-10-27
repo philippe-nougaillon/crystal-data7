@@ -4,21 +4,33 @@
   </h2>
 
   <%= form_for :user, url: '/add_user_do' do %>
-    <%= hidden_field_tag :id, params[:id] %>
+    <div data-controller="partage">
+      <%= hidden_field_tag :id, params[:id] %>
 
-    <h4>Choisissez l'utilisateur avec qui vous souhaitez partager cet Objet</h4>
+      <h4 class="mb-4">Choisissez l'utilisateur avec qui vous souhaitez partager cet Objet</h4>
 
-    <div class="col-sm-5">
-      <% users_not_in = User.where.not(id: @table.users.pluck(:id)).where(id: current_user.tables.map { |t| t.users.pluck(:id)}.flatten.uniq).pluck(:email) %>
-      <%= select_tag :email, options_for_select(users_not_in), include_blank: true, class: 'form-select w-100 mb-4' %>
+      <div class="col-sm-5">
+        <div class="mb-4 text-center">
+          <%= radio_button_tag :type_partage, 'text', (params[:type_partage] == 'text'), data: { 'action': 'change->partage#change', 'partage-target': 'source' }, class: 'form-check-input' %>Texte
+          <%= radio_button_tag :type_partage, 'list', (params[:type_partage] == 'list'), data: { 'action': 'change->partage#change'}, class: 'form-check-input ms-5' %> Liste
+        </div>
 
-      <%= label_tag :email, "Ou entrez son email" %>
-      <%= text_field_tag :email, nil, class:'form-control w-100 mb-4', type: :email %>
+        <div data-partage-target='text' class="mb-4">
+          <%= label_tag :email_text, "Email" %>
+          <%= text_field_tag :email_text, nil, class:'form-control w-100', type: :email %>
+          <div class="form-text">L'utilisateur doit déjà exister</div>
+        </div>
 
-      <%= label_tag :role, 'Rôle' %>
-      <%= select_tag :role, options_for_select(TablesUser.roles.keys.reject { |e| e == "Propriétaire" }), class:'form-select', required: true %>
-      <br>
-      <%= submit_tag "Partager", class: 'btn btn-outline-primary', 'data-turbo-frame': "_top" %>
+        <div data-partage-target='list' class="mb-4">
+          <%= label_tag :email_list, 'Choisissez parmi vos collaborateurs' %>
+          <%= select_tag :email_list, options_for_select(@users_not_in), include_blank: true, class: 'form-select w-100 mb-4' %>
+        </div>
+
+        <%= label_tag :role, 'Rôle' %>
+        <%= select_tag :role, options_for_select(TablesUser.roles.keys.reject { |e| e == "Propriétaire" }), class:'form-select', required: true %>
+        <br>
+        <%= submit_tag "Partager", class: 'btn btn-outline-primary', 'data-turbo-frame': "_top" %>
+      </div>
     </div>
   <% end %>
 <% end %>

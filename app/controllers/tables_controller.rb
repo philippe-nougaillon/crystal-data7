@@ -303,12 +303,18 @@ class TablesController < ApplicationController
   end
 
   def add_user
+    session[:type_partage] ||= 'text'
+    params[:type_partage] ||= session[:type_partage]
+
+    @users_not_in = User.where.not(id: @table.users.pluck(:id)).where(id: current_user.tables.map { |t| t.users.pluck(:id)}.flatten.uniq).pluck(:email)
   end
 
   def add_user_do
+    session[:type_partage] = params[:type_partage]
+
     if not TablesUser.roles.keys.reject { |e| e == "Propriétaire" }.include?(params[:role])
       redirect_to add_user_path(@table), alert: "Rôle indisponible"
-    elsif @user = User.find_by(email:params[:email])
+    elsif @user = User.find_by(email: (params[:type_partage] == "text") ? params[:email_text] : params[:email_list])
       unless @table.users.include?(@user)
         # ajoute le nouvel utilisateur aux utilisateurs de la table
         @table.tables_users << TablesUser.create(table_id: @table.id, user_id: @user.id, role: params[:role])

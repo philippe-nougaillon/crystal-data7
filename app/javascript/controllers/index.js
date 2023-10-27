@@ -9,3 +9,6 @@ application.register("geolocation", GeolocationController)
 
 import TypeController from "./type_controller"
 application.register("type", TypeController)
+
+import PartageController from "./partage_controller"
+application.register("partage", PartageController)
