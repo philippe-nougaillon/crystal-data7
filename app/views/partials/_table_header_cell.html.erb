@@ -1,4 +1,4 @@
-<% unless action_name == 'show_details' && @relation.field == field %>
+<% unless ['show_details', 'related_tables'].include?(action_name) && @relation.field == field %>
   <th>
     <%= link_to url_for(params.permit!.merge(sort_by: field.id)), class:'text-decoration-none' do %>
       <span class="text-nowrap">

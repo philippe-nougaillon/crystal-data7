@@ -1,4 +1,4 @@
-<% unless action_name == 'show_details' && field.Collection? && @relation.field == field %>
+<% unless ['show_details', 'related_tables'].include?(action_name) && field.Collection? && @relation.field == field %>
   <% if value %>
     <td style="<%= 'text-align: right;' if field.is_numeric %>">
       <% case field.datatype when 'Fichier' %>
