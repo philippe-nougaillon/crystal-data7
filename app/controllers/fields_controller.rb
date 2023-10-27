@@ -39,7 +39,7 @@ class FieldsController < ApplicationController
         format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Attribut modifié avec succès.' }
         format.json { render :show, status: :ok, location: @field }
       else
-        format.html { render :edit }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), alert: @field.errors.full_messages.join(', '), status: :unprocessable_entity }
         format.json { render json: @field.errors, status: :unprocessable_entity }
       end
     end
