@@ -26,6 +26,11 @@ class User < ApplicationRecord
     self.id == 1
   end
 
+  # Retourne les emails des utilisateurs qui ont des tables en commun avec l'utilisateur, mais qui ne sont pas dans la table envoyée en paramètre
+  def others(table)
+    User.where.not(id: table.users.pluck(:id)).where(id: self.tables.map { |t| t.users.pluck(:id)}.flatten.uniq).pluck(:email)
+  end
+
   private
 
   def new_user_notification

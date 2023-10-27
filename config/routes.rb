@@ -35,7 +35,6 @@ Rails.application.routes.draw do
 
   get 'show_attrs', to: 'tables#show_attrs' 
   get 'tables/:id/fill', to: 'tables#fill', as: :fill
-  get 'tables/:id/add_user', to:'tables#add_user', as: :add_user
   get 'tables/:id/partages', to:'tables#partages', as: :partages
   get 'tables/:id/partages_delete', to:'tables#partages_delete', as: :annuler_partage
   get 'tables/:id/logs', to: 'tables#logs', as: :logs

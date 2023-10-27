@@ -33,10 +33,6 @@
 <i><small>Seuls les utilisateurs propriétaires peuvent modifier les attributs de l'Objet</small></i>
 <br><br>
 
-<%= turbo_frame_tag "partage_frame" do %>
-	<% if policy(@table).add_user? %>
-		<%= link_to add_user_path(@table), title:"Ajouter un partage avec un autre utilisateur", class:'btn btn-outline-primary', data: { turbo_frame: "partage_frame" } do %>
-				Ajouter un partage
-		<% end %>
-	<% end %>
+<% if policy(@table).add_user? %>
+	<%= render partial: 'tables/add_user', locals: {others: current_user.others(@table) } %>
 <% end %>

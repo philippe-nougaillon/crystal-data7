@@ -302,13 +302,6 @@ class TablesController < ApplicationController
     redirect_to tables_path, notice: "Importation terminée. Table '#{Table.last.name.humanize}' créée avec succès."
   end
 
-  def add_user
-    session[:type_partage] ||= 'text'
-    params[:type_partage] ||= session[:type_partage]
-
-    @users_not_in = User.where.not(id: @table.users.pluck(:id)).where(id: current_user.tables.map { |t| t.users.pluck(:id)}.flatten.uniq).pluck(:email)
-  end
-
   def add_user_do
     session[:type_partage] = params[:type_partage]
 
