@@ -3,7 +3,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav w-100 justify-content-between align-items-center">
         <li class="nav-item dropdown">
-          <a class="navbar-brand nav-link text-primary fs-1 px-0 fw-bold <%= current_user.tables.count > 1 ? "dropdown-toggle" : "" %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="navbar-brand nav-link text-primary fs-1 px-0 <%= current_user.tables.count > 1 ? "dropdown-toggle" : "" %>" style="font-weight: 500" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <%= @table.name.humanize.pluralize %>
           </a>
           <% if current_user.tables.count > 1 %>
