@@ -66,7 +66,6 @@
           <div data-controller="geolocation" class="input-group">
             <%= text_field_tag field_name, field_value, class: 'form-control', 'data-geolocation-target': 'gpstextfield', required: field.obligatoire, 'data-testid': field.name %>
             <button type="button" data-action="click->geolocation#search" class="btn btn-outline-primary btn-sm p-0" title="Position actuelle">
-              <%= evil_icon 'ei-location', class:'mt-1', size: :s %>
             </button>
           </div>
         <% when 'Collection' %>
@@ -78,7 +77,6 @@
             <div class="d-flex align-items-center">
               <%= select_tag field_name, options_for_select(field.populate_linked_table.invert, field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %> 
               <%= link_to table_path(Table.find(field.relation.relation_with_id)), target: '_blank' do %>
-                <%= evil_icon 'ei-external-link', size: :s %>
               <% end %>
             </div>
           <% end %>
