@@ -311,7 +311,7 @@ class TablesController < ApplicationController
       unless @table.users.include?(@user)
         # ajoute le nouvel utilisateur aux utilisateurs de la table
         @table.tables_users << TablesUser.create(table_id: @table.id, user_id: @user.id, role: params[:role])
-        # UserMailer.notification_nouveau_partage(@user, @table).deliver_later
+        UserMailer.notification_nouveau_partage(@user, @table).deliver_later
         flash[:notice] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' activé"
       else
         flash[:alert] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' déjà existant !"

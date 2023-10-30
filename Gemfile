@@ -112,3 +112,5 @@ gem "prawn-table", "~> 0.2.2"
 gem "matrix", "~> 0.4.2"
 
 gem "rqrcode", "~> 2.2"
+
+gem "mailgun-ruby", "~> 1.2"

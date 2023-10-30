@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     end
   end
 
+  root 'devise/sessions#new'
+
   resources :tables
   resources :values
   resources :blobs, only: [:new, :create]
