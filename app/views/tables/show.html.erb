@@ -2,18 +2,7 @@
   <div class="container-fluid px-0">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav w-100 justify-content-between align-items-center">
-        <li class="nav-item dropdown">
-          <a class="navbar-brand nav-link text-primary fs-1 px-0 <%= current_user.tables.count > 1 ? "dropdown-toggle" : "" %>" style="font-weight: 500" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <%= @table.name.humanize.pluralize %>
-          </a>
-          <% if current_user.tables.count > 1 %>
-            <ul class="dropdown-menu w-100">
-              <% current_user.tables.where.not(name: @table.name).order(:name).each do |table| %>
-                <li><%= link_to table.name.humanize.pluralize, table_path(table), class: 'dropdown-item fs-4', style: 'font-weight: 500' %></li>
-              <% end %>
-            </ul>
-          <% end %>
-        </li>
+        <%= render partial: 'partials/navbar_table_show'%>
         <div class="d-flex gap-2">
           <% if policy(@table).show_attrs? %>
               <%= link_to show_attrs_path(id:@table), class:'nav-link', title:"Modifier les attributs de l'Objet '#{@table.name}'" do %> 
