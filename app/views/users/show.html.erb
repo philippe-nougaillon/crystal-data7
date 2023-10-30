@@ -1,11 +1,10 @@
-<%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger float-end', 'data-turbo': false, title: 'Se déconnecter' do %>
-  Se déconnecter
-<% end %>
-
-<div class="d-flex align-items-center text-secondary">
-  <h1 class="my-4">
+<div class="d-flex flex-end align-items-center justify-content-between flex-wrap mb-4 ">
+  <h1 class="text-secondary">
     <%= @user.name %>
   </h1>
+  <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger', 'data-turbo': false, title: 'Se déconnecter' do %>
+    Se déconnecter
+  <% end %>
 </div>
 
 <div class="w-sm-50">

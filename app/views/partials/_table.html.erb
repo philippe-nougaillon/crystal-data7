@@ -36,7 +36,7 @@
     <%= link_to "(+) #{table.name.humanize}", fill_path(table, relation: @relation, value: @record_index), class: 'btn btn-outline-primary mb-4', data: { turbo_frame: "_top" }  %>
   <% end %>
 <% end %>
-<div class="d-flex align-items-center justify-content-end gap-2">
+<div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
   <p class="flex-fill mb-0">
     Affichage de 
     <%= @records_size || '0' %>
@@ -46,7 +46,7 @@
       sur <%= @records.size %> au total
     <% end %>
   </p>
-  <div class="d-none d-sm-block">
+  <div class="d-block">
     <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format XLS" do %>
       XLS
     <% end %>

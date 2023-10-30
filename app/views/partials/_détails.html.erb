@@ -1,5 +1,5 @@
 <div id="details">
-  <div class="row row-cols-sm-2 row-cols-lg-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3">
     <% @table.fields.détaillable.ordered.each_with_index do |field, index| %>
       <% values = @table.value_datas_détaillable(@record_index) %>
       <% value = field.values.find_by(record_index: @record_index) %> 
