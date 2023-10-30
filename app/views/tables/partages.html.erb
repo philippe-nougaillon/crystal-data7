@@ -36,5 +36,3 @@
 <% if policy(@table).add_user? %>
 	<%= render partial: 'tables/add_user', locals: {others: current_user.others(@table) } %>
 <% end %>
-
-<%= root_url %>
