@@ -255,16 +255,16 @@
 
 	<p>
 		Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et 
-		chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra. 
-		<br>
-		Les types disponibles sont : 
+		chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste, Oui/Non, Fichier, etc.)
+		<br><br>
+		Les types d'attributs disponibles sont : 
 		<ul class="list-group list-group-flush mb-5 m-3 gap-2">
 			<li>
 				<b>Texte</b> :
 				<ul>
 					<li>Texte simple : peut contenir une chaine de 255 caractères maximum. L'option 'Filtre ?' permet de créer une liste déroulante contenant les valeurs distinctes. </li>
-					<li>Texte long : permet de faire des gros messages</li>
-					<li>Texte riche : permet de formater du texte (gras, souligné, titre, couleur, taille, liens, listes, etc.), grâce à un éditeur de texte intégré</li>
+					<li>Texte long : permet de rédiger de longs textes</li>
+					<li>Texte riche : permet de rédiger et formater un texte long (gras, souligné, titre, couleur, taille, liens, listes, etc.), à l'aide d'un petit éditeur de texte intégré (TRIX Editor)</li>
 				</ul>
 			</i>
 			<li>
@@ -283,17 +283,17 @@
 			<li>
 				<b>Fichier</b> :
 				<ul>
-					<li>Fichier : permet de lier et de stocker un fichier (document, image, etc...).</li>
+					<li>Fichier : permet de lier et de stocker un fichier dans un objet (document, image, etc...).</li>
 					<li>Image : idem 'Fichier' mais affiche un aperçu de l'image ou l'image d'origine selon le contexte.</li>
 					<li>PDF : idem 'Fichier' mais affiche un aperçu de la première page du document PDF.</li>
 				</ul>
 			</li>
 			<li><b>Utilisateur</b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table</li>
-			<li><b>URL</b> : permet d'ajouter un lien vers une ressource internet (interne ou externe).</li>
+			<li><b>URL</b> : permet d'ajouter un lien vers une ressource internet via une URL (interne ou externe).</li>
 			<li>
-				<b>Vidéo YouTube</b> : affiche l'aperçu d'une vidéo YouTube.  
+				<b>Vidéo YouTube</b> : permet d'ajouter un lien vers une vidéo YouTube et d'afficher l'aperçu de la vidéo dans une miniature.  
 			</li>
-			<li><b>Couleur</b> : affiche une couleur choisie dans une palette.</li>
+			<li><b>Couleur</b> : une couleur choisie dans une palette.</li>
 			<li><b>Localisation (GPS)</b> :
 				<ul>
 					<li>Capture la localisation de l'utilisateur, s'il le demande, en appuyant sur le bouton <span class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-location-crosshairs"></i></li></span>
@@ -302,12 +302,12 @@
 				</ul>
 			</li>
 			<li>
-				<b>QR Code</b> : pour générer un QR Code à partir d'un autre attribut. (Ex: <i>[N°deSérie],[Reference],[url site web]</i>)
+				<b>QR Code</b> : pour générer un QR Code à partir du contenu d'un autre attribut de l'objet. (Ex: <i>[N°deSérie],[Reference],[URL site web]</i>)
 			</li>
 			<li>
-				<b>UUID</b> : génère un identifiant unique pour chaque objet. (Universally Unique IDentifier)
+				<b>UUID</b> : génère automatiquement un identifiant unique. (UDID = Universally Unique IDentifier)
 			</li>
-			<li><b>WORKFLOW</b> : contient l'état d'un objet associé à une couleur. (Ex: <i>Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary</i>)
+			<li><b>WORKFLOW</b> : pour ajouter un état à un objet, associé à une couleur. (Ex: <i>Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary</i>)
 				<ul><li>
 					Couleurs disponibles:
 					<span class="badge bg-primary">Primary</span>
@@ -329,15 +329,17 @@
 		Exemple : un objet Intervention aura un attribut 'Technicien' qui permettra de choisir un technicien dans la collection du même nom.
 		Ces relations sont aussi visibles dans la vue détails d'un objet. 
 		Ainsi, quand un objet Technicien est lié à des Interventions, 
-		celles-ci s'afficheront automatiquement dans la vue de détail du Technicien.
+		la vue de détails de chaque Technicien affiche automatiquement ses Interventions et permet d'en saisir une nouvelle pour ce Technicien.  
 	</p>
 
 	<h3 class="fw-bold text-warning mt-5">Filtres</h3>
 	<p class="w-sm-75">
-		Les Filtres permettent de mémoriser un ensemble de critères de sélection pour obtenir une collection filtrée d'objets.
-		Ces filtres acceptent différents critères selon le type d'attribut.
-		Ex : un attribut de type Texte est filtré avec %TXT% (Filtre tout ce qui contient les 3 lettres TXT) 
-		et un attribut numérique est filtré avec un signe et une valeur (Qté en stock: > 5) 
+		Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères.
+		Ces filtres acceptent des critères différents selon le type d'attribut :
+		<br>	
+		- un attribut de type Texte est filtré avec %TXT% (Filtre tout ce qui contient les 3 lettres TXT) 
+		<br>		
+		- un attribut numérique est filtré avec un signe et une valeur (Qté en stock: > 5) 
 	</p>
 
 	<h3 class="fw-bold text-warning mt-5">Utilisateurs, partages et rôles</h3>
@@ -345,13 +347,13 @@
 		Vous pouvez partager vos collections avec d'autres utilisateurs en leur donnant un rôle (Lecteur, Collecteur, Éditeur).
 		<ul class="list-group mb-5 m-3 gap-2">
 			<li>
-				Un <b>lecteur</b> peut seulement consulter les données.
+				Un <b>Lecteur</b> peut uniquement voir les objets de la collection partagée.
 			</li>
 			<li>
-				Un <b>collecteur</b> peut ajouter des données mais il ne voit que ses données.
+				Un <b>Collecteur</b> peut ajouter des objets dans la collection partagée, et ne verra que ses objets. 
 			</li>
 			<li>
-				Un <b>éditeur</b> peut voir et modifier toutes les données.
+				Un <b>Éditeur</b> peut voir et modifier tous les objets.
 			</li>
 		</ul>
 	</p>
