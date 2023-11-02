@@ -43,12 +43,12 @@
           <div id="signature">
             <%= hidden_field_tag field_name, field_value, 'data-testid': "signature" %>
             <div class="wrapper">
-              <canvas id="signature-pad" class="signature-pad" style="border: 1px solid;" width=400 height=200></canvas>
+              <canvas id="signature-pad" class="form-control" width=400 height=200></canvas>
             </div>
 
             <div style="margin-top: 8px;">
-              <button id="save" class="btn btn-sm btn-outline-primary">Enregistrer</button>
-              <a id="clear" class="btn btn-sm">Effacer</a>
+              <button id="save" class="btn btn-sm btn-outline-success">Valider cette signature</button>
+              <a id="clear" class="btn btn-sm btn-outline-dark">Effacer</a>
             </div>
           </div>
         <% when 'Texte_long' %>
