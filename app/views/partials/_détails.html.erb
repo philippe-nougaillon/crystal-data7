@@ -4,8 +4,11 @@
       <% values = @table.value_datas_détaillable(@record_index) %>
       <% value = field.values.find_by(record_index: @record_index) %> 
       <% field_value = value.data if value %>
-      <div class="col mb-2">
-        <label class="fw-bold">
+      <div class="col mb-4">
+        <label class="fw-bold d-flex gap-2 mb-2">
+          <span class="material-symbols-outlined text-black-50">
+            <%= field.icon %>
+          </span>
           <%= field.name.humanize %>
         </label>
         <% if value = values[index]%>
