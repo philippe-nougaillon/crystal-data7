@@ -20,7 +20,7 @@
                 <% end %>
               <% end %>
             <% when 'Signature' %>
-              <%= link_to("Oui", values_signature_path(table: @table, field:field, record_index: @record_index)) %>
+              <img src=<%= value %> style="border: 1px #CCC solid; padding: 10px;">
             <% when 'Date' %>
               <%= l(value.to_date) unless value.blank? %>
             <% when 'Texte_long' %>

@@ -40,9 +40,16 @@
           <% end %>
           <%= text_field_tag field_name, field_value, disabled: true, class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Signature' %>
-          <div class="sig" disabled=true>
-            <canvas class="pad" width="400" height="53"></canvas>
-            <%= hidden_field_tag field_name, nil, class: "output w-100", 'data-testid': field.name %>
+          <div id="signature">
+            <%= hidden_field_tag field_name, field_value, 'data-testid': "signature" %>
+            <div class="wrapper">
+              <canvas id="signature-pad" class="signature-pad" style="border: 1px solid;" width=400 height=200></canvas>
+            </div>
+
+            <div style="margin-top: 8px;">
+              <button id="save" class="btn btn-sm btn-outline-primary">Enregistrer</button>
+              <a id="clear" class="btn btn-sm">Effacer</a>
+            </div>
           </div>
         <% when 'Texte_long' %>
           <%= text_area_tag field_name, field_value, autofocus: (index == 0),col: 10, row: 10, class: 'form-control w-100', 'data-testid': field.name %>
@@ -98,3 +105,21 @@
     <%= link_to "Annuler", request.referer %>
   </div>
 <% end %>
+
+
+<script>
+  var signaturePad = new SignaturePad(document.getElementById('signature-pad'));
+  var signatureField = document.querySelector("[data-testid=signature]");
+  console.log(signatureField);
+  var saveButton = document.getElementById('save');
+  var cancelButton = document.getElementById('clear');
+
+  saveButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    signatureField.setAttribute('value', signaturePad.toDataURL("image/svg+xml"));
+  });
+
+  cancelButton.addEventListener('click', function (event) {
+    signaturePad.clear();
+  });
+</script>
