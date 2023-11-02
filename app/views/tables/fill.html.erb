@@ -116,10 +116,13 @@
 
   saveButton.addEventListener('click', function (event) {
     event.preventDefault();
-    signatureField.setAttribute('value', signaturePad.toDataURL("image/svg+xml"));
+    if (!signaturePad.isEmpty()) {
+      signatureField.setAttribute('value', signaturePad.toDataURL("image/svg+xml"));
+    }
   });
 
   cancelButton.addEventListener('click', function (event) {
     signaturePad.clear();
+    signatureField.setAttribute('value', "");
   });
 </script>
