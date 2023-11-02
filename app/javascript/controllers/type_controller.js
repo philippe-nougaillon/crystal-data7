@@ -17,7 +17,7 @@ export default class extends Controller {
 
     if (['Formule', 'Liste', 'Workflow', 'Collection', 'QRCode', 'Distance'].includes(type.value)) {
       this.paramsTarget.style.display = 'block';
-      this.numberTarget.style.dispaly = 'none';
+      this.numberTarget.style.display = 'none';
       if (type.value == "Formule" ) {
         this.paramsTarget.children[2].innerHTML = "ex: [Temps] * [Coût horaire] OU [Prix HT] * 1.2 "
       } else if (type.value == "Liste" ) {

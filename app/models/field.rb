@@ -13,10 +13,11 @@ class Field < ApplicationRecord
 
 	validates_presence_of :name
 	validates_presence_of :datatype
+	validate :check_options
 
 	after_save :add_or_update_relation, if: Proc.new { |field| field.Collection? }
 
-	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID]
+	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID, :Signature]
 	enum operation: [:Somme, :Moyenne]
 	enum visibility:[:Liste_et_Détails, :Vue_Liste, :Vue_Détails]
 
@@ -207,6 +208,19 @@ private
 			relation.relation_with_id = source_table.id
 			relation.items = source_fields
 			relation.save
+		end
+	end
+
+	def check_options
+		case self.datatype
+		when 'Workflow'
+			unless self.items.count(':') > 0 && self.items_splitted.any?
+				errors.add(:erreur, ": Paramètres du workflow incorrects")
+			end
+		when 'Liste'
+			unless self.items.count(',') > 0 || self.items.count('[') > 0
+				errors.add(:erreur, ": Paramètres de la liste incorrects")
+			end
 		end
 	end
 

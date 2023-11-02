@@ -1,12 +1,11 @@
 <div class="my-4 d-flex align-items-center text-info gap-2">
-  <%= evil_icon 'ei-archive', size: :m %>
   <h1 class="mb-0">
     Objets
   </h1>
 </div>
 
 <div class="overflow-x-auto">
-  <table class="table table-hover w-100">
+  <table class="table table-striped table-hover w-100">
     <thead>
       <tr>
         <th>Nom</th>
@@ -22,7 +21,7 @@
       <% if @tables.any? %>
         <% @tables.each do | table | %>
           <tr>
-            <td><%= link_to table.name.upcase, table, class: 'fw-bold text-black' %></td>
+            <td><%= link_to table.name.upcase, table, class: 'fw-bold text-black text-decoration-none' %></td>
             <td><%= table.field_names %></td>
             <td><%= table.role_name(current_user) %></td>
             <td>

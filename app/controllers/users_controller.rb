@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     def create
 	    @user = User.new(user_params)
 	    if @user.save
-        UserMailer.notification_nouveau_compte(@user).deliver_later
+        UserMailer.notification_nouveau_compte(@user).deliver_now
         session[:user_id] = @user.id
         redirect_to tables_path, notice:"Bienvenue '#{@user.name}' ! Votre compte a bien été créé et vous avez été notifié par mail."
 	    else

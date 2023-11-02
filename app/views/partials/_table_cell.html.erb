@@ -1,4 +1,4 @@
-<% unless action_name == 'show_details' && field.Collection? && @relation.field == field %>
+<% unless ['show_details', 'related_tables'].include?(action_name) && field.Collection? && @relation.field == field %>
   <% if value %>
     <td style="<%= 'text-align: right;' if field.is_numeric %>">
       <% case field.datatype when 'Fichier' %>
@@ -9,10 +9,10 @@
           <%= link_to image_tag(blob.file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file), title: blob.file.filename %>
         <% end %>
       <% when 'Signature' %>
-        <%= link_to("Oui", values_signature_path(table: table, field: field, record_index: record_index)) %>
+        <img src=<%= value %>>
       <% when 'Date' %>
         <% unless value.blank? %>
-          <%= link_to_if is_link, l(value.to_date), details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" } %>
+          <%= link_to_if is_link, l(value.to_date), details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'text-black' %>
         <% end %>
       <% when 'Texte_long' %>
         <%= truncate(value, length: 80) %>
@@ -27,7 +27,7 @@
         <% color = items[value] %>
         <span class="badge bg-<%= color %>"><%= value %></span>
       <% when 'URL' %>
-        <%= link_to URI.parse(value).host, value, target: "_blank", data: { turbo_frame: "_top" } %>
+        <%= link_to URI.parse(value).host, value, target: "_blank", data: { turbo_frame: "_top" }, class: 'text-black' %>
       <% when 'Couleur' %>
         <span style="background-color: <%= value %>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
       <% when 'GPS' %>
@@ -35,7 +35,7 @@
       <% when 'Collection' %>
         <% linked_value = field.get_linked_table_record(value.to_i) %>
         <% linked_table = Table.find(field.relation.relation_with_id) %>
-        <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" }, 'data-testid': "Voir les détails de #{field.items.tr('[]','').split('.').first} à la ligne n°#{value}" %>
+        <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" }, class: 'text-black', 'data-testid': "Voir les détails de #{field.items.tr('[]','').split('.').first} à la ligne n°#{value}" %>
       <% when 'Utilisateur' %>
         <%= value %>
       <% when 'Vidéo_YouTube' %>
@@ -45,7 +45,7 @@
       <% when 'Distance' %>
         ~<%= value %> km
       <% else %>
-        <%= link_to_if is_link, value, details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" } %>
+        <%= link_to_if is_link, value, details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'text-black' %>
       <% end %>
 
       <% if field.operation %>

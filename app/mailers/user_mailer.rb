@@ -4,9 +4,9 @@ class UserMailer < ApplicationMailer
 	def notification(table, items)
 		@items = items
 		@table = table
-		user = table.users.first
+		users = User.where(id: TablesUser.where(table_id: table.id, role: 'Propriétaire').pluck(:user_id))
 
-		mail(to: user.email, subject: "Nouveau contenu '#{@table.name}'")
+		mail(to: users.pluck(:email), subject: "Nouveau contenu '#{@table.name}'")
 	end
 
 	def notification_nouveau_compte(user)

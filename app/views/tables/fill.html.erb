@@ -5,7 +5,7 @@
 
   <%= hidden_field_tag :table_id, @table.id %>
 
-  <div class="w-md-50">
+  <div class="row row-cols-sm-2 row-cols-lg-3">
     <% @table.fields.ordered.each_with_index do |field, index| %>
       <% field_name = "[data][#{@record_index}][#{field.id}]" %> 
       <% value = field.values.find_by(record_index: @record_index) %> 
@@ -28,8 +28,8 @@
           <%= text_field_tag field_name, field_value, class: 'form-control w-100', type: 'date', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Oui_non?' %>
           <br>
-          <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui'), 'data-testid': field.name %> Oui 
-          <%= radio_button_tag field_name, 'Non', (field_value == 'Non'), 'data-testid': field.name %> Non
+          <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui'), class:'form-check-input', 'data-testid': field.name %> Oui 
+          <%= radio_button_tag field_name, 'Non', (field_value == 'Non'), class:'form-check-input ms-3', 'data-testid': field.name %> Non
         <% when 'Liste' %>
           <%= select_tag field_name, options_for_select(field.items_splitted, field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Formule' %>
@@ -40,9 +40,16 @@
           <% end %>
           <%= text_field_tag field_name, field_value, disabled: true, class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Signature' %>
-          <div class="sig" disabled=true>
-            <canvas class="pad" width="400" height="53"></canvas>
-            <%= hidden_field_tag field_name, nil, class: "output w-100", 'data-testid': field.name %>
+          <div id="signature">
+            <%= hidden_field_tag field_name, field_value, 'data-testid': "signature" %>
+            <div class="wrapper">
+              <canvas id="signature-pad" class="form-control" width=400 height=200></canvas>
+            </div>
+
+            <div style="margin-top: 8px;">
+              <button id="save" class="btn btn-sm btn-outline-success">Valider cette signature</button>
+              <a id="clear" class="btn btn-sm btn-outline-dark">Effacer</a>
+            </div>
           </div>
         <% when 'Texte_long' %>
           <%= text_area_tag field_name, field_value, autofocus: (index == 0),col: 10, row: 10, class: 'form-control w-100', 'data-testid': field.name %>
@@ -64,9 +71,8 @@
           <%= color_field_tag field_name, field_value, class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'GPS' %>
           <div data-controller="geolocation" class="input-group">
-            <%= text_field_tag field_name, field_value, class: 'form-control form-control-sm', 'data-geolocation-target': 'gpstextfield', required: field.obligatoire, 'data-testid': field.name %>
-            <button type="button" data-action="click->geolocation#search" class="btn btn-outline-primary" title="Position actuelle">
-              <%= evil_icon 'ei-location', class:'mt-1' %>
+            <%= text_field_tag field_name, field_value, class: 'form-control', 'data-geolocation-target': 'gpstextfield', required: field.obligatoire, 'data-testid': field.name %>
+            <button type="button" data-action="click->geolocation#search" class="btn btn-outline-primary btn-sm p-0" title="Position actuelle">
             </button>
           </div>
         <% when 'Collection' %>
@@ -75,7 +81,11 @@
             <% if params[:relation].present? && Relation.find(params[:relation]).field_id == field.id %>
               <% field_value = params[:value] %>
             <% end %>
-            <%= select_tag field_name, options_for_select(field.populate_linked_table.invert, field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %> 
+            <div class="d-flex align-items-center">
+              <%= select_tag field_name, options_for_select(field.populate_linked_table.invert, field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %> 
+              <%= link_to table_path(Table.find(field.relation.relation_with_id)), target: '_blank' do %>
+              <% end %>
+            </div>
           <% end %>
         <% when 'Utilisateur' %>
           <%= select_tag field_name, options_for_select(@table.users.pluck(:name), field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
@@ -84,7 +94,7 @@
         <% when 'QRCode', 'Distance' %>
           <%= text_field_tag field_name, field_value, class: 'form-control form-control-sm w-100', disabled: true %>
         <% when 'UUID' %>
-          <%= text_field_tag field_name, field_value || SecureRandom.uuid, class: 'form-control form-control-sm w-100' %>
+          <%= text_field_tag field_name, field_value || SecureRandom.uuid, class: 'form-control form-control-sm w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% end %>
       </fieldset>
     <% end %>
@@ -95,3 +105,24 @@
     <%= link_to "Annuler", request.referer %>
   </div>
 <% end %>
+
+
+<script>
+  var signaturePad = new SignaturePad(document.getElementById('signature-pad'));
+  var signatureField = document.querySelector("[data-testid=signature]");
+  console.log(signatureField);
+  var saveButton = document.getElementById('save');
+  var cancelButton = document.getElementById('clear');
+
+  saveButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    if (!signaturePad.isEmpty()) {
+      signatureField.setAttribute('value', signaturePad.toDataURL("image/svg+xml"));
+    }
+  });
+
+  cancelButton.addEventListener('click', function (event) {
+    signaturePad.clear();
+    signatureField.setAttribute('value', "");
+  });
+</script>

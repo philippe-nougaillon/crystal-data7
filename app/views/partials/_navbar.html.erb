@@ -1,31 +1,46 @@
-<nav class="nav d-none d-lg-flex flex-column shadow gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100 align-items-center" data-turbo="false">
+<nav class="nav d-none d-lg-flex flex-column shadow gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100 align-items-center">
   <div class="flex-fill d-flex flex-column gap-5 mt-4">
     <li class="nav-item">
-      <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Ma collection favorite/Page d'accueil" do %>
-        <%= evil_icon 'ei-star', size: :m, class: 'text-primary' %>
+      <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Ma collection favorite/Page d'accueil", class:'d-flex flex-column align-items-center text-decoration-none' do %>
+        <span class="material-symbols-outlined">
+          stars
+        </span>
+        Favori
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to tables_path, title: "Liste des Objets" do %>
-        <%= evil_icon 'ei-archive', size: :m, class: 'text-info' %>
+      <%= link_to tables_path, title: "Liste des Objets", class:'d-flex flex-column align-items-center text-decoration-none text-info' do %>
+      <span class="material-symbols-outlined">
+        database
+      </span>
+      Objets
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to filters_path, title: "Liste des Filtres" do %>
-        <%= evil_icon 'ei-search', size: :m, class: 'text-success' %>
+      <%= link_to filters_path, title: "Liste des Filtres", class:'d-flex flex-column align-items-center text-decoration-none text-success' do %>
+      <span class="material-symbols-outlined">
+        tune
+      </span>
+      Filtres
       <% end %>
     </li>
   </div>
   <% if user_signed_in? %>
     <li class="nav-item">
-      <%= link_to current_user, title: "Profil utilisateur" do %>
-        <%= evil_icon 'ei-user', size: :m, class: 'text-black-50' %>
+      <%= link_to current_user, title: "Profil utilisateur", class:'d-flex flex-column align-items-center text-decoration-none text-black-50' do %>
+      <span class="material-symbols-outlined">
+        badge
+      </span>
+      Profil
       <% end %>
     </li>
   <% end %>
   <li class="nav-item">
-    <%= link_to a_propos_path, title: "À Propos de CrystalData" do %>
-      <%= evil_icon 'ei-question', size: :m, class: 'text-black-50' %>
+    <%= link_to a_propos_path, title: "À Propos de CrystalData", class:'d-flex flex-column align-items-center text-decoration-none text-black-50' do %>
+    <span class="material-symbols-outlined">
+      help
+    </span>
+    À Propos
     <% end %>
   </li>
 </nav>
@@ -34,16 +49,7 @@
   <div class="container-fluid">
     <% if controller_name == "tables" && action_name == "show" %>
       <ul class='mb-0 px-0' style='list-style-type: none;'>
-        <li class="nav-item dropdown">
-          <a class="navbar-brand nav-link dropdown-toggle text-primary fs-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <%= @table.name.humanize.pluralize %>
-          </a>
-          <ul class="dropdown-menu">
-            <% current_user.tables.where.not(name: @table.name).each do |table| %>
-              <li><%= link_to table.name.humanize.pluralize, table_path(table), class: 'dropdown-item fs-5' %></li>
-            <% end %>
-          </ul>
-        </li>
+        <%= render partial: 'partials/navbar_table_show'%>
       </ul>
     <% else %>
       <h1 class="navbar-brand mb-0">
@@ -57,56 +63,76 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'nav-link text-primary d-flex align-items-center gap-1' do %>
-            <%= evil_icon 'ei-star' %>
+            <span class="material-symbols-outlined">
+              stars
+            </span>
             <%= user_signed_in? ? 'Ma collection favorite' : 'Accueil' %>
           <% end %>
         </li>
         <li class="nav-item">
           <%= link_to tables_path, title: "Liste des Objets", class: 'nav-link text-info d-flex align-items-center gap-1' do %>
-            <%= evil_icon 'ei-archive' %>
+            <span class="material-symbols-outlined">
+              database
+            </span>
             Objets
           <% end %>
         </li>
         <li class="nav-item">
           <%= link_to filters_path, title: "Liste des filtres", class: 'nav-link text-success d-flex align-items-center gap-1' do %>
-            <%= evil_icon 'ei-search' %>
-            Mes Filtres
-          <% end %>
-        </li>
-        <% if controller_name == "tables" && %i[index new].include?(action_name) %>
-          <li class="nav-item dropdown">
-            <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              --- <%= @table.name.upcase %>
+            <span class="material-symbols-outlined">
+              Tune
             </span>
-            <ul class="dropdown-menu">
-              <% if policy(@table).show_attrs? %>
-                <li><%= link_to 'Modifier Attributs', show_attrs_path(id:@table), class:'dropdown-item', title:"Modifier les attributs de l'Objet '#{@table.name}'" %> </li>
-              <% end %>
-              <% if policy(@table).edit? %>
-                <li><%= link_to 'Modifier Objet', edit_table_path(id:@table), class:'dropdown-item', title:"Modifier l'Objet '#{@table.name}'" %> </li>
-              <% end %>
-              <% if policy(@table).partages? %>
-                <li><%= link_to "Partages", partages_path(@table), class:'dropdown-item', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" %></li>
-              <% end %>
-              <% if policy(@table).logs? %>
-                <li><%= link_to 'Audit Trail', logs_path(id:@table), class:'dropdown-item', title:"Historique des modifications de l'Objet '#{@table.name}'" %></li>
-              <% end %>
-            </ul>
-          </li>
-        <% end %>
-        <li class="nav-item">
-          <%= link_to a_propos_path, title: "À Propos de CrystalData", class: 'nav-link text-black-50 d-flex align-items-center gap-1' do %>
-            <%= evil_icon 'ei-question' %>
-            À Propos
+            Filtres
           <% end %>
         </li>
         <% if user_signed_in? %>
           <li class="nav-item">
             <%= link_to current_user, title: "Profil utilisateur", class: 'nav-link text-black-50 d-flex align-items-center gap-1' do %>
-              <%= evil_icon 'ei-user' %>
+              <span class="material-symbols-outlined">
+                badge
+              </span>
               Profil
             <% end %>
           </li>
+        <% end %>
+        <li class="nav-item">
+          <%= link_to a_propos_path, title: "À Propos de CrystalData", class: 'nav-link text-black-50 d-flex align-items-center gap-1' do %>
+            <span class="material-symbols-outlined">
+              help
+            </span>
+            À Propos
+          <% end %>
+        </li>
+        <% if controller_name == "tables" && action_name == "show" %>
+          <hr>
+          <% if policy(@table).show_attrs? %>
+            <li class="nav-item">
+              <%= link_to show_attrs_path(id:@table), class:'nav-link', title:"Modifier les attributs de l'Objet '#{@table.name}'" do %> 
+                Modifier Attributs
+              <% end %>
+            </li>
+          <% end %>
+          <% if policy(@table).edit? %>
+            <li class="nav-item">
+              <%= link_to edit_table_path(id:@table), class:'nav-link', title:"Modifier l'Objet '#{@table.name}'" do %> 
+                Modifier Objet
+              <% end %>
+            </li>
+          <% end %>
+          <% if policy(@table).partages? %>
+            <li class="nav-item">
+              <%= link_to partages_path(@table), class:'nav-link', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" do %>
+                Partages
+              <% end %>
+            </li>
+          <% end %>
+          <% if policy(@table).logs? %>
+            <li class="nav-item">
+              <%= link_to logs_path(id:@table), class:'nav-link', title:"Historique des modifications de l'Objet '#{@table.name}'" do %>
+                Audit Trail
+              <% end %>
+            </li>
+          <% end %>
         <% end %>
       </ul>
     </div>

@@ -1,0 +1,34 @@
+<%= turbo_frame_tag "partage_frame" do %>
+  <h2 class="text-black-50 my-3">
+    Partager l'objet '<%= @table.name.humanize %>' avec un autre utilisateur
+  </h2>
+
+  <%= form_for :user, url: '/add_user_do' do %>
+    <div data-controller="partage">
+      <%= hidden_field_tag :id, params[:id] %>
+
+      <div class="col-sm-5">
+        <div class="mb-4">
+          <%= radio_button_tag :type_partage, 'list', true, data: { 'action': 'change->partage#change'}, class: 'form-check-input' %> Collaborateurs
+          <%= radio_button_tag :type_partage, 'text', false, data: { 'action': 'change->partage#change', 'partage-target': 'source' }, class: 'form-check-input ms-5' %> Autre
+        </div>
+
+        <div data-partage-target='text' class="mb-4">
+          <%= label_tag :email_text, "Email" %>
+          <%= text_field_tag :email_text, nil, class:'form-control w-100', type: :email %>
+          <div class="form-text">L'utilisateur doit déjà exister</div>
+        </div>
+
+        <div data-partage-target='list' class="mb-4">
+          <%= label_tag :email_list, 'Choisissez parmi vos collaborateurs' %>
+          <%= select_tag :email_list, options_for_select(others), include_blank: true, class: 'form-select w-100 mb-4' %>
+        </div>
+
+        <%= label_tag :role, 'Rôle' %>
+        <%= select_tag :role, options_for_select(TablesUser.roles.keys.reject { |e| e == "Propriétaire" }), class:'form-select', required: true %>
+        <br>
+        <%= submit_tag "Partager", class: 'btn btn-outline-primary', 'data-turbo-frame': "_top" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

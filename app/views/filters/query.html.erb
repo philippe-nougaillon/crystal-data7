@@ -1,5 +1,4 @@
 <div class="my-4 d-flex align-items-center text-success gap-2">
-  <%= evil_icon 'ei-search', size: :m %>
   <h1 class="mb-0 d-inline">
     <%= @filter.name %>
     [<%= @filter.table.name.pluralize %>]
@@ -10,7 +9,7 @@
   <div class="row row-cols-sm-2 row-cols-lg-3 gap-3">
   <% @filter.table.fields.ordered.each_with_index do |field, index| %>
     <div class="row">
-      <div class="col">
+      <div class="col px-auto">
         <span class="fw-bold"><%= field.name %></span>
         <% if field.is_numeric %>
           <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
