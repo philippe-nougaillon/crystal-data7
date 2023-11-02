@@ -73,6 +73,9 @@
           <div data-controller="geolocation" class="input-group">
             <%= text_field_tag field_name, field_value, class: 'form-control', 'data-geolocation-target': 'gpstextfield', required: field.obligatoire, 'data-testid': field.name %>
             <button type="button" data-action="click->geolocation#search" class="btn btn-outline-primary btn-sm p-0" title="Position actuelle">
+              <span class="material-symbols-outlined mt-1 px-2">
+                my_location
+              </span>
             </button>
           </div>
         <% when 'Collection' %>

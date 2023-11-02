@@ -184,6 +184,59 @@ class Field < ApplicationRecord
 		# return dist
 	end
 
+	def icon
+		case self.datatype
+		when 'Texte'
+			'abc'
+		when 'Nombre'
+			'tag'
+		when 'Euros'
+			'euro'
+		when 'Formule'
+			'calculate'
+		when 'Texte_long'
+			'notes'
+		when 'Date'
+			'calendar_today'
+		when 'Oui_non?'
+			'help'
+		when 'Collection'
+			'database'
+		when 'Liste'
+			'format_list_numbered'
+		when 'Fichier'
+			'description'
+		when 'Signature'
+			'signature'
+		when 'Texte_riche'
+			'text_snippet'
+		when 'Image'
+			'image'
+		when 'Workflow'
+			'steppers'
+		when 'URL'
+			'link'
+		when 'Couleur'
+			'palette'
+		when 'GPS'
+			'my_location'
+		when 'PDF'
+			'picture_as_pdf'
+		when 'Utilisateur'
+			'person'
+		when 'Vidéo_YouTube'
+			'play_circle'
+		when 'QRCode'
+			'qr_code_2'
+		when 'Distance'
+			'straighten'
+		when 'UUID'
+			'barcode'
+		else
+			'title'
+		end
+	end
+
 private
 
 	def slug_candidates
