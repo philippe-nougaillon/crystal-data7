@@ -56,7 +56,7 @@ Field.create!([
   {name: 'Intervention', table_id: 4, datatype: 'Collection', items: "[Intervention.\"Date,Client,Type,Etat,Technicien\"]", filtre: false, obligatoire: true, row_order: 4, operation: nil, slug: '4d9d1981-524a-4e0b-aab5-7fa81511b444'},
   {name: "Technicien",   table_id: 4, datatype: "Collection", items: "[Technicien.\"Nom,Prénom\"]", filtre: true, obligatoire: true, row_order: 5, operation: nil, slug: "c0e37920-9ec9-455a-846e-8a2d1ff42e39"},
 
-  {name: "Description", table_id: 2, datatype: "Signature", items: nil, filtre: false, obligatoire: false, row_order: 11, operation: nil, slug: "74601861-f2eb-4346-9303-69fefc4ae1ad"},
+  {name: "Signature Client", table_id: 2, datatype: "Signature", items: nil, filtre: false, obligatoire: false, row_order: 11, operation: nil, slug: "74601861-f2eb-4346-9303-69fefc4ae1ad"},
 ])
 
 Value.create!([
