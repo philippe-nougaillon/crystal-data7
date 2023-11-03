@@ -1,66 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <title>We're sorry, but something went wrong (500)</title>
+  <title>Problème serveur (Erreur 500) - CrystalDATA</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="apple-mobile-web-app-title" content="CrystalDATA">
+  <meta name="application-name" content="CrystalDATA">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
   <style>
-  .rails-default-error-page {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
-  }
+    body{
+      height: 100vh;
+      background-image: url("/http-erreurs-500-.jpg");
+      background-size: 45%;
+      background-position: 0% 15%;
+      background-repeat: no-repeat;
+      display: flex;
+    }
+    img#logo{
+      width: 10vw;
+      margin-top: 3%;
+      margin-left: 10%;
+    }
+    div#content{
+      margin-top: 5%;
+      margin-left: 33%;
+    }
+    h1,h2,p{
+      color: #27496B;
+    }
+    h1{
+      margin-top: 15%;
+      margin-bottom: 50px;
+    }
 
-  .rails-default-error-page div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
+    p{
+      font-size: 24px;
+    }
 
-  .rails-default-error-page div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+    @media screen and (max-width: 769px) {
+      body{
+        background-position: 75% 5%;
+      }
+      img#logo{
+        width: 30vw;
+        margin-top: 5%;
+        margin-left: 0;
+      }
+      body{
+        flex-direction: column;
+      }
+      div#content{
+        margin-left: 5%;
+        margin-right: 5%;
+      }
+    }
+    @media screen and (min-width: 1503px) {
+      img#logo{
+        margin-top: 10%;
+        margin-left: 25%;
+      }
+    }
 
-  .rails-default-error-page h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
-
-  .rails-default-error-page div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+    #content2{
+      display: flex;
+      flex-direction: column;
+      @media screen and (min-width: 600px) {
+        flex-direction: row;
+        
+      }
+    }
   </style>
 </head>
 
-<body class="rails-default-error-page">
-  <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <div>
-      <h1>We're sorry, but something went wrong.</h1>
+<body>
+  <div id="content2">
+    <img src="/http-erreurs-500-.jpg" style="flex-grow: 1">
+    <div style="flex-grow: 1">
+      <h1>
+        Aïe!
+        <br><br>
+        Le serveur a rencontré un problème inattendu qui l'empêche de répondre à la requête.
+      </h1>
+      <h2>Essayez de rafraichir la page, et si le problème persiste, n'hésitez pas à <a href="https://www.philnoug.com/contact">nous contacter</a>.</h2>
+      <br><br>
+      <p>
+        Cliquez 
+        <a href="/">ici</a>
+        pour revenir à la page d'accueil.
+      </p>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
   </div>
+  
 </body>
 </html>
