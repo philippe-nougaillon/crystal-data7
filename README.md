@@ -1,24 +1,6 @@
 # Vos données métier 'In da Cloud' 
 
 ## Application NO-CODE de base de données en ligne, qui vous permet de créer et de partager des collections d'Objets et formulaires variés avec vos collaborateurs
-
-Développeur d'applications métiers en entreprises depuis plus de 30 ans, j'ai souvent aidé mes clients à passer 
-d'un système d'information en silos, où les données métier de l'entreprise sont enfermées 
-dans des feuilles Excel, à un système de type plateforme où les données sont centralisées et 
-partagées entre les services depuis une source unique de confiance (<b>Single Source Of Truth</b>). 
-
-C'est pourquoi j'ai commencé le développement d'un outil NO-CODE et open-source, il y a bientôt 10 ans,  
-dans le but de couvrir les fonctions de base d'une plateforme d'information ouverte.
-
-Fort d'une expérience de plus de 30 ans sur les SGDB les plus intéressants de leurs époques 
-(SuperBase 64, Yes You Can, SuperDB, FoxPro, dBase 3/4, Paradox 3/4, Access, Delphi, VB4/5/6/SQL Server,
-C#/SQLite/MySQL, stack LAMP, Ruby on Rails...), ma vocation a toujours été d'aider mes clients à franchir 
-le pas vers le décloisonnement de leurs données, avec pour objectif une informatique de gestion plus efficace, 
-collaborative et centrée sur les objectifs. 
-	
-CrystalData a donc pour ambition d'être un petit concentré de toute mon expérience dans les L4G/SGBD/AGL, 
-et, pourquoi pas, de poser les fondations d'une future application sur mesure, la vôtre, 
-intégrant toutes vos spécificités, règles métier, Workflow, etc...
 	
 ### Principales fonctionnalités
 
@@ -101,6 +83,9 @@ Les types disponibles sont :
 			<li>
 				<b>UUID</b> : génère un identifiant unique pour chaque objet. (Universally Unique IDentifier)
 			</li>
+			<li>
+				<b>Signature</b> : permet de signer manuellement avec la souris ou sur un écran tactile.
+			</li>
 
 ### Relations entre objets
  
@@ -129,3 +114,24 @@ CrystalData a été développé par [Studio 'Philnoug & Partners'](https://www.p
 ### Besoin d'une nouvelle fonctionnalité ou d'une application sur mesure ? Nous vous la développons !
 
 Pour en savoir plus, [contactez-nous](https://www.philnoug.com/contact)
+
+### Historique et motivation
+
+Développeur d'applications métiers en entreprises depuis plus de 30 ans, j'ai souvent aidé mes clients à passer 
+d'un système d'information en silos, où les données métier de l'entreprise sont enfermées 
+dans des feuilles Excel, à un système de type plateforme où les données sont centralisées et 
+partagées entre les services depuis une source unique de confiance (<b>Single Source Of Truth</b>). 
+
+C'est pourquoi j'ai commencé le développement d'un outil NO-CODE et open-source, il y a bientôt 10 ans,  
+dans le but de couvrir les fonctions de base d'une plateforme d'information ouverte.
+
+Fort d'une expérience de plus de 30 ans sur les SGDB les plus intéressants de leurs époques 
+(SuperBase 64, Yes You Can, SuperDB, FoxPro, dBase 3/4, Paradox 3/4, Access, Delphi, VB4/5/6/SQL Server,
+C#/SQLite/MySQL, stack LAMP, Ruby on Rails...), ma vocation a toujours été d'aider mes clients à franchir 
+le pas vers le décloisonnement de leurs données, avec pour objectif une informatique de gestion plus efficace, 
+collaborative et centrée sur les objectifs. 
+	
+CrystalData a donc pour ambition d'être un petit concentré de toute mon expérience dans les L4G/SGBD/AGL, 
+et, pourquoi pas, de poser les fondations d'une future application sur mesure, la vôtre, 
+intégrant toutes vos spécificités, règles métier, Workflow, etc...
+
