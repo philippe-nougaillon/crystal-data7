@@ -18,8 +18,8 @@
   </div>
 
   <div class="text-black-50">
-    MÀJ le <%= l @table.last_update_at(@record_index) %>
-    (il y a <%= time_ago_in_words(@table.last_update_at(@record_index)) %>)
+    Modifié il y a <%= time_ago_in_words(@table.last_update_at(@record_index)) %>
+    (le <%= l @table.last_update_at(@record_index) %>)
   </div>
 </div>
 
