@@ -12,7 +12,7 @@
           <%= field.name.humanize %>
         </label>
         <% if value = values[index]%>
-          <div class="form-control w-100 min-h-100"> 
+          <div class="form-control w-100 min-h-field"> 
             <% case field.datatype when 'Fichier' %>
               <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
             <% when 'Image', 'PDF' %>
@@ -45,8 +45,6 @@
             <% when 'GPS' %>
               <% unless value.blank? %>
                 <%= render partial: 'partials/mapbox', locals: {value: value} %>
-              <% else %>
-                <br>
               <% end %>
             <% when 'Collection' %>
               <% linked_value = field.get_linked_table_record(value.to_i) %>

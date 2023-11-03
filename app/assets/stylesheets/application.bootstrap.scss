@@ -163,4 +163,9 @@ table, table * {
       }
     }
   }
-}@import 'actiontext.css';
+}
+
+.min-h-field{
+  min-height: 2.4rem;
+}
+@import 'actiontext.css';
