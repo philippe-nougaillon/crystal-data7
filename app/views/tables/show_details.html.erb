@@ -17,9 +17,9 @@
     <%= link_to "Retour", table_path(@table) %>
   </div>
 
-  <div class="mt-4">
-    <%= turbo_frame_tag "main_frame" do %>
-    <% end %>
+  <div class="text-black-50">
+    MÀJ le <%= l @table.last_update_at(@record_index) %>
+    (il y a <%= time_ago_in_words(@table.last_update_at(@record_index)) %>)
   </div>
 </div>
 
