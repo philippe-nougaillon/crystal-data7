@@ -36,7 +36,7 @@
     </li>
   <% end %>
   <li class="nav-item">
-    <%= link_to a_propos_path, title: "À Propos de CrystalData", class:'d-flex flex-column align-items-center text-decoration-none text-black-50' do %>
+    <%= link_to a_propos_path, title: "À Propos de CrystalDATA", class:'d-flex flex-column align-items-center text-decoration-none text-black-50' do %>
     <span class="material-symbols-outlined">
       help
     </span>
@@ -53,7 +53,7 @@
       </ul>
     <% else %>
       <h1 class="navbar-brand mb-0">
-        <%= link_to 'CrystalData', user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'text-decoration-none text-black' %>
+        <%= link_to 'CrystalDATA', user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'text-decoration-none text-black' %>
       </h1>
     <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,7 +96,7 @@
           </li>
         <% end %>
         <li class="nav-item">
-          <%= link_to a_propos_path, title: "À Propos de CrystalData", class: 'nav-link text-black-50 d-flex align-items-center gap-1' do %>
+          <%= link_to a_propos_path, title: "À Propos de CrystalDATA", class: 'nav-link text-black-50 d-flex align-items-center gap-1' do %>
             <span class="material-symbols-outlined">
               help
             </span>
