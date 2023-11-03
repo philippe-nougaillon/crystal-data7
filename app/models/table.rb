@@ -73,19 +73,19 @@ class Table < ApplicationRecord
 	end
 
 	def lecteur?(user)
-		self.tables_users.find_by(user_id: user.id).role == 'Lecteur'
+		self.tables_users.exists?(user_id: user.id) && self.tables_users.find_by(user_id: user.id).role == 'Lecteur'
 	end
 
 	def collecteur?(user)
-		self.tables_users.find_by(user_id: user.id).role == 'Collecteur'
+		self.tables_users.exists?(user_id: user.id) && self.tables_users.find_by(user_id: user.id).role == 'Collecteur'
 	end
 
 	def éditeur?(user)
-		self.tables_users.find_by(user_id: user.id).role == 'Éditeur'
+		self.tables_users.exists?(user_id: user.id) && self.tables_users.find_by(user_id: user.id).role == 'Éditeur'
 	end
 
 	def propriétaire?(user)
-		self.tables_users.find_by(user_id: user.id).role == 'Propriétaire'
+		self.tables_users.exists?(user_id: user.id) && self.tables_users.find_by(user_id: user.id).role == 'Propriétaire'
 	end
 
 private
