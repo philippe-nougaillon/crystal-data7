@@ -17,6 +17,9 @@ class CollectionToCsv < ApplicationService
         @table.fields.each_with_index do | field,index |
           if field.Collection?
             cols << (values[index] ? field.get_linked_table_record(values[index]).to_s.gsub("'", " ") : nil)
+          elsif field.Signature?
+            value = values[index].blank? ? 'Pas signé' : 'Signé'
+            cols << value
           else
             cols << (values[index] ? values[index].to_s.gsub("'", " ") : nil) 
           end

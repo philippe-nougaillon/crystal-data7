@@ -26,6 +26,9 @@ class CollectionToXls < ApplicationService
       @table.fields.each_with_index do | field,index |
         if field.Collection?
           fields_to_export << field.get_linked_table_record(values[index])
+        elsif field.Signature?
+          value = values[index].blank? ? 'Pas signé' : 'Signé'
+          fields_to_export << value
         else
           fields_to_export << values[index]
         end

@@ -2,8 +2,13 @@
   <td><%= i + 1 %></td>
   <td><b><%= field.name %></b></td>
   <td>
-    <%= field.datatype.humanize %>
-    <%= "= #{field.items}" unless field.items.blank? %>
+    <div class="d-flex gap-2">
+      <span class="material-symbols-outlined text-black-50">
+        <%= field.icon %>
+      </span>
+      <%= field.datatype.humanize %>
+      <%= "= #{field.items}" unless field.items.blank? %>
+    </div>
   </td>
   <td>
     <% if field.obligatoire %>Obligatoire<% end %>
