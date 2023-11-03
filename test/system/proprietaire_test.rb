@@ -9,7 +9,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   # Tables
   test "visiting the index" do
     visit tables_url
-    assert_selector "h1", text: "Mes Objets"
+    assert_selector "h1", text: "Objets"
   end
   
   test "creating a Table" do

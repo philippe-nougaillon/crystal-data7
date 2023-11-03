@@ -96,18 +96,18 @@ class TablesController < ApplicationController
         book = CollectionToXls.new(@table, @records).call
         file_contents = StringIO.new
         book.write file_contents # => Now file_contents contains the rendered file output
-        filename = "Export_#{@table.name.humanize}_#{Date.today.to_s}.xls"
+        filename = "Export_#{@table.name.humanize.pluralize}.xls"
         send_data file_contents.string.force_encoding('binary'), filename: filename 
       end
       format.csv do
         csv_string = CollectionToCsv.new(@table, @records).call
-        filename = "Export_#{@table.name.humanize}_#{Date.today.to_s}.csv"
+        filename = "Export_#{@table.name.humanize.pluralize}.csv"
         send_data csv_string, filename: filename
       end
       format.pdf do
         pdf = ExportPdf.new
         pdf.export_collection(@table, @records)
-        filename = "Export_#{@table.name}.pdf"
+        filename = "Export_#{@table.name.humanize.pluralize}.pdf"
         
         send_data pdf.render, filename: filename, type: 'application/pdf'
       end
