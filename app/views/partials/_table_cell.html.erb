@@ -9,7 +9,7 @@
           <%= link_to image_tag(blob.file.representation(resize_to_limit: [100, 100])), url_for(Blob.find(value).file), title: blob.file.filename %>
         <% end %>
       <% when 'Signature' %>
-        <img src=<%= value %>>
+        <img class="w-100" src=<%= value %>>
       <% when 'Date' %>
         <% unless value.blank? %>
           <%= link_to_if is_link, l(value.to_date), details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'text-black' %>

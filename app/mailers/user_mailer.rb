@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-	default from: '"CrystalData" <crystaldata@philnoug.com>'
+	default from: '"CrystalDATA" <crystaldata@philnoug.com>'
 
 	def notification(table, items)
 		@items = items
@@ -25,7 +25,7 @@ class UserMailer < ApplicationMailer
 	def new_user_notification
 		@user = params[:user]
 
-		mail(to: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com", subject:"[CrystalData] Un compte a été créé")
+		mail(to: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com", subject:"[CrystalDATA] Un compte a été créé")
 	end
 
 end

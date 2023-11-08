@@ -109,7 +109,7 @@ Un <b>éditeur</b> peut voir et modifier toutes les données.
 
 ### Développement, support et services
 
-CrystalData a été développé par [Studio 'Philnoug & Partners'](https://www.philnoug.com)
+CrystalDATA a été développé par [Studio 'Philnoug & Partners'](https://www.philnoug.com)
 
 ### Besoin d'une nouvelle fonctionnalité ou d'une application sur mesure ? Nous vous la développons !
 
