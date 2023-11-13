@@ -41,17 +41,19 @@ namespace :tables do
       end
     end
 
-    # maj du nombre de ligne de cette table
-    @new_table.update(record_index: @record_index)
-
     # execure requête d'insertion dans VALUES
-    # sql = "INSERT INTO values (field_id, table_id, user_id, data, created_at, updated_at, record_index) "
     sql = "INSERT INTO values (user_id, field_id, data, record_index, created_at, updated_at) "
     sql = sql + "VALUES #{inserts_value.join(', ')}"
-      CONN.execute sql
 
-    # execure requête d'insertion dans LOGS
-    #sql = "INSERT INTO logs ('field_id', 'user_id', 'message', 'created_at', 'updated_at', 'record_index', 'ip', 'action') VALUES #{inserts_log.join(", ")}"
-      #CONN.execute sql
+    begin
+      results = CONN.exec_query sql
+    rescue StandardError => e
+      puts e
+    end
+
+    if results
+      # màj du nombre de lignes de cette table
+      @new_table.update(record_index: @record_index)
+    end
   end
 end

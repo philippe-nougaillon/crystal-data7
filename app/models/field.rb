@@ -49,7 +49,7 @@ class Field < ApplicationRecord
 		end
 		begin
 			results = eval(formule_to_evaluate.delete('[]'))
-		rescue => e
+		rescue
 			results = 'Formule erronée'
 		end
 		return results
