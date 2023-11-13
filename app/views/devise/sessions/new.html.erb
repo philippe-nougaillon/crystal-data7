@@ -1,8 +1,10 @@
 <div class="d-flex flex-wrap flex-sm-nowrap gap-5 align-items-center">
 
-  <%= render 'partials/welcome' %>
+  <div class="w-100 p-sm-5 m-sm-5">
+    <%= render 'partials/welcome' %>
+  </div>
 
-  <div class="border p-4 p-sm-5">
+  <div class="w-75 border p-4 p-sm-5">
     <h2 class="text-center mb-5 text-secondary">Connexion</h2>
     <%= form_for resource, url: session_path(resource_name) do |f| %>
       <%= f.text_field :email, required: true, class: 'form-control w-100 mb-4', placeholder:'Adresse mail', type: :email %>
@@ -20,6 +22,6 @@
 
     <%# render "devise/shared/links" %>
 
-    <%= link_to "Se connecter en tant qu'invité (mode démonstration)", user_connect_guest_user_path(1), class: 'btn btn-outline-success' %>
+    <%= link_to "Se connecter en tant qu'invité", user_connect_guest_user_path(1), class: 'btn btn-outline-success' %>
   </div>
 </div>
