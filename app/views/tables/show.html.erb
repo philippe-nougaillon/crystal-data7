@@ -32,7 +32,7 @@
 
 <% if @table.fields.any? %>
   <%= form_tag table_path(@table.slug), {method: :get, class: 'd-flex gap-4 mb-4'} do |f| %>
-    <div class="d-flex gap-4 flex-wrap mb-4">
+    <div class="d-flex gap-4 flex-wrap">
       <div>
         <%= label_tag :search, "Rechercher" %>
         <%= text_field_tag :search, params[:search], onchange:'this.form.submit()', class:'form-control' %>
@@ -73,9 +73,21 @@
         <%= link_to "(+) #{@table.name.humanize}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
       <% end %>
     </div>
+
+    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+      <%= radio_button_tag :view, "table", (params[:view]=='table'), name:'view', id:'btnradio1', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
+      <label class="btn btn-outline-primary" for="btnradio1">Tableau</label>
+
+      <%= radio_button_tag :view, "map", (params[:view]=='map'), name:'view', id:'btnradio2', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
+      <label class="btn btn-outline-primary" for="btnradio2">Carte</label>
+    </div>
   <% end %>
 
-  <%= render partial: 'partials/table', locals: { table: @table, records: @records} %>
+  <% case params[:view] when 'table' %>
+    <%= render partial: 'partials/table', locals: { table: @table, records: @records} %>
+  <% when 'map' %>
+    <div id='map' style='height: 70vh;'></div>
+  <% end %>
 
 <% else %>
   <% unless params[:attrs] %>
@@ -85,3 +97,30 @@
     <% end %> 
   <% end %>
 <% end %>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoicGhpbG5vdWciLCJhIjoiY2pvNXRyczhjMDFkajNxcGVmNHZtcHZ4OSJ9.vcFMjboSUDUUg--tDsgapg';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    center: [2.407914616221202, 47.08362763879501],
+    zoom: 4,
+    style: 'mapbox://styles/mapbox/streets-v11'
+  });
+
+  <% Value.joins(:field).where(record_index: @records, 'field.datatype': 'GPS').each do |record| %>
+    <% unless record.data.empty? %>
+      var lng = <%= record.data.split(',').last.to_f %>
+      var lat = <%= record.data.split(',').first.to_f %>
+      var marker = new mapboxgl.Marker({ color: "#FF0000"})
+        .setLngLat([lng, lat])
+        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+        .setHTML("<a id='pin' href='#<%= @records.first %>'><h1 class='has-text-weight-bold has-text-centered is-size-6 mb-4'><%= @records.first %></h1><p class='is-size-7'><%= @records.first %></p><p class='is-size-7'><%= @records.first %> <%= @records.first %></p></a>"))
+        .addTo(map);
+    <% end %>
+  <% end %>
+
+  map.addControl(new mapboxgl.FullscreenControl());
+  map.addControl(new mapboxgl.NavigationControl());
+  
+  setTimeout(function(){ map.setLayoutProperty('country-label', 'text-field', ['get', 'name_fr']); }, 3000);
+</script>

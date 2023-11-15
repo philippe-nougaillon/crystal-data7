@@ -15,6 +15,9 @@ class TablesController < ApplicationController
   # GET /tables/1
   # GET /tables/1.json
   def show
+    unless params[:view].present?
+      params[:view] = 'table'
+    end
     @sum = Hash.new(0)
     @filters = {}
     @filter_results = {}
