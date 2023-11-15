@@ -74,12 +74,22 @@
       <% end %>
     </div>
 
-    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-      <%= radio_button_tag :view, "table", (params[:view]=='table'), name:'view', id:'btnradio1', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-      <label class="btn btn-outline-primary" for="btnradio1">Tableau</label>
+    <div>
+      <%= label_tag 'Vue' %>
+      <br>
+      <div class="btn-group flex-no-wrap" role="group" aria-label="Basic radio toggle button group">
+        <%= radio_button_tag :view, "table", (params[:view]=='table'), name:'view', id:'btnradio1', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
+        <label class="btn btn-outline-primary" for="btnradio1">Tableau</label>
 
-      <%= radio_button_tag :view, "map", (params[:view]=='map'), name:'view', id:'btnradio2', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-      <label class="btn btn-outline-primary" for="btnradio2">Carte</label>
+        <%= radio_button_tag :view, "map", (params[:view]=='map'), name:'view', id:'btnradio2', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
+        <label class="btn btn-outline-primary" for="btnradio2">Carte</label>
+
+        <%= radio_button_tag :view, "graph", (params[:view]=='graph'), name:'view', id:'btnradio3', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
+        <label class="btn btn-outline-primary" for="btnradio3">Graphe</label>
+
+        <%= radio_button_tag :view, "calendar", (params[:view]=='calendar'), name:'view', id:'btnradio4', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
+        <label class="btn btn-outline-primary" for="btnradio4">Calendrier</label>
+      </div>
     </div>
   <% end %>
 
@@ -87,6 +97,10 @@
     <%= render partial: 'partials/table', locals: { table: @table, records: @records} %>
   <% when 'map' %>
     <div id='map' style='height: 70vh;'></div>
+  <% when 'graph' %>
+    <p>Pas encore disponible</p>
+  <% when 'calendar' %>
+    <p>Pas encore disponible</p>
   <% end %>
 
 <% else %>
@@ -107,7 +121,7 @@
     style: 'mapbox://styles/mapbox/streets-v11'
   });
 
-  <% Value.joins(:field).where(record_index: @records, 'field.datatype': 'GPS').each do |record| %>
+  <% @table.values.joins(:field).where(record_index: @records, 'field.datatype': 'GPS').each do |record| %>
     <% unless record.data.empty? %>
       var lng = <%= record.data.split(',').last.to_f %>
       var lat = <%= record.data.split(',').first.to_f %>
