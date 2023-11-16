@@ -98,7 +98,11 @@
   <% when 'map' %>
     <div id='map' style='height: 70vh;'></div>
   <% when 'graph' %>
-    <p>Pas encore disponible</p>
+    <div class="shadow mx-auto my-5 p-5">
+      <canvas class="p-3" id="chartBar"></canvas>
+    </div>
+    <%= @table.values.joins(:field).where(record_index: @records, 'field.datatype': 'Nombre').pluck(:data).to_json.html_safe %>
+    <%= @records.to_json.html_safe %>
   <% when 'calendar' %>
     <p>Pas encore disponible</p>
   <% end %>
@@ -137,4 +141,33 @@
   map.addControl(new mapboxgl.NavigationControl());
   
   setTimeout(function(){ map.setLayoutProperty('country-label', 'text-field', ['get', 'name_fr']); }, 3000);
+</script>
+
+<!-- Required chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Chart bar -->
+<script>
+  const dataBarChart = {
+    labels: <%= @records.to_json.html_safe %>,
+    datasets: [
+      {
+        label: "<%= @table.fields.where(datatype: 'Nombre').first.name %>",
+        backgroundColor: "hsl(252, 82.9%, 67.8%)",
+        borderColor: "hsl(252, 82.9%, 67.8%)",
+        data: <%= @table.values.joins(:field).where(record_index: @records, 'field.datatype': 'Nombre').pluck(:data).to_json.html_safe %>,
+      },
+    ],
+  };
+
+  const configBarChart = {
+    type: "bar",
+    data: dataBarChart,
+    options: {},
+  };
+
+  var chartBar = new Chart(
+    document.getElementById("chartBar"),
+    configBarChart
+  );
 </script>
