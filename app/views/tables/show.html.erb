@@ -104,7 +104,9 @@
     <%= @table.values.joins(:field).where(record_index: @records, 'field.datatype': 'Nombre').pluck(:data).to_json.html_safe %>
     <%= @records.to_json.html_safe %>
   <% when 'calendar' %>
-    <p>Pas encore disponible</p>
+    <%= month_calendar do |date| %>
+      <%= date %>
+    <% end %>
   <% end %>
 
 <% else %>
