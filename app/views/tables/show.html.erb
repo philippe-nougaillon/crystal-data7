@@ -31,7 +31,7 @@
 </nav>
 
 <% if @table.fields.any? %>
-  <%= form_tag table_path(@table.slug), {method: :get, class: 'd-flex flex-wrap align-items-end gap-4 mb-4'} do |f| %>
+  <%= form_tag table_path(@table.slug), {method: :get, class: 'd-flex flex-wrap flex-sm-nowrap align-items-start justify-content-between gap-4 mb-4'} do |f| %>
     <div class="d-flex gap-4 flex-wrap">
       <div>
         <%= label_tag :search, "Rechercher" %>
@@ -75,7 +75,6 @@
     </div>
 
     <div>
-      <%= label_tag 'Vue' %>
       <br>
       <div class="btn-group flex-no-wrap" role="group" aria-label="Basic radio toggle button group">
         <%= radio_button_tag :view, "table", (params[:view]=='table'), name:'view', id:'btnradio1', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
