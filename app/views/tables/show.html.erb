@@ -197,12 +197,15 @@
   const dataBarChart = {
     labels: <%= @labels.to_json.html_safe %>,
     datasets: [
-      {
-        label: "<%= @title %>",
-        backgroundColor: "hsl(252, 82.9%, 67.8%)",
-        borderColor: "hsl(252, 82.9%, 67.8%)",
-        data: <%= @table.values.joins(:field).where(record_index: @records, 'field.datatype': ['Nombre','Euros']).pluck(:data).to_json.html_safe %>,
-      },
+      <% @table.fields.where(datatype: ['Nombre', 'Euros']).each_with_index do |field, index| %>
+        <% colors = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270] %>
+        {
+          label: "<%= field.name %>",
+          backgroundColor: "hsl(<%= colors[index] %>, 82.9%, 67.8%)",
+          borderColor: "hsl(252, 82.9%, 67.8%)",
+          data: <%= @table.values.where(record_index: @records, field_id: field.id).pluck(:data).to_json.html_safe %>,
+        },
+      <% end %>
     ],
   };
 
