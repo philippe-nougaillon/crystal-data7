@@ -1,0 +1,5 @@
+<div class="d-flex flex-wrap gap-1">
+  <% @records.each do |record| %>
+    <%= render partial: 'card', locals: { table: @table, record_index: record} %>
+  <% end %>
+</div>
