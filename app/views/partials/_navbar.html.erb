@@ -85,49 +85,31 @@
             Filtres
           <% end %>
         </li>
-        <% if user_signed_in? %>
-          <li class="nav-item">
-            <%= link_to current_user, title: "Profil utilisateur", class: 'nav-link text-black-50 d-flex align-items-center gap-1' do %>
-              <span class="material-symbols-outlined">
-                badge
-              </span>
-              Profil
-            <% end %>
-          </li>
-        <% end %>
-        <li class="nav-item">
-          <%= link_to a_propos_path, title: "À Propos de CrystalDATA", class: 'nav-link text-black-50 d-flex align-items-center gap-1' do %>
-            <span class="material-symbols-outlined">
-              help
-            </span>
-            À Propos
-          <% end %>
-        </li>
+        
         <% if controller_name == "tables" && action_name == "show" %>
-          <hr>
           <% if policy(@table).show_attrs? %>
-            <li class="nav-item">
+            <li class="nav-item text-end">
               <%= link_to show_attrs_path(id:@table), class:'nav-link', title:"Modifier les attributs de l'Objet '#{@table.name}'" do %> 
                 Modifier Attributs
               <% end %>
             </li>
           <% end %>
           <% if policy(@table).edit? %>
-            <li class="nav-item">
+            <li class="nav-item text-end">
               <%= link_to edit_table_path(id:@table), class:'nav-link', title:"Modifier l'Objet '#{@table.name}'" do %> 
                 Modifier Objet
               <% end %>
             </li>
           <% end %>
           <% if policy(@table).partages? %>
-            <li class="nav-item">
+            <li class="nav-item text-end">
               <%= link_to partages_path(@table), class:'nav-link', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" do %>
                 Partages
               <% end %>
             </li>
           <% end %>
           <% if policy(@table).logs? %>
-            <li class="nav-item">
+            <li class="nav-item text-end">
               <%= link_to logs_path(id:@table), class:'nav-link', title:"Historique des modifications de l'Objet '#{@table.name}'" do %>
                 Audit Trail
               <% end %>

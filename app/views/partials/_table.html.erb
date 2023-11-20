@@ -6,12 +6,17 @@
           <%= render partial: 'partials/table_header_cell', locals: {table:, field:, index:} %>
         <% end %>
         <th>
-          <div class="d-flex gap-2">
+          <%= link_to url_for(params.permit!.merge(sort_by: 0)), class:'text-decoration-none d-flex gap-2' do %>
             <span class="material-symbols-outlined text-black-50">
               update
             </span>
-            MÀJ
-          </div>
+            <span class="text-nowrap text-black">
+              MÀJ
+              <% if params[:sort_by] == '0' %>
+                <span class="text-decoration-none text-warning "><%= (session[:order_by] == 'ASC') ? '△' : '▽' %></span>
+              <% end %>
+            </span>
+          <% end %>
         </th>
         <th></th>
       </tr>

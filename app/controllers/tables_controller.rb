@@ -15,6 +15,10 @@ class TablesController < ApplicationController
   # GET /tables/1
   # GET /tables/1.json
   def show
+    unless params[:view].present?
+      params[:view] = 'table'
+    end
+
     @sum = Hash.new(0)
     @filters = {}
     @filter_results = {}
@@ -81,13 +85,25 @@ class TablesController < ApplicationController
       # ordre de tri ASC/DESC
       order_by = (params[:sort_by] == session[:sort_by]) ? ((session[:order_by] == "DESC") ? "ASC" : "DESC") : "ASC"
       
-      @records = @table.values.records_at(@records)
-                              .where(field_id: params[:sort_by])
-                              .order("data #{order_by}")
-                              .pluck(:record_index)
+      if params[:sort_by] == '0'
+        @records = @table.values.records_at(@records).order("values.updated_at #{order_by}").pluck(:record_index).uniq
+      else
+        @records = @table.values.records_at(@records)
+                                .where(field_id: params[:sort_by])
+                                .order("data #{order_by}")
+                                .pluck(:record_index)
+      end
       
       session[:sort_by] = params[:sort_by]
       session[:order_by] = order_by
+    end
+
+    if params[:view] == 'graph' && @table.fields.exists?(datatype: ['Nombre','Euros'])
+      @title = @table.fields.where(datatype: ['Nombre','Euros']).first.name
+      field_id = @table.fields.where(datatype: 'Texte').first.id
+      @labels = @table.values.where(record_index: @records, field_id: field_id).pluck(:data)
+    elsif params[:view] == 'calendar' && @table.fields.exists?(datatype: ['Date'])
+
     end
 
     respond_to do |format|
@@ -299,7 +315,14 @@ class TablesController < ApplicationController
 
   def import_do
     ImportCollection.new(params[:upload], current_user, request).call
-    redirect_to tables_path, notice: "Importation terminée. Table '#{Table.last.name.humanize}' créée avec succès."
+    table = current_user.tables.last
+    if table.record_index > 0
+      flash[:notice] = "Importation terminée. Table '#{table.name.humanize}' créée avec succès."
+    else
+      flash[:alert] = "L'importation a échouée. Vérifiez que les séparateurs, le type et le format soient corrects."
+      table.destroy
+    end
+    redirect_to tables_path
   end
 
   def add_user_do

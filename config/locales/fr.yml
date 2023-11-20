@@ -231,3 +231,7 @@ fr:
   simple_form:
     error_notification:
       user: "A custom message:"
+  simple_calendar:
+    previous: "navigate_before"
+    next: "navigate_next"
+    week: Semaine
