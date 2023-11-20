@@ -251,3 +251,35 @@ table, table * {
 
   .has-events {}
 }
+
+.calendar tr:nth-child(odd) {
+  background: red;
+}
+
+.calendar-header {
+  font-size:30px;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+.day { 
+  height:100px;
+  width:14.28%;
+  border:1px solid lightgrey;
+  vertical-align:top;
+  padding-bottom:10px;
+}
+
+.prev-month {
+  background: WhiteSmoke;
+  border: 1px solid lightgrey;
+}
+
+.next-month {
+  background: WhiteSmoke;
+  border: 1px solid lightgrey;
+}
+
+.prev-month #date, .next-month #date {
+  color: lightgrey
+}

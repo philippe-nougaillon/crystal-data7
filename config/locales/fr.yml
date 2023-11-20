@@ -232,6 +232,6 @@ fr:
     error_notification:
       user: "A custom message:"
   simple_calendar:
-    previous: "<<"
-    next: ">>"
+    previous: "navigate_before"
+    next: "navigate_next"
     week: Semaine
