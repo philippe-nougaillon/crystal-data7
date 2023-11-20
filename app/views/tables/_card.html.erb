@@ -5,6 +5,7 @@
     </p>
     
     <% @table.fields.détaillable.ordered.each_with_index do |field, index| %>
+      <% next if index.zero? %>
       <% values = @table.value_datas_détaillable(record_index) %>
       <% value = field.values.find_by(record_index: record_index) %> 
       <% field_value = value.data if value %>
