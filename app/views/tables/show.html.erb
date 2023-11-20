@@ -98,17 +98,17 @@
           </span>
         </label>
 
-        <%= radio_button_tag :view, "graph", (params[:view]=='graph'), name:'view', id:'btnradio4', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio4" title="Diagramme en barres">
+        <%= radio_button_tag :view, "map", (params[:view]=='map'), name:'view', id:'btnradio4', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
+        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio4" title="Cartographique">
           <span class="material-symbols-outlined">
-            bar_chart_4_bars
+            map
           </span>
         </label>
 
-        <%= radio_button_tag :view, "map", (params[:view]=='map'), name:'view', id:'btnradio5', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio5" title="Cartographique">
+        <%= radio_button_tag :view, "graph", (params[:view]=='graph'), name:'view', id:'btnradio5', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
+        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio5" title="Diagramme en barres">
           <span class="material-symbols-outlined">
-            map
+            bar_chart_4_bars
           </span>
         </label>
       </div>
@@ -117,6 +117,8 @@
 
   <% case params[:view] when 'table' %>
     <%= render partial: 'partials/table', locals: { table: @table, records: @records} %>
+  <% when 'card' %>
+    <%= render partial: 'cards', locals: { table: @table, records: @records} %>
   <% when 'map' %>
     <div id='map' style='height: 70vh;'></div>
   <% when 'graph' %>

@@ -1,0 +1,66 @@
+<%= link_to details_path(@table.slug, record_index: record_index), title: 'Voir les détails', class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
+  <div class="shadow-sm p-4 h-100">
+    <p class="fw-bold">
+      <%= @table.fields.first.values.find_by(record_index: record_index).data %>
+    </p>
+    
+    <% @table.fields.détaillable.ordered.each_with_index do |field, index| %>
+      <% values = @table.value_datas_détaillable(record_index) %>
+      <% value = field.values.find_by(record_index: record_index) %> 
+      <% field_value = value.data if value %>
+      <br>
+
+      <% if value = values[index]%>
+        <% case field.datatype when 'Fichier' %>
+          <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
+        <% when 'Image', 'PDF' %>
+          <% blob = Blob.find(value) %>
+          <% if blob.file.representable? %>
+            <%= link_to url_for(blob.file), {target: "_blank"} do %>
+              <%= image_tag(blob.file.representation(resize_to_limit: [200, 250]), class: 'shadow') %>
+            <% end %>
+          <% end %>
+        <% when 'Signature' %>
+          <img src=<%= value %>>
+        <% when 'Date' %>
+          <%= l(value.to_date) unless value.blank? %>
+        <% when 'Texte_long' %>
+          <%= value %>
+        <% when 'Texte_riche' %>
+          <%= simple_format(value) %>
+        <% when 'Euros' %>
+          <%= number_to_currency(value) %>
+        <% when 'Formule' %>
+          <%= field.evaluate(@table, record_index) %>
+        <% when 'Workflow' %>
+          <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
+          <% color = items[value] %>
+          <span class="badge bg-<%= color %>"><%= value %></span>
+        <% when 'URL' %>
+          <%= link_to URI.parse(value).host, value, target: "_blank" %>
+        <% when 'Couleur' %>
+          <span style="background-color: <%= value %>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <% when 'GPS' %>
+          <!--
+            <% unless value.blank? %>
+              <%= render partial: 'partials/mapbox', locals: {value: value} %>
+            <% end %>
+          -->
+        <% when 'Collection' %>
+          <% linked_value = field.get_linked_table_record(value.to_i) %>
+          <%= link_to linked_value, details_path(Table.find(field.relation.relation_with_id).slug, record_index: value) %>
+        <% when 'Utilisateur' %>
+          <%= value %>
+        <% when 'Vidéo_YouTube' %>
+          <iframe width="280" height="157" src="<%= value %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <% when 'QRCode' %>
+          <div class="w-sm-50"><%= raw value %></div>
+        <% when 'Distance' %>
+          <%= value %>
+        <% else %>
+          <%= value %>
+        <% end %>
+      <% end %>
+    <% end%>
+  </div>
+<% end %>
