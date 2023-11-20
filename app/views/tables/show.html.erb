@@ -31,7 +31,7 @@
 </nav>
 
 <% if @table.fields.any? %>
-  <%= form_tag table_path(@table.slug), {method: :get, class: 'd-flex gap-4 mb-4'} do |f| %>
+  <%= form_tag table_path(@table.slug), {method: :get, class: 'd-flex flex-wrap gap-4 mb-4'} do |f| %>
     <div class="d-flex gap-4 flex-wrap">
       <div>
         <%= label_tag :search, "Rechercher" %>
