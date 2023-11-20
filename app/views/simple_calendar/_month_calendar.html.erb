@@ -1,11 +1,10 @@
 <div class="simple-calendar">
-  <div class="calendar-heading">
-    <time datetime="<%= start_date.strftime('%Y-%m') %>" class="calendar-title"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></time>
-
-    <nav>
-      <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view %>
-      <%= link_to t('simple_calendar.today', default: 'Today'), calendar.url_for_today_view %>
-      <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view %>
+  <div class="calendar-heading mb-4">
+    <nav class="d-flex justify-content-center align-items-center">
+      <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view, class: "btn btn-outline-primary" %>
+      <time datetime="<%= start_date.strftime('%Y-%m') %>" class="calendar-title fs-3 fw-bold mx-3"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></time>
+      <%# link_to t('simple_calendar.today', default: 'Today'), calendar.url_for_today_view %>
+      <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view, class: "btn btn-outline-primary" %>
     </nav>
   </div>
 
@@ -25,10 +24,17 @@
             <%= content_tag :td, class: calendar.td_classes_for(day) do %>
               <%# instance_exec(day, calendar.sorted_events_for(day), &passed_block) %>
               <%= day.day %>
-              <% values = @table.values.joins(:field).where(record_index: @records, data: day, 'field.datatype': 'Date') %>
-              <% if values.any? %>
-              <br>
-                <%= values.pluck(:data) %>
+              <% records_index = @table.values.joins(:field).where(record_index: @records, data: day, 'field.datatype': 'Date').pluck(:record_index) %>
+              <% records_index.each do |record_index| %>
+                <br>
+                <%= link_to details_path(@table.slug, record_index:), title: 'Voir les détails de cette ligne', class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
+                  <div class="shadow-sm pb-3 px-2 bg-light">
+                    <% @table.values.where(record_index: record_index).first(5).pluck(:data).each do |value| %>
+                      <br>
+                      <%= value %>
+                    <% end %>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
