@@ -100,8 +100,13 @@ class TablesController < ApplicationController
 
     if params[:view] == 'graph' && @table.fields.exists?(datatype: ['Nombre','Euros'])
       @title = @table.fields.where(datatype: ['Nombre','Euros']).first.name
-      field_id = @table.fields.where(datatype: 'Texte').first.id
-      @labels = @table.values.where(record_index: @records, field_id: field_id).pluck(:data)
+      fields_id = @table.fields.where.not(datatype: ['Nombre','Euros']).first(2).pluck(:id)
+      labels = []
+      fields_id.each do |field|
+        labels << @table.values.where(record_index: @records, field_id: field).pluck(:data)
+      end
+      @labels = labels.transpose
+
     elsif params[:view] == 'calendar' && @table.fields.exists?(datatype: ['Date'])
 
     end
