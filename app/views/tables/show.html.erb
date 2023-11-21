@@ -78,35 +78,35 @@
       <br>
       <div class="btn-group flex-no-wrap" role="group" aria-label="Basic radio toggle button group">
         <%= radio_button_tag :view, "table", (params[:view]=='table'), name:'view', id:'btnradio1', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio1" title="Tableau">
+        <label class="btn btn-outline-secondary pb-1 lh-1" for="btnradio1" title="Tableau">
           <span class="material-symbols-outlined">
             view_list
           </span>
         </label>
 
         <%= radio_button_tag :view, "card", (params[:view]=='card'), name:'view', id:'btnradio2', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio2" title="Vignettes">
+        <label class="btn btn-outline-secondary pb-1 lh-1" for="btnradio2" title="Vignettes">
           <span class="material-symbols-outlined">
             cards
           </span>
         </label>
 
         <%= radio_button_tag :view, "calendar", (params[:view]=='calendar'), name:'view', id:'btnradio3', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio3" title="Calendrier">
+        <label class="btn btn-outline-secondary pb-1 lh-1" for="btnradio3" title="Calendrier">
           <span class="material-symbols-outlined">
             calendar_month
           </span>
         </label>
 
         <%= radio_button_tag :view, "map", (params[:view]=='map'), name:'view', id:'btnradio4', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio4" title="Cartographique">
+        <label class="btn btn-outline-secondary pb-1 lh-1" for="btnradio4" title="Cartographique">
           <span class="material-symbols-outlined">
             map
           </span>
         </label>
 
         <%= radio_button_tag :view, "graph", (params[:view]=='graph'), name:'view', id:'btnradio5', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio5" title="Diagramme en barres">
+        <label class="btn btn-outline-secondary pb-1 lh-1" for="btnradio5" title="Diagramme en barres">
           <span class="material-symbols-outlined">
             bar_chart_4_bars
           </span>
