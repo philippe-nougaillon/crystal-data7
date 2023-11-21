@@ -14,8 +14,8 @@
       "density": "4"
     },
     {
-      "src": "\/android-chrome-256x256.png",
-      "sizes": "256x256",
+      "src": "\/android-chrome-384x384.png",
+      "sizes": "384x384",
       "type": "image\/png",
       "density": "5"
     },
