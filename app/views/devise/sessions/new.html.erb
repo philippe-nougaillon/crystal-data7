@@ -20,8 +20,8 @@
       </div>
     <% end %>
 
-    <%# render "devise/shared/links" %>
-
     <%= link_to "Se connecter en tant qu'invité", user_connect_guest_user_path(1), class: 'btn btn-outline-success' %>
+
+    <%= render "devise/shared/links" %>
   </div>
 </div>

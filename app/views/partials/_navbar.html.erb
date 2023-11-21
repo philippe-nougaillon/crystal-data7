@@ -3,7 +3,7 @@
     <li class="nav-item">
       <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Ma collection favorite/Page d'accueil", class:'d-flex flex-column align-items-center text-decoration-none' do %>
         <span class="material-symbols-outlined">
-          stars
+          diamond
         </span>
         Favori
       <% end %>
@@ -64,7 +64,7 @@
         <li class="nav-item">
           <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'nav-link text-primary d-flex align-items-center gap-1' do %>
             <span class="material-symbols-outlined">
-              stars
+              diamond
             </span>
             <%= user_signed_in? ? 'Ma collection favorite' : 'Accueil' %>
           <% end %>
