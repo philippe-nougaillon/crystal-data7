@@ -107,8 +107,27 @@ class TablesController < ApplicationController
       end
       @labels = labels.transpose
 
-    elsif params[:view] == 'calendar' && @table.fields.exists?(datatype: ['Date'])
+    elsif params[:view] == 'map' && @table.fields.exists?(datatype: ['GPS'])
+      fields_id = @table.fields.where.not(datatype: ['GPS']).first(7).pluck(:id)
+      @data = []
+      fields_id.each do |field|
+        @data << @table.values.where(record_index: @records, field_id: field).pluck(:data)
+      end
+      @data = @data.transpose
+      @values = @table.fields.where(datatype: 'GPS').first.values.pluck(:data)
+      @lng = []
+      @lat = []
+      @values.each do |value|
+        @lng << value.split(',').last.to_f
+        @lat << value.split(',').first.to_f
+      end
+      avg_lng = @lng.sum(0.0) / @lng.length
+      avg_lat = @lat.sum(0.0) / @lat.length
+      @center = [avg_lng, avg_lat]
 
+      lng_range = @lng.max - @lng.min
+      lat_range = @lat.max - @lat.min
+      @zoom = 5
     end
 
     respond_to do |format|

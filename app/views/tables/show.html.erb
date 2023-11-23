@@ -120,7 +120,13 @@
   <% when 'card' %>
     <%= render partial: 'cards', locals: { table: @table, records: @records} %>
   <% when 'map' %>
-    <div id='map' style='height: 70vh;'></div>
+    <% if @zoom %>
+      <%= render partial: 'map', locals: {} %>
+    <% else %>
+      <div class="alert alert-warning" role="alert">
+        Aucun attribut de type GPS n'a été trouvé pour cet objet
+      </div>
+    <% end %>
   <% when 'graph' %>
     <% if @title %>
       <div class="mx-auto my-5">
@@ -161,33 +167,6 @@
     <% end %> 
   <% end %>
 <% end %>
-
-<script>
-  mapboxgl.accessToken = 'pk.eyJ1IjoicGhpbG5vdWciLCJhIjoiY2pvNXRyczhjMDFkajNxcGVmNHZtcHZ4OSJ9.vcFMjboSUDUUg--tDsgapg';
-  var map = new mapboxgl.Map({
-    container: 'map',
-    center: [2.407914616221202, 47.08362763879501],
-    zoom: 4,
-    style: 'mapbox://styles/mapbox/streets-v11'
-  });
-
-  <% @table.values.joins(:field).where(record_index: @records, 'field.datatype': 'GPS').each do |record| %>
-    <% unless record.data.empty? %>
-      var lng = <%= record.data.split(',').last.to_f %>
-      var lat = <%= record.data.split(',').first.to_f %>
-      var marker = new mapboxgl.Marker({ color: "#FF0000"})
-        .setLngLat([lng, lat])
-        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-        .setHTML("<a id='pin' href='#<%= @records.first %>'><h1 class='has-text-weight-bold has-text-centered is-size-6 mb-4'><%= @records.first %></h1><p class='is-size-7'><%= @records.first %></p><p class='is-size-7'><%= @records.first %> <%= @records.first %></p></a>"))
-        .addTo(map);
-    <% end %>
-  <% end %>
-
-  map.addControl(new mapboxgl.FullscreenControl());
-  map.addControl(new mapboxgl.NavigationControl());
-  
-  setTimeout(function(){ map.setLayoutProperty('country-label', 'text-field', ['get', 'name_fr']); }, 3000);
-</script>
 
 <!-- Required chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
