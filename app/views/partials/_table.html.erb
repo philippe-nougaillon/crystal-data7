@@ -58,7 +58,7 @@
       sur <%= @records.size %> au total
     <% end %>
   </p>
-  <% if action_name == 'show' %>
+  <% if action_name != 'show_details' %>
     <div class="d-block">
       <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format XLS" do %>
         XLS
