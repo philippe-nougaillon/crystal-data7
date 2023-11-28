@@ -1,7 +1,12 @@
 <%= link_to details_path(@table.slug, record_index: record_index), title: 'Voir les détails', class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
-  <div class="shadow-sm p-4 h-100">
+  <div class="shadow-sm p-4 bg-white flex-fill">
     <p class="fw-bold">
-      <%= @table.fields.first.values.find_by(record_index: record_index).data %>
+      <% first_field = @table.fields.first %>
+      <% data = first_field.values.find_by(record_index: record_index).data %>
+      <% if first_field.Date? %>
+        <% data = l(data.to_date) %>
+      <% end %>
+      <%= data %>
     </p>
     
     <% @table.fields.détaillable.ordered.each_with_index do |field, index| %>
