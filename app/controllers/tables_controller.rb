@@ -72,7 +72,11 @@ class TablesController < ApplicationController
       end
     end
 
-    @records = @filter_results.values.reduce(:&)
+    if params[:filtre].present?
+      @records = @table.filters.find_by(name: params[:filtre]).get_filtered_records
+    else
+      @records = @filter_results.values.reduce(:&)
+    end
 
     if @table.lifo 
      # calcule la date maximum de chaque ligne d'enregistrement 
