@@ -147,7 +147,7 @@
         <% records_index.each do |record_index| %>
           <%= link_to details_path(@table.slug, record_index:), title: 'Voir les détails de cette ligne', class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
             <div class="shadow-sm pb-3 px-2 bg-light">
-              <% @table.values.where(record_index: record_index).first(5).pluck(:data).each do |value| %>
+              <% @table.values.joins(:field).where(record_index: record_index).where.not('field.datatype': 'Date').first(5).pluck(:data).each do |value| %>
                 <br>
                 <%= value %>
               <% end %>

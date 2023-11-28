@@ -102,8 +102,12 @@ class TablesController < ApplicationController
       @title = @table.fields.where(datatype: ['Nombre','Euros']).first.name
       fields_id = @table.fields.where.not(datatype: ['Nombre','Euros']).first(2).pluck(:id)
       labels = []
-      fields_id.each do |field|
-        labels << @table.values.where(record_index: @records, field_id: field).pluck(:data)
+      fields_id.each do |field_id|
+        datas = @table.values.where(record_index: @records, field_id: field_id).pluck(:data)
+        if Field.find(field_id).Date?
+          datas = datas.map{ |data| l(data.to_date) }
+        end
+        labels << datas
       end
       @labels = labels.transpose
 
