@@ -75,10 +75,12 @@
     </div>
 
     <div>
-      <div>
-        <%= label_tag :filtre, "Filtre" %>
-        <%= select_tag :filtre, options_for_select(@table.filters.pluck(:name), params[:filtre]), include_blank: true, class:'form-select', onchange: 'this.form.submit()' %>
-      </div>
+      <% if @table.filters.any? %>
+        <div>
+          <%= label_tag :filtre, "Filtre" %>
+          <%= select_tag :filtre, options_from_collection_for_select(@table.filters, 'id', 'name', params[:filtre]), include_blank: true, class:'form-select', onchange: 'this.form.submit()' %>
+        </div>
+      <% end %>
 
       <div class='mt-3 text-end'>
         <div class="btn-group flex-no-wrap" role="group" aria-label="Basic radio toggle button group">

@@ -73,7 +73,7 @@ class TablesController < ApplicationController
     end
 
     if params[:filtre].present?
-      @records = @table.filters.find_by(name: params[:filtre]).get_filtered_records
+      @records = @table.filters.find(params[:filtre]).get_filtered_records
     else
       @records = @filter_results.values.reduce(:&)
     end
