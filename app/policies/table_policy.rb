@@ -77,10 +77,6 @@ class TablePolicy < ApplicationPolicy
     record.propriétaire?(user)
   end
 
-  def activity?
-    false
-  end
-
   def show_details?
     record.users.include?(user)
   end
