@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-	default from: '"CrystalDATA" <crystaldata@philnoug.com>'
+	default from: '"CrystalDATA" <contact@philnoug.com>'
 
 	def notification(table, items)
 		@items = items
