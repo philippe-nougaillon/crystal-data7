@@ -3,11 +3,11 @@
 </h1>
 
 <p class="mb-4">
-  Le fichier à importer doit être de type CSV, au format UTF-8, avec comme séparateur la virgule (,) et les entêtes d'attributs sur la première ligne. 
+  Le fichier à importer doit être de type <b>CSV</b>, au format <b>UTF-8</b>, avec comme séparateur la <b>virgule</b> (,) et les <b>noms d'attributs sur la première ligne</b>. 
 </p>
 
 <%= form_tag({action: "import_do", method: :post}, multipart: true) do %>
-  <%= label_tag :upload, "Fichier source" %>
-  <%= file_field_tag :upload, accept: 'text/csv', class: 'form-control w-sm-25', required: true %>
-  <%= submit_tag "Importer", class: 'btn btn-outline-info mt-4' %>
+  <%= label_tag :upload, "Fichier source", class:'form-label' %>
+  <%= file_field_tag :upload, accept: 'text/csv', class: 'form-control form-control-lg', required: true %>
+  <%= submit_tag "Importer", class: 'btn btn-outline-primary mt-4' %>
 <% end %>
