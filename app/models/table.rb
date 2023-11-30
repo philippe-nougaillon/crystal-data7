@@ -10,6 +10,7 @@ class Table < ApplicationRecord
 	has_many :values, through: :fields, dependent: :destroy
 	has_many :logs, through: :fields, dependent: :destroy
 	has_many :filters, dependent: :destroy
+	has_many :relations, dependent: :destroy
 
 	validates :name, presence: true
 

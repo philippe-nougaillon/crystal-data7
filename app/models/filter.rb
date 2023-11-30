@@ -39,8 +39,8 @@ class Filter < ApplicationRecord
   end
 
   def get_filtered_records
+    filters = {}
     unless self.query.blank?
-      filters = {}
       self.query.each do |query|
         key = query.first
         search_value = query.last
