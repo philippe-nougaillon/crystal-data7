@@ -1,10 +1,12 @@
 class ImportCollection < ApplicationService
-  require 'rake'
-  attr_reader :upload, :current_user
+  require 'csv'
 
-  def initialize(upload, current_user)
+  attr_reader :upload, :current_user, :col_sep
+
+  def initialize(upload, current_user, col_sep)
     @upload = upload
     @current_user = current_user
+    @col_sep = col_sep
   end
 
   def call
@@ -23,7 +25,7 @@ class ImportCollection < ApplicationService
         file.write(@upload.read)
       end
 
-      CSV.foreach(filename_with_path, headers: true, return_headers: true, col_sep: ',', encoding: 'UTF-8') do |row|
+      CSV.foreach(filename_with_path, headers: true, return_headers: true, col_sep: @col_sep, encoding: 'UTF-8') do |row|
         if row.header_row?
           new_table = Table.new(name: File.basename(filename,'.csv'))
           if new_table.save
