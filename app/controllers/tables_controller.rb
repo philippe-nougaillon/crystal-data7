@@ -346,12 +346,12 @@ class TablesController < ApplicationController
   end
 
   def import_do
-    import_executed = ImportCollection.new(params[:upload], current_user, params[:col_sep]).call
+    result = ImportCollection.new(params[:upload], current_user, params[:col_sep]).call
 
-    if import_executed
+    if result.first
       flash[:notice] = "Importation terminée. Table '#{current_user.tables.last.name.humanize}' créée avec succès."
     else
-      flash[:alert] = "L'importation a échouée. Vérifiez que les séparateurs, le type et le format soient corrects."
+      flash[:alert] = "L'importation a échoué. => '#{result.last}'"
     end
     redirect_to tables_path
   end

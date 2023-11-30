@@ -14,6 +14,7 @@ class ImportCollection < ApplicationService
     inserts_log = []
     inserts_value = []
     import_executed = false
+    exception = nil
     new_table = Table.new
     fields = nil
 
@@ -62,9 +63,10 @@ class ImportCollection < ApplicationService
       end
     rescue StandardError => e
       import_executed = false
+      exception = e
     ensure
       new_table.destroy if new_table && !import_executed
-      return import_executed
+      return [import_executed, exception]
     end
   end
 end
