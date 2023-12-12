@@ -24,6 +24,14 @@
       Filtres
       <% end %>
     </li>
+    <li class="nav-item">
+      <%= link_to stats_path, title: "Statistiques", class:'d-flex flex-column align-items-center text-decoration-none' do %>
+      <span class="material-symbols-outlined">
+        Query_stats
+      </span>
+      Stats
+      <% end %>
+    </li>
   </div>
   <% if user_signed_in? %>
     <li class="nav-item">
@@ -83,6 +91,14 @@
               Tune
             </span>
             Filtres
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to stats_path, title: "Statistiques", class: 'nav-link d-flex align-items-center gap-1' do %>
+            <span class="material-symbols-outlined">
+              Query_stats
+            </span>
+            Statistiques
           <% end %>
         </li>
         

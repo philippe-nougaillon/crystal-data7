@@ -1,0 +1,58 @@
+<div class="d-flex justify-items-center mb-12 flex-wrap gap-5">
+  <%= form_tag stats_path, method: :get, class: 'flex-fill d-flex flex-column justify-content-center gap-4' do %>
+    <div>
+      <%= label_tag :collection_id, "Collection", class: "label" %>
+      <%= select_tag :collection_id,
+                      options_from_collection_for_select(@tables, 'id', 'name', params[:collection_id]),
+                      include_blank: true,
+                      class: 'form-select w-100', 
+                      onchange: 'this.form.submit()' %>
+    </div>
+
+    <% if params[:collection_id].present? %>
+      <div>
+        <%= label_tag :attribut_id, "Attribut", class: "label" %>
+        <%= select_tag :attribut_id, 
+                        options_from_collection_for_select(@column_names, 'id', 'name', params[:attribut_id]),
+                        include_blank: true,
+                        class: 'form-select w-100', 
+                        onchange: 'this.form.submit()' %>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="flex-fill ml-2 mt-4 lg:mt-0">
+    <div class="text-center">
+      <h1 class="text-2xl">Statistiques</h1>
+    </div>
+    <canvas id="chartLine"></canvas> 
+  </div>
+</div>
+
+<!-- Required chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Chart line -->
+<script>
+  const data = {
+    labels: <%= @results.keys.to_json.html_safe %>,
+    datasets: [
+      {
+        label: "<%= @results.values.sum %> <%= @table.name.pluralize if @table %>",
+        backgroundColor: "hsl(252, 82.9%, 67.8%)",
+        borderColor: "hsl(252, 82.9%, 67.8%)",
+        data: <%= @results.values.to_json.html_safe %>,
+      },
+    ],
+  };
+
+  const configLineChart = {
+    type: "line",
+    data,
+    options: {},
+  };
+
+  var chartLine = new Chart(
+    document.getElementById("chartLine"),
+    configLineChart
+  );
+</script>

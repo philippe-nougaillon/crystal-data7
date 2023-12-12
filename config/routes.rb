@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   controller :pages do
     get :a_propos, to: 'pages#a_propos'
+    get :stats, to: 'pages#stats'
   end
 
   resources :filters do
