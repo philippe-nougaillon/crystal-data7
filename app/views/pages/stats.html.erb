@@ -18,15 +18,16 @@
                         class: 'form-select w-100', 
                         onchange: 'this.form.submit()' %>
       </div>
-    <% end %>
 
-    <div>
-      <%= label_tag :type, 'Type', class: "label" %>
-      <%= select_tag :type,
-                      options_for_select(['bar', 'line'], params[:type]),
-                      class: 'form-select w-100', 
-                      onchange: 'this.form.submit()' %>
-    </div>
+      <% if params[:attribut_id].present? %>
+        <div class="btn-group btn-group-sm flex-row" role="group" aria-label="Basic radio toggle button group">
+          <%= radio_button_tag :type, 'bar', params[:type] == 'bar', class:'btn-check', id:"btnradio1", onchange: 'this.form.submit()' %>
+          <label class="btn btn-outline-primary" for="btnradio1">Barres</label>
+          <%= radio_button_tag :type, 'line', params[:type] == 'line', class:'btn-check', id:"btnradio2", onchange: 'this.form.submit()' %>
+          <label class="btn btn-outline-primary" for="btnradio2">Lignes</label>
+        </div>
+      <% end %>
+    <% end %>
   <% end %>
   <div class="flex-fill ml-2 mt-4 lg:mt-0">
     <div class="text-center">
@@ -54,7 +55,7 @@
   };
 
   const configChart = {
-    type: "<%= @type %>",
+    type: "<%= params[:type] %>",
     data,
     options: {},
   };
