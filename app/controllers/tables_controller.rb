@@ -51,7 +51,11 @@ class TablesController < ApplicationController
       params[:select].each do | option | 
         unless option.last.blank? 
           field = Field.find(option.first)
-          filter_records = @table.values.where(field: field, data: option.last).pluck(:record_index) 
+          if field.Tags?
+            filter_records = @table.values.where(field: field).where("values.data ILIKE ?", "%#{option.last}%").pluck(:record_index) 
+          else
+            filter_records = @table.values.where(field: field, data: option.last).pluck(:record_index) 
+          end
           @filters[option.first] = option.last
           @filter_results[option.first] = filter_records
         end

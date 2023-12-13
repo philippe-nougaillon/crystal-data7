@@ -44,6 +44,10 @@
         <%= raw value %>
       <% when 'Distance' %>
         ~<%= value %> km
+      <% when 'Tags' %>
+        <% value.split(', ').each do |tag| %>
+          <span class='badge bg-secondary'><%= tag.humanize %></span>
+        <% end %>
       <% else %>
         <%= link_to_if is_link, value, details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'text-black' %>
       <% end %>

@@ -17,7 +17,7 @@ class Field < ApplicationRecord
 
 	after_save :add_or_update_relation, if: Proc.new { |field| field.Collection? }
 
-	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID, :Signature]
+	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID, :Signature, :Tags]
 	enum operation: [:Somme, :Moyenne]
 	enum visibility:[:Liste_et_Détails, :Vue_Liste, :Vue_Détails]
 
@@ -113,6 +113,10 @@ class Field < ApplicationRecord
 
 	def populate_select_filter(records)
 		self.values.records_at(records).where.not(data: nil).pluck(:data).uniq.sort 
+	end
+
+	def populate_field_tags(records)
+		self.values.records_at(records).where.not(data: nil).pluck(:data).join(', ').split(', ').uniq.sort
 	end
 
 	def visibility_polished
@@ -232,6 +236,8 @@ class Field < ApplicationRecord
 			'straighten'
 		when 'UUID'
 			'barcode'
+		when 'Tags'
+			'sell'
 		else
 			'title'
 		end

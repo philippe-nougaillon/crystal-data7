@@ -63,6 +63,12 @@
           <div class="w-sm-50"><%= raw value %></div>
         <% when 'Distance' %>
           <%= value %>
+        <% when 'Tags' %>
+          <div class='d-flex flex-row gap-1'>
+            <% value.split(', ').each do |tag| %>
+              <p class='badge bg-secondary'><%= tag.humanize %></p>
+            <% end %>
+          </div>
         <% else %>
           <%= value %>
         <% end %>

@@ -59,6 +59,13 @@
                     include_blank: true, 
                     class: 'form-select', 
                     onchange: 'this.form.submit()' %>
+            <% elsif field.Tags? %>
+              <%= select_tag "select[#{field.id}]", 
+                    options_for_select(field.populate_field_tags(@records), default_value), 
+                    include_blank: true, 
+                    class: 'form-select', 
+                    onchange: 'this.form.submit()', 
+                    data: {select2: {tags: true, tokenSeparators: [',', ' ']}} %>
             <% else %>
               <%= select_tag "select[#{field.id}]", 
                     options_for_select(field.populate_select_filter(@records), default_value), 
