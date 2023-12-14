@@ -1,0 +1,36 @@
+
+<%= form_for(@message) do |f| %>
+  <% if @message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t('errors.messages.not_saved', count: @message.errors.count) %></h2>
+
+      <ul>
+        <% @message.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :nom, 'Nom', class: 'form-label' %>
+    <%= f.text_field :nom, class: 'form-control', required: true, autofocus: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :filter_id, 'Filtre', class: 'form-label' %>
+    <%= f.select :filter_id, options_from_collection_for_select(current_user.filters.order(:name), 'id', 'name', @message.filter_id), {include_blank: true}, {required: true, class: 'form-select'} %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :field_id, 'Attribut', class: 'form-label' %>
+    <%= f.select :field_id, options_from_collection_for_select(current_user.fields.order(:name), 'id', 'name_with_collection_name', @message.field_id), {include_blank: true}, {required: true, class: 'form-select'} %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :body, 'Contenu du message', class: 'form-label' %>
+    <%= f.text_area :body, class: 'form-control w-100', rows: 10, required: true, autofocus: true %>
+  </div>
+
+  <%= f.submit 'Enregistrer', class: 'btn btn-outline-success' %>
+<% end %>

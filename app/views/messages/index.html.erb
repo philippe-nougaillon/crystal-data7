@@ -1,0 +1,28 @@
+<div class="my-4 d-flex align-items-center text-success gap-2">
+  <h1 class="mb-0">
+    Messages
+  </h1>
+</div>
+
+<div class="overflow-x-auto">
+  <table class="table table-striped table-hover sticky">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Filtre</th>
+        <th>Contenu</th>
+        <th>MÀJ</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @messages.each do |message| %>
+        <%= render message %>
+      <% end %>
+    </tbody>
+
+  </table>
+</div>
+
+<%= link_to "Nouveau Message", new_message_path, class: 'btn btn-outline-success' %>

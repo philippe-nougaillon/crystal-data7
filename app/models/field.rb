@@ -243,6 +243,10 @@ class Field < ApplicationRecord
 		end
 	end
 
+	def name_with_collection_name
+		"#{self.name} (#{self.table.name})"
+	end
+
 private
 
 	def slug_candidates

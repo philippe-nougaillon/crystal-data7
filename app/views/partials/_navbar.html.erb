@@ -32,6 +32,14 @@
       Stats
       <% end %>
     </li>
+    <li class="nav-item">
+      <%= link_to messages_path, title: "Messages", class:'d-flex flex-column align-items-center text-decoration-none', 'data-turbo': 'false' do %>
+      <span class="material-symbols-outlined">
+        forward_to_inbox
+      </span>
+      Messages
+      <% end %>
+    </li>
   </div>
   <% if user_signed_in? %>
     <li class="nav-item">
@@ -99,6 +107,14 @@
               Query_stats
             </span>
             Statistiques
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to messages_path, title: "Messages", class: 'nav-link d-flex align-items-center gap-1' do %>
+            <span class="material-symbols-outlined">
+              forward_to_inbox
+            </span>
+            Messages
           <% end %>
         </li>
         

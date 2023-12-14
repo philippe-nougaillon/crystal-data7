@@ -1,0 +1,11 @@
+<tr id="<%= dom_id message %>">
+  <td><b><%= link_to message.nom, message_path(message), class: 'text-black text-decoration-none' %></b></td>
+  <td><%= message.filter.name %></td>
+  <td><%= truncate(message.body, length: 50) %></td>
+  <td>il y a <%= time_ago_in_words(message.updated_at) %></td>
+  <td>
+    <%# if policy(message).destroy? %>
+      <%= button_to "X", message, method: :delete, 'data-turbo-confirm': "Êtes-vous certain.e", class: 'btn btn-sm btn-outline-danger float-end' %>
+    <%# end %>
+  </td>
+</tr>

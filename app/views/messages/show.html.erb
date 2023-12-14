@@ -1,0 +1,25 @@
+<h1><%= @message.nom %></h1>
+<br>
+<%= @message.body %>
+<br><br>
+<% @message.body.split(' ').each do |word| %>
+  <% if word.include?('[') %>
+    <% sources = word.tr('[]','').split('.') %>
+		<% source_fields = sources.last.tr('"','').split(',') %>
+		<% source_table = current_user.tables.find_by(name: sources.first) %>
+    <% field = current_user.fields.find_by(name: source_fields, table_id: source_table.id) %>
+
+    <% if field.Date? %>
+      <%= l field.values.first.data.to_date %>
+    <% else %>
+      <%= field.values.first.data %>
+    <% end %>
+  <% else %>
+    <%= word %>
+  <% end %>
+<% end %>
+
+<div class='mt-5'>
+  <%= link_to "Modifier", edit_message_path(@message) %> |
+  <%= link_to "Retour", messages_path %>
+</div>
