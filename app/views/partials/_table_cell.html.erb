@@ -1,6 +1,6 @@
 <% unless ['show_details', 'related_tables'].include?(action_name) && field.Collection? && @relation.field == field %>
   <% if value %>
-    <td style="<%= 'text-align: right;' if field.is_numeric %>">
+    <td style="vertical-align: middle; <%= 'text-align: right;' if field.is_numeric %>">
       <% case field.datatype when 'Fichier' %>
         <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
       <% when 'Image', 'PDF' %>
