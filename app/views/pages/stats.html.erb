@@ -1,5 +1,7 @@
-<div class="d-flex justify-items-center mb-12 flex-wrap gap-5">
-  <%= form_tag stats_path, method: :get, class: 'flex-fill d-flex flex-column justify-content-center gap-4' do %>
+<h1 class="text-2xl text-center">Statistiques</h1>
+
+<div class="d-flex justify-items-center flex-wrap gap-5">
+  <%= form_tag stats_path, method: :get, class: 'flex-fill d-flex flex-column mt-4 gap-4' do %>
     <div>
       <%= label_tag :collection_id, "Collection", class: "label" %>
       <%= select_tag :collection_id,
@@ -21,18 +23,15 @@
 
       <% if params[:attribut_id].present? %>
         <div class="btn-group btn-group-sm flex-row" role="group" aria-label="Basic radio toggle button group">
-          <%= radio_button_tag :type, 'bar', params[:type] == 'bar', class:'btn-check', id:"btnradio1", onchange: 'this.form.submit()' %>
-          <label class="btn btn-outline-primary" for="btnradio1">Barres</label>
-          <%= radio_button_tag :type, 'line', params[:type] == 'line', class:'btn-check', id:"btnradio2", onchange: 'this.form.submit()' %>
-          <label class="btn btn-outline-primary" for="btnradio2">Lignes</label>
+          <%= radio_button_tag :type, 'line', params[:type] == 'line', class:'btn-check', id:"btnradio1", onchange: 'this.form.submit()' %>
+          <label class="btn btn-outline-primary" for="btnradio1">Lignes</label>
+          <%= radio_button_tag :type, 'bar', params[:type] == 'bar', class:'btn-check', id:"btnradio2", onchange: 'this.form.submit()' %>
+          <label class="btn btn-outline-primary" for="btnradio2">Barres</label>
         </div>
       <% end %>
     <% end %>
   <% end %>
   <div class="flex-fill ml-2 mt-4 lg:mt-0">
-    <div class="text-center">
-      <h1 class="text-2xl">Statistiques</h1>
-    </div>
     <canvas id="chart"></canvas> 
   </div>
 </div>
