@@ -7,10 +7,12 @@ class UsersController < ApplicationController
 
       @user.tables.each do |table|
         if table.propriétaire?(@user)
-           @total_tables += 1
-           @total_lignes += table.size
+          @total_tables += 1
+          @total_lignes += table.size
         end
       end
+
+      @shared_with = TablesUser.where(table_id: current_user.tables.pluck(:id)).where.not(role: 'Propriétaire')
       @tables_users = TablesUser.where(user_id: current_user.id).where.not(role: 'Propriétaire')
   	end
 
