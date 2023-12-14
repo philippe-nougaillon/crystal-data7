@@ -29,4 +29,8 @@ class Message < ApplicationRecord
 
     return result
   end
+
+  def destinataires
+    self.field.values.where(record_index: self.filter.get_filtered_records).pluck(:data).sort
+  end
 end

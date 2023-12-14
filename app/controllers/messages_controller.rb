@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: %i[ show edit update destroy ]
+  before_action :is_user_authorized?
 
   # GET /messages or /messages.json
   def index
@@ -67,5 +68,9 @@ class MessagesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def message_params
       params.require(:message).permit(:user_id, :filter_id, :field_id, :nom, :body)
+    end
+
+    def is_user_authorized?
+      authorize @message? @message : Message
     end
 end

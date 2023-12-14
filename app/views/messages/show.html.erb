@@ -1,6 +1,12 @@
 <h1 class='mb-5'><%= @message.nom %></h1>
 
-<%= simple_format @message.body_builder(current_user) %>
+<h4 class='mt-4'>Rendu</h4>
+<div class='card p-4'>
+  <%= simple_format @message.body_builder(current_user) %>
+</div>
+
+<h4 class='mt-4'>Destinataires</h4>
+<%= @message.destinataires.join(', ') %>
 
 
 <div class='mt-5'>
