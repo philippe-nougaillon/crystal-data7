@@ -1,23 +1,7 @@
-<h1><%= @message.nom %></h1>
-<br>
-<%= @message.body %>
-<br><br>
-<% @message.body.split(' ').each do |word| %>
-  <% if word.include?('[') %>
-    <% sources = word.tr('[]','').split('.') %>
-		<% source_fields = sources.last.tr('"','').split(',') %>
-		<% source_table = current_user.tables.find_by(name: sources.first) %>
-    <% field = current_user.fields.find_by(name: source_fields, table_id: source_table.id) %>
+<h1 class='mb-5'><%= @message.nom %></h1>
 
-    <% if field.Date? %>
-      <%= l field.values.first.data.to_date %>
-    <% else %>
-      <%= field.values.first.data %>
-    <% end %>
-  <% else %>
-    <%= word %>
-  <% end %>
-<% end %>
+<%= simple_format @message.body_builder(current_user) %>
+
 
 <div class='mt-5'>
   <%= link_to "Modifier", edit_message_path(@message) %> |
