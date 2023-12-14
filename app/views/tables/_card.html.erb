@@ -69,6 +69,8 @@
               <p class='badge bg-secondary'><%= tag.humanize %></p>
             <% end %>
           </div>
+        <% when 'Email' %>
+          <%= mail_to value %>
         <% else %>
           <%= value %>
         <% end %>
