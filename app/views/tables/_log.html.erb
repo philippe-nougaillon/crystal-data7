@@ -3,7 +3,7 @@
   <% record_index = log.audited_changes['record_index'] %>
   <% value = log.audited_changes['data'] %>
   <% old_value = log.audited_changes['old_value'] %>
-  <td><%= "#{ l log.created_at } (il y a #{ time_ago_in_words(log.created_at) })" %></td>
+  <td><%= "#{ time_ago_in_words(log.created_at) } (#{ l log.created_at })" %></td>
   <td><%= log.user ? log.user.name.humanize : 'Administrateur' %></td>
   <td><%= log.remote_address %></td>
   <td><%= log.audited_changes['old_value'] ? 'Modification' : 'Création' %>
@@ -11,20 +11,20 @@
   <td><%= field.name %></td>
   <td>
     <% if field.Collection? %>
-      <%= field.get_linked_table_record(value.to_i) %>
-    <% elsif field.Signature? %>
-      <%= value.blank? ? 'Pas signé' : 'Signé' %>
-    <% else %>
-      <%= value %>
-    <% end %>
-  </td>
-  <td>
-    <% if field.Collection? %>
       <%= field.get_linked_table_record(old_value.to_i) %>
     <% elsif field.Signature? %>
       <%= old_value.blank? ? 'Pas signé' : 'Signé' %>
     <% else %>
-      <%= old_value %>
+      <%= truncate(old_value, length: 50) %>
+    <% end %>
+  </td>
+  <td>
+    <% if field.Collection? %>
+      <%= field.get_linked_table_record(value.to_i) %>
+    <% elsif field.Signature? %>
+      <%= value.blank? ? 'Pas signé' : 'Signé' %>
+    <% else %>
+      <%= truncate(value, length: 50) %>
     <% end %>
   </td>
 </tr>
