@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable
   # :validatable, :recoverable
@@ -57,6 +60,10 @@ class User < ApplicationRecord
 
   def new_user_notification
     UserMailer.with(user: self).new_user_notification.deliver_now
+  end
+
+  def slug_candidates
+    [SecureRandom.uuid]
   end
 
 end

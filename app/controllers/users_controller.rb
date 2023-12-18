@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: %i[show edit update destroy]
   skip_before_action :authenticate_user!, only: %i[connect_guest_user]
 
   def show
-    @user = current_user
     @total_tables, @total_lignes = 0, 0
 
     @user.tables.each do |table|
@@ -32,7 +32,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.new(user_params)
     if @user.update(user_params)
       redirect_to @user, notice:'Mot de passe modifié avec succès.'
     else
@@ -46,8 +45,14 @@ class UsersController < ApplicationController
   end
 
   private
-    def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :remember_me)
-    end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find_by(slug: params[:id])
+  end
+  
+  def user_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :remember_me)
+  end
 
 end
