@@ -1,0 +1,45 @@
+<%= month_calendar do |date| %>
+  <p id="date" class="<%= date == Date.today ? 'badge bg-success' : '' %>">
+    <%= date.day %>
+  </p>
+  <% records_index = @date_values.where(data: date).pluck(:record_index) %>
+  <% if records_index.any? %>
+    <% records_index.each do |record_index| %>
+      <%= link_to details_path(@table.slug, record_index:), title: 'Voir les détails de cette ligne', class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
+        <div class="shadow-sm pb-3 px-2 bg-light">
+          <% @table.values.joins(:field).where(record_index: record_index).where.not('field.datatype': 'Date').first(5).pluck(:data).each do |value| %>
+            <br>
+            <%= value %>
+          <% end %>
+        </div>
+      <% end %>
+      <br>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h2 class="mt-6 mb-3">
+  Synchronisation du calendrier
+</h2>
+<p>
+  Ajouter le lien ci-dessous à votre calendrier personnel (Google Agenda, Apple Calendar, Outlook, ...) pour que les <%= @table.name.pluralize %> avec des attributs de type Date apparaissent automatiquement. Vous pouvez filtrer les <%= @table.name.pluralize %> en sélectionnant un filtre préalablement créé.
+</p>
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" value=<%= root_url + icalendar_table_path(@table, user: current_user.slug, filtre: params[:filtre]) %> id="calendar-clipboard">
+  <span id="myTooltip" onclick="copyLink()" class="btn btn-outline-secondary" style="cursor: pointer;">
+    Copier
+  </span>
+</div>
+
+<script>
+  function copyLink() {
+    var copyText = document.getElementById("calendar-clipboard");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(copyText.value);
+    
+    var tooltip = document.getElementById("myTooltip");
+    tooltip.innerHTML = "Copié!";
+  }
+</script>

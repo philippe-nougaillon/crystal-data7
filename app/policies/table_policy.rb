@@ -85,4 +85,8 @@ class TablePolicy < ApplicationPolicy
     show_details?
   end
 
+  def icalendar?
+    true
+  end
+
 end

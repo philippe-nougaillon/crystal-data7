@@ -1,6 +1,7 @@
 class TablesController < ApplicationController
   before_action :set_table, except: [:new, :create, :import, :import_do, :index]
   before_action :is_user_authorized?
+  skip_before_action :authenticate_user!, only: %i[ icalendar ]
 
   # GET /tables
   # GET /tables.json
@@ -77,7 +78,7 @@ class TablesController < ApplicationController
     end
 
     if params[:filtre].present?
-      @records = @table.filters.find(params[:filtre]).get_filtered_records
+      @records = @table.filters.find_by(slug: params[:filtre]).get_filtered_records
     else
       @records = @filter_results.values.reduce(:&)
     end
@@ -106,33 +107,40 @@ class TablesController < ApplicationController
       session[:order_by] = order_by
     end
 
-    if params[:view] == 'graph' && @table.fields.exists?(datatype: ['Nombre','Euros'])
-      @title = @table.fields.where(datatype: ['Nombre','Euros']).first.name
-      fields_id = @table.fields.where.not(datatype: ['Nombre','Euros']).first(2).pluck(:id)
-      labels = []
-      fields_id.each do |field_id|
-        datas = @table.values.where(record_index: @records, field_id: field_id).pluck(:data)
-        if Field.find(field_id).Date?
-          datas = datas.map{ |data| l(data.to_date) }
+    case params[:view]
+    when 'graph'
+      if @table.fields.exists?(datatype: ['Nombre','Euros'])
+        @title = @table.fields.where(datatype: ['Nombre','Euros']).first.name
+        fields_id = @table.fields.where.not(datatype: ['Nombre','Euros']).first(2).pluck(:id)
+        labels = []
+        fields_id.each do |field_id|
+          datas = @table.values.where(record_index: @records, field_id: field_id).pluck(:data)
+          if Field.find(field_id).Date?
+            datas = datas.map{ |data| l(data.to_date) }
+          end
+          labels << datas
         end
-        labels << datas
+        @labels = labels.transpose
       end
-      @labels = labels.transpose
 
-    elsif params[:view] == 'map' && @table.fields.exists?(datatype: ['GPS'])
-      fields_id = @table.fields.where.not(datatype: ['GPS']).first(7).pluck(:id)
-      @data = []
-      fields_id.each do |field|
-        @data << @table.values.where(record_index: @records, field_id: field).pluck(:data)
+    when 'map'
+      if @table.fields.exists?(datatype: ['GPS'])
+        fields_id = @table.fields.where.not(datatype: ['GPS']).first(7).pluck(:id)
+        @data = []
+        fields_id.each do |field|
+          @data << @table.values.where(record_index: @records, field_id: field).pluck(:data)
+        end
+        @data = @data.transpose
+        gps_values = @table.fields.where(datatype: 'GPS').first.values.where.not(data: [nil, '']).pluck(:data)
+        @lng = []
+        @lat = []
+        gps_values.each do |gps_value|
+          @lng << gps_value.split(',').last.to_f
+          @lat << gps_value.split(',').first.to_f
+        end
       end
-      @data = @data.transpose
-      gps_values = @table.fields.where(datatype: 'GPS').first.values.where.not(data: [nil, '']).pluck(:data)
-      @lng = []
-      @lat = []
-      gps_values.each do |gps_value|
-        @lng << gps_value.split(',').last.to_f
-        @lat << gps_value.split(',').first.to_f
-      end
+    when 'calendar'
+      @date_values = @table.values.joins(:field).where(record_index: @records, 'field.datatype': 'Date')
     end
 
     respond_to do |format|
@@ -424,6 +432,27 @@ class TablesController < ApplicationController
     @record_index = params[:record_index]
     @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
     @sum = Hash.new(0)
+  end
+
+  def icalendar
+    user = User.find_by(slug: params[:user])
+
+    date_records = @table.values.joins(:field).where('field.datatype': 'Date').pluck(:record_index)
+    @values = @table.values.where(record_index: date_records)
+    if @table.collecteur?(user)
+      @values = @values.where(user_id: user.id)
+    end
+
+    if params[:filtre].present?
+      records_index = @table.filters.find_by(slug: params[:filtre]).get_filtered_records
+    else
+      records_index = @values.pluck(:record_index).uniq
+    end
+
+    filename = "CrystalDATA_Agenda_iCal"
+    response.headers['Content-Disposition'] = 'attachment; filename="' + filename + '.ics"'
+    headers['Content-Type'] = "text/calendar; charset=UTF-8"
+    render plain: AgendaToIcalendar.new(@table, records_index).call
   end
 
   private
