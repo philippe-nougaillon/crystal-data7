@@ -135,7 +135,7 @@
   <% when 'card' %>
     <%= render partial: 'cards', locals: { table: @table, records: @records} %>
   <% when 'map' %>
-    <% if @zoom %>
+    <% if @data %>
       <%= render partial: 'map', locals: {} %>
     <% else %>
       <div class="alert alert-warning" role="alert">
