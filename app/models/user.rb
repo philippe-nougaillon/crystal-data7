@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :fields, through: :tables
   has_many :filters
 
-  validates :name, :email, :password, :password_confirmation, presence:true
+  validates :name, :email, presence:true
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create	
 
   after_create :new_user_notification
