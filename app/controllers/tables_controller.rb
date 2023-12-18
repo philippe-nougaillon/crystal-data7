@@ -126,20 +126,13 @@ class TablesController < ApplicationController
         @data << @table.values.where(record_index: @records, field_id: field).pluck(:data)
       end
       @data = @data.transpose
-      @values = @table.fields.where(datatype: 'GPS').first.values.pluck(:data)
+      gps_values = @table.fields.where(datatype: 'GPS').first.values.where.not(data: [nil, '']).pluck(:data)
       @lng = []
       @lat = []
-      @values.each do |value|
-        @lng << value.split(',').last.to_f
-        @lat << value.split(',').first.to_f
+      gps_values.each do |gps_value|
+        @lng << gps_value.split(',').last.to_f
+        @lat << gps_value.split(',').first.to_f
       end
-      avg_lng = @lng.sum(0.0) / @lng.length
-      avg_lat = @lat.sum(0.0) / @lat.length
-      @center = [avg_lng, avg_lat]
-
-      lng_range = @lng.max - @lng.min
-      lat_range = @lat.max - @lat.min
-      @zoom = 5
     end
 
     respond_to do |format|
