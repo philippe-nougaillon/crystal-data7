@@ -18,17 +18,20 @@
   </div>
 
   <div class="mb-3">
-    <%= f.label :filter_id, 'Filtre', class: 'form-label' %>
-    <%= f.select :filter_id, options_from_collection_for_select(current_user.filters.order(:name), 'id', 'name', @message.filter_id), {include_blank: true}, {required: true, class: 'form-select'} %>
+    <%= f.label :filter_id, 'Source (filtre contenant les destinataires)', class: 'form-label' %>
+    <%= f.select :filter_id, options_from_collection_for_select(current_user.filters.order(:name), 'id', 'name', @message.filter_id), {}, {required: true, class: 'form-select'} %>
   </div>
 
   <div class="mb-3">
-    <%= f.label :field_id, 'Attribut', class: 'form-label' %>
-    <%= f.select :field_id, options_from_collection_for_select(current_user.fields.order(:name), 'id', 'name_with_collection_name', @message.field_id), {include_blank: true}, {required: true, class: 'form-select'} %>
+    <%= f.label :field_id, 'Email des destinataires', class: 'form-label' %>
+    <%= f.select :field_id, options_from_collection_for_select(current_user.fields.Email.order(:name), 'id', 'name_with_collection_name', @message.field_id), {include_blank: true}, {required: true, class: 'form-select'} %>
   </div>
 
   <div class="mb-3">
     <%= f.label :body, 'Contenu du message', class: 'form-label' %>
+    <p class="form-text">
+      Utilisez [NomObjet.NomAttribut] pour insérer une valeur dans le message.<br>
+    </p>
     <%= f.text_area :body, class: 'form-control w-100', rows: 10, required: true, autofocus: true %>
   </div>
 
