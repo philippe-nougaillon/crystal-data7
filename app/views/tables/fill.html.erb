@@ -103,6 +103,8 @@
           <%= text_field_tag field_name, field_value || SecureRandom.uuid, class: 'form-control form-control-sm w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Tags' %>
           <%= text_field_tag field_name, field_value, class: 'form-control form-control-sm w-100', required: field.obligatoire, 'data-testid': field.name %>
+        <% when 'Email' %>
+          <%= email_field_tag field_name, field_value, class: 'form-control form-control-sm w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% end %>
       </fieldset>
     <% end %>

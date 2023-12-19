@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable
   # :validatable, :recoverable
@@ -10,7 +13,7 @@ class User < ApplicationRecord
   has_many :filters
   has_many :messages
 
-  validates :name, :email, :password, :password_confirmation, presence:true
+  validates :name, :email, presence:true
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create	
 
   after_create :new_user_notification
@@ -58,6 +61,10 @@ class User < ApplicationRecord
 
   def new_user_notification
     UserMailer.with(user: self).new_user_notification.deliver_now
+  end
+
+  def slug_candidates
+    [SecureRandom.uuid]
   end
 
 end

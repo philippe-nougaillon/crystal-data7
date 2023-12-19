@@ -14,7 +14,11 @@ Rails.application.routes.draw do
 
   root 'devise/sessions#new'
 
-  resources :tables
+  resources :tables do
+    member do
+      get :icalendar
+    end
+  end
   resources :values
   resources :blobs, only: [:new, :create]
 

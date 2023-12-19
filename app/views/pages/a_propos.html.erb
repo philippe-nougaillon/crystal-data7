@@ -1,21 +1,27 @@
 <div class="mt-4">
 	<div class="d-flex justify-content-between align-items-center">
-		<h1 class="text-primary">CrystalDATA</h1>
+		<div>
+			<h1 class="text-primary mb-0">CrystalDATA</h1>
+			<h2 class="fw-normal fs-4 mt-0">
+				Vos données métier 'In da Cloud' 
+				<span class="fw-lighter text-secondary fs-6">Go, go, go... It's your birthday!</span>
+			</h2>
+		</div>
 		<%= image_tag 'icons/crystaldata.png', style: "height: 6rem" %>
 	</div>
 
-	<h2 class="fw-normal fs-4">
-		Vos données métier 'In da Cloud' 
-		<span class="fw-lighter text-secondary fs-6">Go, go, go... It's your birthday!</span>
-	</h2>
+	<h3 class="fw-bold text-dark my-5">Pour qui ?</h3>
 
-	<h3 class="fw-light fs-5 w-sm-75">
+	<p class="fs-5 fw-light w-sm-75">
+		Vous êtes une entreprise de service avec des équipes sur le terrain (ex: BTP, SAV, Installation, Maintenance, etc.) et
+		vous cherchez une méthode de gestion des interventions ou de field service management (FSM) ?
+		<br><br>
 		CrystalData est un gestionnaire d'informations NO-CODE qui vous permet de créer  
 		des collections d'objets métiers (ex: Clients, Interventions, Technicien, Frais, Projets, etc.), 
 		de les lier (Clients <==> Interventions <==> Techniciens <==> Frais) 
 		et de les partager en ligne avec vos collaborateurs.
-	</h3>
-	
+	</p>
+
 	<h3 class="fw-bold text-dark my-5">Principales fonctionnalités</h3>
 
 	<ul class="list-group list-group-flush mb-5 w-sm-75">
@@ -69,105 +75,6 @@
 		</li> 
 	</ul>
 
-	<% if false %>
-
-		<h3 class="text-dark">Toutes les fonctionnalités de CrystalDATA en détails</h3>
-
-		<div class="row">
-			<div class="col">
-				<h4 class="mt-3">
-					<i class="fa fa-check"></i>
-					Créer des collections d'Objets<br>
-				</h4>
-
-				<p>Créez vos collections d'Objets simplement à partir d'une feuille Excel (exportée au format CSV)</p>
-
-				<%= link_to image_path 'screen-lg.png' do %>
-					<%= image_tag 'screen-lg.png', class: 'img-thumbnail w-100' %>
-				<% end %>
-			</div>
-
-			<div class="col">
-				<h4 class="mt-3">
-					<i class="fa fa-check"></i>
-					Ajoutez de nouveaux attributs 
-				</h4>
-				
-				<p>
-					Ajoutez des attributs de type: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, 
-					Champ calculé (formule <%= link_to "Ruby","https://www.ruby-lang.org/fr/documentation/quickstart/", :target => "_blank" %>), 
-					Fichier, Image, 
-					Signature manuscrite, Coordonnées GPS, Météo locale
-				</p>
-
-				<%= link_to image_path 'screen-lg-modif.png' do %>
-					<%= image_tag 'screen-lg-modif.png', class: 'img-thumbnail w-100' %>
-				<% end %>	
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col">
-				<h4 class="mt-5">
-					<i class="fa fa-check"></i>
-					Ajoutez, éditez vos enregistrements dans un formulaire
-				</h4>
-				<p>
-					Un formulaire permet de saisir vos données, sur PC ou sur mobile. Chaque modification est consignée dans un historique (qui, quand, quoi)
-				</p>
-				<%= link_to image_path 'screen-lg-form.png' do %>
-					<%= image_tag 'screen-lg-form.png', class: 'img-thumbnail w-100' %>
-				<% end %>	
-			</div>
-
-			<div class="col">
-				<h4 class="mt-5">
-					<i class="fa fa-check"></i>
-					Recherchez, filtrez et triez vos données 
-				</h4>
-		
-				<%= link_to image_path 'screen-lg-filtre.png' do %>
-					<%= image_tag 'screen-lg-filtre.png', class: 'img-thumbnail w-100' %>
-				<% end %>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col">
-				<h4 class="mt-5">
-					<i class="fa fa-check"></i>
-					Partagez vos données avec d'autres utilisateurs
-				</h4>
-				<%= link_to image_path 'screen-lg-partage.png' do %>
-					<%= image_tag 'screen-lg-partage.png', class: 'img-thumbnail w-100' %>
-				<% end %>
-			</div>
-
-			<div class="col">
-				<h4 class="mt-5">
-					<i class="fa fa-check"></i>
-					Exportez vos données vers un tableur 
-				</h4>
-				<%= link_to image_path 'screen-lg-excel2.png' do %>
-					<%= image_tag 'screen-lg-excel2.png', class: 'img-thumbnail w-100' %>
-				<% end %>
-			</div>
-		</div>
-
-		<h4 class="mt-5">
-			<i class="fa fa-check"></i>
-			Accédez à vos données en mobilité
-		</h4>
-		<p>Les écrans s'adaptent automatiquement à la taille d'un écran de smartphone (Responsive Design)</p>
-
-		<div class="d-flex gap-2 gap-sm-4 mb-5">
-			<%= image_tag 'screen-sm-1.png', class: 'img-thumbnail w-25' %>
-			<%= image_tag 'screen-sm-2.png', class: 'img-thumbnail w-25' %>
-			<%= image_tag 'screen-sm-3.png', class: 'img-thumbnail w-25' %>
-		</div>
-
-	<% end %>
-
 	<h3 class="fw-bold text-dark my-5">L'objet CrystalDATA et ses Attributs</h3>
 
 	<p class="w-sm-75">
@@ -207,6 +114,7 @@
 			</li>
 			<li><b>Utilisateur</b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table</li>
 			<li><b>URL</b> : permet d'ajouter un lien vers une ressource internet via une URL (interne ou externe).</li>
+			<li><b>Email</b> : pour ajouter un lien vers une adresse email.</li>
 			<li>
 				<b>Vidéo YouTube</b> : permet d'ajouter un lien vers une vidéo YouTube et d'afficher l'aperçu de la vidéo dans une miniature.  
 			</li>

@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   def stats
     @tables = current_user.tables
     @results = Hash.new
-    params[:type] ||= 'bar'
+    params[:type] ||= 'line'
 
     if params[:collection_id].present?
       @table = Table.find(params[:collection_id])

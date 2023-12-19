@@ -121,3 +121,5 @@ gem "omniauth", "~> 2.1"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 
 gem "omniauth-google-oauth2", "~> 1.1"
+
+gem "icalendar", "~> 2.10"

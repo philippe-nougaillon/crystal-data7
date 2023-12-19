@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_14_102016) do
+
+ActiveRecord::Schema[7.0].define(version: 2023_12_18_091648) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -189,7 +190,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_14_102016) do
     t.datetime "remember_created_at"
     t.string "uid"
     t.string "provider"
+    t.string "slug"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
   create_table "values", force: :cascade do |t|

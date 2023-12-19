@@ -85,7 +85,7 @@
       <% if @table.filters.any? %>
         <div>
           <%= label_tag :filtre, "Filtre" %>
-          <%= select_tag :filtre, options_from_collection_for_select(@table.filters, 'id', 'name', params[:filtre]), include_blank: true, class:'form-select', onchange: 'this.form.submit()' %>
+          <%= select_tag :filtre, options_from_collection_for_select(@table.filters, 'slug', 'name', params[:filtre]), include_blank: true, class:'form-select w-100', onchange: 'this.form.submit()' %>
         </div>
       <% end %>
 
@@ -135,7 +135,7 @@
   <% when 'card' %>
     <%= render partial: 'cards', locals: { table: @table, records: @records} %>
   <% when 'map' %>
-    <% if @zoom %>
+    <% if @data %>
       <%= render partial: 'map', locals: {} %>
     <% else %>
       <div class="alert alert-warning" role="alert">
@@ -153,25 +153,7 @@
       </div>
     <% end %>
   <% when 'calendar' %>
-    <%= month_calendar do |date| %>
-      <p id="date" class="<%= date == Date.today ? 'badge bg-success' : '' %>">
-        <%= date.day %>
-      </p>
-      <% records_index = @table.values.joins(:field).where(record_index: @records, data: date, 'field.datatype': 'Date').pluck(:record_index) %>
-      <% if records_index.any? %>
-        <% records_index.each do |record_index| %>
-          <%= link_to details_path(@table.slug, record_index:), title: 'Voir les détails de cette ligne', class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
-            <div class="shadow-sm pb-3 px-2 bg-light">
-              <% @table.values.joins(:field).where(record_index: record_index).where.not('field.datatype': 'Date').first(5).pluck(:data).each do |value| %>
-                <br>
-                <%= value %>
-              <% end %>
-            </div>
-          <% end %>
-          <br>
-        <% end %>
-      <% end %>
-    <% end %>
+    <%= render partial: 'calendar' %>
   <% end %>
 
 <% else %>
