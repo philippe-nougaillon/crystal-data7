@@ -10,8 +10,9 @@
           <th>Nbr Co</th>
           <th>Tables</th>
           <th>Values</th>
-          <th>Nbr Partages</th>
-          <th>Nbr Emprunts</th>
+          <th>Partages</th>
+          <th>Emprunts</th>
+          <th>Créé depuis</th>
           <th></th>
         </tr>
       </thead>
@@ -23,12 +24,13 @@
           <% nbr_emprunts = TablesUser.where(user_id: user.id).where.not(role: 'Propriétaire').count %>
           <tr>
             <td><%= user.email %></td>
-            <td><% time_ago_in_words user.last_sign_in_at if user.sign_in_count.positive? %></td>
-            <td class=" <%= user.sign_in_count > 1 ? 'text-info font-black' : ''  %>"><%= user.sign_in_count %></td>
-            <td class=<%= 'text-info' if table_ids.count.positive? %>><%= table_ids.count %></td>
-            <td class=<%= 'text-info' if nbr_values.positive? %>><%= nbr_values %></td>
+            <td><%= time_ago_in_words user.current_sign_in_at if user.sign_in_count.positive? %></td>
+            <td class=" <%= user.sign_in_count.positive? ? 'text-danger font-black' : ''  %>"><%= user.sign_in_count %></td>
+            <td class=<%= 'text-danger' if table_ids.count.positive? %>><%= table_ids.count %></td>
+            <td class=<%= 'text-danger' if nbr_values.positive? %>><%= nbr_values %></td>
             <td class=<%= 'text-danger' if nbr_partages.positive? %>><%= nbr_partages %></td>
             <td class=<%= 'text-danger' if nbr_emprunts.positive? %>><%= nbr_emprunts %></td>
+            <td><%= time_ago_in_words user.created_at %></td>
             <td><%= link_to "[X]", user_path(user), 'data-turbo-method': :delete, class:"btn btn-ghost btn-sm" %></td>
           </tr>
         <% end %>
