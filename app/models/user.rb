@@ -3,14 +3,19 @@ class User < ApplicationRecord
   friendly_id :slug_candidates, use: :slugged
 
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable
+  # :confirmable, :lockable, :timeoutable
   # :validatable, :recoverable
-  devise :database_authenticatable, :registerable, :rememberable, :omniauthable, omniauth_providers: [:google_oauth2]
+  devise  :database_authenticatable,
+          :registerable,
+          :rememberable,
+          :trackable,
+          :omniauthable,
+          omniauth_providers: [:google_oauth2]
 
   has_many :tables_users, dependent: :destroy
   has_many :tables, through: :tables_users
   has_many :fields, through: :tables
-  has_many :filters
+  has_many :filters, dependent: :destroy
 
   validates :name, :email, presence:true
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create	

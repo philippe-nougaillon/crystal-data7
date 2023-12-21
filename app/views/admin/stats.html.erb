@@ -1,0 +1,41 @@
+<div>
+  <h1 class="font-bold text-4xl mb-6">Admin</h1>
+
+  <div class='overflow-x-auto mt-6'>
+    <table class='table'>
+      <thead>
+        <tr>
+          <th>User email</th>
+          <th>Dernière Connexion</th>
+          <th>Nbr Co</th>
+          <th>Tables</th>
+          <th>Values</th>
+          <th>Nbr Partages</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <%# shared_with = TablesUser.where(table_id: current_user.tables.pluck(:id)).where.not(role: 'Propriétaire') %>
+          <% table_ids = TablesUser.where(user_id: user.id, role: 'Propriétaire').pluck(:table_id) %>
+          <% nbr_values = Value.where(user_id: user.id).count %>
+          <% nbr_partages = TablesUser.where(table_id: table_ids).where.not(role: 'Propriétaire').count %>
+          <tr>
+            <td><%= user.email %></td>
+            <td><% time_ago_in_words user.last_sign_in_at if user.sign_in_count.positive? %></td>
+            <td class=" <%= user.sign_in_count > 1 ? 'text-info font-black' : ''  %>"><%= user.sign_in_count %></td>
+            <td class=<%= 'text-info' if table_ids.count.positive? %>><%= table_ids.count %></td>
+            <td><%= nbr_values %></td>
+            <td><%= nbr_partages %></td>
+            <td><%= link_to "[X]", user_path(user), 'data-turbo-method': :delete, class:"btn btn-ghost btn-sm" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <span><%= page_entries_info @users, entry_name: 'user' %></span>
+  <%= paginate @users %>
+
+
+</div>
