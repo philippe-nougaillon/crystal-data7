@@ -57,6 +57,12 @@
               <div class="w-sm-50"><%= raw value %></div>
             <% when 'Distance' %>
               <%= value %>
+            <% when 'Tags' %>
+              <% value.split(', ').each do |tag| %>
+                <span class='badge bg-secondary'><%= tag.humanize %></span>
+              <% end %>
+            <% when 'Email' %>
+              <%= mail_to value %>
             <% else %>
               <%= value %>
             <% end %>

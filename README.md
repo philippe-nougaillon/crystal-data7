@@ -131,7 +131,7 @@ C#/SQLite/MySQL, stack LAMP, Ruby on Rails...), ma vocation a toujours été d'a
 le pas vers le décloisonnement de leurs données, avec pour objectif une informatique de gestion plus efficace, 
 collaborative et centrée sur les objectifs. 
 	
-CrystalData a donc pour ambition d'être un petit concentré de toute mon expérience dans les L4G/SGBD/AGL, 
+CrystalDATA a donc pour ambition d'être un petit concentré de toute mon expérience dans les L4G/SGBD/AGL, 
 et, pourquoi pas, de poser les fondations d'une future application sur mesure, la vôtre, 
 intégrant toutes vos spécificités, règles métier, Workflow, etc...
 

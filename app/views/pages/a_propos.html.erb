@@ -1,17 +1,28 @@
 <div class="mt-4">
-	<h1 class="text-primary">CrystalDATA</h1>
+	<div class="d-flex justify-content-between align-items-center">
+		<div>
+			<h1 class="text-primary mb-0">CrystalDATA</h1>
+			<h2 class="fw-normal fs-4 mt-0">
+				Vos données métier 'In da Cloud' 
+				<span class="fw-lighter text-secondary fs-6">Go, go, go... It's your birthday!</span>
+			</h2>
+		</div>
+		<%= image_tag 'icons/crystaldata.png', style: "height: 6rem" %>
+	</div>
 
-    <h2 class="fw-normal fs-4">
-		Vos données métier 'In da Cloud' 
-		<span class="fw-lighter text-secondary fs-6">Go, go, go... It's your birthday!</span>
-	</h2>
+	<h3 class="fw-bold text-dark my-5">Pour qui ?</h3>
 
-    <h3 class="fw-light fs-5">
-        Application NO-CODE de base de données en ligne, qui vous permet de créer et de partager des collections d'Objets et formulaires variés avec vos collaborateurs
-    </h3>
+	<p class="fs-5 fw-light w-sm-75">
+		Vous êtes une entreprise de service avec des équipes sur le terrain (ex: BTP, SAV, Installation, Maintenance, etc.) et
+		vous cherchez une méthode de gestion des interventions ou de field service management (FSM) ?
+		<br><br>
+		CrystalData est un gestionnaire d'informations NO-CODE qui vous permet de créer  
+		des collections d'objets métiers (ex: Clients, Interventions, Technicien, Frais, Projets, etc.), 
+		de les lier (Clients <==> Interventions <==> Techniciens <==> Frais) 
+		et de les partager en ligne avec vos collaborateurs.
+	</p>
 
-	
-	<h3 class="fw-bold text-warning my-5">Principales fonctionnalités</h3>
+	<h3 class="fw-bold text-dark my-5">Principales fonctionnalités</h3>
 
 	<ul class="list-group list-group-flush mb-5 w-sm-75">
 		<li class="list-group-item d-flex align-items-center gap-2">
@@ -64,113 +75,14 @@
 		</li> 
 	</ul>
 
-	<% if false %>
+	<h3 class="fw-bold text-dark my-5">L'objet CrystalDATA et ses Attributs</h3>
 
-		<h3 class="text-warning">Toutes les fonctionnalités de CrystalDATA en détails</h3>
-
-		<div class="row">
-			<div class="col">
-				<h4 class="mt-3">
-					<i class="fa fa-check"></i>
-					Créer des collections d'Objets<br>
-				</h4>
-
-				<p>Créez vos collections d'Objets simplement à partir d'une feuille Excel (exportée au format CSV)</p>
-
-				<%= link_to image_path 'screen-lg.png' do %>
-					<%= image_tag 'screen-lg.png', class: 'img-thumbnail w-100' %>
-				<% end %>
-			</div>
-
-			<div class="col">
-				<h4 class="mt-3">
-					<i class="fa fa-check"></i>
-					Ajoutez de nouveaux attributs 
-				</h4>
-				
-				<p>
-					Ajoutez des attributs de type: Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, 
-					Champ calculé (formule <%= link_to "Ruby","https://www.ruby-lang.org/fr/documentation/quickstart/", :target => "_blank" %>), 
-					Fichier, Image, 
-					Signature manuscrite, Coordonnées GPS, Météo locale
-				</p>
-
-				<%= link_to image_path 'screen-lg-modif.png' do %>
-					<%= image_tag 'screen-lg-modif.png', class: 'img-thumbnail w-100' %>
-				<% end %>	
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col">
-				<h4 class="mt-5">
-					<i class="fa fa-check"></i>
-					Ajoutez, éditez vos enregistrements dans un formulaire
-				</h4>
-				<p>
-					Un formulaire permet de saisir vos données, sur PC ou sur mobile. Chaque modification est consignée dans un historique (qui, quand, quoi)
-				</p>
-				<%= link_to image_path 'screen-lg-form.png' do %>
-					<%= image_tag 'screen-lg-form.png', class: 'img-thumbnail w-100' %>
-				<% end %>	
-			</div>
-
-			<div class="col">
-				<h4 class="mt-5">
-					<i class="fa fa-check"></i>
-					Recherchez, filtrez et triez vos données 
-				</h4>
-		
-				<%= link_to image_path 'screen-lg-filtre.png' do %>
-					<%= image_tag 'screen-lg-filtre.png', class: 'img-thumbnail w-100' %>
-				<% end %>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col">
-				<h4 class="mt-5">
-					<i class="fa fa-check"></i>
-					Partagez vos données avec d'autres utilisateurs
-				</h4>
-				<%= link_to image_path 'screen-lg-partage.png' do %>
-					<%= image_tag 'screen-lg-partage.png', class: 'img-thumbnail w-100' %>
-				<% end %>
-			</div>
-
-			<div class="col">
-				<h4 class="mt-5">
-					<i class="fa fa-check"></i>
-					Exportez vos données vers un tableur 
-				</h4>
-				<%= link_to image_path 'screen-lg-excel2.png' do %>
-					<%= image_tag 'screen-lg-excel2.png', class: 'img-thumbnail w-100' %>
-				<% end %>
-			</div>
-		</div>
-
-		<h4 class="mt-5">
-			<i class="fa fa-check"></i>
-			Accédez à vos données en mobilité
-		</h4>
-		<p>Les écrans s'adaptent automatiquement à la taille d'un écran de smartphone (Responsive Design)</p>
-
-		<div class="d-flex gap-2 gap-sm-4 mb-5">
-			<%= image_tag 'screen-sm-1.png', class: 'img-thumbnail w-25' %>
-			<%= image_tag 'screen-sm-2.png', class: 'img-thumbnail w-25' %>
-			<%= image_tag 'screen-sm-3.png', class: 'img-thumbnail w-25' %>
-		</div>
-
-	<% end %>
-
-	<h3 class="fw-bold text-warning my-5">L'objet CrystalDATA et ses Attributs</h3>
-
-	<p>
+	<p class="w-sm-75">
 		Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et 
 		chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste, Oui/Non, Fichier, etc.)
 		<br><br>
 		Les types d'attributs disponibles sont : 
-		<ul class="list-group list-group-flush mb-5 m-3 gap-2">
+		<ul class="list-group list-group-flush mb-5 m-3 gap-2 w-sm-75">
 			<li>
 				<b>Texte</b> :
 				<ul>
@@ -202,6 +114,7 @@
 			</li>
 			<li><b>Utilisateur</b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table</li>
 			<li><b>URL</b> : permet d'ajouter un lien vers une ressource internet via une URL (interne ou externe).</li>
+			<li><b>Email</b> : pour ajouter un lien vers une adresse email.</li>
 			<li>
 				<b>Vidéo YouTube</b> : permet d'ajouter un lien vers une vidéo YouTube et d'afficher l'aperçu de la vidéo dans une miniature.  
 			</li>
@@ -222,6 +135,9 @@
 			<li>
 				<b>UUID</b> : génère automatiquement un identifiant unique. (UDID = Universally Unique IDentifier)
 			</li>
+			<li>
+				<b>Tags</b> : permet de saisir des mots-clés séparés par des virgules. (Ex: <i>Paris, France, Europe</i>)
+			</li>
 			<li><b>WORKFLOW</b> : pour ajouter un état à un objet, associé à une couleur. (Ex: <i>Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary</i>)
 				<ul><li>
 					Couleurs disponibles:
@@ -238,7 +154,7 @@
 		</ul>
 	</p>
 
-	<h3 class="fw-bold text-warning my-5">Relations entre objets</h3>
+	<h3 class="fw-bold text-dark my-5">Relations entre objets</h3>
 	<p class="w-sm-75">
 		Les relations entre objets sont créées avec l'attribut 'Collection'. 
 		Exemple : un objet Intervention aura un attribut 'Technicien' qui permettra de choisir un technicien dans la collection du même nom.
@@ -247,7 +163,7 @@
 		la vue de détails de chaque Technicien affiche automatiquement ses Interventions et permet d'en saisir une nouvelle pour ce Technicien.  
 	</p>
 
-	<h3 class="fw-bold text-warning my-5">Filtres</h3>
+	<h3 class="fw-bold text-dark my-5">Filtres</h3>
 	<p class="w-sm-75">
 		Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères.
 		Ces filtres acceptent des critères différents selon le type d'attribut :
@@ -257,7 +173,7 @@
 		- un attribut numérique est filtré avec un signe et une valeur (Qté en stock: > 5) 
 	</p>
 
-	<h3 class="fw-bold text-warning my-5">Utilisateurs, partages et rôles</h3>
+	<h3 class="fw-bold text-dark my-5">Utilisateurs, partages et rôles</h3>
 	<p class="w-sm-75">
 		Vous pouvez partager vos collections avec d'autres utilisateurs en leur donnant un rôle (Lecteur, Collecteur, Éditeur).
 		<ul class="list-group mb-5 m-3 gap-2">
@@ -273,49 +189,10 @@
 		</ul>
 	</p>
 
-	<h3 class="fw-bold text-warning my-5">Développement, support et services</h3>
-	
-	<p class="mt-3">
-		CrystalDATA a été développé par Philippe et Pierre-Emmanuel, du 
-		<%= link_to "Studio 'Philnoug & Partners'", 'https://www.philnoug.com', target: '_blank' %>
-	</p>
-
-	<div class="row mt-3">
-		<div class="col-sm-2">
-			<%= image_tag "philippe.webp",
-			class: "img-thumbnail rounded"
-			%>
-		<h5 class="font-bold">
-			Philippe N.
-		</h5>
-		<h6 class="italic text-xl">
-			Product Manager
-			<br>
-			Développeur Senior RoR
-		</h6>
-		</div>
-		<div class="col-sm-2">
-		<%= image_tag "pierre-emmanuel.webp",
-			class: "img-thumbnail rounded"
-		%>
-		<h5 class="font-bold">
-			Pierre-Emmanuel D.
-		</h5>
-		<h6 class="italic">
-			Développeur Ruby on Rails
-		</h6>
-	</div>
-
-	<p class="mt-3">
-		Besoin d'une nouvelle fonctionnalité ou d'une application sur mesure ? Nous vous la développons !
-		<br><br>
-	    Pour en savoir plus,
-    	<%= link_to "contactez-nous", 'https://www.philnoug.com/contact', target: '_blank', class: 'link' %>
-    </p>
 
 </div>
 
-<h3 class="fw-bold text-warning my-5">Historique et motivation</h3>
+<h3 class="fw-bold text-dark my-5">Historique et motivation</h3>
 
 <p class="w-sm-75">
 	Développeur d'applications métiers en entreprise depuis plus de 30 ans, j'ai souvent aidé mes clients à passer 
@@ -324,19 +201,15 @@
 	partagées entre les services depuis une source unique de confiance (<b>Single Source Of Truth</b>). 
 </p>
 
-<p class="w-sm-75">
-	C'est pourquoi j'ai commencé le développement d'un outil NO-CODE et open-source, il y a bientôt 10 ans,  
-	dans le but de couvrir les fonctions de base d'une plateforme d'information ouverte.
-	<br><br>
-	Fort d'une expérience de plus de 30 ans sur les SGDB les plus intéressants de leurs époques 
+<p class="w-sm-75">	
+	Fort d'une expérience de plus de 30 ans sur les base de données et outils de développement les plus intéressants de leurs époques 
 	(SuperBase 64, Yes You Can, SuperDB, FoxPro, dBase 3/4, Paradox 3/4, Access, Delphi, VB4/5/6/SQL Server,
-	C#/SQLite/MySQL, stack LAMP, Ruby on Rails...), ma vocation a toujours été d'aider mes clients à franchir 
-	le pas vers le décloisonnement de leurs données, avec pour objectif une informatique de gestion plus efficace, 
+	C#/SQLite/MySQL, stack LAMP, Ruby on Rails, et j'en passe...), ma vocation a toujours été d'aider mes clients à franchir 
+	le pas vers le décloisonnement de leurs données avec pour objectif une informatique de gestion plus efficace, 
 	collaborative et centrée sur les objectifs. 
 	<br><br>
-	A force de mettre en place ce type de solution, force était de constater  
-	que même si les clients et les domaines d'activités de mes clients ne se ressemblaient pas 
-	(Loueur, Social, Telécom, Pharma, Industrie), des motifs se répétaient et chaque nouveau projet 
+	Même si les domaines d'activités des clients ne se ressemblaient pas 
+	(Loueur auto, Social, Télécom, Pharma, Industrie, TPE/PME), des motifs se répétaient et chaque nouveau projet 
 	se déroulait d'une façon à peu près identique :
 </p>
 
@@ -399,6 +272,52 @@
 	</div>
 </div>
 
-CrystalDATA a donc pour ambition d'être un petit concentré de toute mon expérience dans les L4G/SGBD/AGL, 
-et, pourquoi pas, de poser les fondations d'une future application sur mesure, la vôtre, 
-intégrant toutes vos spécificités, règles métier, Workflow, etc...
+<p class="w-sm-75">
+	C'est pourquoi j'ai développé de cet outil NO-CODE et open-source,  
+	dans le but de couvrir les fonctions de base d'une plateforme d'information ouverte.
+	<br><br>
+	CrystalDATA a donc pour ambition d'offrir un petit concentré de mon expérience des bases de données, 
+	et, pourquoi pas, de poser les fondations d'une future application/plateforme sur mesure, la vôtre, 
+	intégrant toutes vos spécificités, règles métier, Workflow, Services, etc.
+</p>
+
+	<h3 class="fw-bold text-dark my-5">Développement, support et services</h3>
+	
+	<p class="mt-3">
+		CrystalDATA a été développé par Philippe et Pierre-Emmanuel, du 
+		<%= link_to "Philnoug Consulting", 'https://www.philnoug.com', target: '_blank' %>
+	</p>
+
+	<div class="row mt-3">
+		<div class="col-sm-2">
+			<%= image_tag "philippe.webp",
+			class: "img-thumbnail rounded"
+			%>
+		<h5 class="font-bold">
+			Philippe N.
+		</h5>
+		<h6 class="italic text-xl">
+			Product Manager
+			<br>
+			Développeur Senior RoR
+		</h6>
+		</div>
+		<div class="col-sm-2">
+		<%= image_tag "pierre-emmanuel.webp",
+			class: "img-thumbnail rounded"
+		%>
+		<h5 class="font-bold">
+			Pierre-Emmanuel D.
+		</h5>
+		<h6 class="italic">
+			Développeur Ruby on Rails
+		</h6>
+	</div>
+
+	<p class="mt-3">
+		Besoin d'une nouvelle fonctionnalité ou d'une application sur mesure ? Nous vous la développons !
+		<br><br>
+	    Pour en savoir plus,
+    	<%= link_to "contactez-nous", 'https://www.philnoug.com/contact', target: '_blank', class: 'link' %>
+    </p>
+

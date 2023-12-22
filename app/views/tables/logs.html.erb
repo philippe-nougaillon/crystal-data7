@@ -2,15 +2,17 @@
 
   <div class="my-4 d-flex align-items-center text-secondary gap-2">
     <h1 class="mb-0 d-inline">
-      Audit Trail (<%= @table.name %>)
+      Audit des modifications (<%= @table.name %>)
     </h1>
   </div>
 
   <% if params[:record_index].blank? %>
-    <%= form_tag(request.path, method: :get, class: 'd-flex mb-4 gap-4 align-items-center') do %>
+    <%= form_tag(request.path, method: :get, class: 'd-flex mb-4 gap-4 align-items-end') do %>
 
-      <%= label_tag "Utilisateur" %>
-      <%= select_tag :user_id, options_from_collection_for_select(@table.users, "id", "name", params[:user_id]), include_blank:true, onchange: 'this.form.submit()', class:'form-select' %>
+      <div>
+        <%= label_tag "Utilisateur" %>
+        <%= select_tag :user_id, options_from_collection_for_select(@table.users, "id", "name", params[:user_id]), include_blank:true, onchange: 'this.form.submit()', class:'form-select' %>
+      </div>
 
       <%= submit_tag 'Filtrer', class: 'btn btn-outline-primary' %>
     <% end %>
@@ -20,14 +22,14 @@
     <table class="table table-hover table-striped table-bordered sticky">
       <thead>
         <tr>
-          <th>Le</th>
+          <th>Il y a</th>
           <th>Qui</th>
           <th>IP</th>
           <th>Action</th>
-          <th>Ligne</th>
+          <th>Index</th>
           <th>Attribut</th>
-          <th>Valeur</th>
-          <th>Remplace</th>
+          <th>Avant</th>
+          <th>Après</th>
         </tr>
       </thead>
 

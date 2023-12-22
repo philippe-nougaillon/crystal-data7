@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
+  get 'admin/stats'
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   devise_scope :user do
     authenticated :user do
@@ -13,7 +14,11 @@ Rails.application.routes.draw do
 
   root 'devise/sessions#new'
 
-  resources :tables
+  resources :tables do
+    member do
+      get :icalendar
+    end
+  end
   resources :values
   resources :blobs, only: [:new, :create]
 
@@ -27,6 +32,7 @@ Rails.application.routes.draw do
 
   controller :pages do
     get :a_propos, to: 'pages#a_propos'
+    get :stats, to: 'pages#stats'
   end
 
   resources :filters do

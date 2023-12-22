@@ -1,14 +1,14 @@
 class TablesController < ApplicationController
   before_action :set_table, except: [:new, :create, :import, :import_do, :index]
   before_action :is_user_authorized?
+  skip_before_action :authenticate_user!, only: %i[ icalendar ]
 
   # GET /tables
   # GET /tables.json
   def index
     @tables = current_user.tables.includes(:fields)
-    respond_to do |format|
-      format.html.phone
-      format.html.none 
+    if current_user.sign_in_count < 5
+      flash[:notice] = "Pour créer un nouvel objet, utilisez le bouton 'Nouvel Objet' ci-dessus"
     end
   end
 
@@ -51,7 +51,11 @@ class TablesController < ApplicationController
       params[:select].each do | option | 
         unless option.last.blank? 
           field = Field.find(option.first)
-          filter_records = @table.values.where(field: field, data: option.last).pluck(:record_index) 
+          if field.Tags?
+            filter_records = @table.values.where(field: field).where("values.data ILIKE ?", "%#{option.last}%").pluck(:record_index) 
+          else
+            filter_records = @table.values.where(field: field, data: option.last).pluck(:record_index) 
+          end
           @filters[option.first] = option.last
           @filter_results[option.first] = filter_records
         end
@@ -72,7 +76,11 @@ class TablesController < ApplicationController
       end
     end
 
-    @records = @filter_results.values.reduce(:&)
+    if params[:filtre].present?
+      @records = @table.filters.find_by(slug: params[:filtre]).get_filtered_records
+    else
+      @records = @filter_results.values.reduce(:&)
+    end
 
     if @table.lifo 
      # calcule la date maximum de chaque ligne d'enregistrement 
@@ -98,12 +106,40 @@ class TablesController < ApplicationController
       session[:order_by] = order_by
     end
 
-    if params[:view] == 'graph' && @table.fields.exists?(datatype: ['Nombre','Euros'])
-      @title = @table.fields.where(datatype: ['Nombre','Euros']).first.name
-      field_id = @table.fields.where(datatype: 'Texte').first.id
-      @labels = @table.values.where(record_index: @records, field_id: field_id).pluck(:data)
-    elsif params[:view] == 'calendar' && @table.fields.exists?(datatype: ['Date'])
+    case params[:view]
+    when 'graph'
+      if @table.fields.exists?(datatype: ['Nombre','Euros'])
+        @title = @table.fields.where(datatype: ['Nombre','Euros']).first.name
+        fields_id = @table.fields.where.not(datatype: ['Nombre','Euros']).first(2).pluck(:id)
+        labels = []
+        fields_id.each do |field_id|
+          datas = @table.values.where(record_index: @records, field_id: field_id).pluck(:data)
+          if Field.find(field_id).Date?
+            datas = datas.map{ |data| l(data.to_date) }
+          end
+          labels << datas
+        end
+        @labels = labels.transpose
+      end
 
+    when 'map'
+      if @table.fields.exists?(datatype: ['GPS'])
+        fields_id = @table.fields.where.not(datatype: ['GPS']).first(7).pluck(:id)
+        @data = []
+        fields_id.each do |field|
+          @data << @table.values.where(record_index: @records, field_id: field).pluck(:data)
+        end
+        @data = @data.transpose
+        gps_values = @table.fields.where(datatype: 'GPS').first.values.where.not(data: [nil, '']).pluck(:data)
+        @lng = []
+        @lat = []
+        gps_values.each do |gps_value|
+          @lng << gps_value.split(',').last.to_f
+          @lat << gps_value.split(',').first.to_f
+        end
+      end
+    when 'calendar'
+      @date_values = @table.values.joins(:field).where(record_index: @records, 'field.datatype': 'Date')
     end
 
     respond_to do |format|
@@ -133,6 +169,10 @@ class TablesController < ApplicationController
   def show_attrs 
     @field = Field.new(table_id: @table.id)
     @fields = Field.datatypes.keys.to_a
+
+    if current_user.sign_in_count < 5
+      flash[:notice] = "Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste...)."
+    end
   end
 
   # formulaire d'ajout / modification
@@ -259,6 +299,10 @@ class TablesController < ApplicationController
   # GET /tables/new
   def new
     @table = Table.new
+    if current_user.sign_in_count < 5
+      flash[:notice] = "Un Objet permet de décrire quelque chose d'existant (ex: Voiture, Personne...) avec un ensemble d'attributs (Couleur, Puissance, Poids...). Une collection est consitué d'un ensemble d'objets de même nature"
+    end
+    
   end
 
   # GET /tables/1/edit
@@ -314,13 +358,12 @@ class TablesController < ApplicationController
   end
 
   def import_do
-    ImportCollection.new(params[:upload], current_user, request).call
-    table = current_user.tables.last
-    if table.record_index > 0
-      flash[:notice] = "Importation terminée. Table '#{table.name.humanize}' créée avec succès."
+    result = ImportCollection.new(params[:upload], current_user, params[:col_sep]).call
+
+    if result.first
+      flash[:notice] = "Importation terminée. Table '#{current_user.tables.last.name.humanize}' créée avec succès."
     else
-      flash[:alert] = "L'importation a échouée. Vérifiez que les séparateurs, le type et le format soient corrects."
-      table.destroy
+      flash[:alert] = "L'importation a échoué. => '#{result.last}'"
     end
     redirect_to tables_path
   end
@@ -378,50 +421,6 @@ class TablesController < ApplicationController
     @audits = @audits.reorder('created_at DESC').page(params[:page])
   end
 
-  # ????
-  # def activity
-  #   unless params[:type_action].blank?
-  #     @logs = @table.logs.where(action:params[:type_action].to_i)
-  #   else
-  #     @logs = @table.logs.all
-  #   end
-
-  #   unless params[:user_id].blank?
-  #     @logs = @logs.where(user_id:params[:user_id])
-  #   end
-
-  #   # applique les filtres
-  #   @records_filter = []
-  #   if params[:select]
-  #     params[:select].each do | option | 
-  #       unless option.last.blank? 
-  #         field = Field.find(option.first)
-  #         filter_records = @table.values.where(field:field, data:option.last).pluck(:record_index) 
-  #         if @records_filter.empty?
-  #           @records_filter = filter_records 
-  #         else
-  #           @records_filter = @records_filter & filter_records 
-  #         end  
-  #       end
-  #     end
-  #     @logs = @logs.where(record_index:@records_filter) if @records_filter.any?
-  #   end
-
-  #   @hash = @logs.group_by_day("logs.created_at").count
-  #   fields_count = @table.fields.count
-
-  #   # arroudir au multiple du nombre de champs supérieur
-  #   @hash.each do |key,value| 
-  #     if value % fields_count == 0 
-  #       r = value / fields_count
-  #     else
-  #       r = value + fields_count - (value % fields_count) 
-  #     end 
-  #     #logger.debug "[DEBUG] value:#{value} fields:#{fields_count} r:#{r}"
-  #     @hash[key] = r / fields_count
-  #   end  
-  # end
-
   def show_details
     unless params[:record_index].blank?
       @record_index = params[:record_index]
@@ -440,6 +439,27 @@ class TablesController < ApplicationController
     @record_index = params[:record_index]
     @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
     @sum = Hash.new(0)
+  end
+
+  def icalendar
+    user = User.find_by(slug: params[:user])
+
+    date_records = @table.values.joins(:field).where('field.datatype': 'Date').pluck(:record_index)
+    @values = @table.values.where(record_index: date_records)
+    if @table.collecteur?(user)
+      @values = @values.where(user_id: user.id)
+    end
+
+    if params[:filtre].present?
+      records_index = @table.filters.find_by(slug: params[:filtre]).get_filtered_records
+    else
+      records_index = @values.pluck(:record_index).uniq
+    end
+
+    filename = "CrystalDATA_Agenda_iCal"
+    response.headers['Content-Disposition'] = 'attachment; filename="' + filename + '.ics"'
+    headers['Content-Type'] = "text/calendar; charset=UTF-8"
+    render plain: AgendaToIcalendar.new(@table, records_index).call
   end
 
   private

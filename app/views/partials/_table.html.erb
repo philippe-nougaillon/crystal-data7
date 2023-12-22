@@ -1,5 +1,5 @@
 <div class="overflow-x-auto">
-  <table class="table table-striped table-hover sticky">
+  <table class="table table-hover sticky" style='border-collapse: separate; border-spacing: 0 20px;'>
     <thead>
       <tr style="vertical-align: middle">
         <% table.fields.listable.ordered.each_with_index do | field, index | %>
@@ -58,15 +58,17 @@
       sur <%= @records.size %> au total
     <% end %>
   </p>
-  <div class="d-block">
-    <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format XLS" do %>
-      XLS
-    <% end %>
-    <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format CSV" do %>
-      CSV
-    <% end %>
-    <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format PDF" do %>
-      PDF
-    <% end %>
-  </div>
+  <% if action_name != 'show_details' %>
+    <div class="d-block">
+      <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format XLS" do %>
+        XLS
+      <% end %>
+      <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format CSV" do %>
+        CSV
+      <% end %>
+      <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format PDF" do %>
+        PDF
+      <% end %>
+    </div>
+  <% end %>
 </div>

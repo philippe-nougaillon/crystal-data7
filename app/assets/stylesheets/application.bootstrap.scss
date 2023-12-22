@@ -283,3 +283,8 @@ table, table * {
 .prev-month #date, .next-month #date {
   color: lightgrey
 }
+
+// enlever les bordures sur le contenu des pin sur la carte
+#pin:focus-visible {
+  outline: none;
+}

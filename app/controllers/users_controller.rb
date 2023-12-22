@@ -1,51 +1,66 @@
 class UsersController < ApplicationController
-    skip_before_action :authenticate_user!, only: %i[connect_guest_user]
+  before_action :set_user, only: %i[show edit update destroy]
+  skip_before_action :authenticate_user!, only: %i[connect_guest_user]
+  before_action :is_user_authorized?, except: %i[connect_guest_user]
 
-  	def show
-  		@user = current_user
-      @total_tables, @total_lignes = 0, 0
+  def show
+    @total_tables, @total_lignes = 0, 0
 
-      @user.tables.each do |table|
-        if table.propriétaire?(@user)
-           @total_tables += 1
-           @total_lignes += table.size
-        end
-      end
-      @tables_users = TablesUser.where(user_id: current_user.id).where.not(role: 'Propriétaire')
-  	end
-
-    def new
-    	@user = User.new
-    end
-
-    def create
-	    @user = User.new(user_params)
-	    if @user.save
-        UserMailer.notification_nouveau_compte(@user).deliver_now
-        session[:user_id] = @user.id
-        redirect_to tables_path, notice:"Bienvenue '#{@user.name}' ! Votre compte a bien été créé et vous avez été notifié par mail."
-	    else
-		    render :new	
-	    end
-	  end
-
-    def update
-      @user = User.new(user_params)
-      if @user.update(user_params)
-        redirect_to @user, notice:'Mot de passe modifié avec succès.'
-      else
-        render :show
+    @user.tables.each do |table|
+      if table.propriétaire?(@user)
+        @total_tables += 1
+        @total_lignes += table.size
       end
     end
+    current_user_table_ids = TablesUser.where(user_id: current_user.id, role: 'Propriétaire').pluck(:table_id)
 
-    def connect_guest_user
-      sign_in User.find(1)
-      redirect_to table_path(current_user.favorite_table), notice: "Bienvenue dans la démonstration. Vous pouvez tester ici librement l'application mais avec quelques limitations. Veuillez créer un compte pour avoir toutes les fonctionnalités."
+    @shared_with = TablesUser.where(table_id: current_user_table_ids).where.not(role: 'Propriétaire')
+    @tables_users = TablesUser.where(user_id: current_user.id).where.not(role: 'Propriétaire')
+  end
+
+  def destroy
+    # unless ['pierreemmanuel.dacquet@gmail.com', 'philippe.nougaillon@gmail.com'].include?(current_user.email)
+    #   AdminMailer.with(organisation: @organisation, reason: params[:reason]).suppression_organisation_notification.deliver_now
+    # end
+
+    table_ids = TablesUser.where(user_id: @user.id, role: 'Propriétaire').pluck(:table_id)
+
+    Table.where(id: table_ids).destroy_all
+    @user.destroy
+
+    if ['pierreemmanuel.dacquet@gmail.com', 'philippe.nougaillon@gmail.com'].include?(current_user.email)
+      respond_to do |format|
+        format.html { redirect_to admin_stats_path }
+        format.json { head :no_content }
+      end
+    else
+      # sign_out
+
+      # respond_to do |format|
+      #   format.html { redirect_to root_path, notice: "Tout a bien été supprimé. En espérant vous revoir prochainement :)" }
+      #   format.json { head :no_content }
+      # end
     end
+  end
+
+  def connect_guest_user
+    sign_in User.find(1)
+    redirect_to table_path(current_user.favorite_table), notice: "Bienvenue dans la démonstration. Vous pouvez tester ici librement l'application mais avec quelques limitations. Veuillez créer un compte pour avoir toutes les fonctionnalités."
+  end
 
   private
-  	def user_params
-    	params.require(:user).permit(:name, :email, :password, :password_confirmation, :remember_me)
-  	end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find_by(slug: params[:id])
+  end
+  
+  def user_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :remember_me)
+  end
+
+  def is_user_authorized?
+    authorize @user? @user : User
+  end
 
 end

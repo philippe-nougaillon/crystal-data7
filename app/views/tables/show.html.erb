@@ -31,7 +31,7 @@
 </nav>
 
 <% if @table.fields.any? %>
-  <%= form_tag table_path(@table.slug), {method: :get, class: 'd-flex flex-wrap flex-sm-nowrap align-items-start justify-content-between gap-4 mb-4'} do |f| %>
+  <%= form_tag table_path(@table.slug), {method: :get, class: 'd-flex flex-wrap align-items-start justify-content-between gap-4 mb-4'} do |f| %>
     <div class="d-flex gap-4 flex-wrap">
       <div>
         <%= label_tag :search, "Rechercher" %>
@@ -59,6 +59,13 @@
                     include_blank: true, 
                     class: 'form-select', 
                     onchange: 'this.form.submit()' %>
+            <% elsif field.Tags? %>
+              <%= select_tag "select[#{field.id}]", 
+                    options_for_select(field.populate_field_tags(@records), default_value), 
+                    include_blank: true, 
+                    class: 'form-select', 
+                    onchange: 'this.form.submit()', 
+                    data: {select2: {tags: true, tokenSeparators: [',', ' ']}} %>
             <% else %>
               <%= select_tag "select[#{field.id}]", 
                     options_for_select(field.populate_select_filter(@records), default_value), 
@@ -75,42 +82,50 @@
     </div>
 
     <div>
-      <br>
-      <div class="btn-group flex-no-wrap" role="group" aria-label="Basic radio toggle button group">
-        <%= radio_button_tag :view, "table", (params[:view]=='table'), name:'view', id:'btnradio1', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio1" title="Tableau">
-          <span class="material-symbols-outlined">
-            view_list
-          </span>
-        </label>
+      <% if @table.filters.any? %>
+        <div>
+          <%= label_tag :filtre, "Filtre" %>
+          <%= select_tag :filtre, options_from_collection_for_select(@table.filters, 'slug', 'name', params[:filtre]), include_blank: true, class:'form-select w-100', onchange: 'this.form.submit()' %>
+        </div>
+      <% end %>
 
-        <%= radio_button_tag :view, "card", (params[:view]=='card'), name:'view', id:'btnradio2', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio2" title="Vignettes">
-          <span class="material-symbols-outlined">
-            cards
-          </span>
-        </label>
+      <div class='mt-3 text-end'>
+        <div class="btn-group flex-no-wrap" role="group" aria-label="Basic radio toggle button group">
+          <%= radio_button_tag :view, "table", (params[:view]=='table'), name:'view', id:'btnradio1', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
+          <label class="btn btn-outline-secondary pb-1 lh-1" for="btnradio1" title="Tableau">
+            <span class="material-symbols-outlined">
+              view_list
+            </span>
+          </label>
 
-        <%= radio_button_tag :view, "calendar", (params[:view]=='calendar'), name:'view', id:'btnradio3', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio3" title="Calendrier">
-          <span class="material-symbols-outlined">
-            calendar_month
-          </span>
-        </label>
+          <%= radio_button_tag :view, "card", (params[:view]=='card'), name:'view', id:'btnradio2', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
+          <label class="btn btn-outline-secondary pb-1 lh-1" for="btnradio2" title="Vignettes">
+            <span class="material-symbols-outlined">
+              cards
+            </span>
+          </label>
 
-        <%= radio_button_tag :view, "map", (params[:view]=='map'), name:'view', id:'btnradio4', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio4" title="Cartographique">
-          <span class="material-symbols-outlined">
-            map
-          </span>
-        </label>
+          <%= radio_button_tag :view, "calendar", (params[:view]=='calendar'), name:'view', id:'btnradio3', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
+          <label class="btn btn-outline-secondary pb-1 lh-1" for="btnradio3" title="Calendrier">
+            <span class="material-symbols-outlined">
+              calendar_month
+            </span>
+          </label>
 
-        <%= radio_button_tag :view, "graph", (params[:view]=='graph'), name:'view', id:'btnradio5', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio5" title="Diagramme en barres">
-          <span class="material-symbols-outlined">
-            bar_chart_4_bars
-          </span>
-        </label>
+          <%= radio_button_tag :view, "map", (params[:view]=='map'), name:'view', id:'btnradio4', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
+          <label class="btn btn-outline-secondary pb-1 lh-1" for="btnradio4" title="Cartographique">
+            <span class="material-symbols-outlined">
+              map
+            </span>
+          </label>
+
+          <%= radio_button_tag :view, "graph", (params[:view]=='graph'), name:'view', id:'btnradio5', autocomplete:'off', onchange:'this.form.submit()', class:"btn-check" %>
+          <label class="btn btn-outline-secondary pb-1 lh-1" for="btnradio5" title="Diagramme en barres">
+            <span class="material-symbols-outlined">
+              bar_chart_4_bars
+            </span>
+          </label>
+        </div>
       </div>
     </div>
   <% end %>
@@ -120,7 +135,13 @@
   <% when 'card' %>
     <%= render partial: 'cards', locals: { table: @table, records: @records} %>
   <% when 'map' %>
-    <div id='map' style='height: 70vh;'></div>
+    <% if @data %>
+      <%= render partial: 'map', locals: {} %>
+    <% else %>
+      <div class="alert alert-warning" role="alert">
+        Aucun attribut de type GPS n'a été trouvé pour cet objet
+      </div>
+    <% end %>
   <% when 'graph' %>
     <% if @title %>
       <div class="mx-auto my-5">
@@ -132,25 +153,7 @@
       </div>
     <% end %>
   <% when 'calendar' %>
-    <%= month_calendar do |date| %>
-      <p id="date" class="<%= date == Date.today ? 'badge bg-success' : '' %>">
-        <%= date.day %>
-      </p>
-      <% records_index = @table.values.joins(:field).where(record_index: @records, data: date, 'field.datatype': 'Date').pluck(:record_index) %>
-      <% if records_index.any? %>
-        <% records_index.each do |record_index| %>
-          <%= link_to details_path(@table.slug, record_index:), title: 'Voir les détails de cette ligne', class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
-            <div class="shadow-sm pb-3 px-2 bg-light">
-              <% @table.values.where(record_index: record_index).first(5).pluck(:data).each do |value| %>
-                <br>
-                <%= value %>
-              <% end %>
-            </div>
-          <% end %>
-          <br>
-        <% end %>
-      <% end %>
-    <% end %>
+    <%= render partial: 'calendar' %>
   <% end %>
 
 <% else %>
@@ -162,33 +165,6 @@
   <% end %>
 <% end %>
 
-<script>
-  mapboxgl.accessToken = 'pk.eyJ1IjoicGhpbG5vdWciLCJhIjoiY2pvNXRyczhjMDFkajNxcGVmNHZtcHZ4OSJ9.vcFMjboSUDUUg--tDsgapg';
-  var map = new mapboxgl.Map({
-    container: 'map',
-    center: [2.407914616221202, 47.08362763879501],
-    zoom: 4,
-    style: 'mapbox://styles/mapbox/streets-v11'
-  });
-
-  <% @table.values.joins(:field).where(record_index: @records, 'field.datatype': 'GPS').each do |record| %>
-    <% unless record.data.empty? %>
-      var lng = <%= record.data.split(',').last.to_f %>
-      var lat = <%= record.data.split(',').first.to_f %>
-      var marker = new mapboxgl.Marker({ color: "#FF0000"})
-        .setLngLat([lng, lat])
-        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-        .setHTML("<a id='pin' href='#<%= @records.first %>'><h1 class='has-text-weight-bold has-text-centered is-size-6 mb-4'><%= @records.first %></h1><p class='is-size-7'><%= @records.first %></p><p class='is-size-7'><%= @records.first %> <%= @records.first %></p></a>"))
-        .addTo(map);
-    <% end %>
-  <% end %>
-
-  map.addControl(new mapboxgl.FullscreenControl());
-  map.addControl(new mapboxgl.NavigationControl());
-  
-  setTimeout(function(){ map.setLayoutProperty('country-label', 'text-field', ['get', 'name_fr']); }, 3000);
-</script>
-
 <!-- Required chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -197,12 +173,17 @@
   const dataBarChart = {
     labels: <%= @labels.to_json.html_safe %>,
     datasets: [
-      {
-        label: "<%= @title %>",
-        backgroundColor: "hsl(252, 82.9%, 67.8%)",
-        borderColor: "hsl(252, 82.9%, 67.8%)",
-        data: <%= @table.values.joins(:field).where(record_index: @records, 'field.datatype': ['Nombre','Euros']).pluck(:data).to_json.html_safe %>,
-      },
+      <% @table.fields.where(datatype: ['Nombre', 'Euros']).each_with_index do |field, index| %>
+        <% colors = ['214, 97%, 27%', '201, 100%, 36%', '195, 100%, 39%', '190, 100%, 42%', '190, 74%, 59%', '189, 75%, 75%', '190, 76%, 82%', '190, 77%, 88%','239, 94%, 19%'] %>
+
+        {
+          label: "<%= field.name %>",
+          backgroundColor: "hsl(<%= colors[index%9] %>)",
+          borderColor: "hsl(252, 82.9%, 67.8%)",
+          borderRadius: 5,
+          data: <%= @table.values.where(record_index: @records, field_id: field.id).pluck(:data).to_json.html_safe %>,
+        },
+      <% end %>
     ],
   };
 

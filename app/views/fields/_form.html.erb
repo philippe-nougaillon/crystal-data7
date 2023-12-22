@@ -5,8 +5,8 @@
 
     <div class="d-flex flex-wrap gap-4 mb-4">
       <div>
-        <%= f.label :name, "Nom" %>
-        <%= f.text_field :name, class: 'form-control', required: true %>
+        <%= f.label :name, "Nom de l'attribut" %>
+        <%= f.text_field :name, class: 'form-control', required: true, placeholder: "Ex: Nom#{@field.table.name.humanize}" %>
       </div>
 
       <div>
@@ -24,23 +24,31 @@
     </div>
 
     <div class="mb-4">
-      <div class="d-flex gap-2">
-        <%= f.check_box :obligatoire %>
-        <%= f.label :obligatoire, "Obligatoire ?" %>
+      <div class="form-check mb-4">
+        <%= f.check_box :obligatoire, class: 'form-check-input' %>
+        <%= f.label :obligatoire, "Obligatoire ?", class: 'form-check-label' %>
+        <p class="form-text">
+          Si vous voulez que cet attribut soit obligatoire pour chaque objet de la collection
+        </p>
       </div>
-      <div class="d-flex gap-2">
-        <%= f.check_box :filtre, title: "Permet de réaliser un filtre dynamique pour afficher certains objets de la collection" %>
-        <%= f.label :filtre, "Filtre ?" %>
+      <div class="form-check mb-4">
+        <%= f.check_box :filtre, class: 'form-check-input' %>
+        <%= f.label :filtre, "Filtre ?", class: 'form-check-label' %>
+        <p class="form-text">
+          Si vous voulez que cet attribut soit utilisé comme filtre dans la collection
+        </p>
       </div>
     </div>
 
-    <div class="mb-4">
-      <%= f.label :visibility, "Visibilité:" %>
-      <%= f.select :visibility, options_for_select(Field.visibilities.keys.to_a, @field.visibility), {}, class: 'form-select' %>
-    </div>
+    <% unless @field.new_record? %>
+      <div class="mb-4">
+        <%= f.label :visibility, "Visibilité" %>
+        <%= f.select :visibility, options_for_select(Field.visibilities.keys.to_a, @field.visibility), {}, class: 'form-select' %>
+      </div>
+    <% end %>
 
     <div data-type-target='number' class="mb-4">
-      <%= f.label :operation, "Opération en bas de page:" %>
+      <%= f.label :operation, "Opération en bas de page" %>
       <%= f.select :operation, options_for_select(Field.operations.keys.to_a, @field.operation), {include_blank: true}, class: 'form-select' %>
     </div>
 

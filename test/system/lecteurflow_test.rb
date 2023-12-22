@@ -3,7 +3,7 @@ require "application_system_test_case"
 class LecteurFlowTest < ApplicationSystemTestCase
 
   setup do
-    login_propriétaire
+    login_propriétaire(@user)
   end
 
   # Tables

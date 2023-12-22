@@ -7,40 +7,68 @@
   <% end %>
 </div>
 
-<div class="mb-5">
-  <h2>Informations personnelles</h2>  
-  <p>Nom : <%= @user.name %></p>
-  <p>Email : <%= @user.email %></p>
+<div class="my-5">
+  <h2 class='fs-3 mb-4'>Informations personnelles</h2>  
+  <p>Nom : <b><%= @user.name %></b></p>
+  <p>Email : <b><%= @user.email %></b></p>
   <i>Utilisateur depuis <%= time_ago_in_words(@user.created_at) %></i><br>
 </div>
 
 <div class="w-sm-50 mb-5">
-  <h3>Les objets partagés avec vous</h3>
+  <h2 class='fs-3 mb-4'>Objets que vous partagez</h2>
+  <% if @shared_with.any? %>
+    <div class='overflow-x-auto'>
+      <table class="table table striped table-sm table-hover">
+        <thead>
+          <th>Objet</th>
+          <th>Email</th>
+          <th>Rôle</th>
+        </thead>
+        <tbody>
+          <% @shared_with.each do |shared_with| %>
+            <tr>
+              <td><%= shared_with.table.name %></td>
+              <td><%= shared_with.user.email %></td>
+              <td><%= shared_with.role %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>Vous partagez aucun objet pour l'instant...</p>
+  <% end%>
+</div>
+
+<div class="w-sm-50 mb-5">
+  <h2 class='fs-3 mb-4'>Objets partagés avec vous</h2>
   <% if @tables_users.any? %>
-    <table class="table table striped table-sm table-hover">
-      <thead>
-        <th>Objet</th>
-        <th>Rôle</th>
-      </thead>
-      <tbody>
-        <% @tables_users.each do |table_user| %>
-          <tr>
-            <td><%= table_user.table.name %></td>
-            <td><%= table_user.role %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <div class='overflow-x-auto'>
+      <table class="table table striped table-sm table-hover">
+        <thead>
+          <th>Objet</th>
+          <th>Rôle</th>
+        </thead>
+        <tbody>
+          <% @tables_users.each do |table_user| %>
+            <tr>
+              <td><%= table_user.table.name %></td>
+              <td><%= table_user.role %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   <% else %>
     <p>Aucun objet partagé avec vous pour l'instant...</p>
   <% end%>
 </div>
 
 <div>
-  <h3>Activité du compte</h3>
+  <h2 class='fs-3 mb-4'>Activité du compte</h2>
 
   <div class="mb-4">
-    <p>Nombre d'objets créés : <span class="badge bg-info"><%= @total_tables %></span></p>
-    <p>Nombre total d'objets dans vos collections : <span class="badge bg-primary"><%= @total_lignes %></span></p>
+    <p>Nombre d'objets créés : <span class="badge bg-success"><%= @total_tables %></span></p>
+    <p>Nombre total d'objets dans vos collections : <span class="badge bg-success"><%= @total_lignes %></span></p>
   </div>
 </div>

@@ -10,7 +10,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def show?
-    record.users.include?(user)
+    record.instance_of?(Table) && record.users.include?(user)
   end
 
   def new?
@@ -77,16 +77,16 @@ class TablePolicy < ApplicationPolicy
     record.propriétaire?(user)
   end
 
-  def activity?
-    false
-  end
-
   def show_details?
     record.users.include?(user)
   end
 
   def related_tables?
     show_details?
+  end
+
+  def icalendar?
+    true
   end
 
 end
