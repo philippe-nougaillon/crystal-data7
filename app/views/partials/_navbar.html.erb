@@ -101,6 +101,14 @@
             Statistiques
           <% end %>
         </li>
+        <% if user_signed_in? %>
+          <%= link_to current_user, title: "Statistiques", class: 'nav-link text-secondary d-flex align-items-center gap-1' do %>
+            <span class="material-symbols-outlined">
+              badge
+            </span>
+            Profil
+          <% end %>
+        <% end %>
         
         <% if controller_name == "tables" && action_name == "show" %>
           <% if policy(@table).show_attrs? %>
