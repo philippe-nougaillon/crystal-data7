@@ -57,7 +57,7 @@ class ActiveSupport::TestCase
     visit unauthenticated_root_path
     fill_in "user_email", with: user.email
     fill_in "user_password", with: user.password
-    click_on "S'identifier"
+    click_on "Se connecter"
     sleep(1)
   end
 
@@ -66,7 +66,7 @@ class ActiveSupport::TestCase
   #   # email_field = find('[data-testid="Email"]')
   #   fill_in "email", with: users(:user_lecteur).email
   #   fill_in "Password", with: "AZERTYUIOP"
-  #   click_on "S'identifier"
+  #   click_on "Se connecter"
   #   sleep(1)
   # end
 

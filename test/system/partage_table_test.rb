@@ -19,7 +19,7 @@ class PartageTableTest < ApplicationSystemTestCase
     visit root_url
     fill_in "user[email]", with: @user.email
     fill_in "user[password]", with: @user.password
-    click_on "S'identifier"
+    click_on "Se connecter"
     click_on "Stocks"
     assert_text "RJ45"
   end
