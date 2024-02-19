@@ -2,7 +2,7 @@ class AdminController < ApplicationController
   before_action :user_authorized?
 
   def stats
-    @users = User.order('users.current_sign_in_at DESC').page(params[:page]).per(50)
+    @users = User.order('users.current_sign_in_at DESC NULLS LAST').page(params[:page]).per(50)
   end
 
   private
