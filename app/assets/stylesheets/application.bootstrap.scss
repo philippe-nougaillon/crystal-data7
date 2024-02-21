@@ -66,9 +66,6 @@ div.d-flex{
   transform: translateX(1.5rem);
 }
 
-table, table * {
-  background-color: transparent !important;
-}
 #notification{
   transition-property: color,background-color,border-color,-webkit-text-decoration-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;
   transition-duration: .15s;

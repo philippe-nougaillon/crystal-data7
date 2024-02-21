@@ -1,7 +1,7 @@
-<nav class="nav d-none d-lg-flex flex-column shadow-sm gap-5 py-4 position-fixed top-0 start-0 overflow-hidden h-100 align-items-center">
-  <div class="flex-fill d-flex flex-column gap-5 mt-4">
+<nav class="nav d-none d-lg-flex flex-column shadow-sm position-fixed top-0 start-0 overflow-hidden h-100 align-items-center bg-body-secondary">
+  <div class="flex-fill d-flex flex-column w-100">
     <li class="nav-item">
-      <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Ma collection favorite/Page d'accueil", class:'d-flex flex-column align-items-center text-decoration-none' do %>
+      <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Ma collection favorite/Page d'accueil", class: "d-flex flex-column align-items-center text-decoration-none py-3 #{'bg-dark-subtle' if params[:controller] == 'tables' && @table && @table.show_on_startup_screen }" do %>
         <span class="material-symbols-outlined">
           diamond
         </span>
@@ -9,7 +9,7 @@
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to tables_path, title: "Liste des Objets", class:'d-flex flex-column align-items-center text-decoration-none text-info' do %>
+      <%= link_to tables_path, title: "Liste des Objets", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-info #{'bg-dark-subtle' if params[:controller] == 'tables' && !(@table && @table.show_on_startup_screen)}" do %>
       <span class="material-symbols-outlined">
         database
       </span>
@@ -17,7 +17,7 @@
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to filters_path, title: "Liste des Filtres", class:'d-flex flex-column align-items-center text-decoration-none text-success' do %>
+      <%= link_to filters_path, title: "Liste des Filtres", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-success #{'bg-dark-subtle' if params[:controller] == 'filters'}" do %>
       <span class="material-symbols-outlined">
         tune
       </span>
@@ -25,7 +25,7 @@
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to stats_path, title: "Statistiques", class:'d-flex flex-column align-items-center text-decoration-none text-secondary', 'data-turbo': 'false' do %>
+      <%= link_to stats_path, title: "Statistiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-secondary #{'bg-dark-subtle' if params[:action] == 'stats'}", 'data-turbo': 'false' do %>
       <span class="material-symbols-outlined">
         Query_stats
       </span>
@@ -34,8 +34,8 @@
     </li>
   </div>
   <% if user_signed_in? %>
-    <li class="nav-item">
-      <%= link_to current_user, title: "Profil utilisateur", class:'d-flex flex-column align-items-center text-decoration-none text-black-50' do %>
+    <li class="nav-item w-100">
+      <%= link_to current_user, title: "Profil utilisateur", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-black-50 #{'bg-dark-subtle' if params[:controller] == 'users'}" do %>
       <span class="material-symbols-outlined">
         badge
       </span>
@@ -43,8 +43,8 @@
       <% end %>
     </li>
   <% end %>
-  <li class="nav-item">
-    <%= link_to a_propos_path, title: "À Propos de CrystalDATA", class:'d-flex flex-column align-items-center text-decoration-none text-black-50' do %>
+  <li class="nav-item w-100">
+    <%= link_to a_propos_path, title: "À Propos de CrystalDATA", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-black-50 #{'bg-dark-subtle' if params[:action] == 'a_propos'}" do %>
     <span class="material-symbols-outlined">
       help
     </span>

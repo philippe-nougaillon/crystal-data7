@@ -12,7 +12,7 @@
         <img class="w-100" src=<%= value %>>
       <% when 'Date' %>
         <% unless value.blank? %>
-          <%= link_to_if is_link, l(value.to_date), details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'text-black' %>
+          <%= link_to_if is_link, l(value.to_date), details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2' %>
         <% end %>
       <% when 'Texte_long' %>
         <%= truncate(value, length: 80) %>
@@ -35,7 +35,7 @@
       <% when 'Collection' %>
         <% linked_value = field.get_linked_table_record(value.to_i) %>
         <% linked_table = Table.find(field.relation.relation_with_id) %>
-        <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" }, class: 'text-black', 'data-testid': "Voir les détails de #{field.items.tr('[]','').split('.').first} à la ligne n°#{value}" %>
+        <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2', 'data-testid': "Voir les détails de #{field.items.tr('[]','').split('.').first} à la ligne n°#{value}" %>
       <% when 'Utilisateur' %>
         <%= value %>
       <% when 'Vidéo_YouTube' %>
@@ -51,7 +51,7 @@
       <% when 'Email' %>
         <%= mail_to value %>
       <% else %>
-        <%= link_to_if is_link, value, details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'text-black' %>
+        <%= link_to_if is_link, value, details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2' %>
       <% end %>
 
       <% if field.operation %>
