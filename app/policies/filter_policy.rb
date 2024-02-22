@@ -10,7 +10,7 @@ class FilterPolicy < ApplicationPolicy
   end
 
   def new?
-    user && (!(user.compte_démo?) || Rails.env.development?)
+    user
   end
 
   def create?

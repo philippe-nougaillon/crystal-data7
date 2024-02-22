@@ -6,11 +6,11 @@ class FieldPolicy < ApplicationPolicy
   end
 
   def create?
-    record.table.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
+    record.table.propriétaire?(user)
   end
   
   def edit?
-    record.table.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
+    record.table.propriétaire?(user)
   end
 
   def update?
