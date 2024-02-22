@@ -7,7 +7,7 @@ class TablesController < ApplicationController
   # GET /tables.json
   def index
     @tables = current_user.tables.includes(:fields)
-    if current_user.sign_in_count < 5
+    if current_user.compte_démo?
       flash[:notice] = "Pour créer un nouvel objet, utilisez le bouton 'Nouvel Objet' ci-dessus"
     end
   end
@@ -170,7 +170,7 @@ class TablesController < ApplicationController
     @field = Field.new(table_id: @table.id)
     @fields = Field.datatypes.keys.to_a
 
-    if current_user.sign_in_count < 5
+    if current_user.compte_démo?
       flash[:notice] = "Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste...)."
     end
   end
@@ -299,7 +299,7 @@ class TablesController < ApplicationController
   # GET /tables/new
   def new
     @table = Table.new
-    if current_user.sign_in_count < 5
+    if current_user.compte_démo?
       flash[:notice] = "Un Objet permet de décrire quelque chose d'existant (ex: Voiture, Personne...) avec un ensemble d'attributs (Couleur, Puissance, Poids...). Une collection est consitué d'un ensemble d'objets de même nature"
     end
     
