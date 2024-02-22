@@ -5,8 +5,11 @@
 
     <div class="d-flex flex-wrap gap-4 mb-4">
       <div>
-        <%= f.label :name, "Nom de l'attribut" %>
-        <%= f.text_field :name, class: 'form-control', required: true, placeholder: "Ex: Nom#{@field.table.name.humanize}" %>
+        <%= f.label :name, "Nom attribut" %>
+        <%= f.text_field :name, class: 'form-control', required: true %>
+        <p class="form-text">
+          ex: Nom, Prénom, Date de naissance, etc.
+        </p>
       </div>
 
       <div>

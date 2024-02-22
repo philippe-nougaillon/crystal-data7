@@ -31,11 +31,11 @@
               <%= "il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" unless table.size.zero? %>
             </td>
             <td style="text-align: right; white-space: nowrap;">
+              <% if policy(table).show_attrs? %>
+                <%= link_to 'Modifier Attributs', show_attrs_path(id: table.slug), title:"Modifier les attributs de l'Objet '#{table.name}'", class: 'btn btn-outline-primary btn-sm me-2' %>
+              <% end %>
               <% if policy(table).partages? %>
                 <%= link_to 'Partarger', partages_path(table), title: "Partager avec un autre utilisateur", class: 'btn btn-outline-success btn-sm' %>
-              <% end %>
-              <% if policy(table).show_attrs? %>
-                <%= link_to 'Modifier Attributs', show_attrs_path(id: table.slug), title:"Modifier les attributs de l'Objet '#{table.name}'", class: 'btn btn-outline-secondary btn-sm me-2' %>
               <% end %>
               <% if policy(table).destroy? %>
                 <%= link_to 'X', table, title: "Supprimer l'Objet #{table.name}", 'data-turbo-method': :delete, 'data-turbo-confirm': "Êtes-vous certain.e de vouloir supprimer l'Objet #{table.name} ? Toutes les données enregistrées dedans seront perdues !", class: 'btn btn-outline-danger btn-sm' %>

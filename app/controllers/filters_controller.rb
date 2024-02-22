@@ -1,7 +1,7 @@
 class FiltersController < ApplicationController
   before_action :set_filter, only: %i[ show edit update destroy query]
   before_action :is_user_authorized?
-  before_action :info_notice, only: %i[index]
+  before_action :info_notice, only: %i[index query]
 
   # GET /filters or /filters.json
   def index
@@ -28,7 +28,7 @@ class FiltersController < ApplicationController
 
     respond_to do |format|
       if @filter.save
-        format.html { redirect_to query_filter_url(@filter), notice: "Filtre créé." }
+        format.html { redirect_to query_filter_url(@filter)}
         format.json { render :show, status: :created, location: @filter }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -113,6 +113,10 @@ class FiltersController < ApplicationController
         flash[:notice] = case params[:action]
         when 'index'
           "(i)Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères"
+        when 'query'
+          if params.keys.count == 3 # ne pas afficher l'aide quand on applique le filtre
+            "(i)Renseignez ici les critères de sélection afin d'obtenir une collection d'objets filtrés"
+          end
         end
       end
     end
