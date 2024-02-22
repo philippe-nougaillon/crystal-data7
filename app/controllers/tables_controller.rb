@@ -1,15 +1,13 @@
 class TablesController < ApplicationController
   before_action :set_table, except: [:new, :create, :import, :import_do, :index]
   before_action :is_user_authorized?
+  before_action :info_notice, only: %i[index show_attrs partages logs]
   skip_before_action :authenticate_user!, only: %i[ icalendar ]
 
   # GET /tables
   # GET /tables.json
   def index
     @tables = current_user.tables.includes(:fields)
-    if current_user.compte_démo?
-      flash[:notice] = "(i)Pour créer un nouvel objet, utilisez le bouton 'Nouvel Objet' ci-dessus"
-    end
   end
 
   # GET /tables/1
@@ -169,10 +167,6 @@ class TablesController < ApplicationController
   def show_attrs 
     @field = Field.new(table_id: @table.id)
     @fields = Field.datatypes.keys.to_a
-
-    if current_user.compte_démo?
-      flash[:notice] = "(i)Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste...)."
-    end
   end
 
   # formulaire d'ajout / modification
@@ -400,6 +394,7 @@ class TablesController < ApplicationController
   end 
 
   def logs
+
     # Afficher les changements pour la ligne #record_index
     if params[:record_index]
       sql = "audited_changes ->> 'record_index' = '#{params[:record_index].to_s}'"
@@ -475,5 +470,20 @@ class TablesController < ApplicationController
 
     def is_user_authorized?
       authorize @table ? @table : Table
+    end
+
+    def info_notice
+      if current_user.compte_démo? && flash[:notice] == nil && flash[:alert] == nil
+        flash[:notice] = case params[:action]
+        when 'index'
+          "(i)Pour créer un nouvel objet, utilisez le bouton 'Nouvel Objet' ci-dessus"
+        when 'show_attrs'
+          "(i)Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste...)."
+        when 'partages'
+          "(i)Partagez vos collections d'objet avec d'autres utilisateurs"
+        when 'logs'
+          "(i)Chaque modification d'un objet est consignée dans un historique (quand, qui, quoi, valeur avant, valeur après)"
+        end
+      end
     end
 end

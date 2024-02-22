@@ -1,13 +1,11 @@
 class FiltersController < ApplicationController
   before_action :set_filter, only: %i[ show edit update destroy query]
   before_action :is_user_authorized?
+  before_action :info_notice, only: %i[index]
 
   # GET /filters or /filters.json
   def index
     @filters = current_user.filters.ordered
-    if current_user.compte_démo?
-      flash[:notice] = "(i)Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères"
-    end
   end
 
   # GET /filters/1 or /filters/1.json
@@ -108,5 +106,14 @@ class FiltersController < ApplicationController
 
     def is_user_authorized?
       authorize @filter? @filter : Filter
+    end
+
+    def info_notice
+      if current_user.compte_démo? && flash[:notice] == nil && flash[:alert] == nil
+        flash[:notice] = case params[:action]
+        when 'index'
+          "(i)Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères"
+        end
+      end
     end
 end
