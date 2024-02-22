@@ -6,7 +6,7 @@ class FiltersController < ApplicationController
   def index
     @filters = current_user.filters.ordered
     if current_user.compte_démo?
-      flash[:notice] = "Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères"
+      flash[:notice] = "(i)Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères"
     end
   end
 

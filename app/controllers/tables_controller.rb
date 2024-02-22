@@ -8,7 +8,7 @@ class TablesController < ApplicationController
   def index
     @tables = current_user.tables.includes(:fields)
     if current_user.compte_démo?
-      flash[:notice] = "Pour créer un nouvel objet, utilisez le bouton 'Nouvel Objet' ci-dessus"
+      flash[:notice] = "(i)Pour créer un nouvel objet, utilisez le bouton 'Nouvel Objet' ci-dessus"
     end
   end
 
@@ -171,7 +171,7 @@ class TablesController < ApplicationController
     @fields = Field.datatypes.keys.to_a
 
     if current_user.compte_démo?
-      flash[:notice] = "Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste...)."
+      flash[:notice] = "(i)Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste...)."
     end
   end
 
@@ -300,7 +300,7 @@ class TablesController < ApplicationController
   def new
     @table = Table.new
     if current_user.compte_démo?
-      flash[:notice] = "Un Objet permet de décrire quelque chose d'existant (ex: Voiture, Personne...) avec un ensemble d'attributs (Couleur, Puissance, Poids...). Une collection est consitué d'un ensemble d'objets de même nature"
+      flash[:notice] = "(i)Un Objet permet de décrire quelque chose d'existant (ex: Voiture, Personne...) avec un ensemble d'attributs (Couleur, Puissance, Poids...). Une collection est constituée d'un ensemble d'objets de même nature"
     end
     
   end
