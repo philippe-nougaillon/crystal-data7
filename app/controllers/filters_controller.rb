@@ -5,7 +5,7 @@ class FiltersController < ApplicationController
   # GET /filters or /filters.json
   def index
     @filters = current_user.filters.ordered
-    if current_user.sign_in_count < 5
+    if current_user.compte_démo?
       flash[:notice] = "Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères"
     end
   end
