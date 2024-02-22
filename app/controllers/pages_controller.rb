@@ -18,7 +18,15 @@ class PagesController < ApplicationController
           @values = field.values
           @results = @values.group(:data).order(:data).count(:id)
 
-          if field.Collection?
+          if field.Euros? || field.Nombre?
+            @results = @values.pluck(:record_index, :data).to_h
+            results_humanized = {}
+            @results.each do |k, v|
+              label = @table.values.records_at(k).pluck(:data).first(2)
+              results_humanized[label.insert(0,k)] = v
+            end
+            @results = results_humanized
+          elsif field.Collection?
             results_humanized = {}
             @results.each do |k, v|
               results_humanized[field.get_linked_table_record(k)] = v

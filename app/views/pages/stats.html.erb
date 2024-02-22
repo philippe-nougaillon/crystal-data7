@@ -45,7 +45,7 @@
     labels: <%= @results.keys.to_json.html_safe %>,
     datasets: [
       {
-        label: "<%= @results.values.sum %> <%= @table.name.pluralize if @table %>",
+        label: "<%= @table.size %> <%= @table.name.pluralize if @table %>",
         backgroundColor: "hsl(252, 82.9%, 67.8%)",
         borderColor: "hsl(252, 82.9%, 67.8%)",
         data: <%= @results.values.to_json.html_safe %>,
