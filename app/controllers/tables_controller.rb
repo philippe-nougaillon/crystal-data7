@@ -458,7 +458,7 @@ class TablesController < ApplicationController
   end
 
   def securite
-    @tables = current_user.tables
+    @tables = current_user.tables.order(:name)
   end
 
   private

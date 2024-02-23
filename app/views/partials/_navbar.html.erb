@@ -9,7 +9,7 @@
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to tables_path, title: "Liste des Objets", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-info #{'bg-dark-subtle' if params[:controller] == 'tables' && !(@table && @table.show_on_startup_screen)}" do %>
+      <%= link_to tables_path, title: "Liste des Objets", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-info #{'bg-dark-subtle' if params[:controller] == 'tables' && !((@table && @table.show_on_startup_screen) || params[:action] == 'securite')}" do %>
       <span class="material-symbols-outlined">
         database
       </span>
@@ -33,7 +33,7 @@
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to securite_tables_path, title: "Statistiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-secondary #{'bg-dark-subtle' if params[:action] == 'stats'}", 'data-turbo': 'false' do %>
+      <%= link_to securite_tables_path, title: "Statistiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-danger #{'bg-dark-subtle' if params[:action] == 'securite'}", 'data-turbo': 'false' do %>
       <span class="material-symbols-outlined">
         lock
       </span>
@@ -110,7 +110,7 @@
           <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to securite_tables_path, title: "Statistiques", class: 'nav-link text-secondary d-flex align-items-center gap-1' do %>
+          <%= link_to securite_tables_path, title: "Statistiques", class: 'nav-link text-danger d-flex align-items-center gap-1' do %>
             <span class="material-symbols-outlined">
               lock
             </span>

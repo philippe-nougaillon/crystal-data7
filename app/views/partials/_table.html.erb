@@ -1,7 +1,7 @@
 <div class="overflow-x-auto">
   <table class="table table-hover border align-middle">
     <thead>
-      <tr style="vertical-align: middle">
+      <tr class="table-secondary" style="vertical-align: middle">
         <% table.fields.listable.ordered.each_with_index do | field, index | %>
           <%= render partial: 'partials/table_header_cell', locals: {table:, field:, index:} %>
         <% end %>
