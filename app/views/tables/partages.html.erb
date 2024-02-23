@@ -20,7 +20,7 @@
 				<td><%= user.email %></td>
 				<td><%= @table.role_name(user) %></td>
 				<td>
-					<% unless @table.users[0] == user %>
+					<% if !@table.propriétaire?(user) && policy(@table).delete_record? %>
 						<%= link_to "Annuler le partage", annuler_partage_path(@table, user_id:user.id), title:"Annuler ce partage", 
 							data: { confirm: 'Confirmez-vous ?' }, class: 'btn btn-outline-danger btn-sm' %>
 					<% end %>

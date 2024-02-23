@@ -89,4 +89,8 @@ class TablePolicy < ApplicationPolicy
     true
   end
 
+  def securite?
+    user
+  end
+
 end

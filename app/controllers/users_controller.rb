@@ -12,10 +12,6 @@ class UsersController < ApplicationController
         @total_lignes += table.size
       end
     end
-    current_user_table_ids = TablesUser.where(user_id: current_user.id, role: 'Propriétaire').pluck(:table_id)
-
-    @shared_with = TablesUser.where(table_id: current_user_table_ids).where.not(role: 'Propriétaire')
-    @tables_users = TablesUser.where(user_id: current_user.id).where.not(role: 'Propriétaire')
   end
 
   def destroy

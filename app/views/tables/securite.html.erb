@@ -1,0 +1,56 @@
+<div class="my-4 d-flex align-items-center text-secondary gap-2">
+  <h1 class="mb-0">
+    Sécurité
+  </h1>
+</div>
+
+<% if @tables.any? %>
+  <% @tables.each do | table | %>
+    <div class="mb-5">
+      <div class="d-flex gap-2 align-items-center">
+        <h2><%= table.name %></h2>
+        <% if policy(table).add_user? %>
+          <%= link_to '+', partages_path(table), class: 'btn btn-outline-primary btn-sm' %>
+        <% end %>
+      </div>
+      <div class="overflow-x-auto mt-2">
+        <table class="table table-hover w-100 border align-middle">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Rôle</th>
+              <th>Créer?</th>
+              <th>Modifier?</th>
+              <th>Supprimer?</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% table.users.each do |user| %>
+              <tr>
+                <td class="fw-bold text-black text-decoration-none"><%= user.name %></td>
+                <td><%= user.email %></td>
+                <td><%= table.role_name(user) %></td>
+                <td class="text-warning"><%= table.role_number(user) >= 1 ? "✓" : "-" %></td>
+                <td class="text-warning"><%= table.role_number(user) >= 1 ? "✓" : "-" %></td>
+                <td class="text-warning"><%= table.propriétaire?(user) ? "✓" : "-" %></td>
+                <td>
+                  <% if !table.propriétaire?(user) && policy(table).delete_record? %>
+                    <%= link_to "Annuler le partage", annuler_partage_path(table, user_id:user.id), title:"Annuler ce partage", 
+                      data: { confirm: 'Confirmez-vous ?' }, class: 'btn btn-outline-danger btn-sm' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <i>
+  Aucun objet pour l'instant...
+  </i>
+<% end %>

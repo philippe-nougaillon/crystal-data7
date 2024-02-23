@@ -32,6 +32,14 @@
       Stats
       <% end %>
     </li>
+    <li class="nav-item">
+      <%= link_to securite_tables_path, title: "Statistiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-secondary #{'bg-dark-subtle' if params[:action] == 'stats'}", 'data-turbo': 'false' do %>
+      <span class="material-symbols-outlined">
+        lock
+      </span>
+      Sécurité
+      <% end %>
+    </li>
   </div>
   <% if user_signed_in? %>
     <li class="nav-item w-100">
@@ -99,6 +107,14 @@
               Query_stats
             </span>
             Statistiques
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to securite_tables_path, title: "Statistiques", class: 'nav-link text-secondary d-flex align-items-center gap-1' do %>
+            <span class="material-symbols-outlined">
+              lock
+            </span>
+            Sécurité
           <% end %>
         </li>
         <% if user_signed_in? %>

@@ -1,5 +1,5 @@
 class TablesController < ApplicationController
-  before_action :set_table, except: [:new, :create, :import, :import_do, :index]
+  before_action :set_table, except: [:new, :create, :import, :import_do, :index, :securite]
   before_action :is_user_authorized?
   before_action :info_notice, only: %i[index show_attrs partages logs]
   skip_before_action :authenticate_user!, only: %i[ icalendar ]
@@ -390,7 +390,7 @@ class TablesController < ApplicationController
     # supprime l'utilisateur que si ce n'est pas le dernier
     @table.users.delete(@user) if @table.users.count > 1
     flash[:notice] = "Le partage avec l'utilisateur '#{@user.name}' a été désactivé !"
-    redirect_to partages_path
+    redirect_to request.referrer
   end 
 
   def logs
@@ -455,6 +455,10 @@ class TablesController < ApplicationController
     response.headers['Content-Disposition'] = 'attachment; filename="' + filename + '.ics"'
     headers['Content-Type'] = "text/calendar; charset=UTF-8"
     render plain: AgendaToIcalendar.new(@table, records_index).call
+  end
+
+  def securite
+    @tables = current_user.tables
   end
 
   private
