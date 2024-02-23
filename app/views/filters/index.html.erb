@@ -5,9 +5,9 @@
 </div>
 
 <div class="overflow-x-auto">
-  <table class="table table-striped table-hover sticky">
+  <table class="table table-hover border align-middle">
     <thead>
-      <tr>
+      <tr class="table-secondary">
         <th>Nom</th>
         <th>Table</th>
         <th>Critères</th>
@@ -17,8 +17,18 @@
     </thead>
 
     <tbody>
-      <% @filters.includes([:table]).each do |filter| %>
-        <%= render filter %>
+      <% if @filters.any? %>
+        <% @filters.includes([:table]).each do |filter| %>
+          <%= render filter %>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan=7>
+            <i>
+              Aucun filtre pour l'instant...
+            </i>
+          </td>
+        </tr>
       <% end %>
     </tbody>
 

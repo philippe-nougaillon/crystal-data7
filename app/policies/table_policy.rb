@@ -14,7 +14,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def new?
-    index? && (!(user.compte_démo?) || Rails.env.development?)
+    index?
   end
 
   def create?
@@ -22,7 +22,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def edit?
-    record.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
+    record.propriétaire?(user)
   end
 
   def update?
@@ -70,7 +70,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def partages_delete?
-    partages?
+    partages? && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def logs?
@@ -87,6 +87,10 @@ class TablePolicy < ApplicationPolicy
 
   def icalendar?
     true
+  end
+
+  def securite?
+    user
   end
 
 end

@@ -5,7 +5,7 @@
 </div>
 
 <div class="overflow-x-auto">
-	<table class="table table-striped table-hover table-bordered table-responsive">
+	<table class="table table-hover table-bordered table-responsive border align-middle">
 		<thead>
 			<tr>
 				<th>Utilisateur</th>
@@ -20,9 +20,9 @@
 				<td><%= user.email %></td>
 				<td><%= @table.role_name(user) %></td>
 				<td>
-					<% unless @table.users[0] == user %>
+					<% if !@table.propriétaire?(user) && policy(@table).delete_record? %>
 						<%= link_to "Annuler le partage", annuler_partage_path(@table, user_id:user.id), title:"Annuler ce partage", 
-							data: { confirm: 'Vraiment ??' }, class: 'btn btn-outline-danger btn-sm' %>
+							data: { confirm: 'Confirmez-vous ?' }, class: 'btn btn-outline-danger btn-sm' %>
 					<% end %>
 				</td>
 			</tr>

@@ -1,4 +1,4 @@
-<h1 class="text-2xl text-center">Statistiques</h1>
+<h1 class="text-2xl mt-4">Statistiques</h1>
 
 <div class="d-flex justify-items-center flex-wrap gap-5">
   <%= form_tag stats_path, method: :get, class: 'flex-fill d-flex flex-column mt-4 gap-4' do %>
@@ -45,7 +45,7 @@
     labels: <%= @results.keys.to_json.html_safe %>,
     datasets: [
       {
-        label: "<%= @results.values.sum %> <%= @table.name.pluralize if @table %>",
+        label: "<%= "#{@table.size}  #{@table.name.pluralize}" if @table %>",
         backgroundColor: "hsl(252, 82.9%, 67.8%)",
         borderColor: "hsl(252, 82.9%, 67.8%)",
         data: <%= @results.values.to_json.html_safe %>,

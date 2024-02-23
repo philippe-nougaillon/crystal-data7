@@ -6,7 +6,7 @@
           <%= t('simple_calendar.previous', default: 'Previous') %>
         </span>
       <% end %>
-      <time datetime="<%= start_date.strftime('%Y-%m') %>" class="calendar-title fs-3 fw-bold mx-3"><%= t('date.month_names')[start_date.month].humanize %> <%= start_date.year %></time>
+      <time datetime="<%= start_date.strftime('%Y-%m') %>" class="calendar-title fs-3 fw-bold text-center" style="width: 250px"><%= t('date.month_names')[start_date.month].humanize %> <%= start_date.year %></time>
       <%# link_to t('simple_calendar.today', default: 'Today'), calendar.url_for_today_view %>
       <%= link_to calendar.url_for_next_view, class: "btn btn-outline-primary pb-1 lh-1" do %>
         <span class="material-symbols-outlined">
@@ -17,7 +17,7 @@
   </div>
 
   <div class="overflow-x-auto">
-    <table class="table table-striped">
+    <table class="table border">
       <thead>
         <tr>
           <% date_range.slice(0, 7).each do |day| %>

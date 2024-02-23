@@ -1,16 +1,13 @@
 class TablesController < ApplicationController
-  before_action :set_table, except: [:new, :create, :import, :import_do, :index]
+  before_action :set_table, except: [:new, :create, :import, :import_do, :index, :securite]
   before_action :is_user_authorized?
+  before_action :info_notice, only: %i[index show_attrs partages logs]
   skip_before_action :authenticate_user!, only: %i[ icalendar ]
 
   # GET /tables
   # GET /tables.json
   def index
     @tables = current_user.tables.includes(:fields)
-    respond_to do |format|
-      format.html.phone
-      format.html.none 
-    end
   end
 
   # GET /tables/1
@@ -296,6 +293,10 @@ class TablesController < ApplicationController
   # GET /tables/new
   def new
     @table = Table.new
+    if current_user.compte_démo?
+      flash[:notice] = "(i)Un Objet permet de décrire quelque chose d'existant (ex: Voiture, Personne...) avec un ensemble d'attributs (Couleur, Puissance, Poids...). Une collection est constituée d'un ensemble d'objets de même nature"
+    end
+    
   end
 
   # GET /tables/1/edit
@@ -389,10 +390,11 @@ class TablesController < ApplicationController
     # supprime l'utilisateur que si ce n'est pas le dernier
     @table.users.delete(@user) if @table.users.count > 1
     flash[:notice] = "Le partage avec l'utilisateur '#{@user.name}' a été désactivé !"
-    redirect_to partages_path
+    redirect_to request.referrer
   end 
 
   def logs
+
     # Afficher les changements pour la ligne #record_index
     if params[:record_index]
       sql = "audited_changes ->> 'record_index' = '#{params[:record_index].to_s}'"
@@ -455,6 +457,10 @@ class TablesController < ApplicationController
     render plain: AgendaToIcalendar.new(@table, records_index).call
   end
 
+  def securite
+    @tables = current_user.tables.order(:name)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_table
@@ -468,5 +474,20 @@ class TablesController < ApplicationController
 
     def is_user_authorized?
       authorize @table ? @table : Table
+    end
+
+    def info_notice
+      if current_user.compte_démo? && flash[:notice] == nil && flash[:alert] == nil
+        flash[:notice] = case params[:action]
+        when 'index'
+          "(i)Pour créer un nouvel objet, utilisez le bouton 'Nouvel Objet' ci-dessus"
+        when 'show_attrs'
+          "(i)Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste...)."
+        when 'partages'
+          "(i)Partagez vos collections d'objet avec d'autres utilisateurs"
+        when 'logs'
+          "(i)Chaque modification d'un objet est consignée dans un historique (quand, qui, quoi, valeur avant, valeur après)"
+        end
+      end
     end
 end
