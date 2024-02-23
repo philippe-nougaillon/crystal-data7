@@ -24,6 +24,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     @message.user_id = current_user.id
+    @message.field = @message.filter.table.fields.where(datatype: "Email").first
 
     respond_to do |format|
       if @message.save

@@ -9,6 +9,10 @@ class MessagePolicy < ApplicationPolicy
     user
   end
 
+  def show?
+    record.user_id == user.id
+  end
+
   def new?
     user && (!(user.compte_démo?) || Rails.env.development?)
   end
