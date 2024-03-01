@@ -15,6 +15,8 @@ class Field < ApplicationRecord
 	validates_presence_of :datatype
 	validate :check_options
 
+	normalizes :name, with: -> name { name.tr(' ','_') }
+
 	after_save :add_or_update_relation, if: Proc.new { |field| field.Collection? }
 
 	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID, :Signature, :Tags, :Email]

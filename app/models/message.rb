@@ -9,8 +9,10 @@ class Message < ApplicationRecord
         value = nil
 
         begin
-          sources = word.tr('[]','').split('.')
-          source_fields = sources.last.tr('"','').split(',')
+          sources = word.tr('[','').split('.')
+          source_fields = sources.last.split(']').first
+          overflow = sources.last.split(']').last
+
           source_table = user.tables.find_by(name: sources.first)
           field = user.fields.find_by(name: source_fields, table_id: source_table.id)
 
@@ -19,6 +21,8 @@ class Message < ApplicationRecord
           else
             value = field.values.first.data
           end
+          # Ajouter les caractères collés après ']'
+          value.concat(overflow) unless overflow == source_fields
         rescue StandardError => e
           value = "/// ERREUR : Vérifiez que le format est correct : <b>[NomObjet.Attribut]</b> ///"
         ensure 
