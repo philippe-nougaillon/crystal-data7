@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ 'source', 'params', 'number' ]
+  static targets = [ 'source', 'attribute_name', 'params', 'number' ]
 
   initialize() {
     this.paramsTarget.style.display = 'none';
@@ -38,5 +38,8 @@ export default class extends Controller {
       this.paramsTarget.style.display = 'none';
       this.numberTarget.style.display = 'none';
     }
+
+    // Préremplissage du nom de l'attribut
+    this.attribute_nameTarget.children[1].value = this.sourceTarget.value;
   }
 }
