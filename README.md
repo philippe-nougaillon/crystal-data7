@@ -78,10 +78,16 @@ Les types disponibles sont :
 				<b>QR Code</b> : pour générer un QR Code à partir d'un autre attribut. (Ex: <i>[N°deSérie],[Reference],[url site web]</i>)
 			</li>
 			<li>
+				<b>QR Scan</b> : permet de scanner un QR Code avec la caméra de votre smartphone, tablette ou ordinateur.
+			</li>
+			<li>
 				<b>Vidéo YouTube</b> : affiche l'aperçu d'une vidéo YouTube.  
 			</li>
 			<li>
 				<b>UUID</b> : génère un identifiant unique pour chaque objet. (Universally Unique IDentifier)
+			</li>
+			<li>
+				<b>Tags</b> : permet de saisir des mots-clés séparés par des virgules. (Ex: <i>Paris, France, Europe</i>)
 			</li>
 			<li>
 				<b>Signature</b> : permet de signer manuellement avec la souris ou sur un écran tactile.
