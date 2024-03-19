@@ -45,15 +45,15 @@
         <% when 'Signature' %>
           <div id="signature">
             <%= hidden_field_tag field_name, field_value, 'data-testid': "signature" %>
-            <div class="wrapper">
-              <canvas id="signature-pad" class="form-control" width=400 height=200></canvas>
-            </div>
+            <canvas id="signature-pad" class="form-control" width=400 height=200></canvas>
 
             <div style="margin-top: 8px;">
               <button id="save" class="btn btn-sm btn-outline-success">Valider cette signature</button>
               <a id="clear" class="btn btn-sm btn-outline-dark">Effacer</a>
             </div>
           </div>
+
+          <%= render partial:'partials/script_signature' %>
         <% when 'Texte_long' %>
           <%= text_area_tag field_name, field_value, autofocus: (index == 0),col: 10, row: 10, class: 'form-control w-100', 'data-testid': field.name %>
         <% when 'Texte_riche' %>
@@ -106,75 +106,21 @@
         <% when 'Email' %>
           <%= email_field_tag field_name, field_value, class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'QRScan' %>
-          <%= text_field_tag field_name, field_value, class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
-          <div>
-            <a class="button" id="startButton">Start</a>
-            <a class="button" id="resetButton">Reset</a>
-          </div>
-          <div>
-            <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
+          <video id="video" class="form-control w-100 p-0 mb-1"></video>
+
+          <div id="sourceSelectPanel" class="d-flex align-items-center" style="display:none; gap: 4px;">
+            <label for="sourceSelect">Source:</label>
+            <select id="sourceSelect" class="form-select w-100"></select>
           </div>
 
-          <div id="sourceSelectPanel" style="display:none">
-            <label for="sourceSelect">Change video source:</label>
-            <select id="sourceSelect" style="max-width:400px">
-            </select>
+          <div class="my-2 d-flex" style="gap: 4px;">
+            <a class="btn btn-sm btn-outline-success w-100" id="startButton">Scanner</a>
+            <a class="btn btn-sm btn-outline-dark w-100" id="resetButton">Effacer</a>
           </div>
 
-          <label>Result:</label>
-          <pre><code id="result"></code></pre>
-          <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
-          <script type="text/javascript">
-            window.addEventListener('load', function () {
-              let selectedDeviceId;
-              const codeReader = new ZXing.BrowserMultiFormatReader()
-              console.log('ZXing code reader initialized')
-              codeReader.listVideoInputDevices()
-                .then((videoInputDevices) => {
-                  const sourceSelect = document.getElementById('sourceSelect')
-                  selectedDeviceId = videoInputDevices[0].deviceId
-                  if (videoInputDevices.length >= 1) {
-                    videoInputDevices.forEach((element) => {
-                      const sourceOption = document.createElement('option')
-                      sourceOption.text = element.label
-                      sourceOption.value = element.deviceId
-                      sourceSelect.appendChild(sourceOption)
-                    })
+          <%= text_field_tag field_name, field_value, class: 'form-control w-100 mt-4', required: field.obligatoire, placeholder: "Aucune valeur scannée (appuyez sur 'Scanner' ci-dessus)", 'data-testid': field.name %>
 
-                    sourceSelect.onchange = () => {
-                      selectedDeviceId = sourceSelect.value;
-                    };
-
-                    const sourceSelectPanel = document.getElementById('sourceSelectPanel')
-                    sourceSelectPanel.style.display = 'block'
-                  }
-
-                  document.getElementById('startButton').addEventListener('click', () => {
-                    codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
-                      if (result) {
-                        console.log(result)
-                        document.getElementsByName("<%= field_name %>")[0].value = result.text
-                      }
-                      if (err && !(err instanceof ZXing.NotFoundException)) {
-                        console.error(err)
-                        document.getElementsByName("<%= field_name %>")[0].value = err
-                      }
-                    })
-                    console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
-                  })
-
-                  document.getElementById('resetButton').addEventListener('click', () => {
-                    codeReader.reset()
-                    document.getElementById('result').textContent = '';
-                    console.log('Reset.')
-                  })
-
-                })
-                .catch((err) => {
-                  console.error(err)
-                })
-            })
-          </script>
+          <%= render partial:'partials/script_qrscan', locals: {field_name:} %>
         <% end %>
       </fieldset>
     <% end %>
@@ -185,24 +131,3 @@
     <%= link_to "Annuler", request.referer %>
   </div>
 <% end %>
-
-
-<script>
-  var signaturePad = new SignaturePad(document.getElementById('signature-pad'));
-  var signatureField = document.querySelector("[data-testid=signature]");
-  console.log(signatureField);
-  var saveButton = document.getElementById('save');
-  var cancelButton = document.getElementById('clear');
-
-  saveButton.addEventListener('click', function (event) {
-    event.preventDefault();
-    if (!signaturePad.isEmpty()) {
-      signatureField.setAttribute('value', signaturePad.toDataURL("image/svg+xml"));
-    }
-  });
-
-  cancelButton.addEventListener('click', function (event) {
-    signaturePad.clear();
-    signatureField.setAttribute('value', "");
-  });
-</script>
