@@ -9,8 +9,8 @@
     <thead>
       <tr class="table-secondary">
         <th>Nom</th>
-        <th class="col-md-8">Attributs</th>
         <th>màj</th>
+        <th></th>
         <th></th>
       </tr>
     </thead>
@@ -19,10 +19,22 @@
       <% if @tables.any? %>
         <% @tables.each do | table | %>
           <tr>
-            <td><%= link_to table.name.upcase, table, class: 'fw-bold text-black text-decoration-none' %></td>
-            <td><%= table.field_names %></td>
+            <td>
+            <%= link_to table.name, table, class: ' text-primary' %>
+            <% if table.show_on_startup_screen? %>
+              <span class="material-symbols-outlined text-primary fs-6">
+                diamond
+              </span>
+            <% end %>
+            <br>
+            <%= table.field_names %></td>
             <td>
               <%= "il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" unless table.size.zero? %>
+            </td>
+            <td>
+              <% if policy(table).fill? %>
+                <%= link_to "(+) #{table.name.humanize}", fill_path(table.slug), title: "Ajouter un nouvel Objet à la collection '#{table.name}'", class: 'btn btn-outline-success btn-sm me-2 w-100' %>
+              <% end %>
             </td>
             <td style="text-align: right; white-space: nowrap;">
               <% if policy(table).show_attrs? %>
