@@ -34,8 +34,12 @@
         <%= value %>
       <% when 'Collection' %>
         <% linked_value = field.get_linked_table_record(value.to_i) %>
-        <% linked_table = Table.find(field.relation.relation_with_id) %>
-        <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2', 'data-testid': "Voir les détails de #{field.items.tr('[]','').split('.').first} à la ligne n°#{value}" %>
+        <% linked_table = Table.find_by(id: field.relation.relation_with_id) %>
+        <% if linked_table %>
+          <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2', 'data-testid': "Voir les détails de #{field.items.tr('[]','').split('.').first} à la ligne n°#{value}" %>
+        <% else %>
+          Aucune relation trouvée
+        <% end %>
       <% when 'Utilisateur' %>
         <%= value %>
       <% when 'Vidéo_YouTube' %>

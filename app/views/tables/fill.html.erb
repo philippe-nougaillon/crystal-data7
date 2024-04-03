@@ -92,6 +92,8 @@
               <%= link_to table_path(Table.find(field.relation.relation_with_id)), target: '_blank' do %>
               <% end %>
             </div>
+          <% else %>
+            <%= select_tag field_name, options_for_select(["Aucune relation trouvée"]), class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
           <% end %>
         <% when 'Utilisateur' %>
           <%= select_tag field_name, options_for_select(@table.users.pluck(:name), field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
