@@ -296,7 +296,6 @@ class TablesController < ApplicationController
     if current_user.compte_démo?
       flash[:notice] = "(i)Un Objet permet de décrire quelque chose d'existant (ex: Voiture, Personne...) avec un ensemble d'attributs (Couleur, Puissance, Poids...). Une collection est constituée d'un ensemble d'objets de même nature"
     end
-    
   end
 
   # GET /tables/1/edit
@@ -490,4 +489,5 @@ class TablesController < ApplicationController
         end
       end
     end
+    
 end

@@ -24,6 +24,8 @@ class UsersController < ApplicationController
     Table.where(id: table_ids).destroy_all
     @user.destroy
 
+    # TODO: ???
+      
     if ['pierreemmanuel.dacquet@gmail.com', 'philippe.nougaillon@gmail.com'].include?(current_user.email)
       respond_to do |format|
         format.html { redirect_to admin_stats_path }

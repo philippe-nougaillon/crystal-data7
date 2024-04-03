@@ -55,18 +55,12 @@ class Field < ApplicationRecord
 		return results
 	end
 
-	# def delete_file(filename)
-	# 	pathname = Rails.root.join('public', 'table_files') 
-	# 	File.delete(pathname + filename) 
-	# end
-
 	def is_valid_table_params
 		self.items.include?('[') && self.items.include?(']') &&
 		Table.find_by(id: self.relation.relation_with_id)
 	end
 
 	def populate_linked_table		
-
 		relation = self.relation
 
 		table = Table.find_by(id: relation.relation_with_id)
@@ -267,6 +261,7 @@ private
 		source_fields = sources.last.tr('"','').split(',')
 		source_table = self.table.users.first.tables.find_by(name: sources.first)
 		####
+		# TODO 
 		# Utiliser self.table.users.first.tables.find_by(name: sources.first)
 		# est correct pour l'instant, mais posera problème si l'order des User change,
 		# ou si d'autres users peuvent ajouter/modifier des fields

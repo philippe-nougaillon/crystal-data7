@@ -5,7 +5,7 @@ class Table < ApplicationRecord
 	audited
 
 	has_many :tables_users, dependent: :destroy
-  has_many :users, through: :tables_users
+  	has_many :users, through: :tables_users
 	has_many :fields, dependent: :destroy
 	has_many :values, through: :fields, dependent: :destroy
 	has_many :logs, through: :fields, dependent: :destroy
@@ -41,6 +41,7 @@ class Table < ApplicationRecord
 		record_index
 	end
     
+	# TODO
 	# Vérifier que l'enregistrement est libre 
     # (aucun autre enregistrement pointe dessus (type Table))
 	def record_can_be_destroy?(record_index)

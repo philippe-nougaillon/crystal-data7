@@ -9,6 +9,7 @@ class ExportPdf
 
   def initialize
     super()
+
     self.font_families.update("OpenSans" => {
       :normal => Rails.root.join("vendor/assets/fonts/Open_Sans/static/OpenSans/OpenSans-Regular.ttf"),
       :italic => Rails.root.join("vendor/assets/fonts/Open_Sans/static/OpenSans/OpenSans-Italic.ttf"),
@@ -52,4 +53,5 @@ class ExportPdf
       row(0).font_style = :bold
     end
   end
+  
 end

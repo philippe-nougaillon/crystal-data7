@@ -1,4 +1,7 @@
 class ValuesController < ApplicationController
+  
+  # TODO ????
+   
   # before_action :set_value, only: []
   # before_action :is_user_authorized?
 
@@ -18,7 +21,7 @@ class ValuesController < ApplicationController
       params.require(:value).permit(:field_id, :table_id, :data)
     end
 
-    # ????
+    # TODO ????
     # def is_user_authorized?
     #   @value = Table.find(params[:table]).values.records_at(params[:record_index]).find_by(field_id:params[:field])
     #   authorize @value

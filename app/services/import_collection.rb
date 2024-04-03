@@ -72,6 +72,7 @@ class ImportCollection < ApplicationService
     end
   end
 
+  # TODO : clean code !
   def detect_string_type(str)
     return "Oui_non?" if ['true', 'false', 'oui', 'non'].include?(str.downcase)
     return "Nombre" if str.to_i.to_s == str
@@ -83,4 +84,5 @@ class ImportCollection < ApplicationService
     end
     "Texte"
   end
+
 end
