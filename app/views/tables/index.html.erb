@@ -33,7 +33,7 @@
             </td>
             <td>
               <% if policy(table).fill? %>
-                <%= link_to "(+) #{table.name.humanize}", fill_path(table.slug), title: "Ajouter un nouvel Objet à la collection '#{table.name}'", class: 'btn btn-outline-success btn-sm me-2 w-100' %>
+                <%= link_to "(+) #{table.name}", fill_path(table.slug), title: "Ajouter un nouvel Objet à la collection '#{table.name}'", class: 'btn btn-outline-success btn-sm me-2 w-100' %>
               <% end %>
             </td>
             <td style="text-align: right; white-space: nowrap;">

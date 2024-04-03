@@ -74,13 +74,13 @@ class FiltersController < ApplicationController
         book = CollectionToXls.new(@filter.table, @records).call
         file_contents = StringIO.new
         book.write file_contents # => Now file_contents contains the rendered file output
-        filename = "Export collection d'objets '#{@filter.table.name.humanize}' du_#{Date.today.to_s}.xls"
+        filename = "Export collection d'objets '#{@filter.table.name}' du_#{Date.today.to_s}.xls"
         send_data file_contents.string.force_encoding('binary'), filename: filename 
       end
       
       format.csv do
         csv_string = CollectionToCsv.new(@filter.table, @records).call
-        filename = "Export collection d'objets '#{@filter.table.name.humanize}' du_#{Date.today.to_s}.csv"
+        filename = "Export collection d'objets '#{@filter.table.name}' du_#{Date.today.to_s}.csv"
         send_data csv_string, filename: filename
       end
       format.pdf do

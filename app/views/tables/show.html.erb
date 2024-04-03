@@ -77,7 +77,7 @@
         <% end %>
       <% end %>
       <% if policy(@table).fill? %>
-        <%= link_to "(+) #{@table.name.humanize}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
+        <%= link_to "(+) #{@table.name}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end' %>
       <% end %>
     </div>
 

@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "partage_frame" do %>
   <h2 class="text-black-50 my-3">
-    Partager l'objet '<%= @table.name.humanize %>' avec un autre utilisateur
+    Partager l'objet '<%= @table.name %>' avec un autre utilisateur
   </h2>
 
   <%= form_for :user, url: '/add_user_do' do %>

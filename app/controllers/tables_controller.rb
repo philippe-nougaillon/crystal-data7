@@ -146,18 +146,18 @@ class TablesController < ApplicationController
         book = CollectionToXls.new(@table, @records).call
         file_contents = StringIO.new
         book.write file_contents # => Now file_contents contains the rendered file output
-        filename = "Export_#{@table.name.humanize.pluralize}.xls"
+        filename = "Export_#{@table.name.pluralize}.xls"
         send_data file_contents.string.force_encoding('binary'), filename: filename 
       end
       format.csv do
         csv_string = CollectionToCsv.new(@table, @records).call
-        filename = "Export_#{@table.name.humanize.pluralize}.csv"
+        filename = "Export_#{@table.name.pluralize}.csv"
         send_data csv_string, filename: filename
       end
       format.pdf do
         pdf = ExportPdf.new
         pdf.export_collection(@table, @records)
-        filename = "Export_#{@table.name.humanize.pluralize}.pdf"
+        filename = "Export_#{@table.name.pluralize}.pdf"
         
         send_data pdf.render, filename: filename, type: 'application/pdf'
       end
@@ -372,9 +372,9 @@ class TablesController < ApplicationController
         # ajoute le nouvel utilisateur aux utilisateurs de la table
         @table.tables_users << TablesUser.create(table_id: @table.id, user_id: @user.id, role: params[:role])
         UserMailer.notification_nouveau_partage(@user, @table).deliver_now
-        flash[:notice] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' activé"
+        flash[:notice] = "Partage de la table '#{@table.name}' avec l'utilisateur '#{@user.name}' activé"
       else
-        flash[:alert] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' déjà existant !"
+        flash[:alert] = "Partage de la table '#{@table.name}' avec l'utilisateur '#{@user.name}' déjà existant !"
       end
     else
       flash[:alert] = "Utilisateur inconnu ! Demandez-lui de créer un compte depuis la page d'accueil."

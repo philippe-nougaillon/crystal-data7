@@ -260,7 +260,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
     link = find("[data-testid='Voir les détails de #{@device_table.name} à la ligne n°#{@device_model_name_value_3.record_index}']")
     link.click
-    assert_text @device_table.name.humanize
+    assert_text @device_table.name
     assert_text @device_model_name_value_3.data
     assert_text I18n.l @device_release_date_value_3.data.to_date
   end
@@ -351,7 +351,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     link.click
     sleep(1)
     assert_text /Affichage de 1/
-    click_on "(+) #{@manufacturer_table.name.humanize}"
+    click_on "(+) #{@manufacturer_table.name}"
     assert_text "#{@device_model_name_value_2.data}, #{@device_release_date_value_2.data}"
     click_on "Enregistrer"
     assert_text "Données ajoutées avec succès :)"

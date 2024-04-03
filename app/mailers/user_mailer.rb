@@ -19,7 +19,7 @@ class UserMailer < ApplicationMailer
 		@user = user
 		@table = table
 
-		mail(to: @user.email, subject: "Partage de la table '#{@table.name.humanize}' activé", bcc:"philippe.nougaillon@gmail.com")
+		mail(to: @user.email, subject: "Partage de la table '#{@table.name}' activé", bcc:"philippe.nougaillon@gmail.com")
 	end
 
 	def new_user_notification

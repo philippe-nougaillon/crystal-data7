@@ -1,5 +1,5 @@
 <h1 class="text-primary my-4">
-  <%= "#{params[:record_index] ? 'Modification' : 'Ajout'} '#{@table.name.humanize}'" %>
+  <%= "#{params[:record_index] ? 'Modification' : 'Ajout'} '#{@table.name}'" %>
 </h1>
 <%= form_tag fill_do_path(relation: params[:relation], value: params[:value]), multipart: true do %>
 
