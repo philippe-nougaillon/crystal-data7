@@ -1,5 +1,5 @@
 <div class="my-4 d-flex align-items-center text-secondary gap-2">
-	<h1 class="mb-0 d-inline">
+	<h1 class="mb-0 d-inline text-primary">
 		Liste des partages de l'Objet '<%= @table.name %>'
 	</h1>
 </div>
@@ -34,5 +34,5 @@
 <br><br>
 
 <% if policy(@table).add_user? %>
-	<%= render partial: 'tables/add_user', locals: {others: current_user.others(@table) } %>
+	<%= render partial: 'tables/add_user', locals: { others: current_user.others(@table) } %>
 <% end %>

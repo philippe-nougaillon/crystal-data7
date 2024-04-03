@@ -8,7 +8,7 @@
   <% @tables.each do | table | %>
     <div class="mb-5">
       <div class="d-flex gap-2 align-items-center justify-content-between">
-        <h2><%= table.name %></h2>
+        <h3><%= table.name %></h3>
         <% if policy(table).add_user? %>
           <%= link_to partages_path(table), class: 'btn btn-outline-secondary btn-sm', title: 'Ajouter un utilisateur' do %>
             <span class="material-symbols-outlined">
@@ -20,7 +20,7 @@
       <div class="overflow-x-auto mt-2">
         <table class="table table-hover w-100 border align-middle">
           <thead>
-            <tr class="table-secondary">
+            <tr class="">
               <th class="col-md-2">Utilisateur</th>
               <th class="col-md-4">Email</th>
               <th>Rôle</th>
@@ -34,7 +34,7 @@
 
           <tbody>
             <% table.users.each do |user| %>
-              <tr class="<%='table-primary' if user == current_user %>">
+              <tr class="<%='table-danger' if user == current_user %>">
                 <td class="fw-bold text-black text-decoration-none"><%= user.name %><%= " (C'est vous)" if user == current_user %></td>
                 <td><%= user.email %></td>
                 <td><%= table.role_name(user) %></td>

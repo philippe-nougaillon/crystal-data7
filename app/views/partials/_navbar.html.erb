@@ -1,5 +1,5 @@
 <nav class="nav d-none d-lg-flex flex-column shadow-sm position-fixed top-0 start-0 overflow-hidden h-100 align-items-center bg-body-secondary">
-  <div class="flex-fill d-flex flex-column w-100">
+  <div class="flex-fill d-flex flex-column w-100 mt-3">
     <li class="nav-item">
       <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Ma collection favorite/Page d'accueil", class: "d-flex flex-column align-items-center text-decoration-none py-3 #{'bg-dark-subtle' if params[:controller] == 'tables' && @table && @table.show_on_startup_screen }" do %>
         <span class="material-symbols-outlined">
@@ -53,10 +53,10 @@
   <% end %>
   <li class="nav-item w-100">
     <%= link_to a_propos_path, title: "À Propos de CrystalDATA", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-black-50 #{'bg-dark-subtle' if params[:action] == 'a_propos'}" do %>
-    <span class="material-symbols-outlined">
-      help
-    </span>
-    À Propos
+      <span class="material-symbols-outlined">
+        help
+      </span>
+      Aide
     <% end %>
   </li>
 </nav>
