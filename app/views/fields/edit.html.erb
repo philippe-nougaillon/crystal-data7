@@ -4,7 +4,29 @@
   </h1>
 </div>
 
-<h2 class="mb-5">Modification de l'attribut '<%= @field.name.humanize %>'</h2>
+<!--- TODO: Partial (idem show_attrs) -->
+<% if @field.table.fields.any? %>
+	<div class="overflow-x-auto">
+		<table class="table table-hover align-middle">
+			<thead>
+				<tr>
+					<th class="col-md-1">#</th>
+					<th>Nom de l'attribut</th>
+					<th>Type</th>
+					<th>Options</th>
+					<th>Visibilité</th>
+					<th></th>
+				</tr>
+			</thead>
+			<% @field.table.fields.ordered.each_with_index do | field, index | %>
+				<%= render partial:'fields/field', locals: {field:field, i:index} %>
+			<% end %>
+		</table>
+	</div>
+<% end %>
+<br>
+
+<h3 class="mb-4">Modification de l'attribut '<%= @field.name.humanize %>'</h3>
 
 <%= render 'form' %>
 
