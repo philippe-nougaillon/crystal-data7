@@ -14,6 +14,8 @@
         <% unless value.blank? %>
           <% if Value.is_valid_date?(value) %>
             <%= link_to_if is_link, l(value.to_date), details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2' %>
+          <% else %>
+            Erreur
           <% end %>
         <% end %>
       <% when 'Texte_long' %>
