@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[a_propos]
+  before_action :info_notice, only: %i[stats]
 
   def a_propos
   end
@@ -45,6 +46,14 @@ class PagesController < ApplicationController
           end
         end
       end
+    end
+  end
+
+  private
+
+  def info_notice
+    if current_user.compte_démo? && flash[:notice] == nil && flash[:alert] == nil && params.keys.size == 2
+      flash[:notice] = "(i)Les statistiques permettent de visualiser une série de valeurs issues de vos collections"
     end
   end
   

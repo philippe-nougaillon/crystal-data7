@@ -34,8 +34,8 @@
 
           <tbody>
             <% table.users.each do |user| %>
-              <tr class="<%='table-danger' if user == current_user %>">
-                <td class="text-decoration-none"><%= user.name %><%= " (C'est vous)" if user == current_user %></td>
+              <tr>
+                <td class="<%= 'text-danger fw-bold' if user == current_user %>"><%= user.name %></td>
                 <td><%= user.email %></td>
                 <td><%= table.role_name(user) %></td>
                 <td class="text-success fw-bold">

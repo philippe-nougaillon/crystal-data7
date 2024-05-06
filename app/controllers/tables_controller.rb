@@ -1,7 +1,7 @@
 class TablesController < ApplicationController
   before_action :set_table, except: [:new, :create, :import, :import_do, :index, :securite]
   before_action :is_user_authorized?
-  before_action :info_notice, only: %i[index show_attrs partages logs]
+  before_action :info_notice, only: %i[index show_attrs partages logs securite]
   skip_before_action :authenticate_user!, only: %i[ icalendar ]
 
   # GET /tables
@@ -486,6 +486,8 @@ class TablesController < ApplicationController
           "(i)Partagez vos collections d'objet avec d'autres utilisateurs"
         when 'logs'
           "(i)Chaque modification d'un objet est consignée dans un historique (quand, qui, quoi, valeur avant, valeur après)"
+        when 'securite'
+          "(i)Chaque partage d'objet et autorisations sont personnalisables. Cliquez sur + pour partager un objet avec un utilisateur"
         end
       end
     end
