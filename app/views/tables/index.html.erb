@@ -32,15 +32,18 @@
               <%= "il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" unless table.size.zero? %>
             </td>
             <td>
-              <% if policy(table).fill? %>
-                <%= link_to "(+) #{table.name}", fill_path(table.slug), title: "Ajouter un nouvel Objet à la collection '#{table.name}'", class: 'btn btn-outline-success btn-sm me-2 w-100' %>
+              <% if policy(table).fill? || current_user.compte_démo? %>
+                <%= link_to "(+) #{table.name}", fill_path(table.slug), title: "Ajouter un nouvel Objet à la collection '#{table.name}'", class: 'btn btn-outline-primary btn-sm me-2 w-100' %>
               <% end %>
             </td>
             <td style="text-align: right; white-space: nowrap;">
               <% if policy(table).show_attrs? %>
-                <%= link_to 'Modifier Attributs', show_attrs_path(id: table.slug), title:"Modifier les attributs de l'Objet '#{table.name}'", class: 'btn btn-outline-primary btn-sm me-2' %>
+                <%= link_to 'Modifier Attributs', show_attrs_path(id: table.slug), title:"Modifier les attributs de l'Objet '#{table.name}'", class: 'btn btn-outline-success btn-sm me-2' %>
               <% end %>
-              <% if policy(table).destroy? %>
+              <% if policy(table).logs? %>
+                <%= link_to 'Activité', logs_path(id: table.slug), title:"Historique des modifications de l'Objet '#{table.name}'", class: 'btn btn-outline-secondary btn-sm me-2' %>
+              <% end %>
+              <% if policy(table).destroy? || current_user.compte_démo? %>
                 <%= link_to 'X', table, title: "Supprimer l'Objet #{table.name}", 'data-turbo-method': :delete, 'data-turbo-confirm': "Êtes-vous certain.e de vouloir supprimer l'Objet #{table.name} ? Toutes les données enregistrées dedans seront perdues !", class: 'btn btn-outline-danger btn-sm' %>
               <% end %>
             </td>
