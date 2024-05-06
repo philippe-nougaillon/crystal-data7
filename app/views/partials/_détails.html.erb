@@ -67,6 +67,13 @@
               <% end %>
             <% when 'Email' %>
               <%= mail_to value %>
+            <% when 'Stars' %>
+              <% value.to_i.times do %>
+                <i class="bi bi-star-fill"></i>
+              <% end %>
+              <% (5 - value.to_i).times do %>
+                <i class="bi bi-star"></i>
+              <% end %>
             <% else %>
               <%= value %>
             <% end %>

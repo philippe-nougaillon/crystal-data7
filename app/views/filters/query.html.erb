@@ -45,6 +45,9 @@
             <%= check_box_tag "[query][#{field.id}][yes]", params[:query].try(:[], field.id.to_s).try(:[], :yes), params[:query].try(:[], field.id.to_s).try(:[], :yes) %>
             <%= label_tag "[query][#{field.id}][no]", "Non", class: '' %>
             <%= check_box_tag "[query][#{field.id}][no]", params[:query].try(:[], field.id.to_s).try(:[], :no), params[:query].try(:[], field.id.to_s).try(:[], :no)%>
+          <% elsif field.Stars? %>
+            <%= select_tag "[query][#{field.id}]", options_for_select((0..5).to_a, params[:query].try(:[], field.id.to_s)), class: 'form-select w-100',include_blank: true, autofocus: index.zero? %>
+            <% hint = 'Choisissez une note entre 0 et 5' %>
           <% else %>
             <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
             <% hint = 'ex: %john%  ou  john (pour une égalité)' %>

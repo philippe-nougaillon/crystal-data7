@@ -30,9 +30,10 @@
         <% when 'Date' %>
           <%= text_field_tag field_name, field_value, class: 'form-control w-100', type: 'date', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Oui_non?' %>
-          <br>
-          <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui'), class:'form-check-input', 'data-testid': field.name %> Oui 
-          <%= radio_button_tag field_name, 'Non', (field_value == 'Non'), class:'form-check-input ms-3', 'data-testid': field.name %> Non
+          <div class="mt-2">
+            <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui'), class:'form-check-input', 'data-testid': field.name %> Oui 
+            <%= radio_button_tag field_name, 'Non', (field_value == 'Non'), class:'form-check-input ms-3', 'data-testid': field.name %> Non
+          </div>
         <% when 'Liste' %>
           <%= select_tag field_name, options_for_select(field.items_splitted, field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Formule' %>
@@ -123,6 +124,13 @@
           <%= text_field_tag field_name, field_value, class: 'form-control w-100 mt-4', required: field.obligatoire, placeholder: "Aucune valeur scannée (appuyez sur 'Scanner' ci-dessus)", 'data-testid': field.name %>
 
           <%= render partial:'partials/script_qrscan', locals: {field_name:} %>
+        <% when 'Stars' %>
+          <div class="mt-2">
+            <% 0.upto(5) do |i| %>
+              <%= radio_button_tag field_name, i, (!field_value.nil? && field_value.to_i == i), 'data-testid': field.name %>
+              <span class="me-3"><%= i %></span>
+            <% end %> 
+          </div>
         <% end %>
       </fieldset>
     <% end %>

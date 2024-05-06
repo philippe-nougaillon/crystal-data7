@@ -58,6 +58,15 @@
         <% end %>
       <% when 'Email' %>
         <%= mail_to value %>
+      <% when 'Stars' %>
+        <div class="d-flex">
+          <% value.to_i.times do %>
+            <i class="bi bi-star-fill"></i>
+          <% end %>
+          <% (5 - value.to_i).times do %>
+            <i class="bi bi-star"></i>
+          <% end %>
+        </div>
       <% else %>
         <%= link_to_if is_link, value, details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2' %>
       <% end %>

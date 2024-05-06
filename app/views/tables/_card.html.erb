@@ -1,5 +1,5 @@
 <%= link_to details_path(@table.slug, record_index: record_index), title: 'Voir les détails', class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
-  <div class="shadow-sm p-4 bg-white flex-fill">
+  <div class="shadow p-4 bg-white flex-fill">
     <p class="fw-bold">
       <% first_field = @table.fields.first %>
       <% data = first_field.values.find_by(record_index: record_index).data %>
@@ -71,6 +71,15 @@
           </div>
         <% when 'Email' %>
           <%= mail_to value %>
+        <% when 'Stars' %>
+          <div class="d-flex flex-row mt-2">
+            <% value.to_i.times do %>
+              <i class="bi bi-star-fill"></i>
+            <% end %>
+            <% (5 - value.to_i).times do %>
+              <i class="bi bi-star"></i>
+            <% end %>
+          </div>
         <% else %>
           <%= value %>
         <% end %>
