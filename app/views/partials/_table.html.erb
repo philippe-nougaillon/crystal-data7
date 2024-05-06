@@ -44,7 +44,7 @@
   </table>
 </div>
 <% if %w[show_details related_tables].include?(action_name) %>
-  <% if policy(table).fill? %>
+  <% if policy(table).fill? || current_user.compte_démo? %>
     <%= link_to "(+) #{table.name}", fill_path(table, relation: @relation, value: @record_index), class: 'btn btn-outline-primary mb-4', data: { turbo_frame: "_top" }  %>
   <% end %>
 <% end %>

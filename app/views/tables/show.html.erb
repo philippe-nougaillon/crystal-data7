@@ -78,7 +78,7 @@
           </div>
         <% end %>
       <% end %>
-      <% if policy(@table).fill? %>
+      <% if policy(@table).fill? || current_user.compte_démo? %>
         <%= link_to "(+) #{@table.name}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end', title: "Ajouter un nouvel objet à cette collection" %>
       <% end %>
     </div>
