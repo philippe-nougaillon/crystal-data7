@@ -82,9 +82,89 @@
 		chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste, Oui/Non, Fichier, etc.)
 		<br><br>
 		Les types d'attributs disponibles sont : 
+		<div>
+			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">abc</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">notes</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">text_snippet</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">tag</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">euro</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">calculate</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'date'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">calendar_today</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'oui_non'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">help</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'liste'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">format_list_numbered</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'liste_objet'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">database</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">description</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">image</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">picture_as_pdf</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'utilisateur'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">person</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'url'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">link</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'email'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">mail</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'video'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">play_circle</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'couleur'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">palette</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'localisation'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">my_location</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'qrcode'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">qr_code_2</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'qrscan'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">qr_code_scanner</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'signature'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">signature</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'uuid'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">barcode</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'tags'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">sell</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'stars'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">star</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'workflow'), class: 'btn btn-outline-primary btn-sm' do %>
+				<span class="material-symbols-outlined text-black-50">steppers</span>
+			<% end %>
+		</div>
 		<ul class="list-group list-group-flush mb-5 m-3 gap-2 w-sm-75">
 			<li>
-				<b>Texte</b> :
+				<b id="texte">Texte</b> :
 				<ul>
 					<li>Texte simple : peut contenir une chaine de 255 caractères maximum. L'option 'Filtre ?' permet de créer une liste déroulante contenant les valeurs distinctes. </li>
 					<li>Texte long : permet de rédiger de longs textes</li>
@@ -92,34 +172,34 @@
 				</ul>
 			</i>
 			<li>
-				<b>Chiffres</b> :
+				<b id="chiffres">Chiffres</b> :
 				<ul>
 					<li>Nombre : pour saisir des valeurs numériques, avec ou sans décimales. L'option 'Opération en bas de page', calculera la moyenne ou la somme des valeurs de l'attribut.</li>
 					<li>Euros : idem 'Nombre' mais affiche la valeur avec le symbole euros (€).</li>
 					<li>Formule : champ calculé à partir de champs existants ou d'une formule en langage Ruby. (Ex: <i>[Temps Passé] * [Coût horaire]</i> OU <i>[Prix HT] * 1.2</i>)
 				</ul>
 			</li>
-			<li><b>Date</b> : une date choisie dans un calendrier.</li>
-			<li><b>Oui/Non</b> : permet de choisir entre Oui ou Non ou aucun des deux.</li>
-			<li><b>Liste</b> : pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.
+			<li><b id="date">Date</b> : une date choisie dans un calendrier.</li>
+			<li><b id="oui_non">Oui/Non</b> : permet de choisir entre Oui ou Non ou aucun des deux.</li>
+			<li><b id="liste">Liste</b> : pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.
 			</li>
-			<li><b>Liste d'objets (Collection)</b> : pour choisir un objet parmi les objets d'une autre de vos collections.(Ex: <i>[Technicien."Nom,Prénom,Expérience"]</i>)</li>
+			<li><b id="liste_objet">Liste d'objets (Collection)</b> : pour choisir un objet parmi les objets d'une autre de vos collections.(Ex: <i>[Technicien."Nom,Prénom,Expérience"]</i>)</li>
 			<li>
-				<b>Fichier</b> :
+				<b id="fichier">Fichier</b> :
 				<ul>
 					<li>Fichier : permet de lier et de stocker un fichier dans un objet (document, image, etc...).</li>
 					<li>Image : idem 'Fichier' mais affiche un aperçu de l'image ou l'image d'origine selon le contexte.</li>
 					<li>PDF : idem 'Fichier' mais affiche un aperçu de la première page du document PDF.</li>
 				</ul>
 			</li>
-			<li><b>Utilisateur</b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table</li>
-			<li><b>URL</b> : permet d'ajouter un lien vers une ressource internet via une URL (interne ou externe).</li>
-			<li><b>Email</b> : pour ajouter un lien vers une adresse email.</li>
+			<li><b id="utilisateur">Utilisateur</b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table</li>
+			<li><b id="url">URL</b> : permet d'ajouter un lien vers une ressource internet via une URL (interne ou externe).</li>
+			<li><b id="email">Email</b> : pour ajouter un lien vers une adresse email.</li>
 			<li>
-				<b>Vidéo YouTube</b> : permet d'ajouter un lien vers une vidéo YouTube et d'afficher l'aperçu de la vidéo dans une miniature.  
+				<b id="video">Vidéo YouTube</b> : permet d'ajouter un lien vers une vidéo YouTube et d'afficher l'aperçu de la vidéo dans une miniature.  
 			</li>
-			<li><b>Couleur</b> : une couleur choisie dans une palette.</li>
-			<li><b>Localisation (GPS)</b> :
+			<li><b id="couleur">Couleur</b> : une couleur choisie dans une palette.</li>
+			<li><b id="localisation">Localisation (GPS)</b> :
 				<ul>
 					<li>Capture la localisation de l'utilisateur, s'il le demande, en appuyant sur le bouton <span class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-location-crosshairs"></i></li></span>
 					<li>Affiche la location sur une carte, basée sur les coordonnées indiquées au format "LNG, LAT". (Ex: <i>48.85879287621989, 2.294761243572842</i> pour pointer sur la tour Eiffel).</li>
@@ -127,24 +207,24 @@
 				</ul>
 			</li>
 			<li>
-				<b>QR Code</b> : pour générer un QR Code à partir du contenu d'un autre attribut de l'objet. (Ex: <i>[N°deSérie],[Reference],[URL site web]</i>)
+				<b id="qrcode">QR Code</b> : pour générer un QR Code à partir du contenu d'un autre attribut de l'objet. (Ex: <i>[N°deSérie],[Reference],[URL site web]</i>)
 			</li>
 			<li>
-				<b>QR Scan</b> : permet de scanner un QR Code avec la caméra de votre smartphone, tablette ou ordinateur.
+				<b id="qrscan">QR Scan</b> : permet de scanner un QR Code avec la caméra de votre smartphone, tablette ou ordinateur.
 			</li>
 			<li>
-				<b>Signature</b> : permet de signer manuellement avec la souris ou sur un écran tactile.
+				<b id="signature">Signature</b> : permet de signer manuellement avec la souris ou sur un écran tactile.
 			</li>
 			<li>
-				<b>UUID</b> : génère automatiquement un identifiant unique. (UDID = Universally Unique IDentifier)
+				<b id="uuid">UUID</b> : génère automatiquement un identifiant unique. (UDID = Universally Unique IDentifier)
 			</li>
 			<li>
-				<b>Tags</b> : permet de saisir des mots-clés séparés par des virgules. (Ex: <i>Paris, France, Europe</i>)
+				<b id="tags">Tags</b> : permet de saisir des mots-clés séparés par des virgules. (Ex: <i>Paris, France, Europe</i>)
 			</li>
 			<li>
-				<b>Stars</b> : permet de noter un objet avec des étoiles. (Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)
+				<b id="stars">Stars</b> : permet de noter un objet avec des étoiles. (Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)
 			</li>
-			<li><b>WORKFLOW</b> : pour ajouter un état à un objet, associé à une couleur. (Ex: <i>Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary</i>)
+			<li><b id="workflow">WORKFLOW</b> : pour ajouter un état à un objet, associé à une couleur. (Ex: <i>Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary</i>)
 				<ul><li>
 					Couleurs disponibles:
 					<span class="badge bg-primary">Primary</span>
