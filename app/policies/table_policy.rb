@@ -14,7 +14,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def new?
-    index?
+    index? && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def create?
@@ -22,7 +22,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def edit?
-    record.propriétaire?(user)
+    record.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def update?
@@ -38,7 +38,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def fill?
-    record.users.include?(user) && record.role_number(user) >= 1
+    record.users.include?(user) && record.role_number(user) >= 1  && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def fill_do?

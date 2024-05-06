@@ -25,8 +25,6 @@
   <td><%= field.visibility_polished %></td>
   <td style="text-align: right; white-space: nowrap;">
     <%= link_to 'Modifier', edit_field_path(id: field.slug), title: 'Modifier l\'attribut', class: 'btn btn-outline-secondary btn-sm me-2' %>
-    <% if policy(field).destroy? %>
-      <%= link_to 'X', field, title: 'Supprimer l\'attribut', 'data-turbo-method': :delete, 'data-turbo-confirm': 'Confirmez-vous la suppression de l\'attribut ?', class: 'btn btn-outline-danger btn-sm' %>
-    <% end %>
+    <%= link_to 'X', field, title: 'Supprimer l\'attribut', 'data-turbo-method': :delete, 'data-turbo-confirm': 'Confirmez-vous la suppression de l\'attribut ?', class: 'btn btn-outline-danger btn-sm' %>
   </td>
 </tr>
