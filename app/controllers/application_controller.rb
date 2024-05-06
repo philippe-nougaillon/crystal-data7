@@ -23,7 +23,7 @@ private
 
   def set_layout_variables
     @sitename ||= "CrystalDATA"
-    @sitename.concat(" v0.18.a ")
+    @sitename.concat(" v0.18.b ")
   end
 
   def prepare_exception_notifier
