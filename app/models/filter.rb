@@ -72,6 +72,18 @@ class Filter < ApplicationRecord
                   sql = "data = 'Non'"
                 end
               end
+            elsif field.Signature?
+              unless query.last['yes'].blank?
+                if query.last['no'].blank?
+                  sql = "data IS NOT NULL"
+                else
+                  sql = "data LIKE '%%'"
+                end
+              else
+                unless query.last['no'].blank?
+                  sql = "data = ''"
+                end
+              end
             else
               if search_value.class == Array
                 sql = "data IN(?) ", search_value

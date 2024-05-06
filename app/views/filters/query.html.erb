@@ -7,8 +7,8 @@
 
 <div class="border rounded shadow-sm p-3 p-sm-4">
   <%= form_tag query_filter_path, method: :get do %>
-    <div class="row row-cols-sm-2 row-cols-lg-3 gap-3">
-    <% @filter.table.fields.ordered.each_with_index do |field, index| %>
+    <div class="row row-cols-sm-2 row-cols-lg-4 gap-3">
+    <% @filter.table.fields.where.not(datatype: 'QRCode').ordered.each_with_index do |field, index| %>
       <div class="row">
         <div class="col px-auto">
           <label class="fw-bold d-flex gap-2 mb-2">
@@ -21,13 +21,9 @@
             <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
             <% hint = 'ex: >= 30  ou  30 (pour une égalité)' %>
           <% elsif field.Date? %>
-            <div class="row gap-4 mb-0">
-              <div class="col">
-                <%= date_field_tag "[query][#{field.id}][start]", params[:query].try(:[], field.id.to_s).try(:[], :start), class: 'form-control w-100', autofocus: index.zero? %>
-              </div>
-              <div class="col">
-                <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s).try(:[], :end), class: 'form-control w-100' %>
-              </div>
+            <div class="d-flex gap-4 mb-0">
+              <%= date_field_tag "[query][#{field.id}][start]", params[:query].try(:[], field.id.to_s).try(:[], :start), class: 'form-control w-100', autofocus: index.zero? %>
+              <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s).try(:[], :end), class: 'form-control w-100' %>
             </div>
             <% hint = 'Entrez une date ou une période (date de début / date de fin)' %>
           <% elsif field.Liste? %>
@@ -43,7 +39,7 @@
             <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
             <%= select_tag "[query][#{field.id}]", options_for_select(items.keys, params[:query].try(:[], field.id.to_s)), class: 'form-select w-100', 'data-testid': field.name, autofocus: index.zero?, multiple: true %>
             <% hint = 'Appuyez sur MAJ ou CTRL pour faire un choix multiple' %>
-          <% elsif field.datatype == "Oui_non?" %>
+          <% elsif field.datatype == "Oui_non?" || field.Signature? %>
             <br>
             <%= label_tag "[query][#{field.id}][yes]", "Oui", class: '' %>
             <%= check_box_tag "[query][#{field.id}][yes]", params[:query].try(:[], field.id.to_s).try(:[], :yes), params[:query].try(:[], field.id.to_s).try(:[], :yes) %>
@@ -69,12 +65,12 @@
   <ul class="nav nav-tabs w-100 mt-4">
     <li class="nav-item shadow-sm">
       <div class="nav-link fw-bold active">
-        <%= @filter.table.name.pluralize.humanize %>
+        <%= @filter.table.name.pluralize.humanize %> + Filtre
       </div>
     </li>
   </ul>
 
-  <div class="card shadow-sm p-3 p-sm-4 p-lg-5">
+  <div class="card shadow-sm p-3">
     <%= render partial: 'partials/table', locals: { table: @filter.table, records: @records} %>
   </div>
 <% end %>
