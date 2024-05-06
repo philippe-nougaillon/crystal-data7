@@ -23,7 +23,7 @@
           <% if policy(@table).logs? %>
             <p class="mb-0">|</p>
             <%= link_to logs_path(id:@table), class:'nav-link', title:"Historique des modifications de l'Objet '#{@table.name}'" do %>
-              Audit Trail
+              Activité
             <% end %>
           <% end %>
         </div>

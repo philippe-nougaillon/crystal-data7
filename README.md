@@ -6,7 +6,7 @@
 
 * Créez des Objets constitués d'attributs variés <br>(Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Fichier, Image, PDF, Position GPS, Lien vers un Objet dans une autre Collection)
 * Ajoutez, éditez vos objets dans un formulaire
-* Audit trail: chaque modification d'un objet est consignée dans un historique (quand, qui, quoi, valeur avant, valeur après)
+* Activité: chaque modification d'un objet est consignée dans un historique (quand, qui, quoi, valeur avant, valeur après)
 * Recherchez, filtrez et triez vos objets
 * Partagez vos collections d'objet avec d'autres utilisateurs
 * Exportez vos collections vers un tableur
