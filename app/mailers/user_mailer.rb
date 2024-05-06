@@ -28,6 +28,7 @@ class UserMailer < ApplicationMailer
 	end
 
 	def new_guest_notification
+		@user = User.find(1)
 		mail(to: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com", subject:"[CrystalDATA] Le compte démo est utilisé")
 	end
 
