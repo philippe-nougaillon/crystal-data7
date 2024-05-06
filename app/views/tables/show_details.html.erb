@@ -11,7 +11,7 @@
       |
     <% end %>
     <% if policy(@table).logs? %>
-      <%= link_to "Activité", logs_path(record_index: @record_index), title:"Audit des modifications", data: { turbo_frame: "audit_frame" } %>
+      <%= link_to "Activité", logs_path(record_index: @record_index), title:"Affiche l'activité de #{@table.name} en bas de cette page", data: { turbo_frame: "audit_frame" } %>
       |
     <% end %>
     <% if policy(@table).delete_record? %>
@@ -47,4 +47,7 @@
       event.target.classList.add('active');
     }
   </script>
+<% end %>
+
+<%= turbo_frame_tag "audit_frame" do %>
 <% end %>
