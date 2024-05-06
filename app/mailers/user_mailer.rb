@@ -27,4 +27,8 @@ class UserMailer < ApplicationMailer
 		mail(to: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com", subject:"[CrystalDATA] Un compte a été créé")
 	end
 
+	def new_guest_notification
+		mail(to: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com", subject:"[CrystalDATA] Le compte démo est utilisé")
+	end
+
 end
