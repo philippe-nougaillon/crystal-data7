@@ -411,7 +411,11 @@ class TablesController < ApplicationController
        sql = sql + " OR " unless index == @table.fields.size - 1
     end
     sql = sql + ")"
-    @audits = Audited::Audit.where(sql)
+    if sql == " ()"
+      @audits = Audited::Audit.none
+    else
+      @audits = Audited::Audit.where(sql)
+    end
     @audits = @audits.reorder('created_at DESC').page(params[:page])
   end
 
