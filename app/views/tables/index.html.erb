@@ -20,14 +20,14 @@
         <% @tables.each do | table | %>
           <tr>
             <td>
-            <%= link_to table.name, table, class: ' text-primary' %>
-            <% if table.show_on_startup_screen? %>
-              <span class="material-symbols-outlined text-primary fs-6">
-                diamond
-              </span>
-            <% end %>
-            <br>
-            <%= table.field_names %></td>
+              <%= link_to table.name, table, class: ' text-primary' %>
+              <% if table.show_on_startup_screen? %>
+                <span class="material-symbols-outlined text-primary fs-6">
+                  diamond
+                </span>
+              <% end %>
+              <br>
+              <%= table.field_names %></td>
             <td>
               <%= "il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" unless table.size.zero? %>
             </td>
@@ -39,6 +39,9 @@
             <td style="text-align: right; white-space: nowrap;">
               <% if policy(table).show_attrs? %>
                 <%= link_to 'Modifier Attributs', show_attrs_path(id: table.slug), title:"Modifier les attributs de l'Objet '#{table.name}'", class: 'btn btn-outline-success btn-sm me-2' %>
+              <% end %>
+              <% if policy(table).edit? || current_user.compte_démo? %>
+                <%= link_to 'Modifier Objet', edit_table_path(id: table), title:"Modifier les propriétés de l'Objet '#{table.name}'", class: 'btn btn-outline-warning btn-sm me-2' %> 
               <% end %>
               <% if policy(table).logs? %>
                 <%= link_to 'Activité', logs_path(id: table.slug), title:"Historique des modifications de l'Objet '#{table.name}'", class: 'btn btn-outline-secondary btn-sm me-2' %>
