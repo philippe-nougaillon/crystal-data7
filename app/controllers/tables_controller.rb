@@ -175,8 +175,8 @@ class TablesController < ApplicationController
       # modification ligne existante
       @record_index = params[:record_index]
     else
-      # ajout d'une ligne
-      @record_index = @table.increment_record_index
+      # ajout d'une ligne (à laisser négatif ou alors changer le code dans fill_do)
+      @record_index = -1
     end
   end
 
@@ -184,8 +184,13 @@ class TablesController < ApplicationController
   def fill_do
     table = Table.find(params[:table_id])
     data = params[:data]
-    record_index = data.keys.first
-    values = data[record_index.to_s]
+    if data.keys.first.to_i.positive?
+      record_index = data.keys.first
+      values = data[record_index.to_s]
+    else 
+      record_index = table.increment_record_index
+      values = data[data.keys.first]
+    end
 
     if not values.values.compact_blank.blank?
       # update? = si données existent déjà, on les supprime avant pour pouvoir ajouter les données modifiées 
