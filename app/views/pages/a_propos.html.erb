@@ -77,7 +77,7 @@
 
 	<h3 class="fw-bold text-dark mt-5">L'objet CrystalDATA et ses Attributs</h3>
 
-	<p class="w-sm-75">
+	<p class="fs-5 fw-light w-sm-75">
 		Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et 
 		chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste, Oui/Non, Fichier, etc.)
 		<br><br>
@@ -123,6 +123,9 @@
 			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary', title: 'Document PDF' do %>
 				<span class="material-symbols-outlined">picture_as_pdf</span>
 			<% end %>
+		</div>
+		
+		<div class="mt-2">
 			<%= link_to a_propos_path(anchor: 'utilisateur'), class: 'btn btn-outline-primary', title: 'Utilisateur' do %>
 				<span class="material-symbols-outlined">person</span>
 			<% end %>
@@ -242,7 +245,7 @@
 	</p>
 
 	<h3 class="fw-bold text-dark mt-5">Relations entre objets</h3>
-	<p class="w-sm-75">
+	<p class="fs-5 fw-light w-sm-75">
 		Les relations entre objets sont créées avec l'attribut 'Collection'. 
 		Exemple : un objet Intervention aura un attribut 'Technicien' qui permettra de choisir un technicien dans la collection du même nom.
 		Ces relations sont aussi visibles dans la vue détails d'un objet. 
@@ -251,7 +254,7 @@
 	</p>
 
 	<h3 class="fw-bold text-dark mt-5">Filtres</h3>
-	<p class="w-sm-75">
+	<p class="fs-5 fw-light w-sm-75">
 		Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères.
 		Ces filtres acceptent des critères différents selon le type d'attribut :
 		<br>	
@@ -261,7 +264,7 @@
 	</p>
 
 	<h3 class="fw-bold text-dark mt-5">Utilisateurs, partages et rôles</h3>
-	<p class="w-sm-75">
+	<p class="fs-5 fw-light w-sm-75">
 		Vous pouvez partager vos collections avec d'autres utilisateurs en leur donnant un rôle (Lecteur, Collecteur, Éditeur).
 		<ul class="list-group mb-5 m-3 gap-2">
 			<li>
@@ -281,14 +284,14 @@
 
 <h3 class="fw-bold text-dark mt-5">Historique et motivation</h3>
 
-<p class="w-sm-75">
+<p class="fs-5 fw-light w-sm-75">
 	Développeur d'applications métiers en entreprise depuis plus de 30 ans, j'ai souvent aidé mes clients à passer 
 	d'un système d'information en silos, où les données métier de l'entreprise sont enfermées 
 	dans des feuilles Excel, à un système de type plateforme où les données sont centralisées et 
 	partagées entre les services depuis une source unique de confiance (<b>Single Source Of Truth</b>). 
 </p>
 
-<p class="w-sm-75">	
+<p class="fs-5 fw-light w-sm-75">	
 	Fort d'une expérience de plus de 30 ans sur les base de données et outils de développement les plus intéressants de leurs époques 
 	(SuperBase 64, Yes You Can, SuperDB, FoxPro, dBase 3/4, Paradox 3/4, Access, Delphi, VB4/5/6/SQL Server,
 	C#/SQLite/MySQL, stack LAMP, Ruby on Rails, et j'en passe...), ma vocation a toujours été d'aider mes clients à franchir 
@@ -359,8 +362,8 @@
 	</div>
 </div>
 
-<p class="w-sm-75">
-	C'est pourquoi j'ai développé de cet outil NO-CODE et open-source,  
+<p class="fs-5 fw-light w-sm-75">
+	C'est pourquoi j'ai commencé le développement de cet outil NO-CODE et open-source, il y a 10 ans,  
 	dans le but de couvrir les fonctions de base d'une plateforme d'information ouverte.
 	<br><br>
 	CrystalDATA a donc pour ambition d'offrir un petit concentré de mon expérience des bases de données, 
@@ -369,6 +372,10 @@
 </p>
 
 <h3 class="fw-bold text-dark mt-5">Développement, support et services</h3>
+
+<p class="mt-3">
+	<i>CrystalDATA a été développé en Ruby on Rails par Philippe et Pierre-Emmanuel</i>
+</p>
 
 <div class="row mt-3">
 	<div class="col-sm-2">
@@ -394,13 +401,10 @@
 	</h6>
 </div>
 
-<p class="mt-3">
-	CrystalDATA a été développé en Ruby on Rails par Philippe et Pierre-Emmanuel
-</p>
 
-<p class="mt-2">
+<p class="fs-5 fw-light text-secondary mt-2">
 	Besoin d'une nouvelle fonctionnalité ou d'une application sur mesure ? Nous vous la développons !
-	<br><br>
+	<br>
 	Pour en savoir plus,
 	<%= link_to "contactez-nous", 'https://www.philnoug.com/contact', target: '_blank', class: 'link' %>
 </p>

@@ -1,5 +1,5 @@
 <li class="nav-item dropdown">
-  <a class="navbar-brand nav-link text-primary fs-1 px-0 <%= current_user.tables.count > 1 ? "dropdown-toggle" : "" %>" style="font-weight: 500" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <a class="navbar-brand nav-link text-primary fs-1 px-0 <%= current_user.tables.count > 1 ? "dropdown-toggle" : "" %>" style="font-weight: 500" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Choisir une autre collection">
     <%= @table.name.pluralize %>
   </a>
   <% if current_user.tables.count > 1 %>
