@@ -82,84 +82,85 @@
 		chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste, Oui/Non, Fichier, etc.)
 		<br><br>
 		Les types d'attributs disponibles sont : 
-		<div>
-			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">abc</span>
+
+		<div class="mt-2">
+			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary', title: 'Texte' do %>
+				<span class="material-symbols-outlined">abc</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">notes</span>
+			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary', title: 'Texte long' do %>
+				<span class="material-symbols-outlined">notes</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">text_snippet</span>
+			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary', title: 'Texte riche' do %>
+				<span class="material-symbols-outlined">text_snippet</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">tag</span>
+			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary', title: 'Nombre' do %>
+				<span class="material-symbols-outlined">tag</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">euro</span>
+			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary', title: 'Euros' do %>
+				<span class="material-symbols-outlined">euro</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">calculate</span>
+			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary', title: 'Formule' do %>
+				<span class="material-symbols-outlined">calculate</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'date'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">calendar_today</span>
+			<%= link_to a_propos_path(anchor: 'date'), class: 'btn btn-outline-primary', title: 'Date' do %>
+				<span class="material-symbols-outlined">calendar_today</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'oui_non'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">help</span>
+			<%= link_to a_propos_path(anchor: 'oui_non'), class: 'btn btn-outline-primary', title: 'Oui/Non?' do %>
+				<span class="material-symbols-outlined">help</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'liste'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">format_list_numbered</span>
+			<%= link_to a_propos_path(anchor: 'liste'), class: 'btn btn-outline-primary', title: 'Liste de choix' do %>
+				<span class="material-symbols-outlined">format_list_numbered</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'liste_objet'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">database</span>
+			<%= link_to a_propos_path(anchor: 'liste_objet'), class: 'btn btn-outline-primary', title: "Liste d'objets (Collection)" do %>
+				<span class="material-symbols-outlined">database</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">description</span>
+			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary', title: 'Fichier' do %>
+				<span class="material-symbols-outlined">description</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">image</span>
+			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary', title: 'Image' do %>
+				<span class="material-symbols-outlined">image</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">picture_as_pdf</span>
+			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary', title: 'Document PDF' do %>
+				<span class="material-symbols-outlined">picture_as_pdf</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'utilisateur'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">person</span>
+			<%= link_to a_propos_path(anchor: 'utilisateur'), class: 'btn btn-outline-primary', title: 'Utilisateur' do %>
+				<span class="material-symbols-outlined">person</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'url'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">link</span>
+			<%= link_to a_propos_path(anchor: 'url'), class: 'btn btn-outline-primary', title: 'Lien URL' do %>
+				<span class="material-symbols-outlined">link</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'email'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">mail</span>
+			<%= link_to a_propos_path(anchor: 'email'), class: 'btn btn-outline-primary', title: 'Adresse email' do %>
+				<span class="material-symbols-outlined">mail</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'video'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">play_circle</span>
+			<%= link_to a_propos_path(anchor: 'video'), class: 'btn btn-outline-primary', title: 'Vidéo YouTube' do %>
+				<span class="material-symbols-outlined">play_circle</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'couleur'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">palette</span>
+			<%= link_to a_propos_path(anchor: 'couleur'), class: 'btn btn-outline-primary', title: 'Couleur' do %>
+				<span class="material-symbols-outlined">palette</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'localisation'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">my_location</span>
+			<%= link_to a_propos_path(anchor: 'localisation'), class: 'btn btn-outline-primary', title: 'Localisation GPS' do %>
+				<span class="material-symbols-outlined">my_location</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'qrcode'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">qr_code_2</span>
+			<%= link_to a_propos_path(anchor: 'qrcode'), class: 'btn btn-outline-primary', title: 'QR Code' do %>
+				<span class="material-symbols-outlined">qr_code_2</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'qrscan'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">qr_code_scanner</span>
+			<%= link_to a_propos_path(anchor: 'qrscan'), class: 'btn btn-outline-primary', title: 'Scanner à QR Code' do %>
+				<span class="material-symbols-outlined">barcode_reader</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'signature'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">signature</span>
+			<%= link_to a_propos_path(anchor: 'signature'), class: 'btn btn-outline-primary', title: 'Signature manuscrite' do %>
+				<span class="material-symbols-outlined">signature</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'uuid'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">barcode</span>
+			<%= link_to a_propos_path(anchor: 'uuid'), class: 'btn btn-outline-primary', title: 'UDID' do %>
+				<span class="material-symbols-outlined">key</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'tags'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">sell</span>
+			<%= link_to a_propos_path(anchor: 'tags'), class: 'btn btn-outline-primary', title: 'Tags' do %>
+				<span class="material-symbols-outlined">sell</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'stars'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">star</span>
+			<%= link_to a_propos_path(anchor: 'stars'), class: 'btn btn-outline-primary', title: 'Etoiles' do %>
+				<span class="material-symbols-outlined">star</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'workflow'), class: 'btn btn-outline-primary btn-sm' do %>
-				<span class="material-symbols-outlined text-black-50">steppers</span>
+			<%= link_to a_propos_path(anchor: 'workflow'), class: 'btn btn-outline-primary', title: 'Workflow' do %>
+				<span class="material-symbols-outlined">steppers</span>
 			<% end %>
 		</div>
 		<ul class="list-group list-group-flush mb-5 m-3 gap-2 w-sm-75">
@@ -389,7 +390,7 @@
 		Pierre-Emmanuel D.
 	</h5>
 	<h6 class="italic">
-		Développeur 
+		Développeur junior
 	</h6>
 </div>
 
