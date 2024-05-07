@@ -176,7 +176,7 @@ class TablesController < ApplicationController
       @record_index = params[:record_index]
     else
       # ajout d'une ligne (à laisser négatif ou alors changer le code dans fill_do)
-      @record_index = -1
+      @record_index = "-1"
     end
   end
 
@@ -185,11 +185,13 @@ class TablesController < ApplicationController
     table = Table.find(params[:table_id])
     data = params[:data]
     if data.keys.first.to_i.positive?
+      # update
       record_index = data.keys.first
       values = data[record_index.to_s]
     else 
+      # create
       record_index = table.increment_record_index
-      values = data[data.keys.first]
+      values = data["-1"]
     end
 
     if not values.values.compact_blank.blank?
