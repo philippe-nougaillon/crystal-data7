@@ -5,7 +5,8 @@
                     placeholder: 'Ex: Article, Intervention, Technicien...', 
                     autofocus: true, 
                     class: 'form-control mb-4 w-sm-50',
-                    disabled: action_name == "edit" %>
+                    disabled: action_name == "edit",
+                    'data-testid': 'Name' %>
 
   <div class="form-check mb-4">
     <%= f.check_box :lifo, class: 'form-check-input' %>
