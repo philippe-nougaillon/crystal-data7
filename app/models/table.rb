@@ -90,6 +90,10 @@ class Table < ApplicationRecord
 		self.tables_users.exists?(user_id: user.id) && self.tables_users.find_by(user_id: user.id).role == 'Propriétaire'
 	end
 
+	def name_pluralized
+		self.name.pluralize.upcase
+	end
+
 private
 	# only one candidate for an nice id; one random UDID
 	def slug_candidates
