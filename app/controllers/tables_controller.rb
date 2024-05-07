@@ -183,16 +183,11 @@ class TablesController < ApplicationController
   # formulaire d'ajout / modification posté
   def fill_do
     table = Table.find(params[:table_id])
-    user = current_user
     data = params[:data]
     record_index = data.keys.first
     values = data[record_index.to_s]
 
     if not values.values.compact_blank.blank?
-
-      inserts_log = []
-      notif_items = []
-
       # update? = si données existent déjà, on les supprime avant pour pouvoir ajouter les données modifiées 
       update = table.values.where(record_index:record_index).any?
       # garde la date de dernière mise à jour
@@ -262,8 +257,9 @@ class TablesController < ApplicationController
 
       # notifier l'utilisateur d'un ajout 
       if not update and table.notification
-        UserMailer.notification(table, notif_items).deliver_now
+        UserMailer.notification(table, table.value_datas_listable(record_index)).deliver_now
       end
+
       if params[:relation].present? && params[:value].present?
         table = Table.find(Relation.find(params[:relation]).relation_with_id)
         url = details_path(table.slug, record_index: params[:value])
