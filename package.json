@@ -6,6 +6,7 @@
     "@hotwired/turbo-rails": "^7.3.0",
     "@popperjs/core": "^2.11.8",
     "@rails/actiontext": "^7.0.8",
+    "@zxing/library": "^0.20.0",
     "autoprefixer": "^10.4.14",
     "bootstrap": "^5.3.1",
     "bootstrap-icons": "^1.10.5",

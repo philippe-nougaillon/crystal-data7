@@ -47,8 +47,12 @@
                 <%= render partial: 'partials/mapbox', locals: {value: value} %>
               <% end %>
             <% when 'Collection' %>
-              <% linked_value = field.get_linked_table_record(value.to_i) %>
-              <%= link_to linked_value, details_path(Table.find(field.relation.relation_with_id).slug, record_index: value) %>
+              <% if field.is_valid_table_params %>
+                <% linked_value = field.get_linked_table_record(value.to_i) %>
+                <%= link_to linked_value, details_path(Table.find(field.relation.relation_with_id).slug, record_index: value) %>
+              <% else %>
+                Aucune relation trouvée
+              <% end %>
             <% when 'Utilisateur' %>
               <%= value %>
             <% when 'Vidéo_YouTube' %>
@@ -63,6 +67,13 @@
               <% end %>
             <% when 'Email' %>
               <%= mail_to value %>
+            <% when 'Stars' %>
+              <% value.to_i.times do %>
+                <i class="bi bi-star-fill"></i>
+              <% end %>
+              <% (5 - value.to_i).times do %>
+                <i class="bi bi-star"></i>
+              <% end %>
             <% else %>
               <%= value %>
             <% end %>

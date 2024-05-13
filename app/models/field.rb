@@ -17,7 +17,7 @@ class Field < ApplicationRecord
 
 	after_save :add_or_update_relation, if: Proc.new { |field| field.Collection? }
 
-	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID, :Signature, :Tags, :Email]
+	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID, :Signature, :Tags, :Email, :QRScan, :Stars]
 	enum operation: [:Somme, :Moyenne]
 	enum visibility:[:Liste_et_Détails, :Vue_Liste, :Vue_Détails]
 
@@ -55,60 +55,63 @@ class Field < ApplicationRecord
 		return results
 	end
 
-	# def delete_file(filename)
-	# 	pathname = Rails.root.join('public', 'table_files') 
-	# 	File.delete(pathname + filename) 
-	# end
-
 	def is_valid_table_params
-		self.items.include?('[') && self.items.include?(']')
+		self.items.include?('[') && self.items.include?(']') &&
+		Table.find_by(id: self.relation.relation_with_id)
 	end
 
 	def populate_linked_table		
-
 		relation = self.relation
 
-		table = Table.find(relation.relation_with_id)
+		table = Table.find_by(id: relation.relation_with_id)
 
-		source_fields = relation.items
-		table_data = {}
-		
-		table.values.includes(:field).each do |value| 
-		  	if source_fields.include?(value.field.name)
-				if value.field.Collection? 
-					unless table_data.key?(value.record_index) 
-						table_data[value.record_index] = "#{ value.field.name }=(#{ value.field.populate_linked_table[value.data.to_i] })"
-					else 
-						table_data[value.record_index] << ", #{ value.field.name }=(#{value.field.populate_linked_table[value.data.to_i]})"
+		if table
+			source_fields = relation.items
+			table_data = {}
+			
+			table.values.includes(:field).each do |value| 
+					if source_fields.include?(value.field.name)
+					if value.field.Collection? 
+						unless table_data.key?(value.record_index) 
+							table_data[value.record_index] = "#{ value.field.name }=(#{ value.field.populate_linked_table[value.data.to_i] })"
+						else 
+							table_data[value.record_index] << ", #{ value.field.name }=(#{value.field.populate_linked_table[value.data.to_i]})"
+						end
+					else
+						unless table_data.key?(value.record_index) 
+							table_data[value.record_index] = value.data 
+						else 
+							table_data[value.record_index] << ', ' + value.data 
+						end
 					end
-				else
-					unless table_data.key?(value.record_index) 
-						table_data[value.record_index] = value.data 
-					else 
-						table_data[value.record_index] << ', ' + value.data 
-					end
-				end
-		  	end 
+					end 
+			end
+			return table_data
+		else
+			return {}
 		end
-		return table_data 
 	end
 
 	def get_linked_table_record(index)
 		relation = self.relation
-		table = Table.find(relation.relation_with_id)
-    	source_fields = relation.items
+		table = Table.find_by(id: relation.relation_with_id)
+		if table
+			source_fields = relation.items
 		
-		table_data = []
-		table.values.where(record_index: index).includes(:field).each do |value| 
-			if (source_fields.include?(value.field.name)) 
-				if value.field.Collection?
-					table_data << "#{ value.field.name }=(#{value.field.get_linked_table_record(value.record_index)})"
-				else
-					table_data << value.data
+			table_data = []
+			table.values.where(record_index: index).includes(:field).each do |value| 
+				if (source_fields.include?(value.field.name)) 
+					if value.field.Collection?
+						table_data << "#{ value.field.name }=(#{value.field.get_linked_table_record(value.record_index)})"
+					else
+						table_data << value.data
+					end
 				end
 			end
+			return table_data.join(', ') 
+		else
+			return nil
 		end
-		return table_data.join(', ') 
 	end
 
 	def populate_select_filter(records)
@@ -232,6 +235,8 @@ class Field < ApplicationRecord
 			'play_circle'
 		when 'QRCode'
 			'qr_code_2'
+		when 'QRScan'
+			'qr_code_scanner'
 		when 'Distance'
 			'straighten'
 		when 'UUID'
@@ -240,6 +245,8 @@ class Field < ApplicationRecord
 			'sell'
 		when 'Email'
 			'mail'
+		when 'Stars'
+			'star'
 		else
 			'title'
 		end
@@ -256,6 +263,7 @@ private
 		source_fields = sources.last.tr('"','').split(',')
 		source_table = self.table.users.first.tables.find_by(name: sources.first)
 		####
+		# TODO 
 		# Utiliser self.table.users.first.tables.find_by(name: sources.first)
 		# est correct pour l'instant, mais posera problème si l'order des User change,
 		# ou si d'autres users peuvent ajouter/modifier des fields
@@ -264,11 +272,13 @@ private
 		# la fonction dans le controller, ou passer le current_user en paramètre
 		####
 
-		Relation.find_or_initialize_by(field_id: self.id).tap do |relation|
-			relation.table_id = self.table.id
-			relation.relation_with_id = source_table.id
-			relation.items = source_fields
-			relation.save
+		if source_table
+			Relation.find_or_initialize_by(field_id: self.id).tap do |relation|
+				relation.table_id = self.table.id
+				relation.relation_with_id = source_table.id
+				relation.items = source_fields
+				relation.save
+			end
 		end
 	end
 

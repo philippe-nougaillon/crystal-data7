@@ -1,0 +1,76 @@
+<div class="my-4 d-flex align-items-center text-danger gap-2">
+  <h1 class="mb-0">
+    Sécurité
+  </h1>
+</div>
+
+<% if @tables.any? %>
+  <% @tables.each do | table | %>
+    <div class="mb-3">
+      <div class="d-flex gap-2 align-items-center justify-content-between">
+        <h3><%= table.name %></h3>
+        <% if policy(table).add_user? %>
+          <%= link_to partages_path(table), class: 'btn btn-outline-danger btn-sm', title: 'Ajouter un utilisateur' do %>
+            <span class="material-symbols-outlined">
+              person_add
+            </span>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="overflow-x-auto mt-2">
+        <table class="table table-hover w-100 border align-middle">
+          <thead>
+            <tr class="">
+              <th class="col-md-2">Utilisateur</th>
+              <th class="col-md-4">Email</th>
+              <th>Rôle</th>
+              <th>Voir</th>
+              <th>Créer</th>
+              <th>Modifier</th>
+              <th>Supprimer</th>
+              <th class="col-md-2"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% table.users.each do |user| %>
+              <tr>
+                <td class="<%= 'text-danger fw-bold' if user == current_user %>"><%= user.name %></td>
+                <td><%= user.email %></td>
+                <td><%= table.role_name(user) %></td>
+                <td class="text-success fw-bold">
+                  <% case table.role_number(user) when 1 %>
+                    <span title="Ne peux voir que ses données">✓*</span>
+                  <% else %>
+                    ✓
+                  <% end %>
+                </td>
+                <td class="text-success fw-bold"><%= table.role_number(user) >= 1 ? "✓" : "-" %></td>
+                <td class="text-success fw-bold">
+                  <% case table.role_number(user) when 0 %>
+                    -
+                  <% when 1 %>
+                    <span title="Ne peux modifier que ses données">✓*</span>
+                  <% else %>
+                    ✓
+                  <% end %>
+                </td>
+                <td class="text-success fw-bold"><%= table.propriétaire?(user) ? "✓" : "-" %></td>
+                <td>
+                  <% if !table.propriétaire?(user) && policy(table).delete_record? %>
+                    <%= link_to "Annuler le partage", annuler_partage_path(table, user_id:user.id), title:"Annuler ce partage", 
+                      data: { confirm: 'Confirmez-vous ?' }, class: 'btn btn-outline-danger btn-sm' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <i>
+  Aucun objet pour l'instant...
+  </i>
+<% end %>

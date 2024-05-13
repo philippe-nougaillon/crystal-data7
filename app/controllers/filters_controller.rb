@@ -1,13 +1,11 @@
 class FiltersController < ApplicationController
   before_action :set_filter, only: %i[ show edit update destroy query]
   before_action :is_user_authorized?
+  before_action :info_notice, only: %i[index query]
 
   # GET /filters or /filters.json
   def index
     @filters = current_user.filters.ordered
-    if current_user.compte_démo?
-      flash[:notice] = "Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères"
-    end
   end
 
   # GET /filters/1 or /filters/1.json
@@ -30,7 +28,7 @@ class FiltersController < ApplicationController
 
     respond_to do |format|
       if @filter.save
-        format.html { redirect_to query_filter_url(@filter), notice: "Filtre créé." }
+        format.html { redirect_to query_filter_url(@filter)}
         format.json { render :show, status: :created, location: @filter }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -76,13 +74,13 @@ class FiltersController < ApplicationController
         book = CollectionToXls.new(@filter.table, @records).call
         file_contents = StringIO.new
         book.write file_contents # => Now file_contents contains the rendered file output
-        filename = "Export collection d'objets '#{@filter.table.name.humanize}' du_#{Date.today.to_s}.xls"
+        filename = "Export collection d'objets '#{@filter.table.name}' du_#{Date.today.to_s}.xls"
         send_data file_contents.string.force_encoding('binary'), filename: filename 
       end
       
       format.csv do
         csv_string = CollectionToCsv.new(@filter.table, @records).call
-        filename = "Export collection d'objets '#{@filter.table.name.humanize}' du_#{Date.today.to_s}.csv"
+        filename = "Export collection d'objets '#{@filter.table.name}' du_#{Date.today.to_s}.csv"
         send_data csv_string, filename: filename
       end
       format.pdf do
@@ -108,5 +106,18 @@ class FiltersController < ApplicationController
 
     def is_user_authorized?
       authorize @filter? @filter : Filter
+    end
+
+    def info_notice
+      if current_user.compte_démo? && flash[:notice] == nil && flash[:alert] == nil
+        flash[:notice] = case params[:action]
+        when 'index'
+          "(i)Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères"
+        when 'query'
+          if params.keys.count == 3 # ne pas afficher l'aide quand on applique le filtre
+            "(i)Renseignez ici les critères de sélection afin d'obtenir une collection d'objets filtrés"
+          end
+        end
+      end
     end
 end

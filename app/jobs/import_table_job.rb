@@ -31,6 +31,7 @@ class ImportTableJob < ActiveJob::Base
 		  	@lignes += 1
 		end
 	end
+	
 	@new_table.update_attributes(record_index:@record_index)
     logger.debug "JOB ImportTableJob => ended ! Nbr de lignes traitées: #{@lignes} | Lignes importées: #{@record_index}"
  

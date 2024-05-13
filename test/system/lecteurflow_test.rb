@@ -50,7 +50,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "creating a Field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Attributs"
+  #   click_on "Attributs"
 
   #   # Ajout d'un field
   #   fill_in "Nom", with: "Désignation"
@@ -78,7 +78,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "updating a Field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Attributs"
+  #   click_on "Attributs"
   #   click_on "Modifier", match: :first
     
   #   fill_in "Nom", with: "Description"
@@ -90,7 +90,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "destroying a Field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Attributs"
+  #   click_on "Attributs"
   #   page.accept_confirm do
   #     click_on "X", match: :first
   #   end
@@ -101,7 +101,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "create workflow field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Attributs"
+  #   click_on "Attributs"
 
   #   fill_in "Nom", with: "État"
   #   page.select "Workflow", from: "Type de données"
@@ -121,7 +121,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "create url field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Attributs"
+  #   click_on "Attributs"
 
   #   fill_in "Nom", with: "Url"
   #   page.select "URL", from: "Type de données"
@@ -140,7 +140,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "create color field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Attributs"
+  #   click_on "Attributs"
 
   #   fill_in "Nom", with: "Couleur"
   #   page.select "Couleur", from: "Type de données"
@@ -159,7 +159,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "create gps field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Attributs"
+  #   click_on "Attributs"
 
   #   fill_in "Nom", with: "Coordonnées"
   #   page.select "GPS", from: "Type de données"
@@ -181,7 +181,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "create image field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Attributs"
+  #   click_on "Attributs"
 
   #   fill_in "Nom", with: "Image"
   #   page.select "Image", from: "Type de données"
@@ -201,7 +201,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "create pdf field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Attributs"
+  #   click_on "Attributs"
 
   #   fill_in "Nom", with: "PDF"
   #   page.select "PDF", from: "Type de données"
@@ -221,7 +221,7 @@ class LecteurFlowTest < ApplicationSystemTestCase
   # test "create table type field" do
   #   visit tables_url
   #   click_on "Stocks"
-  #   click_on "Modifier Attributs"
+  #   click_on "Attributs"
 
   #   fill_in "Nom", with: "Interventions"
   #   page.select "Collection", from: "Type de données"

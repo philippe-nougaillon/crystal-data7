@@ -1,11 +1,11 @@
 <h1 class="text-primary my-4">
-  <%= "#{params[:record_index] ? 'Modification' : 'Ajout'} '#{@table.name.humanize}'" %>
+  <%= "#{params[:record_index] ? 'Modification' : 'Ajout'} '#{@table.name}'" %>
 </h1>
 <%= form_tag fill_do_path(relation: params[:relation], value: params[:value]), multipart: true do %>
 
   <%= hidden_field_tag :table_id, @table.id %>
 
-  <div class="row row-cols-sm-2 row-cols-lg-3">
+  <div class="border rounded shadow-sm p-3 p-sm-4">
     <% @table.fields.ordered.each_with_index do |field, index| %>
       <% field_name = "[data][#{@record_index}][#{field.id}]" %> 
       <% value = field.values.find_by(record_index: @record_index) %> 
@@ -30,9 +30,10 @@
         <% when 'Date' %>
           <%= text_field_tag field_name, field_value, class: 'form-control w-100', type: 'date', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Oui_non?' %>
-          <br>
-          <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui'), class:'form-check-input', 'data-testid': field.name %> Oui 
-          <%= radio_button_tag field_name, 'Non', (field_value == 'Non'), class:'form-check-input ms-3', 'data-testid': field.name %> Non
+          <div class="mt-2">
+            <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui'), class:'form-check-input', 'data-testid': field.name %> Oui 
+            <%= radio_button_tag field_name, 'Non', (field_value == 'Non'), class:'form-check-input ms-3', 'data-testid': field.name %> Non
+          </div>
         <% when 'Liste' %>
           <%= select_tag field_name, options_for_select(field.items_splitted, field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Formule' %>
@@ -45,15 +46,15 @@
         <% when 'Signature' %>
           <div id="signature">
             <%= hidden_field_tag field_name, field_value, 'data-testid': "signature" %>
-            <div class="wrapper">
-              <canvas id="signature-pad" class="form-control" width=400 height=200></canvas>
-            </div>
+            <canvas id="signature-pad" class="form-control" width=400 height=200></canvas>
 
             <div style="margin-top: 8px;">
               <button id="save" class="btn btn-sm btn-outline-success">Valider cette signature</button>
               <a id="clear" class="btn btn-sm btn-outline-dark">Effacer</a>
             </div>
           </div>
+
+          <%= render partial:'partials/script_signature' %>
         <% when 'Texte_long' %>
           <%= text_area_tag field_name, field_value, autofocus: (index == 0),col: 10, row: 10, class: 'form-control w-100', 'data-testid': field.name %>
         <% when 'Texte_riche' %>
@@ -92,19 +93,44 @@
               <%= link_to table_path(Table.find(field.relation.relation_with_id)), target: '_blank' do %>
               <% end %>
             </div>
+          <% else %>
+            <%= select_tag field_name, options_for_select(["Aucune relation trouvée"]), class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
           <% end %>
         <% when 'Utilisateur' %>
           <%= select_tag field_name, options_for_select(@table.users.pluck(:name), field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Vidéo_YouTube' %>
           <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'QRCode', 'Distance' %>
-          <%= text_field_tag field_name, field_value, class: 'form-control form-control-sm w-100', disabled: true %>
+          <%= text_field_tag field_name, field_value, class: 'form-control w-100', disabled: true, 'data-testid': field.name %>
         <% when 'UUID' %>
-          <%= text_field_tag field_name, field_value || SecureRandom.uuid, class: 'form-control form-control-sm w-100', required: field.obligatoire, 'data-testid': field.name %>
+          <%= text_field_tag field_name, field_value || SecureRandom.uuid, class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Tags' %>
-          <%= text_field_tag field_name, field_value, class: 'form-control form-control-sm w-100', required: field.obligatoire, 'data-testid': field.name %>
+          <%= text_field_tag field_name, field_value, class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Email' %>
-          <%= email_field_tag field_name, field_value, class: 'form-control form-control-sm w-100', required: field.obligatoire, 'data-testid': field.name %>
+          <%= email_field_tag field_name, field_value, class: 'form-control w-100', required: field.obligatoire, 'data-testid': field.name %>
+        <% when 'QRScan' %>
+          <video id="video" class="form-control w-100 p-0 mb-1"></video>
+
+          <div id="sourceSelectPanel" class="d-flex align-items-center" style="display:none; gap: 4px;">
+            <label for="sourceSelect">Source:</label>
+            <select id="sourceSelect" class="form-select w-100"></select>
+          </div>
+
+          <div class="my-2 d-flex" style="gap: 4px;">
+            <a class="btn btn-sm btn-outline-success w-100" id="startButton">Scanner</a>
+            <a class="btn btn-sm btn-outline-dark w-100" id="resetButton">Effacer</a>
+          </div>
+
+          <%= text_field_tag field_name, field_value, class: 'form-control w-100 mt-4', required: field.obligatoire, placeholder: "Aucune valeur scannée (appuyez sur 'Scanner' ci-dessus)", 'data-testid': field.name %>
+
+          <%= render partial:'partials/script_qrscan', locals: {field_name:} %>
+        <% when 'Stars' %>
+          <div class="mt-2">
+            <% 0.upto(5) do |i| %>
+              <%= radio_button_tag field_name, i, (!field_value.nil? && field_value.to_i == i), 'data-testid': field.name %>
+              <span class="me-3"><%= i %></span>
+            <% end %> 
+          </div>
         <% end %>
       </fieldset>
     <% end %>
@@ -115,24 +141,3 @@
     <%= link_to "Annuler", request.referer %>
   </div>
 <% end %>
-
-
-<script>
-  var signaturePad = new SignaturePad(document.getElementById('signature-pad'));
-  var signatureField = document.querySelector("[data-testid=signature]");
-  console.log(signatureField);
-  var saveButton = document.getElementById('save');
-  var cancelButton = document.getElementById('clear');
-
-  saveButton.addEventListener('click', function (event) {
-    event.preventDefault();
-    if (!signaturePad.isEmpty()) {
-      signatureField.setAttribute('value', signaturePad.toDataURL("image/svg+xml"));
-    }
-  });
-
-  cancelButton.addEventListener('click', function (event) {
-    signaturePad.clear();
-    signatureField.setAttribute('value', "");
-  });
-</script>

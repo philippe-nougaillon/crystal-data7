@@ -10,7 +10,7 @@
 		<%= image_tag 'icons/crystaldata.png', style: "height: 6rem" %>
 	</div>
 
-	<h3 class="fw-bold text-dark my-5">Pour qui ?</h3>
+	<h3 class="fw-bold text-dark mt-5">Pour qui ?</h3>
 
 	<p class="fs-5 fw-light w-sm-75">
 		Vous êtes une entreprise de service avec des équipes sur le terrain (ex: BTP, SAV, Installation, Maintenance, etc.) et
@@ -22,7 +22,7 @@
 		et de les partager en ligne avec vos collaborateurs.
 	</p>
 
-	<h3 class="fw-bold text-dark my-5">Principales fonctionnalités</h3>
+	<h3 class="fw-bold text-dark mt-5">Principales fonctionnalités</h3>
 
 	<ul class="list-group list-group-flush mb-5 w-sm-75">
 		<li class="list-group-item d-flex align-items-center gap-2">
@@ -65,7 +65,7 @@
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Audit trail: chaque modification d'un objet est consignée dans un historique (quand, qui, quoi, valeur avant, valeur après)
+			Activité: chaque modification d'un objet est consignée dans un historique (quand, qui, quoi, valeur avant, valeur après)
 		</li>		
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
@@ -75,16 +75,100 @@
 		</li> 
 	</ul>
 
-	<h3 class="fw-bold text-dark my-5">L'objet CrystalDATA et ses Attributs</h3>
+	<h3 class="fw-bold text-dark mt-5">L'objet CrystalDATA et ses Attributs</h3>
 
-	<p class="w-sm-75">
+	<p class="fs-5 fw-light w-sm-75">
 		Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et 
 		chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste, Oui/Non, Fichier, etc.)
 		<br><br>
 		Les types d'attributs disponibles sont : 
+
+		<div class="mt-2">
+			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary', title: 'Texte' do %>
+				<span class="material-symbols-outlined">abc</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary', title: 'Texte long' do %>
+				<span class="material-symbols-outlined">notes</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary', title: 'Texte riche' do %>
+				<span class="material-symbols-outlined">text_snippet</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary', title: 'Nombre' do %>
+				<span class="material-symbols-outlined">tag</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary', title: 'Euros' do %>
+				<span class="material-symbols-outlined">euro</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary', title: 'Formule' do %>
+				<span class="material-symbols-outlined">calculate</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'date'), class: 'btn btn-outline-primary', title: 'Date' do %>
+				<span class="material-symbols-outlined">calendar_today</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'oui_non'), class: 'btn btn-outline-primary', title: 'Oui/Non?' do %>
+				<span class="material-symbols-outlined">help</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'liste'), class: 'btn btn-outline-primary', title: 'Liste de choix' do %>
+				<span class="material-symbols-outlined">format_list_numbered</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'liste_objet'), class: 'btn btn-outline-primary', title: "Liste d'objets (Collection)" do %>
+				<span class="material-symbols-outlined">database</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary', title: 'Fichier' do %>
+				<span class="material-symbols-outlined">description</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary', title: 'Image' do %>
+				<span class="material-symbols-outlined">image</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary', title: 'Document PDF' do %>
+				<span class="material-symbols-outlined">picture_as_pdf</span>
+			<% end %>
+		</div>
+		
+		<div class="mt-2">
+			<%= link_to a_propos_path(anchor: 'utilisateur'), class: 'btn btn-outline-primary', title: 'Utilisateur' do %>
+				<span class="material-symbols-outlined">person</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'url'), class: 'btn btn-outline-primary', title: 'Lien URL' do %>
+				<span class="material-symbols-outlined">link</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'email'), class: 'btn btn-outline-primary', title: 'Adresse email' do %>
+				<span class="material-symbols-outlined">mail</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'video'), class: 'btn btn-outline-primary', title: 'Vidéo YouTube' do %>
+				<span class="material-symbols-outlined">play_circle</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'couleur'), class: 'btn btn-outline-primary', title: 'Couleur' do %>
+				<span class="material-symbols-outlined">palette</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'localisation'), class: 'btn btn-outline-primary', title: 'Localisation GPS' do %>
+				<span class="material-symbols-outlined">my_location</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'qrcode'), class: 'btn btn-outline-primary', title: 'QR Code' do %>
+				<span class="material-symbols-outlined">qr_code_2</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'qrscan'), class: 'btn btn-outline-primary', title: 'Scanner à QR Code' do %>
+				<span class="material-symbols-outlined">barcode_reader</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'signature'), class: 'btn btn-outline-primary', title: 'Signature manuscrite' do %>
+				<span class="material-symbols-outlined">signature</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'uuid'), class: 'btn btn-outline-primary', title: 'UDID' do %>
+				<span class="material-symbols-outlined">key</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'tags'), class: 'btn btn-outline-primary', title: 'Tags' do %>
+				<span class="material-symbols-outlined">sell</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'stars'), class: 'btn btn-outline-primary', title: 'Etoiles' do %>
+				<span class="material-symbols-outlined">star</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'workflow'), class: 'btn btn-outline-primary', title: 'Workflow' do %>
+				<span class="material-symbols-outlined">steppers</span>
+			<% end %>
+		</div>
 		<ul class="list-group list-group-flush mb-5 m-3 gap-2 w-sm-75">
 			<li>
-				<b>Texte</b> :
+				<b id="texte">Texte</b> :
 				<ul>
 					<li>Texte simple : peut contenir une chaine de 255 caractères maximum. L'option 'Filtre ?' permet de créer une liste déroulante contenant les valeurs distinctes. </li>
 					<li>Texte long : permet de rédiger de longs textes</li>
@@ -92,34 +176,34 @@
 				</ul>
 			</i>
 			<li>
-				<b>Chiffres</b> :
+				<b id="chiffres">Chiffres</b> :
 				<ul>
 					<li>Nombre : pour saisir des valeurs numériques, avec ou sans décimales. L'option 'Opération en bas de page', calculera la moyenne ou la somme des valeurs de l'attribut.</li>
 					<li>Euros : idem 'Nombre' mais affiche la valeur avec le symbole euros (€).</li>
 					<li>Formule : champ calculé à partir de champs existants ou d'une formule en langage Ruby. (Ex: <i>[Temps Passé] * [Coût horaire]</i> OU <i>[Prix HT] * 1.2</i>)
 				</ul>
 			</li>
-			<li><b>Date</b> : une date choisie dans un calendrier.</li>
-			<li><b>Oui/Non</b> : permet de choisir entre Oui ou Non ou aucun des deux.</li>
-			<li><b>Liste</b> : pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.
+			<li><b id="date">Date</b> : une date choisie dans un calendrier.</li>
+			<li><b id="oui_non">Oui/Non</b> : permet de choisir entre Oui ou Non ou aucun des deux.</li>
+			<li><b id="liste">Liste</b> : pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.
 			</li>
-			<li><b>Liste d'objets (Collection)</b> : pour choisir un objet parmi les objets d'une autre de vos collections.(Ex: <i>[Technicien."Nom,Prénom,Expérience"]</i>)</li>
+			<li><b id="liste_objet">Liste d'objets (Collection)</b> : pour choisir un objet parmi les objets d'une autre de vos collections.(Ex: <i>[Technicien."Nom,Prénom,Expérience"]</i>)</li>
 			<li>
-				<b>Fichier</b> :
+				<b id="fichier">Fichier</b> :
 				<ul>
 					<li>Fichier : permet de lier et de stocker un fichier dans un objet (document, image, etc...).</li>
 					<li>Image : idem 'Fichier' mais affiche un aperçu de l'image ou l'image d'origine selon le contexte.</li>
 					<li>PDF : idem 'Fichier' mais affiche un aperçu de la première page du document PDF.</li>
 				</ul>
 			</li>
-			<li><b>Utilisateur</b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table</li>
-			<li><b>URL</b> : permet d'ajouter un lien vers une ressource internet via une URL (interne ou externe).</li>
-			<li><b>Email</b> : pour ajouter un lien vers une adresse email.</li>
+			<li><b id="utilisateur">Utilisateur</b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table</li>
+			<li><b id="url">URL</b> : permet d'ajouter un lien vers une ressource internet via une URL (interne ou externe).</li>
+			<li><b id="email">Email</b> : pour ajouter un lien vers une adresse email.</li>
 			<li>
-				<b>Vidéo YouTube</b> : permet d'ajouter un lien vers une vidéo YouTube et d'afficher l'aperçu de la vidéo dans une miniature.  
+				<b id="video">Vidéo YouTube</b> : permet d'ajouter un lien vers une vidéo YouTube et d'afficher l'aperçu de la vidéo dans une miniature.  
 			</li>
-			<li><b>Couleur</b> : une couleur choisie dans une palette.</li>
-			<li><b>Localisation (GPS)</b> :
+			<li><b id="couleur">Couleur</b> : une couleur choisie dans une palette.</li>
+			<li><b id="localisation">Localisation (GPS)</b> :
 				<ul>
 					<li>Capture la localisation de l'utilisateur, s'il le demande, en appuyant sur le bouton <span class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-location-crosshairs"></i></li></span>
 					<li>Affiche la location sur une carte, basée sur les coordonnées indiquées au format "LNG, LAT". (Ex: <i>48.85879287621989, 2.294761243572842</i> pour pointer sur la tour Eiffel).</li>
@@ -127,18 +211,24 @@
 				</ul>
 			</li>
 			<li>
-				<b>QR Code</b> : pour générer un QR Code à partir du contenu d'un autre attribut de l'objet. (Ex: <i>[N°deSérie],[Reference],[URL site web]</i>)
+				<b id="qrcode">QR Code</b> : pour générer un QR Code à partir du contenu d'un autre attribut de l'objet. (Ex: <i>[N°deSérie],[Reference],[URL site web]</i>)
 			</li>
 			<li>
-				<b>Signature</b> : permet de signer manuellement avec la souris ou sur un écran tactile.
+				<b id="qrscan">QR Scan</b> : permet de scanner un QR Code avec la caméra de votre smartphone, tablette ou ordinateur.
 			</li>
 			<li>
-				<b>UUID</b> : génère automatiquement un identifiant unique. (UDID = Universally Unique IDentifier)
+				<b id="signature">Signature</b> : permet de signer manuellement avec la souris ou sur un écran tactile.
 			</li>
 			<li>
-				<b>Tags</b> : permet de saisir des mots-clés séparés par des virgules. (Ex: <i>Paris, France, Europe</i>)
+				<b id="uuid">UUID</b> : génère automatiquement un identifiant unique. (UDID = Universally Unique IDentifier)
 			</li>
-			<li><b>WORKFLOW</b> : pour ajouter un état à un objet, associé à une couleur. (Ex: <i>Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary</i>)
+			<li>
+				<b id="tags">Tags</b> : permet de saisir des mots-clés séparés par des virgules. (Ex: <i>Paris, France, Europe</i>)
+			</li>
+			<li>
+				<b id="stars">Stars</b> : permet de noter un objet avec des étoiles. (Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)
+			</li>
+			<li><b id="workflow">WORKFLOW</b> : pour ajouter un état à un objet, associé à une couleur. (Ex: <i>Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary</i>)
 				<ul><li>
 					Couleurs disponibles:
 					<span class="badge bg-primary">Primary</span>
@@ -154,8 +244,8 @@
 		</ul>
 	</p>
 
-	<h3 class="fw-bold text-dark my-5">Relations entre objets</h3>
-	<p class="w-sm-75">
+	<h3 class="fw-bold text-dark mt-5">Relations entre objets</h3>
+	<p class="fs-5 fw-light w-sm-75">
 		Les relations entre objets sont créées avec l'attribut 'Collection'. 
 		Exemple : un objet Intervention aura un attribut 'Technicien' qui permettra de choisir un technicien dans la collection du même nom.
 		Ces relations sont aussi visibles dans la vue détails d'un objet. 
@@ -163,8 +253,8 @@
 		la vue de détails de chaque Technicien affiche automatiquement ses Interventions et permet d'en saisir une nouvelle pour ce Technicien.  
 	</p>
 
-	<h3 class="fw-bold text-dark my-5">Filtres</h3>
-	<p class="w-sm-75">
+	<h3 class="fw-bold text-dark mt-5">Filtres</h3>
+	<p class="fs-5 fw-light w-sm-75">
 		Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères.
 		Ces filtres acceptent des critères différents selon le type d'attribut :
 		<br>	
@@ -173,8 +263,8 @@
 		- un attribut numérique est filtré avec un signe et une valeur (Qté en stock: > 5) 
 	</p>
 
-	<h3 class="fw-bold text-dark my-5">Utilisateurs, partages et rôles</h3>
-	<p class="w-sm-75">
+	<h3 class="fw-bold text-dark mt-5">Utilisateurs, partages et rôles</h3>
+	<p class="fs-5 fw-light w-sm-75">
 		Vous pouvez partager vos collections avec d'autres utilisateurs en leur donnant un rôle (Lecteur, Collecteur, Éditeur).
 		<ul class="list-group mb-5 m-3 gap-2">
 			<li>
@@ -192,16 +282,16 @@
 
 </div>
 
-<h3 class="fw-bold text-dark my-5">Historique et motivation</h3>
+<h3 class="fw-bold text-dark mt-5">Historique et motivation</h3>
 
-<p class="w-sm-75">
+<p class="fs-5 fw-light w-sm-75">
 	Développeur d'applications métiers en entreprise depuis plus de 30 ans, j'ai souvent aidé mes clients à passer 
 	d'un système d'information en silos, où les données métier de l'entreprise sont enfermées 
 	dans des feuilles Excel, à un système de type plateforme où les données sont centralisées et 
 	partagées entre les services depuis une source unique de confiance (<b>Single Source Of Truth</b>). 
 </p>
 
-<p class="w-sm-75">	
+<p class="fs-5 fw-light w-sm-75">	
 	Fort d'une expérience de plus de 30 ans sur les base de données et outils de développement les plus intéressants de leurs époques 
 	(SuperBase 64, Yes You Can, SuperDB, FoxPro, dBase 3/4, Paradox 3/4, Access, Delphi, VB4/5/6/SQL Server,
 	C#/SQLite/MySQL, stack LAMP, Ruby on Rails, et j'en passe...), ma vocation a toujours été d'aider mes clients à franchir 
@@ -272,8 +362,8 @@
 	</div>
 </div>
 
-<p class="w-sm-75">
-	C'est pourquoi j'ai développé de cet outil NO-CODE et open-source,  
+<p class="fs-5 fw-light w-sm-75">
+	C'est pourquoi j'ai commencé le développement de cet outil NO-CODE et open-source, il y a 10 ans,  
 	dans le but de couvrir les fonctions de base d'une plateforme d'information ouverte.
 	<br><br>
 	CrystalDATA a donc pour ambition d'offrir un petit concentré de mon expérience des bases de données, 
@@ -281,43 +371,40 @@
 	intégrant toutes vos spécificités, règles métier, Workflow, Services, etc.
 </p>
 
-	<h3 class="fw-bold text-dark my-5">Développement, support et services</h3>
-	
-	<p class="mt-3">
-		CrystalDATA a été développé par Philippe et Pierre-Emmanuel, du 
-		<%= link_to "Philnoug Consulting", 'https://www.philnoug.com', target: '_blank' %>
-	</p>
+<h3 class="fw-bold text-dark mt-5">Développement, support et services</h3>
 
-	<div class="row mt-3">
-		<div class="col-sm-2">
-			<%= image_tag "philippe.webp",
-			class: "img-thumbnail rounded"
-			%>
-		<h5 class="font-bold">
-			Philippe N.
-		</h5>
-		<h6 class="italic text-xl">
-			Product Manager
-			<br>
-			Développeur Senior RoR
-		</h6>
-		</div>
-		<div class="col-sm-2">
-		<%= image_tag "pierre-emmanuel.webp",
-			class: "img-thumbnail rounded"
+<p class="mt-3">
+	<i>CrystalDATA a été développé en Ruby on Rails par Philippe et Pierre-Emmanuel</i>
+</p>
+
+<div class="row mt-3">
+	<div class="col-sm-2">
+		<%= image_tag "philippe.webp",
+		class: "img-thumbnail rounded"
 		%>
-		<h5 class="font-bold">
-			Pierre-Emmanuel D.
-		</h5>
-		<h6 class="italic">
-			Développeur Ruby on Rails
-		</h6>
+	<h5 class="font-bold">
+		Philippe N.
+	</h5>
+	<h6 class="italic text-xl">
+		Product Manager/Dev senior
+	</h6>
 	</div>
+	<div class="col-sm-2">
+	<%= image_tag "pierre-emmanuel.webp",
+		class: "img-thumbnail rounded"
+	%>
+	<h5 class="font-bold">
+		Pierre-Emmanuel D.
+	</h5>
+	<h6 class="italic">
+		Développeur junior
+	</h6>
+</div>
 
-	<p class="mt-3">
-		Besoin d'une nouvelle fonctionnalité ou d'une application sur mesure ? Nous vous la développons !
-		<br><br>
-	    Pour en savoir plus,
-    	<%= link_to "contactez-nous", 'https://www.philnoug.com/contact', target: '_blank', class: 'link' %>
-    </p>
 
+<p class="fs-5 fw-light text-secondary mt-2">
+	Besoin d'une nouvelle fonctionnalité ou d'une application sur mesure ? Nous vous la développons !
+	<br>
+	Pour en savoir plus,
+	<%= link_to "contactez-nous", 'https://www.philnoug.com/contact', target: '_blank', class: 'link' %>
+</p>

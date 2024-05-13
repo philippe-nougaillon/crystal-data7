@@ -1,11 +1,11 @@
 <li class="nav-item dropdown">
-  <a class="navbar-brand nav-link text-primary fs-1 px-0 <%= current_user.tables.count > 1 ? "dropdown-toggle" : "" %>" style="font-weight: 500" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <%= @table.name.humanize.pluralize %>
+  <a class="navbar-brand nav-link text-primary fs-1 px-0 <%= current_user.tables.count > 1 ? "dropdown-toggle" : "" %>" style="font-weight: 500" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Choisir une autre collection">
+    <%= @table.name_pluralized %>
   </a>
   <% if current_user.tables.count > 1 %>
-    <ul class="dropdown-menu w-100">
+    <ul class="dropdown-menu">
       <% current_user.tables.where.not(name: @table.name).order(:name).each do |table| %>
-        <li><%= link_to table.name.humanize.pluralize, table_path(table), class: 'dropdown-item fs-4', style: 'font-weight: 500' %></li>
+        <li><%= link_to table.name_pluralized, table_path(table), class: 'dropdown-item fs-5', style: 'font-weight: 500' %></li>
       <% end %>
     </ul>
   <% end %>

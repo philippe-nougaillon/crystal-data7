@@ -12,10 +12,6 @@ class UsersController < ApplicationController
         @total_lignes += table.size
       end
     end
-    current_user_table_ids = TablesUser.where(user_id: current_user.id, role: 'Propriétaire').pluck(:table_id)
-
-    @shared_with = TablesUser.where(table_id: current_user_table_ids).where.not(role: 'Propriétaire')
-    @tables_users = TablesUser.where(user_id: current_user.id).where.not(role: 'Propriétaire')
   end
 
   def destroy
@@ -28,6 +24,8 @@ class UsersController < ApplicationController
     Table.where(id: table_ids).destroy_all
     @user.destroy
 
+    # TODO: ???
+      
     if ['pierreemmanuel.dacquet@gmail.com', 'philippe.nougaillon@gmail.com'].include?(current_user.email)
       respond_to do |format|
         format.html { redirect_to admin_stats_path }
@@ -45,7 +43,10 @@ class UsersController < ApplicationController
 
   def connect_guest_user
     sign_in User.find(1)
-    redirect_to table_path(current_user.favorite_table), notice: "Bienvenue dans la démonstration. Vous pouvez tester ici librement l'application mais avec quelques limitations. Veuillez créer un compte pour avoir toutes les fonctionnalités."
+    if (current_user.last_sign_in_ip != current_user.current_sign_in_ip) || (current_user.current_sign_in_at - current_user.last_sign_in_at > 60 * 5)
+      UserMailer.new_guest_notification(request.referrer).deliver_now
+    end
+    redirect_to table_path(current_user.favorite_table), notice: "(i)Bienvenue dans la démonstration. Vous pouvez tester ici librement l'application mais avec quelques limitations. Veuillez créer un compte pour avoir toutes les fonctionnalités."
   end
 
   private

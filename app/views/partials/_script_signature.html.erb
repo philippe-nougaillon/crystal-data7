@@ -1,0 +1,19 @@
+<script>
+  var signaturePad = new SignaturePad(document.getElementById('signature-pad'));
+  var signatureField = document.querySelector("[data-testid=signature]");
+  // console.log(signatureField);
+  var saveButton = document.getElementById('save');
+  var cancelButton = document.getElementById('clear');
+
+  saveButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    if (!signaturePad.isEmpty()) {
+      signatureField.setAttribute('value', signaturePad.toDataURL("image/svg+xml"));
+    }
+  });
+
+  cancelButton.addEventListener('click', function (event) {
+    signaturePad.clear();
+    signatureField.setAttribute('value', "");
+  });
+</script>

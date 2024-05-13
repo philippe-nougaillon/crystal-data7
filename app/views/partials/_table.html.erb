@@ -1,7 +1,7 @@
 <div class="overflow-x-auto">
   <table class="table table-hover border align-middle">
     <thead>
-      <tr style="vertical-align: middle">
+      <tr class="table-secondary" style="vertical-align: middle">
         <% table.fields.listable.ordered.each_with_index do | field, index | %>
           <%= render partial: 'partials/table_header_cell', locals: {table:, field:, index:} %>
         <% end %>
@@ -44,8 +44,8 @@
   </table>
 </div>
 <% if %w[show_details related_tables].include?(action_name) %>
-  <% if policy(table).fill? %>
-    <%= link_to "(+) #{table.name.humanize}", fill_path(table, relation: @relation, value: @record_index), class: 'btn btn-outline-primary mb-4', data: { turbo_frame: "_top" }  %>
+  <% if policy(table).fill? || current_user.compte_démo? %>
+    <%= link_to "(+) #{table.name}", fill_path(table, relation: @relation, value: @record_index), class: 'btn btn-outline-primary mb-4', data: { turbo_frame: "_top" }  %>
   <% end %>
 <% end %>
 <div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
@@ -60,13 +60,13 @@
   </p>
   <% if action_name != 'show_details' %>
     <div class="d-block">
-      <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format XLS" do %>
+      <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "Exporter la collection d'objets '#{table.name}' au format XLS" do %>
         XLS
       <% end %>
-      <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format CSV" do %>
+      <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "Exporter la collection d'objets '#{table.name}' au format CSV" do %>
         CSV
       <% end %>
-      <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "Exporter la collection d'objets '#{table.name.humanize}' au format PDF" do %>
+      <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "Exporter la collection d'objets '#{table.name}' au format PDF" do %>
         PDF
       <% end %>
     </div>

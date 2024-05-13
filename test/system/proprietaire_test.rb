@@ -16,7 +16,8 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     visit tables_url
     click_on "Nouvel Objet"
 
-    fill_in "Donnez un nom à ce nouvel Objet", with: "Interventions"
+    name_field = find("[data-testid='Name']")
+    name_field.fill_in with: "Interventions"
     click_button "Continuer"
     assert_text "Objet créé. Vous pouvez maintenant y ajouter des attributs"
 
@@ -47,8 +48,10 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "destroying a Table" do
     visit tables_url
+
+    delete_button = find("[title=\"Supprimer l'Objet #{@device_table.name}\"]")
     page.accept_confirm do
-      click_on "X", match: :first
+      delete_button.click
     end
 
     assert_text "Objet supprimé."
@@ -56,7 +59,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test 'chercher une valeur dans une table' do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
+    click_on @manufacturer_table.name
     assert_text @manufacturer_table.name
     fill_in 'Rechercher', with: @manufacturer_table.values.first.data
     send_keys(:return)
@@ -65,14 +68,14 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "visiting the table show" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
+    click_on @manufacturer_table.name
     assert_text @manufacturer_table.name
   end
 
   test "creating a Field" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
-    click_on "Modifier Attributs"
+    click_on @manufacturer_table.name
+    click_on "Attributs"
 
     # Ajout d'un field
     fill_in "Nom", with: "Désignation"
@@ -99,8 +102,8 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "updating a Field" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
-    click_on "Modifier Attributs"
+    click_on @manufacturer_table.name
+    click_on "Attributs"
     click_on "Modifier", match: :first
     
     fill_in "Nom", with: "Description"
@@ -111,8 +114,8 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   
   test "destroying a Field" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
-    click_on "Modifier Attributs"
+    click_on @manufacturer_table.name
+    click_on "Attributs"
     page.accept_confirm do
       click_on "X", match: :first
     end
@@ -122,11 +125,11 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create workflow field" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
-    click_on "Modifier Attributs"
+    click_on @manufacturer_table.name
+    click_on "Attributs"
 
-    fill_in "Nom", with: "État"
     page.select "Workflow", from: "Type de données"
+    fill_in "Nom", with: "État"
     fill_in "Paramètres", with: "Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary"
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
@@ -142,8 +145,8 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create url field" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
-    click_on "Modifier Attributs"
+    click_on @manufacturer_table.name
+    click_on "Attributs"
 
     fill_in "Nom", with: "Url"
     page.select "URL", from: "Type de données"
@@ -152,7 +155,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
     click_on "Voir la Collection d'Objets", match: :first
     click_on "(+) #{@manufacturer_table.name}"
-    field = find('[data-testid="Url"]')
+    field = find('[data-testid="URL"]')
     field.fill_in with: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     click_button "Enregistrer"
     assert_text "Données ajoutées avec succès :)"
@@ -161,8 +164,8 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create color field" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
-    click_on "Modifier Attributs"
+    click_on @manufacturer_table.name
+    click_on "Attributs"
 
     fill_in "Nom", with: "Couleur"
     page.select "Couleur", from: "Type de données"
@@ -180,11 +183,11 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create gps field" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
-    click_on "Modifier Attributs"
+    click_on @manufacturer_table.name
+    click_on "Attributs"
 
-    fill_in "Nom", with: "Coordonnées"
     page.select "GPS", from: "Type de données"
+    fill_in "Nom", with: "Coordonnées"
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
@@ -202,8 +205,8 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create image field" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
-    click_on "Modifier Attributs"
+    click_on @manufacturer_table.name
+    click_on "Attributs"
 
     fill_in "Nom", with: "Image"
     page.select "Image", from: "Type de données"
@@ -222,8 +225,8 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create pdf field" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
-    click_on "Modifier Attributs"
+    click_on @manufacturer_table.name
+    click_on "Attributs"
 
     fill_in "Nom", with: "PDF"
     page.select "PDF", from: "Type de données"
@@ -242,8 +245,8 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "create table type field" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
-    click_on "Modifier Attributs"
+    click_on @manufacturer_table.name
+    click_on "Attributs"
 
     fill_in "Nom", with: @device_table.name
     page.select "Collection", from: "Type de données"
@@ -253,14 +256,14 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
     click_on "Voir la Collection d'Objets", match: :first
     click_on "(+) #{@manufacturer_table.name}"
-    field = find("[data-testid='#{@device_table.name}']")
+    field = find("[data-testid='#{@device_table.name.humanize}']")
     field.select "#{@device_model_name_value_3.data}, #{@device_release_date_value_3.data}"
     click_button "Enregistrer"
     assert_text "Données ajoutées avec succès :)"
 
     link = find("[data-testid='Voir les détails de #{@device_table.name} à la ligne n°#{@device_model_name_value_3.record_index}']")
     link.click
-    assert_text @device_table.name.humanize
+    assert_text @device_table.name
     assert_text @device_model_name_value_3.data
     assert_text I18n.l @device_release_date_value_3.data.to_date
   end
@@ -268,11 +271,11 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   test "create utilisateur type field" do
 
     visit tables_url
-    click_on @manufacturer_table.name.upcase
-    click_on "Modifier Attributs"
+    click_on @manufacturer_table.name
+    click_on "Attributs"
 
-    fill_in "Nom", with: "Assigné à"
     page.select "Utilisateur", from: "Type de données"
+    fill_in "Nom", with: "Assigné à"
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
@@ -295,7 +298,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "creating values" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
+    click_on @manufacturer_table.name
     click_on "(+) #{@manufacturer_table.name}"
 
     # Ajout des values
@@ -310,9 +313,10 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     old_value = @manufacturer_table.values.find_by(record_index: 2).data
     
     visit tables_url
-    click_on @manufacturer_table.name.upcase
-    update_link = find('[data-testid="Modifier ligne n°2"]')
-    update_link.click
+    click_on @manufacturer_table.name
+    link = find('[data-testid="Voir ligne n°2"]')
+    link.click
+    click_on "Modifier"
     assert_text "Modification '#{@manufacturer_table.name}'"
     field = find("[data-testid='#{@manufacturer_table.fields.first.name}']")
     field.fill_in with: Faker::Device.manufacturer
@@ -324,7 +328,9 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   
   test "détruire un record" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
+    click_on @manufacturer_table.name
+    link = find('[data-testid="Voir ligne n°2"]')
+    link.click
     delete_button = find('[data-testid="Supprimer ligne n°2"]')
     page.accept_confirm do
       delete_button.click
@@ -335,23 +341,26 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test "ne pas détruire un record relié à une autre table" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
+    click_on @manufacturer_table.name
+
+    link = find('[data-testid="Voir ligne n°1"]')
+    link.click
     delete_button = find('[data-testid="Supprimer ligne n°1"]')
     page.accept_confirm do
       delete_button.click
     end
     assert_text "Cet enregistrement n'a pas été supprimé car il est utilisé dans d'autres Tables !"
-    assert_selector('[data-testid="Supprimer ligne n°1"]', visible: :all)
+    assert_selector('[data-testid="Voir ligne n°1"]', visible: :all)
   end
 
   test "créer un record à partir d'une relation" do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
+    click_on @manufacturer_table.name
     link = find("[data-testid='Voir les détails de #{@device_table.name} à la ligne n°#{@device_model_name_value_2.record_index}']")
     link.click
     sleep(1)
     assert_text /Affichage de 1/
-    click_on "(+) #{@manufacturer_table.name.humanize}"
+    click_on "(+) #{@manufacturer_table.name}"
     assert_text "#{@device_model_name_value_2.data}, #{@device_release_date_value_2.data}"
     click_on "Enregistrer"
     assert_text "Données ajoutées avec succès :)"
@@ -361,7 +370,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
   # Filtres
   test 'filtrer les valeurs dans une table' do
     visit tables_url
-    click_on @manufacturer_table.name.upcase
+    click_on @manufacturer_table.name
     assert_text @manufacturer_table.name
 
     fill_in 'Rechercher', with: @manufacturer_table.values.first.data
@@ -377,7 +386,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test 'filtrer les valeurs par date dans une table (range)' do
     visit tables_url
-    click_on @device_table.name.upcase
+    click_on @device_table.name
     assert_text @device_table.name
 
     fill_in 'Release date : Du', with: '12-24-2023'
@@ -389,7 +398,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test 'filtrer les valeurs par date dans une table (mauvaise date)' do
     visit tables_url
-    click_on @device_table.name.upcase
+    click_on @device_table.name
     assert_text @device_table.name
 
     fill_in 'Release date : Du', with: '12-24-2023'
@@ -399,7 +408,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
   test 'filtrer les valeurs par date dans une table (bonne date)' do
     visit tables_url
-    click_on @device_table.name.upcase
+    click_on @device_table.name
     assert_text @device_table.name
 
     fill_in 'Release date : Du', with: '12-25-2023'

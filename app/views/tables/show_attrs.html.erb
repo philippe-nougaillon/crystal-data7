@@ -1,6 +1,6 @@
-<div class="mt-4 d-flex align-items-center text-secondary gap-2">
+<div class="mt-4 d-flex align-items-center text-primary gap-2">
 	<h1 class="mb-0 d-inline">
-		Attributs de l'Objet '<%= @table.name.humanize %>'
+		Attributs de l'Objet '<%= @table.name %>'
 	</h1>
 </div>
 
@@ -36,7 +36,7 @@
 <% end %>
 <br>
 
-<h3 class="mb-4">Ajouter un nouvel attribut</h3>
+<h3 class="text-primary mb-4">Ajouter un nouvel attribut</h3>
 
 <% if @field %>	
 	<%= render partial:'fields/form' %>

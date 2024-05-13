@@ -38,7 +38,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def fill?
-    record.users.include?(user) && record.role_number(user) >= 1
+    record.users.include?(user) && record.role_number(user) >= 1  && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def fill_do?
@@ -70,7 +70,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def partages_delete?
-    partages?
+    partages? && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def logs?
@@ -87,6 +87,10 @@ class TablePolicy < ApplicationPolicy
 
   def icalendar?
     true
+  end
+
+  def securite?
+    user
   end
 
 end

@@ -1,15 +1,13 @@
 class TablesController < ApplicationController
-  before_action :set_table, except: [:new, :create, :import, :import_do, :index]
+  before_action :set_table, except: [:new, :create, :import, :import_do, :index, :securite]
   before_action :is_user_authorized?
+  before_action :info_notice, only: %i[index show_attrs partages logs securite]
   skip_before_action :authenticate_user!, only: %i[ icalendar ]
 
   # GET /tables
   # GET /tables.json
   def index
     @tables = current_user.tables.includes(:fields)
-    if current_user.compte_démo?
-      flash[:notice] = "Pour créer un nouvel objet, utilisez le bouton 'Nouvel Objet' ci-dessus"
-    end
   end
 
   # GET /tables/1
@@ -148,18 +146,18 @@ class TablesController < ApplicationController
         book = CollectionToXls.new(@table, @records).call
         file_contents = StringIO.new
         book.write file_contents # => Now file_contents contains the rendered file output
-        filename = "Export_#{@table.name.humanize.pluralize}.xls"
+        filename = "Export_#{@table.name.pluralize}.xls"
         send_data file_contents.string.force_encoding('binary'), filename: filename 
       end
       format.csv do
         csv_string = CollectionToCsv.new(@table, @records).call
-        filename = "Export_#{@table.name.humanize.pluralize}.csv"
+        filename = "Export_#{@table.name.pluralize}.csv"
         send_data csv_string, filename: filename
       end
       format.pdf do
         pdf = ExportPdf.new
         pdf.export_collection(@table, @records)
-        filename = "Export_#{@table.name.humanize.pluralize}.pdf"
+        filename = "Export_#{@table.name.pluralize}.pdf"
         
         send_data pdf.render, filename: filename, type: 'application/pdf'
       end
@@ -169,10 +167,6 @@ class TablesController < ApplicationController
   def show_attrs 
     @field = Field.new(table_id: @table.id)
     @fields = Field.datatypes.keys.to_a
-
-    if current_user.compte_démo?
-      flash[:notice] = "Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste...)."
-    end
   end
 
   # formulaire d'ajout / modification
@@ -181,24 +175,26 @@ class TablesController < ApplicationController
       # modification ligne existante
       @record_index = params[:record_index]
     else
-      # ajout d'une ligne
-      @record_index = @table.increment_record_index
+      # ajout d'une ligne (à laisser négatif ou alors changer le code dans fill_do)
+      @record_index = "-1"
     end
   end
 
   # formulaire d'ajout / modification posté
   def fill_do
     table = Table.find(params[:table_id])
-    user = current_user
     data = params[:data]
-    record_index = data.keys.first
-    values = data[record_index.to_s]
+    if data.keys.first.to_i.positive?
+      # update
+      record_index = data.keys.first
+      values = data[record_index.to_s]
+    else 
+      # create
+      record_index = table.increment_record_index
+      values = data["-1"]
+    end
 
     if not values.values.compact_blank.blank?
-
-      inserts_log = []
-      notif_items = []
-
       # update? = si données existent déjà, on les supprime avant pour pouvoir ajouter les données modifiées 
       update = table.values.where(record_index:record_index).any?
       # garde la date de dernière mise à jour
@@ -268,8 +264,9 @@ class TablesController < ApplicationController
 
       # notifier l'utilisateur d'un ajout 
       if not update and table.notification
-        UserMailer.notification(table, notif_items).deliver_now
+        UserMailer.notification(table, table.value_datas_listable(record_index)).deliver_now
       end
+
       if params[:relation].present? && params[:value].present?
         table = Table.find(Relation.find(params[:relation]).relation_with_id)
         url = details_path(table.slug, record_index: params[:value])
@@ -300,9 +297,8 @@ class TablesController < ApplicationController
   def new
     @table = Table.new
     if current_user.compte_démo?
-      flash[:notice] = "Un Objet permet de décrire quelque chose d'existant (ex: Voiture, Personne...) avec un ensemble d'attributs (Couleur, Puissance, Poids...). Une collection est consitué d'un ensemble d'objets de même nature"
+      flash[:notice] = "(i)Un Objet permet de décrire quelque chose d'existant (ex: Voiture, Personne...) avec un ensemble d'attributs (Couleur, Puissance, Poids...). Une collection est constituée d'un ensemble d'objets de même nature"
     end
-    
   end
 
   # GET /tables/1/edit
@@ -378,9 +374,9 @@ class TablesController < ApplicationController
         # ajoute le nouvel utilisateur aux utilisateurs de la table
         @table.tables_users << TablesUser.create(table_id: @table.id, user_id: @user.id, role: params[:role])
         UserMailer.notification_nouveau_partage(@user, @table).deliver_now
-        flash[:notice] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' activé"
+        flash[:notice] = "Partage de la table '#{@table.name}' avec l'utilisateur '#{@user.name}' activé"
       else
-        flash[:alert] = "Partage de la table '#{@table.name.humanize}' avec l'utilisateur '#{@user.name}' déjà existant !"
+        flash[:alert] = "Partage de la table '#{@table.name}' avec l'utilisateur '#{@user.name}' déjà existant !"
       end
     else
       flash[:alert] = "Utilisateur inconnu ! Demandez-lui de créer un compte depuis la page d'accueil."
@@ -396,10 +392,11 @@ class TablesController < ApplicationController
     # supprime l'utilisateur que si ce n'est pas le dernier
     @table.users.delete(@user) if @table.users.count > 1
     flash[:notice] = "Le partage avec l'utilisateur '#{@user.name}' a été désactivé !"
-    redirect_to partages_path
+    redirect_to request.referrer
   end 
 
   def logs
+
     # Afficher les changements pour la ligne #record_index
     if params[:record_index]
       sql = "audited_changes ->> 'record_index' = '#{params[:record_index].to_s}'"
@@ -417,7 +414,11 @@ class TablesController < ApplicationController
        sql = sql + " OR " unless index == @table.fields.size - 1
     end
     sql = sql + ")"
-    @audits = Audited::Audit.where(sql)
+    if sql == " ()"
+      @audits = Audited::Audit.none
+    else
+      @audits = Audited::Audit.where(sql)
+    end
     @audits = @audits.reorder('created_at DESC').page(params[:page])
   end
 
@@ -462,6 +463,10 @@ class TablesController < ApplicationController
     render plain: AgendaToIcalendar.new(@table, records_index).call
   end
 
+  def securite
+    @tables = current_user.tables.order(:name)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_table
@@ -476,4 +481,22 @@ class TablesController < ApplicationController
     def is_user_authorized?
       authorize @table ? @table : Table
     end
+
+    def info_notice
+      if current_user.compte_démo? && flash[:notice] == nil && flash[:alert] == nil
+        flash[:notice] = case params[:action]
+        when 'index'
+          "(i)Pour créer un nouvel objet, utilisez le bouton 'Nouvel Objet' ci-dessus"
+        when 'show_attrs'
+          "(i)Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste...)."
+        when 'partages'
+          "(i)Partagez vos collections d'objet avec d'autres utilisateurs"
+        when 'logs'
+          "(i)Chaque modification d'un objet est consignée dans un historique (quand, qui, quoi, valeur avant, valeur après)"
+        when 'securite'
+          "(i)Chaque partage d'objet et autorisations sont personnalisables. Cliquez sur + pour partager un objet avec un utilisateur"
+        end
+      end
+    end
+    
 end

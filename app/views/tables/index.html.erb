@@ -7,12 +7,10 @@
 <div class="overflow-x-auto">
   <table class="table table-hover w-100 border align-middle">
     <thead>
-      <tr>
+      <tr class="table-secondary">
         <th>Nom</th>
-        <th class="col-md-4">Attributs</th>
-        <th>Rôle</th>
-        <th class="col-md-2">Partagé avec</th>
-        <th>màj</th>
+        <th>MÀJ</th>
+        <th></th>
         <th></th>
       </tr>
     </thead>
@@ -21,23 +19,34 @@
       <% if @tables.any? %>
         <% @tables.each do | table | %>
           <tr>
-            <td><%= link_to table.name.upcase, table, class: 'fw-bold text-black text-decoration-none' %></td>
-            <td><%= table.field_names %></td>
-            <td><%= table.role_name(current_user) %></td>
             <td>
-              <%= table.shared_with(current_user) %>
-            </td>
+              <%= link_to table.name, table, class: ' text-primary' %>
+              <% if table.show_on_startup_screen? %>
+                <span class="material-symbols-outlined text-primary fs-6">
+                  diamond
+                </span>
+              <% end %>
+              <br>
+              <%= table.field_names %></td>
             <td>
               <%= "il y a #{time_ago_in_words(table.values.maximum(:updated_at))}" unless table.size.zero? %>
             </td>
+            <td>
+              <% if policy(table).fill? || current_user.compte_démo? %>
+                <%= link_to "(+) #{table.name}", fill_path(table.slug), title: "Ajouter un nouvel Objet à la collection '#{table.name}'", class: 'btn btn-outline-primary btn-sm me-2 w-100' %>
+              <% end %>
+            </td>
             <td style="text-align: right; white-space: nowrap;">
-              <% if policy(table).partages? %>
-                <%= link_to 'Partarger', partages_path(table), title: "Partager avec un autre utilisateur", class: 'btn btn-outline-success btn-sm' %>
-              <% end %>
               <% if policy(table).show_attrs? %>
-                <%= link_to 'Modifier Attributs', show_attrs_path(id: table.slug), title:"Modifier les attributs de l'Objet '#{table.name}'", class: 'btn btn-outline-secondary btn-sm me-2' %>
+                <%= link_to 'Modifier Attributs', show_attrs_path(id: table.slug), title:"Modifier les attributs de l'Objet '#{table.name}'", class: 'btn btn-outline-success btn-sm me-2' %>
               <% end %>
-              <% if policy(table).destroy? %>
+              <% if policy(table).edit? || current_user.compte_démo? %>
+                <%= link_to 'Modifier Objet', edit_table_path(id: table), title:"Modifier les propriétés de l'Objet '#{table.name}'", class: 'btn btn-outline-warning btn-sm me-2' %> 
+              <% end %>
+              <% if policy(table).logs? %>
+                <%= link_to 'Activité', logs_path(id: table.slug), title:"Historique des modifications de l'Objet '#{table.name}'", class: 'btn btn-outline-secondary btn-sm me-2' %>
+              <% end %>
+              <% if policy(table).destroy? || current_user.compte_démo? %>
                 <%= link_to 'X', table, title: "Supprimer l'Objet #{table.name}", 'data-turbo-method': :delete, 'data-turbo-confirm': "Êtes-vous certain.e de vouloir supprimer l'Objet #{table.name} ? Toutes les données enregistrées dedans seront perdues !", class: 'btn btn-outline-danger btn-sm' %>
               <% end %>
             </td>

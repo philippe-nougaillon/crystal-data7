@@ -1,6 +1,6 @@
 <div class="my-4 d-flex align-items-center text-secondary gap-2">
-	<h1 class="mb-0 d-inline">
-		Liste des partages de l'Objet '<%= @table.name.humanize %>'
+	<h1 class="mb-0 d-inline text-primary">
+		Liste des partages de l'Objet '<%= @table.name %>'
 	</h1>
 </div>
 
@@ -20,7 +20,7 @@
 				<td><%= user.email %></td>
 				<td><%= @table.role_name(user) %></td>
 				<td>
-					<% unless @table.users[0] == user %>
+					<% if !@table.propriétaire?(user) && policy(@table).delete_record? %>
 						<%= link_to "Annuler le partage", annuler_partage_path(@table, user_id:user.id), title:"Annuler ce partage", 
 							data: { confirm: 'Confirmez-vous ?' }, class: 'btn btn-outline-danger btn-sm' %>
 					<% end %>
@@ -34,5 +34,5 @@
 <br><br>
 
 <% if policy(@table).add_user? %>
-	<%= render partial: 'tables/add_user', locals: {others: current_user.others(@table) } %>
+	<%= render partial: 'tables/add_user', locals: { others: current_user.others(@table) } %>
 <% end %>

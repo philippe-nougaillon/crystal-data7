@@ -1,0 +1,33 @@
+<div class="mx-auto my-5">
+  <canvas id="chartBar"></canvas>
+</div>
+
+<!-- Required chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Chart bar -->
+<script>
+  const dataBarChart = {
+    labels: <%= @labels.to_json.html_safe %>,
+    datasets: [
+      <% @table.fields.where(datatype: ['Nombre', 'Euros']).each_with_index do |field, index| %>
+        <% colors = ['214, 97%, 27%', '201, 100%, 36%', '195, 100%, 39%', '190, 100%, 42%', '190, 74%, 59%', '189, 75%, 75%', '190, 76%, 82%', '190, 77%, 88%','239, 94%, 19%'] %>
+
+        {
+          label: "<%= field.name %>",
+          backgroundColor: "hsl(<%= colors[index%9] %>)",
+          borderColor: "hsl(252, 82.9%, 67.8%)",
+          borderRadius: 5,
+          data: <%= @table.values.where(record_index: @records, field_id: field.id).pluck(:data).to_json.html_safe %>,
+        },
+      <% end %>
+    ],
+  };
+
+  const configBarChart = {
+    type: "bar",
+    data: dataBarChart,
+    options: {},
+  };
+
+  var chartBar = new Chart(document.getElementById("chartBar"),configBarChart);
+</script>

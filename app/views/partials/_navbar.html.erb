@@ -1,7 +1,7 @@
 <nav class="nav d-none d-lg-flex flex-column shadow-sm position-fixed top-0 start-0 overflow-hidden h-100 align-items-center bg-body-secondary">
-  <div class="flex-fill d-flex flex-column w-100">
+  <div class="flex-fill d-flex flex-column w-100 mt-3">
     <li class="nav-item">
-      <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Ma collection favorite/Page d'accueil", class: "d-flex flex-column align-items-center text-decoration-none py-3 #{'bg-dark-subtle' if params[:controller] == 'tables' && @table && @table.show_on_startup_screen }" do %>
+      <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Ma collection favorite/Page d'accueil", class: "d-flex flex-column align-items-center text-decoration-none link-primary py-3 #{'bg-light-subtle shadow-sm' if params[:controller] == 'tables' && @table && @table.show_on_startup_screen }" do %>
         <span class="material-symbols-outlined">
           diamond
         </span>
@@ -9,7 +9,7 @@
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to tables_path, title: "Liste des Objets", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-info #{'bg-dark-subtle' if params[:controller] == 'tables' && !(@table && @table.show_on_startup_screen)}" do %>
+      <%= link_to tables_path, title: "Liste des Objets", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-info #{'bg-light-subtle shadow-sm' if params[:controller] == 'tables' && !((@table && @table.show_on_startup_screen) || params[:action] == 'securite')}" do %>
       <span class="material-symbols-outlined">
         database
       </span>
@@ -17,7 +17,7 @@
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to filters_path, title: "Liste des Filtres", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-success #{'bg-dark-subtle' if params[:controller] == 'filters'}" do %>
+      <%= link_to filters_path, title: "Liste des Filtres", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-success #{'bg-light-subtle shadow-sm' if params[:controller] == 'filters'}" do %>
       <span class="material-symbols-outlined">
         tune
       </span>
@@ -25,17 +25,25 @@
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to stats_path, title: "Statistiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-secondary #{'bg-dark-subtle' if params[:action] == 'stats'}", 'data-turbo': 'false' do %>
+      <%= link_to stats_path, title: "Statistiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-secondary #{'bg-light-subtle shadow-sm' if params[:action] == 'stats'}", 'data-turbo': 'false' do %>
       <span class="material-symbols-outlined">
         Query_stats
       </span>
       Stats
       <% end %>
     </li>
+    <li class="nav-item">
+      <%= link_to securite_tables_path, title: "Statistiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-danger #{'bg-light-subtle shadow-sm' if params[:action] == 'securite'}", 'data-turbo': 'false' do %>
+      <span class="material-symbols-outlined">
+        lock
+      </span>
+      Sécurité
+      <% end %>
+    </li>
   </div>
   <% if user_signed_in? %>
     <li class="nav-item w-100">
-      <%= link_to current_user, title: "Profil utilisateur", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-black-50 #{'bg-dark-subtle' if params[:controller] == 'users'}" do %>
+      <%= link_to current_user, title: "Profil utilisateur", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-black-50 #{'bg-light-subtle shadow-sm' if params[:controller] == 'users'}" do %>
       <span class="material-symbols-outlined">
         badge
       </span>
@@ -44,11 +52,11 @@
     </li>
   <% end %>
   <li class="nav-item w-100">
-    <%= link_to a_propos_path, title: "À Propos de CrystalDATA", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-black-50 #{'bg-dark-subtle' if params[:action] == 'a_propos'}" do %>
-    <span class="material-symbols-outlined">
-      help
-    </span>
-    À Propos
+    <%= link_to a_propos_path, title: "À Propos de CrystalDATA", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-black-50 #{'bg-light-subtle shadow-sm' if params[:action] == 'a_propos'}" do %>
+      <span class="material-symbols-outlined">
+        help
+      </span>
+      Aide
     <% end %>
   </li>
 </nav>
@@ -61,7 +69,7 @@
       </ul>
     <% else %>
       <h1 class="navbar-brand mb-0">
-        <%= link_to 'CrystalDATA', user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'text-decoration-none text-black' %>
+        <%= link_to 'CrystalDATA', user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'text-decoration-none link-black' %>
       </h1>
     <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +78,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'nav-link text-primary d-flex align-items-center gap-1' do %>
+          <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'nav-link link-primary d-flex align-items-center gap-1' do %>
             <span class="material-symbols-outlined">
               diamond
             </span>
@@ -78,7 +86,7 @@
           <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to tables_path, title: "Liste des Objets", class: 'nav-link text-info d-flex align-items-center gap-1' do %>
+          <%= link_to tables_path, title: "Liste des Objets", class: 'nav-link link-info d-flex align-items-center gap-1' do %>
             <span class="material-symbols-outlined">
               database
             </span>
@@ -86,7 +94,7 @@
           <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to filters_path, title: "Liste des filtres", class: 'nav-link text-success d-flex align-items-center gap-1' do %>
+          <%= link_to filters_path, title: "Liste des filtres", class: 'nav-link link-success d-flex align-items-center gap-1' do %>
             <span class="material-symbols-outlined">
               Tune
             </span>
@@ -94,15 +102,23 @@
           <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to stats_path, title: "Statistiques", class: 'nav-link text-secondary d-flex align-items-center gap-1' do %>
+          <%= link_to stats_path, title: "Statistiques", class: 'nav-link link-secondary d-flex align-items-center gap-1' do %>
             <span class="material-symbols-outlined">
               Query_stats
             </span>
             Statistiques
           <% end %>
         </li>
+        <li class="nav-item">
+          <%= link_to securite_tables_path, title: "Statistiques", class: 'nav-link link-danger d-flex align-items-center gap-1' do %>
+            <span class="material-symbols-outlined">
+              lock
+            </span>
+            Sécurité
+          <% end %>
+        </li>
         <% if user_signed_in? %>
-          <%= link_to current_user, title: "Statistiques", class: 'nav-link text-secondary d-flex align-items-center gap-1' do %>
+          <%= link_to current_user, title: "Statistiques", class: 'nav-link link-secondary d-flex align-items-center gap-1' do %>
             <span class="material-symbols-outlined">
               badge
             </span>
@@ -135,7 +151,7 @@
           <% if policy(@table).logs? %>
             <li class="nav-item text-end">
               <%= link_to logs_path(id:@table), class:'nav-link', title:"Historique des modifications de l'Objet '#{@table.name}'" do %>
-                Audit Trail
+                Activité
               <% end %>
             </li>
           <% end %>

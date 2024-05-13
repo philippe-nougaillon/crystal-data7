@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   
   before_action :authenticate_user!
-  #before_action :detect_device_format
   before_action :set_layout_variables
   before_action :prepare_exception_notifier
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -24,7 +23,7 @@ private
 
   def set_layout_variables
     @sitename ||= "CrystalDATA"
-    @sitename.concat(" v0.16 ")
+    @sitename.concat(" v0.18.b ")
   end
 
   def prepare_exception_notifier
@@ -42,15 +41,6 @@ private
     flash[:alert] = msg
     redirect_to(request.referrer || authenticated_root_path)
   end
-
-  # def detect_device_format
-  #   case request.user_agent
-  #   when /iPhone/i, /Android/i && /mobile/i, /Windows Phone/i
-  #     request.variant = :phone
-  #   else
-  #     request.variant = :desktop
-  #   end
-  # end
 
 protected
   def configure_permitted_parameters

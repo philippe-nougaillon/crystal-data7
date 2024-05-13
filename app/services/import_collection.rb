@@ -31,8 +31,10 @@ class ImportCollection < ApplicationService
           new_table = Table.new(name: File.basename(filename,'.csv'))
           if new_table.save
             new_table.tables_users << TablesUser.create(table_id: new_table.id, user_id: @current_user.id, role: "Propriétaire")
+            first_data_row = CSV.read(filename_with_path, headers: true, col_sep: @col_sep, encoding: 'UTF-8').first
             row.each_with_index do |key, index|
-              new_table.fields.create(name: key.first, row_order: index)
+              sample_data = first_data_row ? first_data_row[index] : ""
+              new_table.fields.create(name: key.first, row_order: index, datatype: detect_string_type(sample_data))
             end
             fields = new_table.fields
           end
@@ -69,4 +71,18 @@ class ImportCollection < ApplicationService
       return [import_executed, exception]
     end
   end
+
+  # TODO : clean code !
+  def detect_string_type(str)
+    return "Oui_non?" if ['true', 'false', 'oui', 'non'].include?(str.downcase)
+    return "Nombre" if str.to_i.to_s == str
+    begin
+      Date.parse(str)
+      return "Date"
+    rescue ArgumentError
+      # Pas une date
+    end
+    "Texte"
+  end
+
 end

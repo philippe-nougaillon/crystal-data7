@@ -5,7 +5,7 @@ class Table < ApplicationRecord
 	audited
 
 	has_many :tables_users, dependent: :destroy
-  has_many :users, through: :tables_users
+  	has_many :users, through: :tables_users
 	has_many :fields, dependent: :destroy
 	has_many :values, through: :fields, dependent: :destroy
 	has_many :logs, through: :fields, dependent: :destroy
@@ -41,6 +41,7 @@ class Table < ApplicationRecord
 		record_index
 	end
     
+	# TODO
 	# Vérifier que l'enregistrement est libre 
     # (aucun autre enregistrement pointe dessus (type Table))
 	def record_can_be_destroy?(record_index)
@@ -87,6 +88,10 @@ class Table < ApplicationRecord
 
 	def propriétaire?(user)
 		self.tables_users.exists?(user_id: user.id) && self.tables_users.find_by(user_id: user.id).role == 'Propriétaire'
+	end
+
+	def name_pluralized
+		self.name.pluralize.upcase
 	end
 
 private

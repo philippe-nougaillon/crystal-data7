@@ -5,15 +5,18 @@
 
     <div class="d-flex flex-wrap gap-4 mb-4">
       <div>
-        <%= f.label :name, "Nom de l'attribut" %>
-        <%= f.text_field :name, class: 'form-control', required: true, placeholder: "Ex: Nom#{@field.table.name.humanize}" %>
-      </div>
-
-      <div>
         <%= f.label :datatype, "Type de données" %>
         <span data-action="change->type#change">
           <%= f.select :datatype, options_for_select(@fields, @field.datatype), {}, class: 'form-select', data: { 'type-target': 'source' } %>
         </span>
+      </div>
+
+      <div data-type-target="<%= 'attribute_name' if params[:action] == "show_attrs" %>">
+        <%= f.label :name, "Nom de l'attribut" %>
+        <%= f.text_field :name, class: 'form-control', required: true %>
+        <p class="form-text">
+          ex: Nom, Prénom, Date de naissance, etc.
+        </p>
       </div>
 
       <div data-type-target='params' class="w-100">
@@ -55,7 +58,7 @@
     <div class="d-flex flex-wrap align-items-center gap-2">
       <% if @field.new_record? %>
         <%= f.submit "Ajouter cet attribut", class: 'btn btn-outline-primary' %>
-        <%= link_to "Voir la Collection", @field.table, title: "Voir la Collection d'Objets" %>
+        <%= link_to "Terminer", @field.table, title: "Retour à Collection d'Objets" %>
       <% else %>
         <%= f.submit "Modifier", class: 'btn btn-outline-primary' %>
         <%= link_to 'Retour', show_attrs_path(id: @field.table) %>

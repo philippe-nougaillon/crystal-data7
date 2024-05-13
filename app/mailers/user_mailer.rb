@@ -1,6 +1,5 @@
 class UserMailer < ApplicationMailer
-	default from: '"CrystalDATA" <contact@philnoug.com>'
-
+	
 	def notification(table, items)
 		@items = items
 		@table = table
@@ -19,13 +18,19 @@ class UserMailer < ApplicationMailer
 		@user = user
 		@table = table
 
-		mail(to: @user.email, subject: "Partage de la table '#{@table.name.humanize}' activé", bcc:"philippe.nougaillon@gmail.com")
+		mail(to: @user.email, subject: "Partage de la table '#{@table.name}' activé", bcc:"philippe.nougaillon@gmail.com")
 	end
 
 	def new_user_notification
 		@user = params[:user]
 
 		mail(to: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com", subject:"[CrystalDATA] Un compte a été créé")
+	end
+
+	def new_guest_notification(referrer)
+		@user = User.find(1)
+		@referrer = referrer
+		mail(to: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com", subject:"[CrystalDATA] Le compte démo est utilisé")
 	end
 
 end

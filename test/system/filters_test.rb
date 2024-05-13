@@ -16,10 +16,9 @@ class FiltersTest < ApplicationSystemTestCase
     click_on "Nouveau Filtre"
 
     fill_in "Nom", with: "Nouvelles interventions"
-    page.select @manufacturer_table.name.humanize, from: "Collection"
+    page.select @manufacturer_table.name, from: "Collection"
     click_on "Continuer"
 
-    assert_text "Filtre créé."
     fill_in "[query][#{@manufacturer_table.fields.first.id}]", with: "%%"
     click_on 'Enregistrer et appliquer le filtre'
     assert_text /Affichage de 3/
