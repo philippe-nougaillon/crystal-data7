@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[a_propos]
   before_action :info_notice, only: %i[stats]
+  skip_before_action :authenticate_user!, only: %i[a_propos]
 
   def a_propos
   end
