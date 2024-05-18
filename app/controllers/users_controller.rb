@@ -43,9 +43,9 @@ class UsersController < ApplicationController
 
   def connect_guest_user
     sign_in User.find(1)
-    if (current_user.last_sign_in_ip != current_user.current_sign_in_ip) || (current_user.current_sign_in_at - current_user.last_sign_in_at > 60 * 5)
-      UserMailer.new_guest_notification(request.referrer).deliver_now
-    end
+    # if (current_user.last_sign_in_ip != current_user.current_sign_in_ip) || (current_user.current_sign_in_at - current_user.last_sign_in_at > 60 * 5)
+    #   UserMailer.new_guest_notification(request.referrer).deliver_now
+    # end
     redirect_to table_path(current_user.favorite_table), notice: "(i)Bienvenue dans la démonstration. Vous pouvez tester ici librement l'application mais avec quelques limitations. Veuillez créer un compte pour avoir toutes les fonctionnalités."
   end
 
