@@ -3,7 +3,7 @@
   <div data-controller="type">
     <%= f.hidden_field :table_id %>
 
-    <div class="d-flex flex-wrap gap-4 mb-4">
+    <div class="d-flex flex-row flex-wrap gap-4 mb-4">
       <div>
         <%= f.label :datatype, "Type de données" %>
         <span data-action="change->type#change">
@@ -26,15 +26,15 @@
       </div>
     </div>
 
-    <div class="mb-4">
-      <div class="form-check mb-4">
+    <div>
+      <div class="form-check d-block">
         <%= f.check_box :obligatoire, class: 'form-check-input' %>
         <%= f.label :obligatoire, "Obligatoire ?", class: 'form-check-label' %>
         <p class="form-text">
           Si vous voulez que cet attribut soit obligatoire pour chaque objet de la collection
         </p>
       </div>
-      <div class="form-check mb-4">
+      <div class="form-check d-block">
         <%= f.check_box :filtre, class: 'form-check-input' %>
         <%= f.label :filtre, "Filtre ?", class: 'form-check-label' %>
         <p class="form-text">
@@ -55,7 +55,7 @@
       <%= f.select :operation, options_for_select(Field.operations.keys.to_a, @field.operation), {include_blank: true}, class: 'form-select' %>
     </div>
 
-    <div class="d-flex flex-wrap align-items-center gap-2">
+    <div class="d-flex flex-row flex-wrap align-items-center gap-2">
       <% if @field.new_record? %>
         <%= f.submit "Ajouter cet attribut", class: 'btn btn-outline-primary' %>
         <%= link_to "Terminer", @field.table, title: "Retour à Collection d'Objets" %>
