@@ -354,7 +354,7 @@ class TablesController < ApplicationController
   end
 
   def import_do
-    result = ImportCollection.new(params[:upload], current_user, params[:col_sep]).call
+    result = ImportCollection.new(params[:upload], current_user, params[:col_sep], params[:table_id]).call
 
     if result.first
       flash[:notice] = "Importation terminée. Table '#{current_user.tables.last.name.humanize}' créée avec succès."

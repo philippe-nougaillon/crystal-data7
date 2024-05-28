@@ -3,20 +3,28 @@ class ImportCollection < ApplicationService
 
   attr_reader :upload, :current_user, :col_sep
 
-  def initialize(upload, current_user, col_sep)
+  def initialize(upload, current_user, col_sep, table_id)
     @upload = upload
     @current_user = current_user
     @col_sep = col_sep
+    @table_id = table_id
   end
 
   def call
-    record_index = 0
     inserts_log = []
     inserts_value = []
     import_executed = false
     exception = nil
-    new_table = Table.new
-    fields = nil
+    if table = Table.find_by(id: @table_id)
+      record_index = table.record_index
+      is_new_table = false
+      fields = table.fields
+    else
+      record_index = 0
+      table = Table.new
+      is_new_table = true
+      fields = nil
+    end
 
     begin
       #Save file to local dir
@@ -28,26 +36,28 @@ class ImportCollection < ApplicationService
 
       CSV.foreach(filename_with_path, headers: true, return_headers: true, col_sep: @col_sep, encoding: 'UTF-8') do |row|
         if row.header_row?
-          new_table = Table.new(name: File.basename(filename,'.csv'))
-          if new_table.save
-            new_table.tables_users << TablesUser.create(table_id: new_table.id, user_id: @current_user.id, role: "Propriétaire")
-            first_data_row = CSV.read(filename_with_path, headers: true, col_sep: @col_sep, encoding: 'UTF-8').first
-            row.each_with_index do |key, index|
-              sample_data = first_data_row ? first_data_row[index] : ""
-              new_table.fields.create(name: key.first, row_order: index, datatype: detect_string_type(sample_data))
+          if is_new_table
+            table = Table.new(name: File.basename(filename,'.csv'))
+            if table.save
+              table.tables_users << TablesUser.create(table_id: table.id, user_id: @current_user.id, role: "Propriétaire")
+              first_data_row = CSV.read(filename_with_path, headers: true, col_sep: @col_sep, encoding: 'UTF-8').first
+              row.each_with_index do |key, index|
+                sample_data = first_data_row ? first_data_row[index] : ""
+                table.fields.create(name: key.first, row_order: index, datatype: detect_string_type(sample_data))
+              end
+              fields = table.fields
             end
-            fields = new_table.fields
           end
         else
           record_index += 1
           row.each_with_index do | key, index |
             if data = key.last
-              # Supprimer les ' 
+              # Supprimer les '
               data.gsub!("'"," ") if data.include?("'")
             else
-              data = ''  
+              data = ''
             end
-            inserts_value.push "(#{@current_user.id}, #{fields[index].id}, '#{data}', #{record_index}, '#{Time.now}', '#{Time.now}')"  
+            inserts_value.push "(#{@current_user.id}, #{fields[index].id}, '#{data}', #{record_index}, '#{Time.now}', '#{Time.now}')"
           end
         end
       end
@@ -60,29 +70,42 @@ class ImportCollection < ApplicationService
 
       if results
         # màj du nombre de lignes de cette table
-        new_table.update(record_index: record_index)
+        table.update(record_index: record_index)
         import_executed = true
       end
     rescue StandardError => e
       import_executed = false
       exception = e
     ensure
-      new_table.destroy if new_table && !import_executed
+      if !import_executed
+        if is_new_table
+          table.destroy
+        else
+          table.values.where('record_index > ?', table.record_index).delete_all
+        end
+      end
       return [import_executed, exception]
     end
   end
 
-  # TODO : clean code !
   def detect_string_type(str)
-    return "Oui_non?" if ['true', 'false', 'oui', 'non'].include?(str.downcase)
-    return "Nombre" if str.to_i.to_s == str
-    begin
-      Date.parse(str)
-      return "Date"
-    rescue ArgumentError
-      # Pas une date
+    detected_type = "Texte"
+
+    unless str.nil?
+      if ['true', 'false', 'oui', 'non'].include?(str.downcase)
+        detected_type = "Oui_non?" 
+      elsif str.to_i.to_s == str
+        detected_type = "Nombre"
+      else
+        begin
+          Date.parse(str)
+          detected_type = "Date"
+        rescue ArgumentError
+          # Pas une date
+        end
+      end
     end
-    "Texte"
+    detected_type
   end
 
 end
