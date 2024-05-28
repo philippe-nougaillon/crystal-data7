@@ -5,10 +5,5 @@
 
   <%= hidden_field_tag :table_id, @table.id %>
 
-  <%= render partial: 'fill_form', locals: {demo: false} %>
-
-  <div class="d-flex flex-wrap align-items-center gap-2 mt-4">
-    <%= submit_tag "Enregistrer", class: 'btn btn-outline-primary'%>
-    <%= link_to "Annuler", request.referer %>
-  </div>
+  <%= render partial: 'fill_form', locals: {aperçu: false} %>
 <% end %>

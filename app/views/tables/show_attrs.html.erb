@@ -4,46 +4,45 @@
 	</h1>
 </div>
 
-<br>
-	<div class="d-block d-md-flex justify-content-between gap-5">
-		<div class="flex-grow-1">
-			<div class="overflow-x-auto">
-				<table class="table table-hover align-middle">
-					<thead>
-						<tr>
-							<th class="col-md-1">#</th>
-							<th>Nom de l'attribut</th>
-							<th>Type</th>
-							<th>Options</th>
-							<th>Visibilité</th>
-							<th></th>
-						</tr>
-					</thead>
-					<% if @table.fields.any? %>
-						<% @table.fields.ordered.each_with_index do | field, index | %>
-							<%= render partial:'fields/field', locals: {field:field, i:index} %>
-						<% end %>
-					<% else %>
-						<tr>
-							<td colspan="6" class="text-center">
-								Aucun attribut n'a été ajouté à cet objet.
-							</td>
-						</tr>
+<div class="d-block d-md-flex justify-content-between gap-5 mt-4">
+	<div class="flex-grow-1">
+		<div class="overflow-x-auto">
+			<table class="table table-hover align-middle">
+				<thead>
+					<tr>
+						<th class="col-md-1">#</th>
+						<th>Nom de l'attribut</th>
+						<th>Type</th>
+						<th>Options</th>
+						<th>Visibilité</th>
+						<th></th>
+					</tr>
+				</thead>
+				<% if @table.fields.any? %>
+					<% @table.fields.ordered.each_with_index do | field, index | %>
+						<%= render partial:'fields/field', locals: {field:field, i:index} %>
 					<% end %>
-				</table>
-			</div>
-			<div class="flex-grow-1">
-				<h3 class="text-primary mb-4">Ajouter un nouvel attribut</h3>
-
-				<% if @field %>	
-					<%= render partial:'fields/form' %>
+				<% else %>
+					<tr>
+						<td colspan="6" class="text-center">
+							Aucun attribut n'a été ajouté à cet objet.
+						</td>
+					</tr>
 				<% end %>
-			</div>
+			</table>
 		</div>
-		<div class="d-none d-md-block mx-auto">
-			<h3 class="text-primary text-center">Aperçu mobile</h3>
-			<div class="mockup-phone">
-				<%= render partial: 'fill_form', locals: {demo: true} %>
-			</div>
+		<div class="flex-grow-1">
+			<h3 class="text-primary mb-4">Ajouter un nouvel attribut</h3>
+
+			<% if @field %>	
+				<%= render partial:'fields/form' %>
+			<% end %>
 		</div>
 	</div>
+	<div class="d-none d-md-block mx-auto">
+		<h3 class="text-primary text-center">Aperçu formulaire mobile</h3>
+		<div class="mockup-phone">
+			<%= render partial: 'fill_form', locals: {aperçu: true} %>
+		</div>
+	</div>
+</div>

@@ -1,4 +1,4 @@
-<div class="<%= demo ? 'phone-content' : 'border rounded shadow-sm p-3 p-sm-4' %>">
+<div class="<%= aperçu ? 'phone-content' : 'border rounded shadow-sm p-3 p-sm-4' %>">
   <% @table.fields.ordered.each_with_index do |field, index| %>
     <% field_name = "[data][#{@record_index}][#{field.id}]" %> 
     <% value = field.values.find_by(record_index: @record_index) %> 
@@ -129,4 +129,9 @@
       <% end %>
     </fieldset>
   <% end %>
+
+  <div class="d-flex flex-wrap align-items-center gap-2 mt-4">
+    <%= submit_tag "Enregistrer", class: 'btn btn-outline-primary'%>
+    <%= link_to_unless aperçu, "Annuler", request.referer %>
+  </div>
 </div>
