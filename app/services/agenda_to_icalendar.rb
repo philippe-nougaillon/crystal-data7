@@ -19,11 +19,16 @@ class AgendaToIcalendar < ApplicationService
       datas = @table.values.joins(:field).where(record_index: record_index).where.not('field.datatype': ['Date', 'Signature']).pluck(:data)
       summary = datas.first(2)
 
-      event = Icalendar::Event.new
-      event.dtstart = date_value.data.to_date.strftime("%Y%m%dT%H%M%S")
-      event.summary = "#{summary.join(' | ')}"
-      event.description = "#{datas.join(' | ')}"
-      calendar.add_event(event)
+      begin
+        event = Icalendar::Event.new
+        event.dtstart = date_value.data.to_date.strftime("%Y%m%dT%H%M%S")
+        event.summary = "#{summary.join(' | ')}"
+        event.description = "#{datas.join(' | ')}"
+        calendar.add_event(event)
+      rescue
+        # Todo : envoyer une alerte ?
+      end  
+
     end
     return calendar.to_ical
   end
