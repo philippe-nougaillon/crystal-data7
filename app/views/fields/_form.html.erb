@@ -4,12 +4,14 @@
     <%= f.hidden_field :table_id %>
 
     <div class="d-flex flex-row flex-wrap gap-4 mb-4">
-      <div>
-        <%= f.label :datatype, "Type de données" %>
-        <span data-action="change->type#change">
-          <%= f.select :datatype, options_for_select(@fields, @field.datatype), {}, class: 'form-select', data: { 'type-target': 'source' } %>
-        </span>
-      </div>
+      <% if @field.new_record? %>
+        <div>
+          <%= f.label :datatype, "Type de données" %>
+          <span data-action="change->type#change">
+            <%= f.select :datatype, options_for_select(@fields, @field.datatype), {}, class: 'form-select', data: { 'type-target': 'source' } %>
+          </span>
+        </div>
+      <% end %>
 
       <div data-type-target="<%= 'attribute_name' if params[:action] == "show_attrs" %>">
         <%= f.label :name, "Nom de l'attribut" %>
