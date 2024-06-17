@@ -29,7 +29,7 @@ class ImportCollection < ApplicationService
     begin
       #Save file to local dir
       filename = @upload.original_filename
-      filename_with_path = Rails.root.join('public', 'tmp', filename)
+      filename_with_path = Rails.root.join('public', filename)
       File.open(filename_with_path, 'wb') do |file|
         file.write(@upload.read)
       end
