@@ -43,6 +43,9 @@
           // console.log('Reset.')
         })
 
+        document.getElementById('submit').addEventListener('click', () => {
+          codeReader.reset()
+        })
       })
       .catch((err) => {
         console.error(err)

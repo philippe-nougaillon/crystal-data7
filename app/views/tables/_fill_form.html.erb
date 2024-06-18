@@ -131,7 +131,7 @@
   <% end %>
 
   <div class="d-flex flex-wrap align-items-center gap-2 mt-4">
-    <%= submit_tag "Enregistrer", class: 'btn btn-outline-primary'%>
+    <%= submit_tag "Enregistrer", id:'submit', class: 'btn btn-outline-primary' %>
     <%= link_to_unless aperçu, "Annuler", request.referer %>
   </div>
 </div>
