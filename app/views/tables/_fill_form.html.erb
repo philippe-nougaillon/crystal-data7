@@ -1,4 +1,4 @@
-<div class="<%= aperçu ? 'phone-content' : 'border rounded shadow-sm p-3 p-sm-4' %>">
+<div class="<%= aperçu ? 'phone-content' : 'row row-cols-sm-2 row-cols-lg-3 border rounded shadow-sm p-3 p-sm-4' %>">
   <% @table.fields.ordered.each_with_index do |field, index| %>
     <% field_name = "[data][#{@record_index}][#{field.id}]" %> 
     <% value = field.values.find_by(record_index: @record_index) %> 
