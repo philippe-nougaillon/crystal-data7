@@ -23,6 +23,7 @@ class CollectionToXls < ApplicationService
     @records.each do | record_index |
       values = @table.values.joins(:field).records_at(record_index).order("fields.row_order").pluck(:data)
       fields_to_export = []
+      # TODO : à mettre dans une fonction (équivalent à l'export pdf / icalendar/ csv)
       @table.fields.each_with_index do | field,index |
         if field.Collection?
           fields_to_export << field.get_linked_table_record(values[index])

@@ -13,6 +13,7 @@ class CollectionToCsv < ApplicationService
       @records.each do | index |
         cols = []
         values = @table.values.joins(:field).records_at(index).order("fields.row_order").pluck(:data)
+        # TODO : à mettre dans une fonction (équivalent à l'export pdf / icalendar)
         @table.fields.each_with_index do | field,index |
           if field.Collection?
             cols << (values[index] ? field.get_linked_table_record(values[index]).to_s.gsub("'", " ") : nil)
