@@ -20,7 +20,7 @@ class AgendaToIcalendar < ApplicationService
         # begin
         event = Icalendar::Event.new
         event.dtstart = date_value.data.to_date.strftime("%Y%m%dT%H%M%S")
-        datas = @table.values.joins(:field).where(record_index: record_index).where.not('field.datatype': ['Date', 'Signature']).pluck('field.datatype', :data)
+        datas = @table.values.joins(:field).where(record_index: record_index).where.not('field.datatype': ['Date', 'Signature']).pluck('field.name', :data)
         event.description = datas.map{ |data| "#{data.first}: #{data.last}" }.join(', ')
         event.summary = datas.first(3).map{ |data| data.last }.join(' | ')
         calendar.add_event(event)
