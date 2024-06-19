@@ -3,25 +3,23 @@
   <div data-controller="type">
     <%= f.hidden_field :table_id %>
 
-    <div class="d-flex flex-row flex-wrap gap-4 mb-4">
-      <% if @field.new_record? %>
-        <div>
-          <%= f.label :datatype, "Type de données" %>
-          <span data-action="change->type#change">
-            <%= f.select :datatype, options_for_select(@fields, @field.datatype), {}, class: 'form-select', data: { 'type-target': 'source' } %>
-          </span>
-        </div>
-      <% end %>
+    <div class="d-flex flex-row flex-wrap gap-2 mb-4">
+      <div>
+        <%= f.label :datatype, "Type de données" %>
+        <span data-action="change->type#change">
+          <%= f.select :datatype, options_for_select(@fields, @field.datatype), {}, class: 'form-select', data: { 'type-target': 'source' }, disabled: !@field.new_record? %>
+        </span>
+      </div>
 
       <div data-type-target="<%= 'attribute_name' if params[:action] == "show_attrs" %>">
         <%= f.label :name, "Nom de l'attribut" %>
         <%= f.text_field :name, class: 'form-control', required: true %>
-        <p class="form-text">
+        <p class="form-text mb-0">
           ex: Nom, Prénom, Date de naissance, etc.
         </p>
       </div>
 
-      <div data-type-target='params' class="w-100">
+      <div data-type-target='params' class="w-100 mt-24">
         <%= f.label :items, "Paramètres" %>
         <%= f.text_field :items, class: "form-control w-100" %>
         <small class="form-text text-muted"></small>
