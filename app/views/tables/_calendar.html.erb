@@ -7,7 +7,7 @@
     <% records_index.each do |record_index| %>
       <%= link_to details_path(@table.slug, record_index:), title: 'Voir les détails de cette ligne', class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
         <div class="shadow-sm pb-3 px-2 bg-light">
-          <% @table.values.joins(:field).where(record_index: record_index).where.not('field.datatype': 'Date').first(5).pluck(:data).each_with_index do |value, index| %>
+          <% @table.values.joins(:field).where(record_index: record_index).where.not('field.datatype': ['Date', 'Signature', 'QRCode', 'Image', 'Fichier', 'PDF']).first(5).pluck(:data).each_with_index do |value, index| %>
             <br>
             <span class="<%= "fw-bold" if index == 0 %>"><%= value %></span>
           <% end %>
