@@ -21,6 +21,8 @@ class AgendaToIcalendar < ApplicationService
         event.dtstart = date_value.data.to_date.strftime("%Y%m%dT%H%M%S")
 
         datas = Hash.new
+        # TODO : pouvoir afficher les autres dates
+        # TODO : afficher selon une nouvelle visibilité
         fields = @table.fields.where.not(datatype: ['Date', 'QRCode', 'Image', 'Fichier', 'PDF'])
         # TODO : à mettre dans une fonction (équivalent à l'export pdf / collection_to_csv/to_xls)
         fields.each do |field|

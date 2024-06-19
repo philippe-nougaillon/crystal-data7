@@ -55,8 +55,7 @@ class Field < ApplicationRecord
 	end
 
 	def is_valid_table_params
-		self.items.include?('[') && self.items.include?(']') &&
-		Table.find_by(id: self.relation.relation_with_id)
+		self.items.include?('[') && self.items.include?(']') && self.relation && Table.find_by(id: self.relation.relation_with_id)
 	end
 
 	def populate_linked_table		
@@ -83,7 +82,9 @@ class Field < ApplicationRecord
 							table_data[value.record_index] << ", #{ value.data }" 
 						end
 					end
-				end 
+				else
+					table_data["0"] = "Erreur nom attribut !"
+				end
 			end
 			return table_data
 		else
