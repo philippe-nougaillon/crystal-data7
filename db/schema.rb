@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_21_102601) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_19_140754) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -133,6 +133,32 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_21_102601) do
     t.index ["user_id"], name: "index_logs_on_user_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.string "nom"
+    t.bigint "filter_id", null: false
+    t.bigint "field_id", null: false
+    t.string "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["field_id"], name: "index_messages_on_field_id"
+    t.index ["filter_id"], name: "index_messages_on_filter_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "table_id", null: false
+    t.bigint "field_id", null: false
+    t.string "value"
+    t.string "send_to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["field_id"], name: "index_notifications_on_field_id"
+    t.index ["table_id"], name: "index_notifications_on_table_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "relations", force: :cascade do |t|
     t.bigint "field_id", null: false
     t.integer "table_id"
@@ -205,6 +231,12 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_21_102601) do
   add_foreign_key "filters", "users"
   add_foreign_key "logs", "fields"
   add_foreign_key "logs", "users"
+  add_foreign_key "messages", "fields"
+  add_foreign_key "messages", "filters"
+  add_foreign_key "messages", "users"
+  add_foreign_key "notifications", "fields"
+  add_foreign_key "notifications", "tables"
+  add_foreign_key "notifications", "users"
   add_foreign_key "relations", "fields"
   add_foreign_key "tables_users", "tables"
   add_foreign_key "tables_users", "users"

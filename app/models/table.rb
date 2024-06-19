@@ -5,14 +5,17 @@ class Table < ApplicationRecord
 	audited
 
 	has_many :tables_users, dependent: :destroy
-  	has_many :users, through: :tables_users
+	has_many :users, through: :tables_users
 	has_many :fields, dependent: :destroy
 	has_many :values, through: :fields, dependent: :destroy
 	has_many :logs, through: :fields, dependent: :destroy
 	has_many :filters, dependent: :destroy
 	has_many :relations, dependent: :destroy
+	has_many :notifications, dependent: :destroy
 
 	validates :name, presence: true
+
+	scope :ordered, -> { order(:name) }
 
 	# Donne le nombre de lignes de la table 
 	def size
