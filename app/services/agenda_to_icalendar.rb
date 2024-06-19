@@ -21,9 +21,8 @@ class AgendaToIcalendar < ApplicationService
         event = Icalendar::Event.new
         event.dtstart = date_value.data.to_date.strftime("%Y%m%dT%H%M%S")
         datas = @table.values.joins(:field).where(record_index: record_index).where.not('field.datatype': ['Date', 'Signature']).pluck('field.datatype', :data)
-        event.description = datas.map{ |data| "#{data.first}: #{data.last}"}.join(', ')
-        summary = datas.first(2)
-        event.summary = "#{summary.join(' | ')}"
+        event.description = datas.map{ |data| "#{data.first}: #{data.last}" }.join(', ')
+        event.summary = datas.first(3).map{ |data| data.last }.join(' | ')
         calendar.add_event(event)
         # rescue
         #   # Todo : envoyer une alerte ?
