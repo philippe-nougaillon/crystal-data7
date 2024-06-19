@@ -209,6 +209,9 @@ class TablesController < ApplicationController
           return
         end  
 
+        # test si c'est un update ou new record
+        old_value = table.values.find_by(record_index:record_index, field:field)
+
         # enregistre le fichier
         if field.Fichier? || field.Image? || field.PDF?
           unless value.blank?
@@ -220,7 +223,7 @@ class TablesController < ApplicationController
           else 
             # si l'utilisateur n'a pas choisi de fichier
             # on passe pour ne pas écraser le fichier existant
-            next
+            next if old_value
           end
         elsif field.Formule? 
           value = field.evaluate(table, record_index) # evalue le champ calculé
@@ -229,9 +232,6 @@ class TablesController < ApplicationController
         elsif field.Distance?
           value = field.distance(table, record_index)
         end
-
-        # test si c'est un update ou new record
-        old_value = table.values.find_by(record_index:record_index, field:field)
 
         if old_value
           if (old_value.data != value) and !(old_value.data.blank? and value.blank?)
@@ -354,9 +354,9 @@ class TablesController < ApplicationController
   end
 
   def import_do
-    result = ImportCollection.new(params[:upload], current_user, params[:col_sep]).call
+    result = ImportCollection.new(params[:upload], current_user, params[:col_sep], params[:table_id]).call
 
-    if result.first
+    if result
       flash[:notice] = "Importation terminée. Table '#{current_user.tables.last.name.humanize}' créée avec succès."
     else
       flash[:alert] = "L'importation a échoué. => '#{result.last}'"

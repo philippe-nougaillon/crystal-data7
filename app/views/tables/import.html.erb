@@ -13,5 +13,14 @@
   <%= label_tag :col_sep, 'Séparateur de colonnes' %>
   <%= select_tag :col_sep, options_for_select([',',';',':','::'], ','), class:'form-select mb-4' %>
 
+  <%= label_tag :table_id, 'Importer dans une table existante ?' %>
+  <%= select_tag :table_id, options_from_collection_for_select(current_user.tables.order(:name), :id, :name), include_blank: true, class:'form-select' %>
+  <p class="form-text">
+    Si vous sélectionnez une table, les données seront ajoutées à la table existante (<b>l'ordre des colonnes entre le CSV et la table existante doivent être identique</b>).
+    <br>
+    Si vous ne sélectionnez pas de table, une nouvelle table sera créée.
+  </p>
+
+
   <%= submit_tag "Importer", class: 'btn btn-outline-primary mt-4' %>
 <% end %>
