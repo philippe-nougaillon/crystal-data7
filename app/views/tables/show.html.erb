@@ -4,7 +4,9 @@
       <ul class="navbar-nav w-100 justify-content-between align-items-center">
         <%= render partial: 'partials/navbar_table_show'%>
         <div class="d-flex align-items-center">
-          <p class="mb-0">Modifier:</p>
+          <% if policy(@table).show_attrs? || (policy(@table).edit? || current_user.compte_démo?) || policy(@table).partages? %>
+            <p class="mb-0">Modifier:</p>
+          <% end %>
           <% if policy(@table).show_attrs? %>
             <%= link_to show_attrs_path(id:@table), class:'nav-link', title:"Modifier les attributs de l'Objet '#{@table.name}'" do %> 
               Attributs

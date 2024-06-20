@@ -1,0 +1,15 @@
+<tr id="<%= dom_id notification %>">
+  <td><%= notification.table.name %></td>
+  <td><%= notification.field.name %></td>
+  <td><%= notification.value %></td>
+  <td><%= notification.send_to %></td>
+  <td><%= l(notification.last_notif_sent_at, format: :long) if notification.last_notif_sent_at %></td>
+  <td style="text-align: right; white-space: nowrap;">
+    <% if policy(notification).edit? %>
+      <%= link_to "Modifier", edit_notification_path(notification), class: 'btn btn-sm btn-outline-primary me-2' %>
+    <% end %>
+    <% if policy(notification).destroy? %>
+      <%= button_to "X", notification, method: :delete, 'data-turbo-confirm': "Êtes-vous certain.e", class: 'btn btn-sm btn-outline-danger', form_class: 'float-end' %>
+    <% end %>
+  </td>
+</tr>
