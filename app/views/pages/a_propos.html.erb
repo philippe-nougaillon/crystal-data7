@@ -162,6 +162,9 @@
 			<%= link_to a_propos_path(anchor: 'stars'), class: 'btn btn-outline-primary', title: 'Etoiles' do %>
 				<span class="material-symbols-outlined">star</span>
 			<% end %>
+			<%= link_to a_propos_path(anchor: 'meteo'), class: 'btn btn-outline-primary', title: 'Etoiles' do %>
+				<span class="material-symbols-outlined">partly_cloudy_day</span>
+			<% end %>
 			<%= link_to a_propos_path(anchor: 'workflow'), class: 'btn btn-outline-primary', title: 'Workflow' do %>
 				<span class="material-symbols-outlined">steppers</span>
 			<% end %>
@@ -227,6 +230,9 @@
 			</li>
 			<li>
 				<b id="stars">Stars</b> : permet de noter un objet avec des étoiles. (Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)
+			</li>
+			<li>
+				<b id="meteo">Météo</b> : permet d'afficher la météo actuelle de votre localisation. (Ex: <i>22°C, Pluie légère, 73% d'humidité</i>)
 			</li>
 			<li><b id="workflow">WORKFLOW</b> : pour ajouter un état à un objet, associé à une couleur. (Ex: <i>Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary</i>)
 				<ul><li>
