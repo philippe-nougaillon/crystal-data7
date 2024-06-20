@@ -122,18 +122,20 @@ class TablesController < ApplicationController
 
     when 'map'
       if @table.fields.exists?(datatype: ['GPS'])
-        fields_id = @table.fields.where.not(datatype: ['GPS']).first(7).pluck(:id)
         @data = []
-        fields_id.each do |field|
-          @data << @table.values.where(record_index: @records, field_id: field).pluck(:data)
-        end
-        @data = @data.transpose
-        gps_values = @table.fields.where(datatype: 'GPS').first.values.where.not(data: [nil, '']).pluck(:data)
         @lng = []
         @lat = []
-        gps_values.each do |gps_value|
-          @lng << gps_value.split(',').last.to_f
-          @lat << gps_value.split(',').first.to_f
+        fields_id = @table.fields.where.not(datatype: ['GPS']).first(7).pluck(:id)
+        if fields_id.any?
+          fields_id.each do |field|
+            @data << @table.values.where(record_index: @records, field_id: field).pluck(:data)
+          end
+          @data = @data.transpose
+          gps_values = @table.fields.where(datatype: 'GPS').first.values.where.not(data: [nil, '']).pluck(:data)
+          gps_values.each do |gps_value|
+            @lng << gps_value.split(',').last.to_f
+            @lat << gps_value.split(',').first.to_f
+          end
         end
       end
     when 'calendar'
