@@ -1,4 +1,3 @@
-
 <%= form_for(@notification) do |f| %>
   <% if @notification.errors.any? %>
     <div id="error_explanation">
@@ -19,7 +18,7 @@
 
   <div class="my-4">
     <%= f.label :value, "Valeur qui déclenchera la notification" %><br>
-    <%= f.text_field :value, class: "form-control w-100", required: true %>
+    <%= f.text_field :value, class: "form-control w-100", required: true, placeholder: "ex: Terminé" %>
   </div>
 
   <div>

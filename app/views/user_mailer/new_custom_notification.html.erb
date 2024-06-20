@@ -1,5 +1,5 @@
-<h1>Notification</h1>
+<h1>Notification '<%= @notification.table.name.humanize %>'</h1>
+<br>
+La valeur de l'attribut <b><%= @notification.field.name.humanize %></b> de l'objet <b>#<%= @record_index %></b> vient de passer à '<b><%= @notification.value %></b>'.
 <br><br>
-L'attribut <%= @notification.field.name %> de l'objet <%= @notification.table.name %> est passé à <%= @notification.value %>.
-<br><br>
-<%= link_to "Voir les détails", details_url(@notification.table.slug, record_index: @record_index) %>
+<%= link_to "Voir les détails de l'objet ##{@record_index}", details_url(@notification.table.slug, record_index: @record_index) %>
