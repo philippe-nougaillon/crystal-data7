@@ -3,7 +3,7 @@
   <td><%= notification.field.name %></td>
   <td><%= notification.value %></td>
   <td><%= notification.send_to %></td>
-  <td><%= l(notification.last_notif_sent_at, format: :long) if notification.last_notif_sent_at %></td>
+  <td><%= "il y a #{time_ago_in_words(notification.last_notif_sent_at)}" if notification.last_notif_sent_at %></td>
   <td style="text-align: right; white-space: nowrap;">
     <% if policy(notification).edit? %>
       <%= link_to "Modifier", edit_notification_path(notification), class: 'btn btn-sm btn-outline-primary me-2' %>
