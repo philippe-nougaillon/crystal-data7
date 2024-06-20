@@ -14,7 +14,7 @@
 
   <div>
     <%= f.label :field_id, "Attribut à surveiller" %><br>
-    <%= f.select :field_id, options_from_collection_for_select(@fields, 'id', 'field_with_table', @notification.table), {include_blank: true, required: true}, class: 'form-select w-100' %>
+    <%= f.select :field_id, options_from_collection_for_select(@fields, 'id', 'field_with_table', @notification.field_id), {include_blank: true, required: true}, class: 'form-select w-100' %>
   </div>
 
   <div class="my-4">
@@ -24,7 +24,7 @@
 
   <div>
     <%= f.label :send_to, "Envoyer notification à (emails séparés par des virgules)" %><br>
-    <%= f.text_field :send_to, class: "form-control w-100", required: true %>
+    <%= f.text_field :send_to, value: @notification.send_to || current_user.email, class: "form-control w-100", required: true %>
   </div>
 
   <%= f.submit class: "btn btn-outline-primary mt-4" %>

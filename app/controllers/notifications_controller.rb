@@ -1,6 +1,7 @@
 class NotificationsController < ApplicationController
   before_action :set_notification, only: %i[ show edit update destroy ]
   before_action :is_user_authorized?
+  before_action :set_fields
 
   # GET /notifications or /notifications.json
   def index
@@ -14,13 +15,6 @@ class NotificationsController < ApplicationController
   # GET /notifications/new
   def new
     @notification = Notification.new
-    tables_ids = []
-    tables = current_user.tables.each do |table|
-      tables_ids << table.id if table.propriétaire?(current_user)
-    end
-    tables = Table.where(id: tables_ids).ordered
-
-    @fields = Field.where(table_id: tables.pluck(:id))
   end
 
   # GET /notifications/1/edit
@@ -71,6 +65,16 @@ class NotificationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_notification
       @notification = Notification.find(params[:id])
+    end
+
+    def set_fields
+      tables_ids = []
+      tables = current_user.tables.each do |table|
+        tables_ids << table.id if table.propriétaire?(current_user)
+      end
+      tables = Table.where(id: tables_ids).ordered
+
+      @fields = Field.where(table_id: tables.pluck(:id))
     end
 
     # Only allow a list of trusted parameters through.
