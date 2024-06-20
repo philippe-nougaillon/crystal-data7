@@ -8,7 +8,7 @@
   });
 
   <% @table.values.joins(:field).where(record_index: @records, 'field.datatype': 'GPS').each_with_index do |record, index| %>
-    <% unless record.data.empty? %>
+    <% unless record.data && record.data.empty? %>
       var lng = <%= record.data.split(',').last.to_f %>
       var lat = <%= record.data.split(',').first.to_f %>
       var marker = new mapboxgl.Marker({ color: "#FF0000"})
