@@ -19,7 +19,23 @@ class AgendaToIcalendar < ApplicationService
       unless date_value.data.blank?
         event = Icalendar::Event.new
         event.dtstart = date_value.data.to_date.strftime("%Y%m%dT%H%M%S")
-        datas = @table.values.joins(:field).where(record_index: record_index).where.not('field.datatype': ['Date', 'Signature', 'QRCode', 'Image', 'Fichier', 'PDF']).pluck('field.name', :data)
+
+        datas = Hash.new
+        # TODO : pouvoir afficher les autres dates
+        # TODO : afficher selon une nouvelle visibilité
+        fields = @table.fields.where.not(datatype: ['Date', 'QRCode', 'Image', 'Fichier', 'PDF'])
+        # TODO : à mettre dans une fonction (équivalent à l'export pdf / collection_to_csv/to_xls)
+        fields.each do |field|
+          raw_value = field.values.find_by(record_index: record_index).data
+          if field.Collection?
+            data_value = field.get_linked_table_record(raw_value)
+          elsif field.Signature?
+            data_value = raw_value.blank? ? 'Pas signé' : 'Signé'
+          else
+            data_value = raw_value
+          end
+          datas[field.name] = data_value
+        end
         event.description = datas.map{ |data| "#{data.first}: #{data.last}" }.join(', ')
         event.summary = datas.first(3).map{ |data| data.last }.join(' | ')
         calendar.add_event(event)

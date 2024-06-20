@@ -1,5 +1,5 @@
 <div class="<%= aperçu ? 'phone-content' : 'border rounded shadow-sm p-3 p-sm-4' %>">
-  <div class="<%= aperçu ? 'phone-content' : 'row row-cols-sm-2 row-cols-lg-3' %>">
+  <div class="<%= aperçu ? 'px-1' : 'row row-cols-sm-2 row-cols-lg-3' %>">
     <% @table.fields.ordered.each_with_index do |field, index| %>
       <% field_name = "[data][#{@record_index}][#{field.id}]" %> 
       <% value = field.values.find_by(record_index: @record_index) %> 
@@ -134,7 +134,10 @@
     <% end %>
   </div>
 
-  <div class="d-flex flex-wrap align-items-center gap-2 mt-4">
+  <% if aperçu && @table.fields.count.zero? %>
+    <p class="mt-4 px-1">Aucun attribut n'a encore été ajouté à cet objet...</p>
+  <% end %>
+  <div class="d-flex flex-wrap align-items-center gap-2 mt-4 <%= aperçu ? 'px-1' : '' %>">
     <%= submit_tag "Enregistrer", id:'submit', class: 'btn btn-outline-primary' %>
     <%= link_to_unless aperçu, "Annuler", table_path(@table) %>
   </div>

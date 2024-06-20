@@ -22,7 +22,25 @@
       en bas de page
     <% end %>
   </td>
-  <td><%= field.visibility_polished %></td>
+  <td>
+    <% case field.visibility %>
+    <% when 'Liste_et_Détails' %>
+      <span class="material-symbols-outlined" title="Visible dans la liste">
+        view_list
+      </span>
+      <span class="material-symbols-outlined" title="Visible dans les détails (formulaire)">
+        cards
+      </span>
+    <% when 'Vue_Liste' %>
+      <span class="material-symbols-outlined" title="Visible dans la liste">
+        view_list
+      </span>
+    <% when 'Vue_Détails' %>
+      <span class="material-symbols-outlined" title="Visible dans les détails (formulaire)">
+        cards
+      </span>
+    <% end %>
+  </td>
   <td style="text-align: right; white-space: nowrap;">
     <%= link_to 'Modifier', edit_field_path(id: field.slug, anchor: 'field_edit'), title: 'Modifier l\'attribut', class: 'btn btn-outline-secondary btn-sm me-2' %>
     <%= link_to 'X', field, title: 'Supprimer l\'attribut', 'data-turbo-method': :delete, 'data-turbo-confirm': 'Confirmez-vous la suppression de l\'attribut ?', class: 'btn btn-outline-danger btn-sm' %>
