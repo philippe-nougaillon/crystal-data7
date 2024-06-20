@@ -252,6 +252,10 @@ class Field < ApplicationRecord
 		end
 	end
 
+	def field_with_table
+		"#{self.table.name} - #{self.name}"
+	end
+
 private
 
 	def slug_candidates

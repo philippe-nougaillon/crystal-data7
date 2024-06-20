@@ -1,19 +1,19 @@
 Rails.application.routes.draw do
   get 'admin/stats'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
-
+  
   devise_scope :user do
     authenticated :user do
       root 'tables#index', as: :authenticated_root
     end
-  
+    
     unauthenticated do
       root 'devise/sessions#new', as: :unauthenticated_root
     end
   end
-
+  
   root 'devise/sessions#new'
-
+  
   resources :tables do
     collection do
       get :securite
@@ -24,26 +24,28 @@ Rails.application.routes.draw do
   end
   resources :values
   resources :blobs, only: [:new, :create]
-
+  
   resources :users do
     get :connect_guest_user
   end
-
+  
   resources :fields, only: %i[create edit update destroy] do
     post :update_row_order, on: :collection
   end
-
+  
   controller :pages do
     get :a_propos, to: 'pages#a_propos'
     get :stats, to: 'pages#stats'
   end
-
+  
   resources :filters do
     member do
       get :query
     end
   end
 
+  resources :notifications, except: %i[show]
+  
   get 'show_attrs', to: 'tables#show_attrs' 
   get 'tables/:id/fill', to: 'tables#fill', as: :fill
   get 'tables/:id/partages', to:'tables#partages', as: :partages

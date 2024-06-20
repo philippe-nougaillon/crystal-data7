@@ -33,4 +33,12 @@ class UserMailer < ApplicationMailer
 		mail(to: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com", subject:"[CrystalDATA] Le compte démo est utilisé")
 	end
 
+	def new_custom_notification(notification, record_index)
+		@notification = notification
+		@record_index = record_index
+		mail(to: @notification.send_to,
+				bcc: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com",
+				subject: "[CrystalDATA] Notification '#{@notification.table.name.humanize}' (#{@notification.field.name.humanize} = #{@notification.value})")
+	end
+
 end

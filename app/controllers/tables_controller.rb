@@ -260,6 +260,17 @@ class TablesController < ApplicationController
                       created_at: created_at_date)
 
         end
+
+        # envoyer notifications si l'attribut a la valeur attendue
+        if !old_value || (old_value.data != value)
+          if notifications = table.notifications.where(field_id: field.id, value: value)
+            notifications.each do |notification|
+              notification.update!(last_notif_sent_at: DateTime.now)
+              UserMailer.new_custom_notification(notification, record_index).deliver_now
+            end
+          end
+        end
+
       end
 
       # notifier l'utilisateur d'un ajout 
