@@ -3,7 +3,7 @@
 <% if not values.empty? %>
   <% @records_size += 1 %>
   <tr>
-    <% table.fields.listable.each_with_index do | field, index | %>
+    <% table.fields.listable.ordered.each_with_index do | field, index | %>
       <%= render partial: 'partials/table_cell', locals: {table:, record_index:, field:, is_link: (index == 0), value: values[index] } %>
     <% end %>
 
