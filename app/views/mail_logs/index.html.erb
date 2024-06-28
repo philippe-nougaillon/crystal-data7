@@ -17,8 +17,13 @@
       <%= select_tag :to, 
                       options_for_select(@mail_logs.pluck(:to).uniq.sort, params[:to]), 
                       include_blank: true, 
-                      class: 'form-control form-control-sm',
+                      class: 'form-select form-select-sm w-100',
                       onchange: 'this.form.submit()' %>
+    </div>
+
+    <div class="col-sm-2">
+      <%= label_tag :search_subject, "Sujet" %>
+      <%= select_tag :search_subject, options_for_select(@mail_logs.pluck(:subject).uniq.sort, params[:search_subject]), include_blank: true, onchange:'this.form.submit()', class:"form-select form-select-sm w-full" %>
     </div>
     <div class="col-sm-3">
       <%= check_box_tag :ko, 1, params[:ko], onchange:'this.form.submit()' %>
@@ -30,12 +35,12 @@
 <table class="table mt-4">
   <thead>
     <tr>
-      <th>Destinataire</th>
-      <th>Objet</th>
       <th>Il y a</th>
+      <th>Destinataire</th>
+      <th>Sujet</th>
       <th>Statut</th>
       <th>État</th>
-      <th colspan="2"></th>
+      <th></th>
     </tr>
   </thead>
 

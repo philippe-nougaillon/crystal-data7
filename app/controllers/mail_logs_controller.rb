@@ -14,6 +14,10 @@ class MailLogsController < ApplicationController
       @mail_logs = @mail_logs.where("LOWER(mail_logs.to) like :search", {search: "%#{params[:to]}%".downcase})
     end
 
+    unless params[:search_subject].blank?
+      @mail_logs = @mail_logs.where(subject: params[:search_subject])
+    end
+
     if params[:ko].blank?
       @result_opened = mg_client.get("#{domain}/events", {:event => 'opened'}).to_h
     end

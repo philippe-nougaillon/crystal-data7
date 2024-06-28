@@ -269,7 +269,7 @@ class TablesController < ApplicationController
             notifications.each do |notification|
               notification.update!(last_notif_sent_at: DateTime.now)
               mailer_response = UserMailer.new_custom_notification(notification, record_index).deliver_now
-              MailLog.create(user_id: notification.user_id, message_id: mailer_response.message_id, to: notification.send_to, subject: "Notification")
+              MailLog.create(user_id: notification.user_id, message_id: mailer_response.message_id, to: notification.send_to, subject: "Notification '#{table.name.humanize}:#{field.name.humanize}'")
             end
           end
         end
