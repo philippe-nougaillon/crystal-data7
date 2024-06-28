@@ -13,7 +13,7 @@
 
       <div data-type-target="<%= 'attribute_name' if params[:action] == "show_attrs" %>">
         <%= f.label :name, "Nom de l'attribut" %>
-        <%= f.text_field :name, class: 'form-control', required: true %>
+        <%= f.text_field :name, class: 'form-control', required: true, autocomplete: :off %>
         <p class="form-text mb-0">
           ex: Nom, Prénom, Date de naissance, etc.
         </p>

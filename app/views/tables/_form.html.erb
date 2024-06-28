@@ -3,7 +3,8 @@
   <%= f.label :name, "Donnez un nom (au singulier) au nouvel Objet" %>
   <%= f.text_field :name, required: true, 
                     placeholder: 'Ex: Article, Intervention, Technicien...', 
-                    autofocus: true, 
+                    autofocus: true,
+                    autocomplete: :off, 
                     class: 'form-control mb-4 w-sm-50',
                     disabled: action_name == "edit",
                     'data-testid': 'Name' %>
