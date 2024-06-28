@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   end
 
   resources :notifications, except: %i[show]
+  resources :mail_logs, only: %i[index show]
   
   get 'show_attrs', to: 'tables#show_attrs' 
   get 'tables/:id/fill', to: 'tables#fill', as: :fill

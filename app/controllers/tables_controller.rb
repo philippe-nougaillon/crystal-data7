@@ -268,7 +268,8 @@ class TablesController < ApplicationController
           if notifications = table.notifications.where(field_id: field.id, value: value)
             notifications.each do |notification|
               notification.update!(last_notif_sent_at: DateTime.now)
-              UserMailer.new_custom_notification(notification, record_index).deliver_now
+              mailer_response = UserMailer.new_custom_notification(notification, record_index).deliver_now
+              MailLog.create(user_id: notification.user_id, message_id: mailer_response.message_id, to: notification.send_to, subject: "Notification")
             end
           end
         end
