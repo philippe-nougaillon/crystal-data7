@@ -33,15 +33,15 @@
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to stats_path, title: "Statistiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-secondary #{'bg-light-subtle shadow-sm' if params[:action] == 'stats'}", 'data-turbo': 'false' do %>
+      <%= link_to stats_path, title: "Graphiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-secondary #{'bg-light-subtle shadow-sm' if params[:action] == 'stats'}", 'data-turbo': 'false' do %>
       <span class="material-symbols-outlined">
         Query_stats
       </span>
-      Stats
+      Graphs
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to securite_tables_path, title: "Statistiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-danger #{'bg-light-subtle shadow-sm' if params[:action] == 'securite'}", 'data-turbo': 'false' do %>
+      <%= link_to securite_tables_path, title: "Graphiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-danger #{'bg-light-subtle shadow-sm' if params[:action] == 'securite'}", 'data-turbo': 'false' do %>
       <span class="material-symbols-outlined">
         lock
       </span>
@@ -118,15 +118,15 @@
           <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to stats_path, title: "Statistiques", class: 'nav-link link-secondary d-flex align-items-center gap-1' do %>
+          <%= link_to stats_path, title: "Graphiques", class: 'nav-link link-secondary d-flex align-items-center gap-1' do %>
             <span class="material-symbols-outlined">
               Query_stats
             </span>
-            Statistiques
+            Graphiques
           <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to securite_tables_path, title: "Statistiques", class: 'nav-link link-danger d-flex align-items-center gap-1' do %>
+          <%= link_to securite_tables_path, title: "Graphiques", class: 'nav-link link-danger d-flex align-items-center gap-1' do %>
             <span class="material-symbols-outlined">
               lock
             </span>
@@ -134,7 +134,7 @@
           <% end %>
         </li>
         <% if user_signed_in? %>
-          <%= link_to current_user, title: "Statistiques", class: 'nav-link link-secondary d-flex align-items-center gap-1' do %>
+          <%= link_to current_user, title: "Graphiques", class: 'nav-link link-secondary d-flex align-items-center gap-1' do %>
             <span class="material-symbols-outlined">
               badge
             </span>

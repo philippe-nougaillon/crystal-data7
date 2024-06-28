@@ -53,7 +53,7 @@ class PagesController < ApplicationController
 
   def info_notice
     if current_user.compte_démo? && flash[:notice] == nil && flash[:alert] == nil && params.keys.size == 2
-      flash[:notice] = "(i)Les statistiques permettent de visualiser une série de valeurs issues de vos collections"
+      flash[:notice] = "(i)Les graphiques permettent de visualiser une série de valeurs issues de vos collections"
     end
   end
   
