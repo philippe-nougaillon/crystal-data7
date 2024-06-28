@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'admin/stats'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   
   devise_scope :user do
@@ -35,7 +34,7 @@ Rails.application.routes.draw do
   
   controller :pages do
     get :a_propos, to: 'pages#a_propos'
-    get :stats, to: 'pages#stats'
+    get :graphs, to: 'pages#graphs'
   end
   
   resources :filters do
@@ -56,6 +55,7 @@ Rails.application.routes.draw do
   get 'tables/:id/details', to: 'tables#show_details', as: :details
   get 'tables/:id/related_tables', to: 'tables#related_tables', as: :related_tables
   get '/import', to: 'tables#import'
+  get 'admin/stats'
 
   post 'tables/:id/fill', to: 'tables#fill_do', as: :fill_do
   post '/add_user_do', to:'tables#add_user_do'

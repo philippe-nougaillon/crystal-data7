@@ -1,11 +1,11 @@
 class PagesController < ApplicationController
-  before_action :info_notice, only: %i[stats]
+  before_action :info_notice, only: %i[graphs]
   skip_before_action :authenticate_user!, only: %i[a_propos]
 
   def a_propos
   end
 
-  def stats
+  def graphs
     @tables = current_user.tables
     @results = Hash.new
     params[:type] ||= 'line'
