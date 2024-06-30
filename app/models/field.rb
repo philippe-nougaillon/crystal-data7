@@ -60,12 +60,10 @@ class Field < ApplicationRecord
 
 	def populate_linked_table		
 		relation = self.relation
-
-		table = Table.find_by(id: relation.relation_with_id)
-
-		if table
-			source_fields = relation.items
+		 
+		if table = Table.find_by(id: relation.relation_with_id)
 			table_data = {}
+			source_fields = relation.items
 			
 			table.values.includes(:field).each do |value| 
 				if source_fields.include?(value.field.name)
@@ -94,11 +92,11 @@ class Field < ApplicationRecord
 
 	def get_linked_table_record(index)
 		relation = self.relation
-		table = Table.find_by(id: relation.relation_with_id)
-		if table
+
+		if table = Table.find_by(id: relation.relation_with_id)
+			table_data = []
 			source_fields = relation.items
 		
-			table_data = []
 			table.values.where(record_index: index).includes(:field).each do |value| 
 				if (source_fields.include?(value.field.name)) 
 					if value.field.Collection?
@@ -150,10 +148,9 @@ class Field < ApplicationRecord
 	end
 
 	def distance(table, record_index)
-		fields = self.items # ex: "[Temps passé] - [prix Heure]"
 		formule = self.items.gsub(/\[|\]/, '')
 		pattern = /[\-\*]+/
-		coordinates = formule.split(pattern) # ex: ["Temps passé", "prix Heure"]
+		coordinates = formule.split(pattern) # ex: ["LocalisationBureau", "LocalisationTravail"]
 		
 		lon = []
 		lat = []
@@ -177,18 +174,9 @@ class Field < ApplicationRecord
 
 		a = Math.sin(delta_phi/2.0)**2 + Math.cos(phi_1) * Math.cos(phi_2) * Math.sin(delta_lambda/2.0)**2
 		c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
 		return (r * c).to_i
 
-		# radlat1 = Math::PI * lat[1]/180;
-  	# radlat2 = Math::PI * lat[2]/180;
-    # theta = lon[1]-lon[2];
-    # radtheta = Math::PI * theta/180;
-    # dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta)
-		# dist = Math.acos(dist);
-		# dist = dist * 180/Math::PI;
-		# dist = dist * 60 * 1.1515;
-    # dist = dist * 1.609344
-		# return dist
 	end
 
 	def icon
