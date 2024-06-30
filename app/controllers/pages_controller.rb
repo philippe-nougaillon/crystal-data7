@@ -50,15 +50,19 @@ class PagesController < ApplicationController
   end
 
   def assistant
-    if params[:table_id].present? && params[:commit].present?
+    if params[:table_id].present? && params[:prompt].present? && params[:commit].present?
       if table = current_user.tables.find_by(id: params[:table_id])
         prompt = params[:prompt]
         query, fields = prompt.split(': [')
-        values = table.values_at(fields.split(']').first)
-        query_with_collection_values = query.split(': [').first + ' : ' + values 
-                
-        llm = Langchain::LLM::OpenAI.new(api_key: ENV["OPENAI_API_KEY"])
-        @results = llm.chat(messages: [{role: "user", content: query_with_collection_values }]).completion
+        if fields
+          values = table.values_at(fields.split(']').first)
+          query_with_collection_values = query.split(': [').first + ' : ' + values 
+                  
+          llm = Langchain::LLM::OpenAI.new(api_key: ENV["OPENAI_API_KEY"])
+          @results = llm.chat(messages: [{role: "user", content: query_with_collection_values }]).completion
+        else
+          @results = "Pas compris, désolé. Merci de vérifier votre question et vos données."
+        end
       end
     end
   end

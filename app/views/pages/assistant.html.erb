@@ -25,7 +25,7 @@
         <div class="mb-3">
             <%= label_tag :table_id, "Collection d'objets", class: 'form-label' %>
             <%= select_tag :table_id, 
-                            options_from_collection_for_select(current_user.tables.order(:name), 'id', 'name'), 
+                            options_from_collection_for_select(current_user.tables.order(:name), 'id', 'name', params[:table_id]), 
                             class: 'form-select form-select-lg w-25' %>
         </div>
 
