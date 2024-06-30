@@ -30,6 +30,31 @@ class Table < ApplicationRecord
 		self.values.includes(:field).where("fields.visibility = 0 OR fields.visibility = 2").records_at(record_index).order("fields.row_order").pluck(:data)
 	end
 
+	# Trouve toutes les valeurs des attributs nommés. 
+	# Ex : "LocalisationBureau, LocalisationTravail"
+	
+	def values_at(field_list)
+		values = []
+		field_names = field_list.gsub(/\[|\]/, '').split(', ') 
+		
+		(1..self.size).each do |record_index|
+			record_values = []
+			field_names.each_with_index do |field_name|
+				if field = self.fields.find_by(name: field_name)
+					if value = field.values.find_by(record_index: record_index)
+						if data = value.data
+							record_values << data
+						end
+					end
+				end
+			end
+			values << record_values.join(' ')
+		end
+
+		return values.join(', ')
+
+	end
+
 	def last_update_at(record_index)
 		self.values.where(record_index: record_index).maximum(:updated_at)
 	end
