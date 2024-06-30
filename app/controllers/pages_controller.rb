@@ -49,6 +49,22 @@ class PagesController < ApplicationController
     end
   end
 
+  def assistant
+    if params[:table_id].present? && params[:commit].present?
+      if table = current_user.tables.find_by(id: params[:table_id])
+        prompt = params[:prompt]
+        query, fields = prompt.split(': [')
+        values = table.values_at(fields.split(']').first)
+        query_with_collection_values = query.split(': [').first + ' : ' + values 
+                
+        #llm = Langchain::LLM::OpenAI.new(api_key: ENV["OPENAI_API_KEY"])
+        #@results = llm.chat(messages: [{role: "user", content: query_with_collection_values }]).completion
+      else
+        @results = "...."  
+      end
+    end
+  end
+
   private
 
   def info_notice

@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   controller :pages do
     get :a_propos, to: 'pages#a_propos'
     get :graphs, to: 'pages#graphs'
+    get :assistant, to: "pages#assistant"
   end
   
   resources :filters do
