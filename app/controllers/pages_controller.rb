@@ -57,10 +57,8 @@ class PagesController < ApplicationController
         values = table.values_at(fields.split(']').first)
         query_with_collection_values = query.split(': [').first + ' : ' + values 
                 
-        #llm = Langchain::LLM::OpenAI.new(api_key: ENV["OPENAI_API_KEY"])
-        #@results = llm.chat(messages: [{role: "user", content: query_with_collection_values }]).completion
-      else
-        @results = "...."  
+        llm = Langchain::LLM::OpenAI.new(api_key: ENV["OPENAI_API_KEY"])
+        @results = llm.chat(messages: [{role: "user", content: query_with_collection_values }]).completion
       end
     end
   end
