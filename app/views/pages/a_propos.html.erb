@@ -1,4 +1,4 @@
-<div class="mt-4">
+<div class="mb-5">
 	<div class="d-flex justify-content-between align-items-center">
 		<div>
 			<h1 class="text-primary mb-0">CrystalDATA</h1>
@@ -7,10 +7,10 @@
 				<span class="fw-lighter text-secondary fs-6">Go, go, go... It's your birthday!</span>
 			</h2>
 		</div>
-		<%= image_tag 'icons/crystaldata.png', style: "height: 6rem" %>
+		<%= image_tag 'icons/crystaldata.png', style: "height: 10rem" %>
 	</div>
 
-	<h3 class="fw-bold text-dark mt-5">Pour qui ?</h3>
+	<h3 class="fw-bold text-dark my-4">Pour qui ?</h3>
 
 	<p class="fs-5 fw-light w-sm-75">
 		Vous êtes une entreprise de service avec des équipes sur le terrain (ex: BTP, SAV, Installation, Maintenance, etc.) et
@@ -22,7 +22,7 @@
 		et de les partager en ligne avec vos collaborateurs.
 	</p>
 
-	<h3 class="fw-bold text-dark mt-5">Principales fonctionnalités</h3>
+	<h3 class="fw-bold text-dark my-4">Principales fonctionnalités</h3>
 
 	<ul class="list-group list-group-flush mb-5 w-sm-75">
 		<li class="list-group-item d-flex align-items-center gap-2">
@@ -88,7 +88,7 @@
 
 	</ul>
 
-	<h3 class="fw-bold text-dark mt-5">L'objet CrystalDATA et ses Attributs</h3>
+	<h3 class="fw-bold text-dark my-4">L'objet CrystalDATA et ses Attributs</h3>
 
 	<p class="fs-5 fw-light w-sm-75">
 		Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et 
@@ -269,7 +269,7 @@
 		</ul>
 	</p>
 
-	<h3 class="fw-bold text-dark mt-5">Relations entre objets</h3>
+	<h3 class="fw-bold text-dark my-4">Relations entre objets</h3>
 	<p class="fs-5 fw-light w-sm-75">
 		Les relations entre objets sont créées avec l'attribut 'Collection'. 
 		Exemple : un objet Intervention aura un attribut 'Technicien' qui permettra de choisir un technicien dans la collection du même nom.
@@ -278,7 +278,7 @@
 		la vue de détails de chaque Technicien affiche automatiquement ses Interventions et permet d'en saisir une nouvelle pour ce Technicien.  
 	</p>
 
-	<h3 class="fw-bold text-dark mt-5">Filtres</h3>
+	<h3 class="fw-bold text-dark my-4">Filtres</h3>
 	<p class="fs-5 fw-light w-sm-75">
 		Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères.
 		<br><br>
@@ -293,7 +293,7 @@
 		</ul>
 	</p>
 
-	<h3 class="fw-bold text-dark mt-5">Notifications</h3>
+	<h3 class="fw-bold text-dark my-4">Notifications</h3>
 	<p class="fs-5 fw-light w-sm-75">
 		Les Notifications permettent d'être alerté par email après chaque ajout et modification d'objet dans une collection. 
 		Elles sont paramétrables pour chaque collection et chaque attribut. 
@@ -301,7 +301,7 @@
 		Exemple : être alerté quand un objet dans la collection 'Interventions' a un attribut 'Statut' égal à 'Terminé'.
 	</p>
 
-	<h3 class="fw-bold text-dark mt-5">Utilisateurs, partages et rôles</h3>
+	<h3 class="fw-bold text-dark my-4">Utilisateurs, partages et rôles</h3>
 	<p class="fs-5 fw-light w-sm-75">
 		Vous pouvez partager vos collections avec d'autres utilisateurs en leur donnant un rôle (Lecteur, Collecteur, Éditeur).
 		<ul class="list-group mb-5 m-3 gap-2">
@@ -318,7 +318,7 @@
 	</p>
 
 
-	<h3 class="fw-bold text-dark mt-5">Assistant (IA)</h3>
+	<h3 class="fw-bold text-dark my-4">Assistant (IA)</h3>
 	<p class="fs-5 fw-light w-sm-75">
 		Posez une question à l'Assistant, basée sur les données de vos collections d'objets
 		<br>
@@ -333,7 +333,7 @@
 
 </div>
 
-<h3 class="fw-bold text-dark mt-5">Historique et motivation</h3>
+<h3 class="fw-bold text-dark my-4">Historique et motivation</h3>
 
 <p class="fs-5 fw-light w-sm-75">
 	Développeur d'applications métiers en entreprise depuis plus de 30 ans, j'ai souvent aidé mes clients à passer 
@@ -422,7 +422,7 @@
 	intégrant toutes vos spécificités, règles métier, Workflow, Services, etc.
 </p>
 
-<h3 class="fw-bold text-dark mt-5">Développement, support et services</h3>
+<h3 class="fw-bold text-dark my-4">Développement, support et services</h3>
 
 <p class="mt-3">
 	<i>CrystalDATA a été développé en Ruby on Rails par Philippe et Pierre-Emmanuel</i>
@@ -454,15 +454,13 @@
 
 <p class="fs-5 fw-light text-secondary mt-4">
 	Besoin d'une fonctionnalité ou d'une nouvelle application sur mesure ? Nous vous la développons !
+	<br><br>
+	Vous êtes à la recherche d'une application pour la gestion de projets, d'interventions, de planning, d'émargement ou de facturation ?
 	<br>
-	Nous pouvons aussi convertir vos anciennes applications PC/Windows (ex: VB/VBA/MSACCESS/C#...) en une plateforme WEB.
-	<br>
+	Consultez notre <%= link_to "catalogue de logiciels Open-Source", 'https://www.philnoug.com/logiciels', target: '_blank', class: 'link' %>
+	<br><br>
+	Nous pouvons aussi convertir vos anciennes applications PC/Windows (ex: VB/VBA/MS ACCESS/EXCEL/C#...) en une plateforme WEB.
+	<br><br>
 	Pour en savoir plus,
 	<%= link_to "contactez-nous", 'https://www.philnoug.com/contact', target: '_blank', class: 'link' %>
-
-	<br><br>
-	Vous êtes à la recherche d'une application open-source pour la gestion de projets, d'interventions, de planning, d'émargements ou de facturation ?
-	<br>
-	<%= link_to "Consultez notre catalogue", 'https://www.philnoug.com/logiciels', target: '_blank', class: 'link' %>
-
 </p>
