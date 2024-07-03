@@ -29,7 +29,7 @@
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Créez des Objets constitués d'attributs variés <br>(Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Fichier, Image, PDF, Position GPS, Lien vers un Objet dans une autre Collection)
+			Créez des Objets constitués d'attributs variés, comme : Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Fichier, Image, PDF, Position GPS, Lien vers un Objet dans une autre Collection, QR Code, Météo...
 		</li>
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
@@ -82,13 +82,6 @@
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Accédez à toutes vos collections en mobilité (Les écrans s'adaptent automatiquement aux smartphones/tablettes)
-		</li> 
-
-		<li class="list-group-item d-flex align-items-center gap-2">
-			<span class="material-symbols-outlined text-success">
-				new_releases
-			</span>
     		Assistant (IA). 
 			Posez une question à l'Assistant, basée sur les données de vos collections d'objets
 		</li> 
@@ -103,93 +96,97 @@
 		<br><br>
 		Les types d'attributs disponibles sont : 
 
-		<div class="mt-2">
+		<div class="mt-4">
 			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary', title: 'Texte' do %>
-				<span class="material-symbols-outlined">abc</span>
+				<span class="material-symbols-outlined text-dark">abc</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary', title: 'Texte long' do %>
-				<span class="material-symbols-outlined">notes</span>
+				<span class="material-symbols-outlined text-dark">notes</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary', title: 'Texte riche' do %>
-				<span class="material-symbols-outlined">text_snippet</span>
+				<span class="material-symbols-outlined text-dark">text_snippet</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary', title: 'Nombre' do %>
-				<span class="material-symbols-outlined">tag</span>
+				<span class="material-symbols-outlined text-dark">tag</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary', title: 'Euros' do %>
-				<span class="material-symbols-outlined">euro</span>
+				<span class="material-symbols-outlined text-dark">euro</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary', title: 'Formule' do %>
-				<span class="material-symbols-outlined">calculate</span>
+				<span class="material-symbols-outlined text-dark">calculate</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'date'), class: 'btn btn-outline-primary', title: 'Date' do %>
-				<span class="material-symbols-outlined">calendar_today</span>
+				<span class="material-symbols-outlined text-dark">calendar_today</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'oui_non'), class: 'btn btn-outline-primary', title: 'Oui/Non?' do %>
-				<span class="material-symbols-outlined">help</span>
+				<span class="material-symbols-outlined text-dark">help</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'liste'), class: 'btn btn-outline-primary', title: 'Liste de choix' do %>
-				<span class="material-symbols-outlined">format_list_numbered</span>
+				<span class="material-symbols-outlined text-dark">format_list_numbered</span>
 			<% end %>
+
+		</div>
+		<div class="mt-4">
 			<%= link_to a_propos_path(anchor: 'liste_objet'), class: 'btn btn-outline-primary', title: "Liste d'objets (Collection)" do %>
-				<span class="material-symbols-outlined">database</span>
+				<span class="material-symbols-outlined text-dark">database</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary', title: 'Fichier' do %>
-				<span class="material-symbols-outlined">description</span>
+				<span class="material-symbols-outlined text-dark">description</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary', title: 'Image' do %>
-				<span class="material-symbols-outlined">image</span>
+				<span class="material-symbols-outlined text-dark">image</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary', title: 'Document PDF' do %>
-				<span class="material-symbols-outlined">picture_as_pdf</span>
+				<span class="material-symbols-outlined text-dark">picture_as_pdf</span>
+			<% end %>		
+			<%= link_to a_propos_path(anchor: 'utilisateur'), class: 'btn btn-outline-primary', title: 'Utilisateur' do %>
+				<span class="material-symbols-outlined text-dark">person</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'url'), class: 'btn btn-outline-primary', title: 'Lien URL' do %>
+				<span class="material-symbols-outlined text-dark">link</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'email'), class: 'btn btn-outline-primary', title: 'Adresse email' do %>
+				<span class="material-symbols-outlined text-dark">mail</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'video'), class: 'btn btn-outline-primary', title: 'Vidéo YouTube' do %>
+				<span class="material-symbols-outlined text-dark">play_circle</span>
+			<% end %>
+			<%= link_to a_propos_path(anchor: 'couleur'), class: 'btn btn-outline-primary', title: 'Couleur' do %>
+				<span class="material-symbols-outlined text-dark">palette</span>
 			<% end %>
 		</div>
 		
-		<div class="mt-2">
-			<%= link_to a_propos_path(anchor: 'utilisateur'), class: 'btn btn-outline-primary', title: 'Utilisateur' do %>
-				<span class="material-symbols-outlined">person</span>
-			<% end %>
-			<%= link_to a_propos_path(anchor: 'url'), class: 'btn btn-outline-primary', title: 'Lien URL' do %>
-				<span class="material-symbols-outlined">link</span>
-			<% end %>
-			<%= link_to a_propos_path(anchor: 'email'), class: 'btn btn-outline-primary', title: 'Adresse email' do %>
-				<span class="material-symbols-outlined">mail</span>
-			<% end %>
-			<%= link_to a_propos_path(anchor: 'video'), class: 'btn btn-outline-primary', title: 'Vidéo YouTube' do %>
-				<span class="material-symbols-outlined">play_circle</span>
-			<% end %>
-			<%= link_to a_propos_path(anchor: 'couleur'), class: 'btn btn-outline-primary', title: 'Couleur' do %>
-				<span class="material-symbols-outlined">palette</span>
-			<% end %>
+		<div class="mt-4">
 			<%= link_to a_propos_path(anchor: 'localisation'), class: 'btn btn-outline-primary', title: 'Localisation GPS' do %>
-				<span class="material-symbols-outlined">my_location</span>
+				<span class="material-symbols-outlined text-dark">my_location</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'qrcode'), class: 'btn btn-outline-primary', title: 'QR Code' do %>
-				<span class="material-symbols-outlined">qr_code_2</span>
+				<span class="material-symbols-outlined text-dark">qr_code_2</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'qrscan'), class: 'btn btn-outline-primary', title: 'Scanner à QR Code' do %>
-				<span class="material-symbols-outlined">barcode_reader</span>
+				<span class="material-symbols-outlined text-dark">barcode_reader</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'signature'), class: 'btn btn-outline-primary', title: 'Signature manuscrite' do %>
-				<span class="material-symbols-outlined">signature</span>
+				<span class="material-symbols-outlined text-dark">signature</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'uuid'), class: 'btn btn-outline-primary', title: 'UDID' do %>
-				<span class="material-symbols-outlined">key</span>
+				<span class="material-symbols-outlined text-dark">key</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'tags'), class: 'btn btn-outline-primary', title: 'Tags' do %>
-				<span class="material-symbols-outlined">sell</span>
+				<span class="material-symbols-outlined text-dark">sell</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'stars'), class: 'btn btn-outline-primary', title: 'Etoiles' do %>
-				<span class="material-symbols-outlined">star</span>
+				<span class="material-symbols-outlined text-dark">star</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'meteo'), class: 'btn btn-outline-primary', title: 'Etoiles' do %>
-				<span class="material-symbols-outlined">partly_cloudy_day</span>
+				<span class="material-symbols-outlined text-dark">partly_cloudy_day</span>
 			<% end %>
 			<%= link_to a_propos_path(anchor: 'workflow'), class: 'btn btn-outline-primary', title: 'Workflow' do %>
-				<span class="material-symbols-outlined">steppers</span>
+				<span class="material-symbols-outlined text-dark">steppers</span>
 			<% end %>
 		</div>
-		<ul class="list-group list-group-flush mb-5 m-3 gap-2 w-sm-75">
+		
+		<ul class="list-group list-group-flush my-4 m-3 gap-2 w-sm-75">
 			<li>
 				<b id="texte">Texte</b> :
 				<ul>
@@ -254,18 +251,20 @@
 			<li>
 				<b id="meteo">Météo</b> : permet d'afficher la météo actuelle de votre localisation. (Ex: <i>22°C, Pluie légère, 73% d'humidité</i>)
 			</li>
-			<li><b id="workflow">WORKFLOW</b> : pour ajouter un état à un objet, associé à une couleur. (Ex: <i>Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary</i>)
-				<ul><li>
-					Couleurs disponibles:
-					<span class="badge bg-primary">Primary</span>
-					<span class="badge bg-secondary">Secondary</span>
-					<span class="badge bg-success">Success</span>
-					<span class="badge bg-danger">Danger</span>
-					<span class="badge bg-warning text-dark">Warning</span>
-					<span class="badge bg-info text-dark">Info</span>
-					<span class="badge bg-light text-dark">Light</span>
-					<span class="badge bg-dark">Dark</span>
-				</li></ul>
+			<li><b id="workflow">Workflow</b> : pour ajouter un état à un objet, associé à une couleur. (Ex: <i>Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary</i>)
+				<ul>
+					<li>
+						Couleurs disponibles :
+						<span class="badge bg-primary">Primary</span>
+						<span class="badge bg-secondary">Secondary</span>
+						<span class="badge bg-success">Success</span>
+						<span class="badge bg-danger">Danger</span>
+						<span class="badge bg-warning text-dark">Warning</span>
+						<span class="badge bg-info text-dark">Info</span>
+						<span class="badge bg-light text-dark">Light</span>
+						<span class="badge bg-dark">Dark</span>
+					</li>
+				</ul>
 			</li>
 		</ul>
 	</p>
