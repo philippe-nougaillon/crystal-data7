@@ -47,32 +47,52 @@
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Partagez vos collections d'objet avec d'autres utilisateurs
+			Partagez vos collections d'objets avec d'autres utilisateurs
 		</li>		
+
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
 			Exportez vos collections en CSV, XSL et PDF
 		</li> 
+
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Soyez notifié après chaque ajout d'objet dans une de vos collections
+			Soyez notifié après chaque ajout d'objet dans une de vos collections, ou quand un attribut change d'état
 		</li>
+
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
 			Activité: chaque modification d'un objet est consignée dans un historique (quand, qui, quoi, valeur avant, valeur après)
 		</li>		
+
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
 			Accédez à toutes vos collections en mobilité (Les écrans s'adaptent automatiquement aux smartphones/tablettes)
 		</li> 
+
+		<li class="list-group-item d-flex align-items-center gap-2">
+			<span class="material-symbols-outlined text-success">
+				new_releases
+			</span>
+			Accédez à toutes vos collections en mobilité (Les écrans s'adaptent automatiquement aux smartphones/tablettes)
+		</li> 
+
+		<li class="list-group-item d-flex align-items-center gap-2">
+			<span class="material-symbols-outlined text-success">
+				new_releases
+			</span>
+    		Assistant (IA). 
+			Posez une question à l'Assistant, basée sur les données de vos collections d'objets
+		</li> 
+
 	</ul>
 
 	<h3 class="fw-bold text-dark mt-5">L'objet CrystalDATA et ses Attributs</h3>
@@ -262,18 +282,24 @@
 	<h3 class="fw-bold text-dark mt-5">Filtres</h3>
 	<p class="fs-5 fw-light w-sm-75">
 		Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères.
+		<br><br>
 		Ces filtres acceptent des critères différents selon le type d'attribut :
-		<br>	
-		- un attribut de type Texte est filtré avec %TXT% (Filtre tout ce qui contient les 3 lettres TXT) 
-		<br>		
-		- un attribut numérique est filtré avec un signe et une valeur (Qté en stock: > 5) 
+		<ul class="list-group mb-5 m-3 gap-2">
+			<li>
+				un attribut de type Texte est filtré avec %TXT% (Filtre tout ce qui contient les 3 lettres TXT) 
+			</li>
+			<li>		
+				un attribut numérique est filtré avec un signe et une valeur (Qté en stock: > 5) 
+			</li>
+		</ul>
 	</p>
 
 	<h3 class="fw-bold text-dark mt-5">Notifications</h3>
 	<p class="fs-5 fw-light w-sm-75">
 		Les Notifications permettent d'être alerté par email après chaque ajout et modification d'objet dans une collection. 
 		Elles sont paramétrables pour chaque collection et chaque attribut. 
-		Exemple : être alerté quand un objet dans la collection 'Interventions' a un attribut 'Statut' égal à 'En attente'.
+		<br><br>
+		Exemple : être alerté quand un objet dans la collection 'Interventions' a un attribut 'Statut' égal à 'Terminé'.
 	</p>
 
 	<h3 class="fw-bold text-dark mt-5">Utilisateurs, partages et rôles</h3>
@@ -289,6 +315,19 @@
 			<li>
 				<b>Éditeur</b> peut voir et modifier tous les objets.
 			</li>
+		</ul>
+	</p>
+
+
+	<h3 class="fw-bold text-dark mt-5">Assistant (IA)</h3>
+	<p class="fs-5 fw-light w-sm-75">
+		Posez une question à l'Assistant, basée sur les données de vos collections d'objets
+		<br>
+		Exemples de question, en langage naturel, que l'on peut poser à l'Assistant : 
+		<ul class="list-group m-3 mt-2 gap-2">
+			<li>Quel est le nom du client qui revient le plus souvent dans cette liste : [Client] ?
+			<li>Génère-moi les 3 prochaines interventions à prévoir, en te basant sur cette liste : [Date, Client, Type] ?</li>
+			<li>Tu es statisticien. Calcule moi la moyenne des durées de cette liste : [Durée] ? (Celle-ci est à faire uniquement si vous doutez du sérieux de cet Assistant ;-)</li>
 		</ul>
 	</p>
 
