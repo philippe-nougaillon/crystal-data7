@@ -6,7 +6,7 @@ class PagesController < ApplicationController
   end
 
   def graphs
-    @tables = current_user.tables
+    @tables = current_user.tables.order(:name)
     @results = Hash.new
     params[:type] ||= 'line'
 

@@ -2,11 +2,13 @@
   <div class="flex-fill d-flex flex-column w-100 mt-3">
 
     <li class="nav-item">
-      <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, title: "Ma collection favorite/Page d'accueil", class: "d-flex flex-column align-items-center text-decoration-none link-primary py-3 #{'bg-light-subtle shadow-sm' if params[:controller] == 'tables' && @table && @table.show_on_startup_screen }" do %>
+      <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, 
+                  title: "Page d'accueil ou votre collection favorite", 
+                  class: "d-flex flex-column align-items-center text-decoration-none link-primary py-3 #{'bg-light-subtle shadow-lg' if params[:controller] == 'tables' && @table && @table.show_on_startup_screen }",
+                  disabled: current_user && current_user.favorite_table do %>
         <span class="material-symbols-outlined">
           diamond
         </span>
-        Favori
       <% end %>
     </li>
 
@@ -75,6 +77,7 @@
       <% end %>
     </li>
   <% end %>
+
   <li class="nav-item w-100">
     <%= link_to a_propos_path, title: "À Propos de CrystalDATA", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-black-50 #{'bg-light-subtle shadow-sm' if params[:action] == 'a_propos'}" do %>
       <span class="material-symbols-outlined">
@@ -83,6 +86,7 @@
       Aide
     <% end %>
   </li>
+  
 </nav>
 
 <nav class="navbar d-flex d-lg-none navbar-expand-lg fixed-top bg-white shadow-sm">
