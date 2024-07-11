@@ -119,7 +119,7 @@ class Table < ApplicationRecord
 	end
 
 	def name_pluralized
-		self.name.pluralize.upcase
+		self.name.pluralize
 	end
 
 private

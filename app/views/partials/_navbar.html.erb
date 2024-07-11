@@ -3,7 +3,7 @@
 
     <li class="nav-item">
       <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, 
-                  title: "Page d'accueil ou votre collection favorite", 
+                  title: "Page d'accueil ou une collection de votre objet favori", 
                   class: "d-flex flex-column align-items-center text-decoration-none link-primary py-3 #{'bg-light-subtle shadow-lg' if params[:controller] == 'tables' && @table && @table.show_on_startup_screen }",
                   disabled: current_user && current_user.favorite_table do %>
         <span class="material-symbols-outlined">
