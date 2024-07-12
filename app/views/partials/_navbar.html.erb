@@ -1,5 +1,5 @@
 <nav class="nav d-none d-lg-flex flex-column shadow-sm position-fixed top-0 start-0 overflow-hidden h-100 align-items-center bg-body-secondary">
-  <div class="flex-fill d-flex flex-column w-100 mt-3">
+  <div class="flex-fill d-flex flex-column w-100 mt-2">
 
     <li class="nav-item">
       <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, 
@@ -9,6 +9,7 @@
         <span class="material-symbols-outlined">
           diamond
         </span>
+        /favori
       <% end %>
     </li>
 

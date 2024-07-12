@@ -1,5 +1,5 @@
 <h1 class="text-2xl mt-4 text-dark">
-  Assistant (IA)
+    Assistant (IA)
 </h1>
 
 <h4 class="my-4 text-info">
@@ -22,7 +22,7 @@
             <%= label_tag :table_id, "Collection d'objets source", class: 'form-label' %>
             <%= select_tag :table_id, 
                             options_from_collection_for_select(current_user.tables.order(:name), 'id', 'name', params[:table_id]), 
-                            class: 'form-select form-select-lg w-25' %>
+                            class: 'form-select w-25' %>
         </div>
 
         <div>
@@ -31,7 +31,7 @@
         </div>
         
         <div class="text-secondary fw-lighter">
-            Merci de bien respecter le format "question : [attribut1, attribut2, ..] ?". Les noms entre '[ ]' indique les données à envoyer à l'IA pour élaborer sa réponse. 
+            Merci de respecter le format "Question : [attribut1, attribut2, ..] ?". Les noms entre '[ ]' indiquent les données à envoyer à l'IA pour élaborer une réponse. 
         </div> 
 
         <%= submit_tag "Poser la question à l'Assistant", class: 'btn btn-outline-dark mt-4' %>
