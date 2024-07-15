@@ -54,10 +54,17 @@ class PagesController < ApplicationController
       if table = current_user.tables.find_by(id: params[:table_id])
         prompt = params[:prompt]
         query, fields = prompt.split(': [')
-        if fields
-          values = table.values_at(fields.split(']').first)
+        fields = fields.split(']').first.split(', ')
+        correct_fields = true
+        fields.each do |field|
+          unless table.fields.pluck(:name).include?(field)
+            correct_fields = false
+          end
+        end
+        if correct_fields
+          values = table.values_at(fields)
           query_with_collection_values = query.split(': [').first + ' : ' + values 
-                  
+          
           llm = Langchain::LLM::OpenAI.new(api_key: ENV["OPENAI_API_KEY"])
           @results = llm.chat(messages: [{role: "user", content: query_with_collection_values }]).completion
         else

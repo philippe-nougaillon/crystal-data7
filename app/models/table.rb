@@ -33,9 +33,8 @@ class Table < ApplicationRecord
 	# Trouve toutes les valeurs des attributs nommés. 
 	# Ex : "LocalisationBureau, LocalisationTravail"
 	
-	def values_at(field_list)
+	def values_at(field_names)
 		values = []
-		field_names = field_list.gsub(/\[|\]/, '').split(', ') 
 		
 		(1..self.size).each do |record_index|
 			record_values = []
@@ -43,14 +42,17 @@ class Table < ApplicationRecord
 				if field = self.fields.find_by(name: field_name)
 					if value = field.values.find_by(record_index: record_index)
 						if data = value.data
-							record_values << data
+							if field.Collection?
+								record_values << field.get_linked_table_record(record_index).tr(',','')
+							else
+								record_values << data
+							end
 						end
 					end
 				end
 			end
 			values << record_values.join(' ')
 		end
-
 		return values.join(', ')
 
 	end
