@@ -43,7 +43,7 @@ class Table < ApplicationRecord
 					if value = field.values.find_by(record_index: record_index)
 						if data = value.data
 							if field.Collection?
-								record_values << field.get_linked_table_record(record_index).tr(',','')
+								record_values << field.get_linked_table_record(data).tr(',','')
 							else
 								record_values << data
 							end
