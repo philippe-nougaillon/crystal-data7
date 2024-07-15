@@ -13,18 +13,30 @@
       </ul>
       <ul class="navbar-nav">
         <% if user_signed_in? %>
-          <li class="nav-item mt-1 <%= 'active' if params[:controller] == 'users' %>">
-            <%= link_to current_user.email, current_user, title: "Profil utilisateur", class: "text-decoration-none py-2 text-black-50 px-3" %>
+          <li class="nav-item <%= 'active' if params[:controller] == 'users' %>">
+            <%= link_to current_user, title: "Profil utilisateur", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+              <span class="material-symbols-outlined fs-5 text-black-50">
+                badge
+              </span>
+              <%= current_user.email %>
+            <% end %>
           </li>
-          <li class="nav-item mt-1 <%= 'active' if params[:action] == 'securite' %>">
-            <%= link_to "Sécurité", securite_tables_path, title: "Liste des accès", class: "text-decoration-none py-2 text-black-50 px-3" %>
+          <li class="nav-item <%= 'active' if params[:action] == 'securite' %>">
+            <%= link_to securite_tables_path, title: "Liste des accès", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+              <span class="material-symbols-outlined fs-5 text-black-50">
+                lock
+              </span>
+              Sécurité
+            <% end %>
           </li>
-          <li class="nav-item mt-1 <%= 'active' if params[:action] == 'a_propos' %>">
-            <%= link_to "Aide", a_propos_path, title: "À Propos de CrystalDATA", class: "text-decoration-none py-2 text-black-50 px-3" %>
+          <li class="nav-item <%= 'active' if params[:action] == 'a_propos' %>">
+            <%= link_to a_propos_path, title: "À Propos de CrystalDATA", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+              <span class="material-symbols-outlined fs-5 text-black-50">
+                help
+              </span>
+              Aide
+            <% end %>
           </li>
-          <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger btn-sm ms-3', 'data-turbo': false, title: 'Se déconnecter' do %>
-            Déconnexion
-          <% end %>
         <% end %>
       </ul>
     </div>

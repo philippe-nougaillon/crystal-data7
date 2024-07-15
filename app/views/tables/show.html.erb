@@ -8,25 +8,33 @@
             <p class="mb-0">Modifier:</p>
           <% end %>
           <% if policy(@table).show_attrs? %>
-            <%= link_to show_attrs_path(id:@table), class:'nav-link', title:"Modifier les attributs de l'Objet '#{@table.name}'" do %> 
-              Attributs
-            <% end %>
+            <li class="nav-item">
+              <%= link_to show_attrs_path(id:@table), class:'nav-link', title:"Modifier les attributs de l'Objet '#{@table.name}'" do %> 
+                Attributs
+              <% end %>
+            </li>
           <% end %>
           <% if policy(@table).edit? || current_user.compte_démo? %>
-            <%= link_to edit_table_path(id:@table), class:'nav-link', title:"Modifier l'Objet '#{@table.name}'" do %> 
-              Objet
-            <% end %>
+            <li class="nav-item">
+              <%= link_to edit_table_path(id:@table), class:'nav-link', title:"Modifier l'Objet '#{@table.name}'" do %> 
+                Objet
+              <% end %>
+            </li>
           <% end %>
           <% if policy(@table).partages? %>
-            <%= link_to partages_path(@table), class:'nav-link', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" do %>
-              Partages
-            <% end %>
+            <li class="nav-item">
+              <%= link_to partages_path(@table), class:'nav-link', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" do %>
+                Partages
+              <% end %>
+            </li>
           <% end %>
           <% if policy(@table).logs? %>
             <p class="mb-0">|</p>
-            <%= link_to logs_path(id:@table), class:'nav-link', title:"Historique des modifications de l'Objet '#{@table.name}'" do %>
-              Activité
-            <% end %>
+            <li class="nav-item">
+              <%= link_to logs_path(id:@table), class:'nav-link', title:"Historique des modifications de l'Objet '#{@table.name}'" do %>
+                Activité
+              <% end %>
+            </li>
           <% end %>
         </div>
       </ul>

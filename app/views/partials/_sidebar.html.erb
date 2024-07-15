@@ -69,5 +69,18 @@
       Assistant
       <% end %>
     </li>
+
+    <!--
+    <% if user_signed_in? %>
+      <li class="nav-item w-100">
+        <%= link_to current_user, title: "Profil utilisateur", class: "d-flex flex-column align-items-center text-decoration-none py-3 text-black-50 #{'bg-light-subtle shadow-sm' if params[:controller] == 'users'}" do %>
+        <span class="material-symbols-outlined">
+          badge
+        </span>
+        Profil
+        <% end %>
+      </li>
+    <% end %>
+    -->
   </div>
 </nav>
