@@ -3,40 +3,37 @@
 </h1>
 
 <h4 class="my-4">
-    Posez une question à l'Assistant, basée sur les données de vos collections d'objets
+    Posez une question à l'Assistant, basée sur les données d'une collection
 </h4>
 
-<div class="d-flex">
-    <%= form_tag assistant_path, method: :get do %>
+<%= form_tag assistant_path, method: :get, class:'w-100 mb-5' do %>
 
+    <div class="d-flex flex-row gap-4">
         <div class="mb-3">
-            <%= label_tag :table_id, "Collection d'objets source", class: 'form-label' %>
+            <%= label_tag :table_id, "Collection", class: 'form-label' %>
             <%= select_tag :table_id, 
                             options_from_collection_for_select(current_user.tables.order(:name), 'id', 'name', params[:table_id]), 
-                            class: 'form-select w-25' %>
+                            include_blank: true,
+                            class: 'form-select', onchange: 'this.form.submit()' %>
         </div>
 
-        <div>
-            <%= label_tag :prompt, "Quelle est votre question ?", class: "label mb-2" %>
-            <%= text_area_tag :prompt, params[:prompt], class: 'form-control w-100' %>
-        </div>
-        
-        <div class="text-secondary fw-lighter">
-            Merci de respecter le format "Question : [attribut1, attribut2, ..] ?". Les noms entre '[ ]' indiquent les données à envoyer à l'IA pour élaborer une réponse. 
-        </div> 
-
-        <%= submit_tag "Poser la question", class: 'btn btn-outline-dark mt-4' %>
-    <% end %>
-
-    <div class="text-secondary">
-        Exemples : 
-        <ul class="mt-2">
-            <li>Quel client revient le plus souvent parmi : [Client] ?
-            <li>Génère-moi les 3 prochaines interventions à prévoir, en te basant sur cette liste : [Date, Client, Type] ?</li>
-            <li>Tu es statisticien. Calcule-moi la moyenne des durées dans : [Durée] ?</li>
-        </ul>
+        <% if params[:table_id] %>
+            <div class="mb-3">
+                <%= label_tag :fields_ids, "Attributs", class: 'form-label' %>
+                <%= select_tag :fields_ids, 
+                                options_from_collection_for_select(@fields, 'id', 'name', params[:fields_ids]), 
+                                class: 'form-select', multiple: true %>
+            </div>
+        <% end %>
     </div>
-</div>
+
+    <div>
+        <%= label_tag :prompt, "Quelle est votre question ?", class: "label mb-2" %>
+        <%= text_area_tag :prompt, params[:prompt], class: 'form-control w-50', rows: 3, placeholder: "Quel client revient le plus souvent ? \r\nGénère-moi les 3 prochaines interventions à prévoir ? \r\nTu es statisticien. Calcule-moi la moyenne des durées ?" %>
+    </div>
+
+    <%= submit_tag "Poser la question", class: 'btn btn-outline-info mt-4' %>
+<% end %>
 
 <div class="mt-4">
     <% if @results %>
@@ -49,7 +46,7 @@
     <% @prompts.each do |prompt| %>
         <div class="mt-4">
             <small class="fst-italic text-secondary">il y a <%= time_ago_in_words prompt.created_at %></small>
-            <p class="text-black mb-0"><%= link_to prompt.query, assistant_path(prompt: prompt.query, table_id: prompt.table_id) %></p>
+            <p class="text-black mb-0"><%= link_to prompt.query, assistant_path(prompt: prompt.query, table_id: prompt.table_id, fields_ids: prompt.fields_id) %></p>
             <p class="text-secondary">Réponse : <%= prompt.response %></p>
         </div>
     <% end %>

@@ -50,31 +50,21 @@ class PagesController < ApplicationController
   end
 
   def assistant
-    @prompts = current_user.prompts.order(created_at: :desc)
+    @prompts = current_user.prompts.order(created_at: :desc).limit(10)
 
-    if params[:table_id].present? && params[:prompt].present? && params[:commit].present?
-      if table = current_user.tables.find_by(id: params[:table_id])
-        prompt = params[:prompt]
-        query, fields = prompt.split(': [')
-        fields = fields.split(']').first.split(', ')
-        correct_fields = true
-        fields.each do |field|
-          unless table.fields.pluck(:name).include?(field)
-            correct_fields = false
-            break
-          end
-        end
-        if correct_fields
-          values = table.values_at(fields)
-          query_with_collection_values = query.split(': [').first + ' : ' + values 
+    if params[:table_id].present?
+      @fields = current_user.tables.find_by(id: params[:table_id]).fields.order(:name)
+      if params[:fields_ids].present? && params[:prompt].present? && params[:commit].present?
+        if table = current_user.tables.find_by(id: params[:table_id])
+          prompt = params[:prompt]
+          values = table.values_at(params[:fields_ids])
+          query_with_collection_values = prompt + " dans cette liste : " + values + ' ?' 
           
           llm = Langchain::LLM::OpenAI.new(api_key: ENV["OPENAI_API_KEY"])
           @results = llm.chat(messages: [{role: "user", content: query_with_collection_values }]).completion
 
-        else
-          @results = "Désolé je ne comprends pas votre question. Merci de vérifier les attributs."
+          Prompt.create(user_id: current_user.id, table_id: table.id, fields_id: params[:fields_ids], query: prompt, response: @results)
         end
-        Prompt.create(user_id: current_user.id, table_id: table.id, query: prompt, response: @results)
       end
     end
   end

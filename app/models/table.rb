@@ -33,13 +33,13 @@ class Table < ApplicationRecord
 	# Trouve toutes les valeurs des attributs nommés. 
 	# Ex : "LocalisationBureau, LocalisationTravail"
 	
-	def values_at(field_names)
+	def values_at(fields_ids)
 		values = []
 		
 		(1..self.size).each do |record_index|
 			record_values = []
-			field_names.each_with_index do |field_name|
-				if field = self.fields.find_by(name: field_name)
+			fields_ids.each_with_index do |field_id|
+				if field = self.fields.find_by(id: field_id)
 					if value = field.values.find_by(record_index: record_index)
 						if data = value.data
 							if field.Collection?
