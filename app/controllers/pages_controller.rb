@@ -50,6 +50,8 @@ class PagesController < ApplicationController
   end
 
   def assistant
+    @prompts = current_user.prompts.order(created_at: :desc)
+
     if params[:table_id].present? && params[:prompt].present? && params[:commit].present?
       if table = current_user.tables.find_by(id: params[:table_id])
         prompt = params[:prompt]
@@ -59,6 +61,7 @@ class PagesController < ApplicationController
         fields.each do |field|
           unless table.fields.pluck(:name).include?(field)
             correct_fields = false
+            break
           end
         end
         if correct_fields
@@ -67,9 +70,11 @@ class PagesController < ApplicationController
           
           llm = Langchain::LLM::OpenAI.new(api_key: ENV["OPENAI_API_KEY"])
           @results = llm.chat(messages: [{role: "user", content: query_with_collection_values }]).completion
+
         else
-          @results = "Pas compris, désolé. Merci de vérifier votre question et vos données."
+          @results = "Désolé je ne comprends pas votre question. Merci de vérifier les attributs."
         end
+        Prompt.create(user_id: current_user.id, table_id: table.id, query: prompt, response: @results)
       end
     end
   end

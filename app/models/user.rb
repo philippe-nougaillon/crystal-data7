@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :filters, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :mail_logs, dependent: :destroy
+  has_many :prompts, dependent: :destroy
 
   validates :name, :email, presence:true
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create	
