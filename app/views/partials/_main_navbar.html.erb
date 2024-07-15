@@ -16,6 +16,9 @@
           <li class="nav-item mt-1 <%= 'active' if params[:controller] == 'users' %>">
             <%= link_to current_user.email, current_user, title: "Profil utilisateur", class: "text-decoration-none py-2 text-black-50 px-3" %>
           </li>
+          <li class="nav-item mt-1 <%= 'active' if params[:action] == 'securite' %>">
+            <%= link_to "Sécurité", securite_tables_path, title: "Liste des accès", class: "text-decoration-none py-2 text-black-50 px-3" %>
+          </li>
           <li class="nav-item mt-1 <%= 'active' if params[:action] == 'a_propos' %>">
             <%= link_to "Aide", a_propos_path, title: "À Propos de CrystalDATA", class: "text-decoration-none py-2 text-black-50 px-3" %>
           </li>

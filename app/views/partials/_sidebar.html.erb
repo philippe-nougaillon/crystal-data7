@@ -4,7 +4,7 @@
     <li class="nav-item">
       <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, 
                   title: "Page d'accueil ou une collection de votre objet favori", 
-                  class: "d-flex flex-column align-items-center text-decoration-none link-primary py-2 #{'bg-body-secondary shadow-sm' if params[:controller] == 'tables' && @table && @table.show_on_startup_screen }",
+                  class: "d-flex flex-column align-items-center text-decoration-none link-primary py-3 #{'bg-body-secondary shadow-sm' if params[:controller] == 'tables' && @table && @table.show_on_startup_screen }",
                   disabled: current_user && current_user.favorite_table do %>
         <span class="material-symbols-outlined">
           home
@@ -14,7 +14,7 @@
     </li>
 
     <li class="nav-item">
-      <%= link_to tables_path, title: "Liste des Objets", class: "d-flex flex-column align-items-center text-decoration-none py-2 link-dark #{'bg-body-secondary shadow-sm' if params[:controller] == 'tables' && !((@table && @table.show_on_startup_screen) || params[:action] == 'securite')}" do %>
+      <%= link_to tables_path, title: "Liste des Objets", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-dark #{'bg-body-secondary shadow-sm' if params[:controller] == 'tables' && !((@table && @table.show_on_startup_screen) || params[:action] == 'securite')}" do %>
       <span class="material-symbols-outlined">
         database
       </span>
@@ -23,7 +23,7 @@
     </li>
 
     <li class="nav-item">
-      <%= link_to filters_path, title: "Liste des Filtres", class: "d-flex flex-column align-items-center text-decoration-none py-2 link-success #{'bg-body-secondary shadow-sm' if params[:controller] == 'filters'}" do %>
+      <%= link_to filters_path, title: "Liste des Filtres", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-success #{'bg-body-secondary shadow-sm' if params[:controller] == 'filters'}" do %>
       <span class="material-symbols-outlined">
         tune
       </span>
@@ -32,7 +32,7 @@
     </li>
 
     <li class="nav-item">
-      <%= link_to notifications_path, title: "Liste des Notifications", class: "d-flex flex-column align-items-center text-decoration-none py-2 link-warning #{'bg-body-secondary shadow-sm' if params[:controller] == 'notifications'}" do %>
+      <%= link_to notifications_path, title: "Liste des Notifications", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-warning #{'bg-body-secondary shadow-sm' if params[:controller] == 'notifications'}" do %>
       <span class="material-symbols-outlined">
         notifications_active
       </span>
@@ -40,26 +40,29 @@
       <% end %>
     </li>
 
+    <!--
     <li class="nav-item">
-      <%= link_to graphs_path, title: "Graphiques", class: "d-flex flex-column align-items-center text-decoration-none py-2 link-secondary #{'bg-body-secondary shadow-sm' if params[:action] == 'graphs'}", 'data-turbo': 'false' do %>
+      <%= link_to graphs_path, title: "Graphiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-secondary #{'bg-body-secondary shadow-sm' if params[:action] == 'graphs'}", 'data-turbo': 'false' do %>
       <span class="material-symbols-outlined">
         Query_stats
       </span>
       Graphs
       <% end %>
     </li>
+    
 
     <li class="nav-item">
-      <%= link_to securite_tables_path, title: "Graphiques", class: "d-flex flex-column align-items-center text-decoration-none py-2 link-danger #{'bg-body-secondary shadow-sm' if params[:action] == 'securite'}", 'data-turbo': 'false' do %>
+      <%= link_to securite_tables_path, title: "Sécurité", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-danger #{'bg-body-secondary shadow-sm' if params[:action] == 'securite'}", 'data-turbo': 'false' do %>
       <span class="material-symbols-outlined">
         lock
       </span>
       Sécurité
       <% end %>
     </li>
+    -->
 
     <li class="nav-item">
-      <%= link_to assistant_path, title: "Assistant", class: "d-flex flex-column align-items-center text-decoration-none py-2 link-info #{'bg-body-secondary shadow-sm' if params[:action] == 'assistant'}", 'data-turbo': 'false' do %>
+      <%= link_to assistant_path, title: "Assistant", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-info #{'bg-body-secondary shadow-sm' if params[:action] == 'assistant'}", 'data-turbo': 'false' do %>
       <span class="material-symbols-outlined">
         family_star
       </span>
