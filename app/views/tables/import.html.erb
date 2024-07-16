@@ -8,7 +8,7 @@
 
 <%= form_tag({action: "import_do", method: :post}, multipart: true) do %>
   <%= label_tag :upload, "Fichier source", class:'form-label' %>
-  <%= file_field_tag :upload, accept: 'text/csv', class: 'form-control form-control-lg mb-4', required: true %>
+  <%= file_field_tag :upload, accept: 'text/csv', class: 'form-control mb-4', required: true %>
 
   <%= label_tag :col_sep, 'Séparateur de colonnes' %>
   <%= select_tag :col_sep, options_for_select([',',';',':','::'], ','), class:'form-select mb-4' %>

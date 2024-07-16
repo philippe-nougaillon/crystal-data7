@@ -16,7 +16,7 @@
       <% field_value = value.data if value %>
       <br>
 
-      <% if value = values[index]%>
+      <% if value = values[index] %>
         <% case field.datatype when 'Fichier' %>
           <%= link_to Blob.find(value).file_attachment.filename, url_for(Blob.find(value).file), target: '_blank' %>
         <% when 'Image', 'PDF' %>
@@ -84,6 +84,6 @@
           <%= value %>
         <% end %>
       <% end %>
-    <% end%>
+    <% end %>
   </div>
 <% end %>
