@@ -4,8 +4,8 @@
 	</h1>
 </div>
 
-<div class="d-block d-md-flex justify-content-between gap-5 mt-4">
-	<div class="flex-grow-1">
+<div class="d-block d-md-flex justify-content-between gap-5">
+	<div class="flex-grow-1 mt-4">
 		<div class="overflow-x-auto">
 			<table class="table table-hover align-middle">
 				<thead>
@@ -31,7 +31,7 @@
 				<% end %>
 			</table>
 		</div>
-		<div class="flex-grow-1">
+		<div class="flex-grow-1 mt-4">
 			<h3 class="text-primary mb-4">Ajouter un nouvel attribut</h3>
 
 			<% if @field %>	
@@ -40,7 +40,7 @@
 		</div>
 	</div>
 	<div class="d-none d-md-block mx-auto">
-		<h4 class="text-primary text-center">Aperçu formulaire mobile</h4>
+		<h4 class="text-secondary text-center mb-0">Aperçu mobile</h4>
 		<div class="mockup-phone">
 			<%= render partial: 'fill_form', locals: {aperçu: true} %>
 		</div>

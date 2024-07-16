@@ -3,7 +3,7 @@
   <div data-controller="type">
     <%= f.hidden_field :table_id %>
 
-    <div class="d-flex flex-row flex-wrap gap-2 mb-4">
+    <div class="d-flex flex-row flex-wrap gap-2">
       <div>
         <%= f.label :datatype, "Type de données" %>
         <span data-action="change->type#change">
@@ -19,7 +19,7 @@
         </p>
       </div>
 
-      <div data-type-target='params' class="w-100 mt-24">
+      <div data-type-target='params' class="w-100 mt-24 mb-4">
         <%= f.label :items, "Paramètres" %>
         <%= f.text_field :items, class: "form-control w-100" %>
         <small class="form-text text-muted"></small>
