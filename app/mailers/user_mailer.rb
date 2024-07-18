@@ -8,6 +8,12 @@ class UserMailer < ApplicationMailer
 		mail(to: users.pluck(:email), subject: "Nouveau contenu '#{@table.name}'")
 	end
 
+	def welcome(user)
+		@user = user
+
+		mail(to: @user.email, subject: "[CrystalDATA] Bienvenue !")
+	end
+
 	def notification_nouveau_compte(user)
 		@user = user
 

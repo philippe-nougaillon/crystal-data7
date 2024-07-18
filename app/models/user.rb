@@ -24,6 +24,7 @@ class User < ApplicationRecord
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create	
 
   after_create :new_user_notification
+  after_create :welcome_email
 
   def favorite_table
     if self.tables.where(show_on_startup_screen: true).present?
@@ -68,6 +69,10 @@ class User < ApplicationRecord
 
   def new_user_notification
     UserMailer.with(user: self).new_user_notification.deliver_now
+  end
+
+  def welcome_email
+    UserMailer.welcome(self).deliver_now
   end
 
   def slug_candidates
