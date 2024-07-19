@@ -12,8 +12,10 @@
       ex: Article, Intervention, Technicien...
     </p>
 
-    <%= label_tag :model_id, "Modèle d'objet" %>
-    <%= select_tag :model_id, options_from_collection_for_select(@modèles, 'id', 'name_with_fields'), class: 'form-control mb-4 w-sm-50', include_blank: true %>
+    <% if @table.new_record? %>
+      <%= label_tag :model_id, "Modèle d'objet" %>
+      <%= select_tag :model_id, options_from_collection_for_select(@modèles, 'id', 'name_with_fields'), class: 'form-control mb-4 w-sm-50', include_blank: true %>
+    <% end %>
 
     <div class="form-check mb-4">
       <%= f.check_box :lifo, class: 'form-check-input' %>
