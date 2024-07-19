@@ -8,28 +8,30 @@
 
 <%= form_tag assistant_path, method: :get, class:'w-100 mb-5' do %>
 
-    <div class="d-flex flex-row gap-4">
-        <div class="mb-3">
+    <div class="d-flex flex-row">
+        <div class="mb-3 w-25 pe-4">
             <%= label_tag :table_id, "Collection", class: 'form-label' %>
             <%= select_tag :table_id, 
                             options_from_collection_for_select(current_user.tables.order(:name), 'id', 'name', params[:table_id]), 
                             include_blank: true,
-                            class: 'form-select', onchange: 'this.form.submit()' %>
+                            class: 'form-select w-100', onchange: 'this.form.submit()' %>
         </div>
 
-        <% if params[:table_id] %>
-            <div class="mb-3">
-                <%= label_tag :fields_ids, "Attributs", class: 'form-label' %>
-                <%= select_tag :fields_ids, 
-                                options_from_collection_for_select(@fields, 'id', 'name', params[:fields_ids]), 
-                                class: 'form-select', multiple: true %>
-            </div>
-        <% end %>
+        
+        <div class="mb-3 w-25">
+            <%= label_tag :fields_ids, "Attributs sources", class: 'form-label' %>
+            <%= select_tag :fields_ids, 
+                            options_from_collection_for_select(@fields || [], 'id', 'name', params[:fields_ids]), 
+                            class: 'form-select w-100', multiple: true %>
+            <p class="form-text">
+                Appuyez sur MAJ ou CTRL pour faire un choix multiple
+            </p>
+        </div>
     </div>
 
     <div>
         <%= label_tag :prompt, "Quelle est votre question ?", class: "label mb-2" %>
-        <%= text_area_tag :prompt, params[:prompt], class: 'form-control w-50', rows: 3, placeholder: "Quel client revient le plus souvent ? \r\nGénère-moi les 3 prochaines interventions à prévoir ? \r\nTu es statisticien. Calcule-moi la moyenne des durées ?" %>
+        <%= text_area_tag :prompt, params[:prompt], class: 'form-control w-50', rows: 5, placeholder: "Quel client revient le plus souvent ? \r\nGénère-moi les 3 prochaines interventions à prévoir ? \r\nTu es statisticien. Calcule-moi la moyenne des durées ?" %>
     </div>
 
     <%= submit_tag "Poser la question", class: 'btn btn-outline-info mt-4' %>
