@@ -43,17 +43,17 @@ class Table < ApplicationRecord
 					if value = field.values.find_by(record_index: record_index)
 						if data = value.data
 							if field.Collection?
-								record_values << field.get_linked_table_record(data).tr(',','')
+								record_values << "#{field.name}: #{field.get_linked_table_record(data)}"
 							else
-								record_values << data
+								record_values << "#{field.name}: #{data}"
 							end
 						end
 					end
 				end
 			end
-			values << record_values.join(' ')
+			values << record_values.join(', ')
 		end
-		return values.join(', ')
+		return values.to_json
 
 	end
 
