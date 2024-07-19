@@ -26,6 +26,13 @@
                   diamond
                 </span>
               <% end %>
+              <% if table.public? %>
+                <%= link_to fill_path(table), target: :_blank do %>
+                  <span class="material-symbols-outlined text-secondary" title="Formulaire public (cliquez pour voir l'URL à partager)">
+                    public
+                  </span>
+                <% end %>
+              <% end %>
               <br>
               <%= table.field_names %></td>
             <td>
