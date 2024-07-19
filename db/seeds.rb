@@ -157,8 +157,8 @@ Value.create!([
   {record_index: 5, field_id: 23, data: "2023-09-23", user_id: 1},
   {record_index: 5, field_id: 24, data: "SNCF", user_id: 1},
   {record_index: 5, field_id: 25, data: "115", user_id: 1},
-  {record_index: 5, field_id: 25, data: "3", user_id: 1},
   {record_index: 5, field_id: 26, data: "3", user_id: 1},
+  {record_index: 5, field_id: 27, data: "3", user_id: 1},
   
   {record_index: 6, field_id: 23, data: "2023-09-13", user_id: 1},
   {record_index: 6, field_id: 24, data: "Repas", user_id: 1},
