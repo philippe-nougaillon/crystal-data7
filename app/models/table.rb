@@ -124,6 +124,10 @@ class Table < ApplicationRecord
 		self.name.pluralize
 	end
 
+	def name_with_fields
+		"#{self.name} (#{self.fields.pluck(:name).join(', ')})"
+	end
+
 private
 	# only one candidate for an nice id; one random UDID
 	def slug_candidates

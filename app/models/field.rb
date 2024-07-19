@@ -60,8 +60,8 @@ class Field < ApplicationRecord
 
 	def populate_linked_table		
 		relation = self.relation
-		 
-		if table = Table.find_by(id: relation.relation_with_id)
+		
+		if relation && table = Table.find_by(id: relation.relation_with_id)
 			table_data = {}
 			source_fields = relation.items
 			
@@ -93,7 +93,7 @@ class Field < ApplicationRecord
 	def get_linked_table_record(index)
 		relation = self.relation
 
-		if table = Table.find_by(id: relation.relation_with_id)
+		if relation && table = Table.find_by(id: relation.relation_with_id)
 			table_data = []
 			source_fields = relation.items
 		

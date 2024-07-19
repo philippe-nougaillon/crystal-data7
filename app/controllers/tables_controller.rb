@@ -310,6 +310,11 @@ class TablesController < ApplicationController
   # GET /tables/new
   def new
     @table = Table.new
+    @table.name = "OBJET_#{DateTime.now.to_i}"
+    @table.lifo = true
+
+    @modèles = User.find(1).tables.first(4)
+
     if current_user.compte_démo?
       flash[:notice] = "(i)Un Objet permet de décrire quelque chose d'existant (ex: Voiture, Personne...) avec un ensemble d'attributs (Couleur, Puissance, Poids...). Une collection est constituée d'un ensemble d'objets de même nature"
     end
@@ -327,6 +332,15 @@ class TablesController < ApplicationController
     respond_to do |format|
       if @table.save
         @table.tables_users << TablesUser.create(table_id: @table.id, user_id: current_user.id, role: "Propriétaire")
+
+        if params[:model_id].present?
+          Table.find(params[:model_id]).fields.each do |f|
+            field = f.dup
+            field.row_order = @table.fields.maximum(:row_order).to_i + 1
+            field.table = @table
+            field.save
+          end
+        end
         format.html { redirect_to show_attrs_path(id: @table), notice: "Objet créé. Vous pouvez maintenant y ajouter des attributs" }
         format.json { render :show, status: :created, location: @table }
       else
