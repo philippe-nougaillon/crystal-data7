@@ -64,7 +64,6 @@ class Field < ApplicationRecord
 		if relation && table = Table.find_by(id: relation.relation_with_id)
 			table_data = {}
 			source_fields = relation.items
-			
 			table.values.includes(:field).each do |value| 
 				if source_fields.include?(value.field.name)
 					if value.field.Collection? 
@@ -80,8 +79,6 @@ class Field < ApplicationRecord
 							table_data[value.record_index] << ", #{ value.data }" 
 						end
 					end
-				else
-					table_data["0"] = "Erreur nom attribut !"
 				end
 			end
 			return table_data
