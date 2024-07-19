@@ -33,7 +33,7 @@ private
   end
 
   def user_not_authorized
-    if current_user.compte_démo?
+    if user_signed_in? && current_user.compte_démo?
       msg = "Vous n'êtes pas autorisé à effectuer cette action avec le compte démonstration. Veuillez créer un compte pour avoir toutes les fonctionnalités."
     else
       msg = "Vous n'êtes pas autorisé à effectuer cette action."

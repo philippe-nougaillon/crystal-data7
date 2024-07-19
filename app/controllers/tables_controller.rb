@@ -2,7 +2,7 @@ class TablesController < ApplicationController
   before_action :set_table, except: [:new, :create, :import, :import_do, :index, :securite]
   before_action :is_user_authorized?
   before_action :info_notice, only: %i[index show_attrs partages logs securite]
-  skip_before_action :authenticate_user!, only: %i[ icalendar ]
+  skip_before_action :authenticate_user!, only: %i[ icalendar fill fill_do ]
 
   # GET /tables
   # GET /tables.json
@@ -173,7 +173,7 @@ class TablesController < ApplicationController
 
   # formulaire d'ajout / modification
   def fill
-    if params[:record_index]
+    if params[:record_index] && user_signed_in?
       # modification ligne existante
       @record_index = params[:record_index]
     else
@@ -186,7 +186,7 @@ class TablesController < ApplicationController
   def fill_do
     table = Table.find(params[:table_id])
     data = params[:data]
-    if data.keys.first.to_i.positive?
+    if data.keys.first.to_i.positive? && user_signed_in?
       # update
       record_index = data.keys.first
       values = data[record_index.to_s]
@@ -258,8 +258,9 @@ class TablesController < ApplicationController
           Value.create(field_id: field.id, 
                       record_index: record_index, 
                       data: value,
-                      user_id: current_user.id,
-                      created_at: created_at_date)
+                      user_id: current_user.try(:id) || 3,
+                      created_at: created_at_date,
+                      audit_comment: (table.public? && !user_signed_in?) ? 'Anonyme' : nil)
 
         end
 
@@ -285,8 +286,10 @@ class TablesController < ApplicationController
         table = Table.find(Relation.find(params[:relation]).relation_with_id)
         url = details_path(table.slug, record_index: params[:value])
         redirect_to url, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
-      else
+      elsif user_signed_in?
         redirect_to table, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
+      else
+        redirect_to fill_path(table), notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
       end
     else
       redirect_to table, alert: "Aucune donnée enregistrée"
@@ -503,7 +506,7 @@ class TablesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def table_params
-      params.require(:table).permit(:name, :record_index, :lifo, :notification, :show_on_startup_screen)
+      params.require(:table).permit(:name, :record_index, :lifo, :notification, :show_on_startup_screen, :public)
     end
 
     def is_user_authorized?

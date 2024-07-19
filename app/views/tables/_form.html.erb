@@ -41,6 +41,14 @@
       </p>
     </div>
 
+    <div class="form-check mb-4">
+      <%= f.check_box :public, class: 'form-check-input' %>
+      <%= f.label :public, "Formulaire public", class: 'form-check-label' %>
+      <p class="form-text">
+        Rendre le formulaire accessible sans connexion (pour la saisie de données uniquement)
+      </p>
+    </div>
+
     <%= f.submit @table.new_record? ? "Continuer" : "Modifier cet objet", class: 'btn btn-outline-primary' %>
   <% end %>
 </div>
