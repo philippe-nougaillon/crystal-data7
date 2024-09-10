@@ -83,51 +83,29 @@ end
 gem "simple_form", ">= 5.0.0"
 gem 'friendly_id', '~> 5.2.4'
 gem "audited"
-gem "aws-sdk-s3", require: false
 gem 'exception_notification'
 gem "devise", "~> 4.9"
 gem "pundit", "~> 2.3"
 gem "dotenv-rails", "~> 2.8"
-
-
-# ??
-# gem 'ranked-model' 
-# gem 'sucker_punch', '~> 2.0'
-# gem "groupdate"
-# gem "chartkick", ">= 3.2.0"
-# gem 'autoprefixer-rails'
-
-# gem 'signature-pad-rails'
-
 gem "spreadsheet", "~> 1.3"
+gem "simple_calendar", "~> 3.0"
+gem "rqrcode", "~> 2.2"
+gem "mailgun-ruby", "~> 1.2"
 
 gem "kaminari", "~> 1.2"
-
 gem "bootstrap4-kaminari-views", "~> 1.0"
 
 gem "prawn", "~> 2.4"
-
 gem "prawn-table", "~> 0.2.2"
-
 gem "matrix", "~> 0.4.2"
 
-gem "rqrcode", "~> 2.2"
-
-gem "mailgun-ruby", "~> 1.2"
-gem "simple_calendar", "~> 3.0"
-
 gem "omniauth", "~> 2.1"
-
 gem "omniauth-rails_csrf_protection", "~> 1.0"
-
 gem "omniauth-google-oauth2", "~> 1.1"
 
 gem "icalendar", "~> 2.10"
-
 gem "csv", "~> 3.3"
 
 gem "langchainrb", "~> 0.13.4"
-
 gem "ruby-openai", "~> 7.1"
-
 gem "tiktoken_ruby", "~> 0.0.9"
