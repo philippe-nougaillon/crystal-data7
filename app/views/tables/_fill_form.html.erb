@@ -76,6 +76,9 @@
               </span>
             </button>
           </div>
+          <p class="form-text">
+            Patience, cela peut prendre quelques secondes...
+          </p>
         <% when 'Collection' %>
           <%# Checker si la liste vient d'une autre table %>
           <% if field.is_valid_table_params %>
@@ -129,6 +132,18 @@
               </div>
             <% end %> 
           </div>
+        <% when 'Météo' %>
+          <div data-controller="weather" class="input-group flex-row">
+            <%= text_field_tag field_name, field_value, class: 'form-control', 'data-weather-target': 'weathertextfield', required: field.obligatoire, 'data-testid': field.name %>
+            <button type="button" data-action="click->weather#search" class="btn btn-outline-primary btn-sm p-0" title="Position actuelle">
+              <span class="material-symbols-outlined mt-1 px-2">
+                my_location
+              </span>
+            </button>
+          </div>
+          <p class="form-text">
+            Patience, cela peut prendre quelques secondes...
+          </p>
         <% end %>
       </fieldset>
     <% end %>

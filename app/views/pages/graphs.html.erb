@@ -1,9 +1,9 @@
 <h1 class="text-2xl mt-4 text-secondary">
-  Statistiques
+  Graphiques
 </h1>
 
 <div class="d-flex justify-items-center flex-wrap gap-5">
-  <%= form_tag stats_path, method: :get, class: 'flex-fill d-flex flex-column mt-4 gap-4' do %>
+  <%= form_tag graphs_path, method: :get, class: 'flex-fill d-flex flex-column mt-4 gap-4' do %>
     <div>
       <%= label_tag :collection_id, "Collection", class: "label" %>
       <%= select_tag :collection_id,

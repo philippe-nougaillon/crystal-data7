@@ -1,12 +1,12 @@
 class PagesController < ApplicationController
-  before_action :info_notice, only: %i[stats]
+  before_action :info_notice, only: %i[graphs]
   skip_before_action :authenticate_user!, only: %i[a_propos]
 
   def a_propos
   end
 
-  def stats
-    @tables = current_user.tables
+  def graphs
+    @tables = current_user.tables.order(:name)
     @results = Hash.new
     params[:type] ||= 'line'
 
@@ -49,11 +49,31 @@ class PagesController < ApplicationController
     end
   end
 
+  def assistant
+    @prompts = current_user.prompts.order(created_at: :desc).limit(10)
+
+    if params[:table_id].present?
+      @fields = current_user.tables.find_by(id: params[:table_id]).fields.order(:name)
+      if params[:fields_ids].present? && params[:prompt].present? && params[:commit].present?
+        if table = current_user.tables.find_by(id: params[:table_id])
+          prompt = params[:prompt]
+          values = table.values_at(params[:fields_ids])
+          query_with_collection_values = prompt + " dans cette liste : " + values + ' ?' 
+          
+          llm = Langchain::LLM::OpenAI.new(api_key: ENV["OPENAI_API_KEY"])
+          @results = llm.chat(messages: [{role: "user", content: query_with_collection_values }]).completion
+
+          Prompt.create(user_id: current_user.id, table_id: table.id, fields_id: params[:fields_ids], query: prompt, response: @results)
+        end
+      end
+    end
+  end
+
   private
 
   def info_notice
     if current_user.compte_démo? && flash[:notice] == nil && flash[:alert] == nil && params.keys.size == 2
-      flash[:notice] = "(i)Les statistiques permettent de visualiser une série de valeurs issues de vos collections"
+      flash[:notice] = "(i)Les graphiques permettent de visualiser une série de valeurs issues de vos collections"
     end
   end
   

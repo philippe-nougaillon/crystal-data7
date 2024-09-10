@@ -30,6 +30,33 @@ class Table < ApplicationRecord
 		self.values.includes(:field).where("fields.visibility = 0 OR fields.visibility = 2").records_at(record_index).order("fields.row_order").pluck(:data)
 	end
 
+	# Trouve toutes les valeurs des attributs nommés. 
+	# Ex : "LocalisationBureau, LocalisationTravail"
+	
+	def values_at(fields_ids)
+		values = []
+		
+		(1..self.size).each do |record_index|
+			record_values = []
+			fields_ids.each_with_index do |field_id|
+				if field = self.fields.find_by(id: field_id)
+					if value = field.values.find_by(record_index: record_index)
+						if data = value.data
+							if field.Collection?
+								record_values << "#{field.name}: #{field.get_linked_table_record(data)}"
+							else
+								record_values << "#{field.name}: #{data}"
+							end
+						end
+					end
+				end
+			end
+			values << record_values.join(', ')
+		end
+		return values.to_json
+
+	end
+
 	def last_update_at(record_index)
 		self.values.where(record_index: record_index).maximum(:updated_at)
 	end
@@ -94,7 +121,11 @@ class Table < ApplicationRecord
 	end
 
 	def name_pluralized
-		self.name.pluralize.upcase
+		self.name.pluralize
+	end
+
+	def name_with_fields
+		"#{self.name} (#{self.fields.pluck(:name).join(', ')})"
 	end
 
 private

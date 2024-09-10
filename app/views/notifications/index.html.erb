@@ -10,9 +10,9 @@
       <tr class="table-secondary">
         <th>Objet</th>
         <th>Attribut</th>
-        <th>Valeur déclenchement</th>
+        <th>Valeur de déclenchement</th>
         <th>Notification envoyée à</th>
-        <th>Dernière notification le</th>
+        <th>Dernière notification envoyée</th>
         <th></th>
       </tr>
     </thead>
@@ -37,3 +37,4 @@
 </div>
 
 <%= link_to "Nouvelle notification", new_notification_path, class: 'btn btn-outline-primary' %>
+<%= link_to "Voir l'historique des emails envoyés", mail_logs_path, class: 'btn btn-outline-secondary' %>

@@ -123,3 +123,11 @@ gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "omniauth-google-oauth2", "~> 1.1"
 
 gem "icalendar", "~> 2.10"
+
+gem "csv", "~> 3.3"
+
+gem "langchainrb", "~> 0.13.4"
+
+gem "ruby-openai", "~> 7.1"
+
+gem "tiktoken_ruby", "~> 0.0.9"

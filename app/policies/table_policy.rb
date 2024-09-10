@@ -38,11 +38,11 @@ class TablePolicy < ApplicationPolicy
   end
 
   def fill?
-    record.users.include?(user) && record.role_number(user) >= 1
+    record.public? || (record.users.include?(user) && record.role_number(user) >= 1)
   end
 
   def fill_do?
-    fill? && (!(user.compte_démo?) || Rails.env.development?)
+    fill? && (!( user && user.compte_démo?) || Rails.env.development?)
   end
 
   def delete_record?

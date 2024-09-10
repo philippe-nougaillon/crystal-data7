@@ -1,4 +1,4 @@
-<div class="my-4 d-flex align-items-center text-info gap-2">
+<div class="my-4 d-flex align-items-center text-dark gap-2">
   <h1 class="mb-0">
     Objets
   </h1>
@@ -25,6 +25,13 @@
                 <span class="material-symbols-outlined text-primary fs-6">
                   diamond
                 </span>
+              <% end %>
+              <% if table.public? %>
+                <%= link_to fill_path(table), target: :_blank do %>
+                  <span class="material-symbols-outlined text-secondary" title="Formulaire public (cliquez pour voir l'URL à partager)">
+                    public
+                  </span>
+                <% end %>
               <% end %>
               <br>
               <%= table.field_names %></td>

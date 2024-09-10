@@ -1,0 +1,44 @@
+<nav class="navbar d-none d-lg-flex navbar-expand-lg bg-body-secondary border-bottom">
+  <div class="container-fluid">
+    <ul class="navbar-nav">
+      <li class="nav-item ps-1">
+        <%= link_to root_path, class:"text-decoration-none d-flex align-items-center gap-2 pb-1" do %>
+          <%= image_tag 'icons/crystaldata.png', style: "height: 3rem" %>
+          CrystalDATA
+        <% end %>
+      </li>
+    </ul>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      </ul>
+      <ul class="navbar-nav">
+        <% if user_signed_in? %>
+          <li class="nav-item <%= 'active' if params[:controller] == 'users' %>">
+            <%= link_to current_user, title: "Profil utilisateur", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+              <span class="material-symbols-outlined fs-5 text-black-50">
+                badge
+              </span>
+              <%= current_user.email %>
+            <% end %>
+          </li>
+          <li class="nav-item <%= 'active' if params[:action] == 'securite' %>">
+            <%= link_to securite_tables_path, title: "Liste des accès", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+              <span class="material-symbols-outlined fs-5 text-black-50">
+                lock
+              </span>
+              Sécurité
+            <% end %>
+          </li>
+          <li class="nav-item <%= 'active' if params[:action] == 'a_propos' %>">
+            <%= link_to a_propos_path, title: "À Propos de CrystalDATA", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+              <span class="material-symbols-outlined fs-5 text-black-50">
+                help
+              </span>
+              Aide
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -2,7 +2,7 @@ class TablesController < ApplicationController
   before_action :set_table, except: [:new, :create, :import, :import_do, :index, :securite]
   before_action :is_user_authorized?
   before_action :info_notice, only: %i[index show_attrs partages logs securite]
-  skip_before_action :authenticate_user!, only: %i[ icalendar ]
+  skip_before_action :authenticate_user!, only: %i[ icalendar fill fill_do ]
 
   # GET /tables
   # GET /tables.json
@@ -122,18 +122,20 @@ class TablesController < ApplicationController
 
     when 'map'
       if @table.fields.exists?(datatype: ['GPS'])
-        fields_id = @table.fields.where.not(datatype: ['GPS']).first(7).pluck(:id)
         @data = []
-        fields_id.each do |field|
-          @data << @table.values.where(record_index: @records, field_id: field).pluck(:data)
-        end
-        @data = @data.transpose
-        gps_values = @table.fields.where(datatype: 'GPS').first.values.where.not(data: [nil, '']).pluck(:data)
         @lng = []
         @lat = []
-        gps_values.each do |gps_value|
-          @lng << gps_value.split(',').last.to_f
-          @lat << gps_value.split(',').first.to_f
+        fields_id = @table.fields.where.not(datatype: ['GPS']).first(7).pluck(:id)
+        if fields_id.any?
+          fields_id.each do |field|
+            @data << @table.values.where(record_index: @records, field_id: field).pluck(:data)
+          end
+          @data = @data.transpose
+          gps_values = @table.fields.where(datatype: 'GPS').first.values.where.not(data: [nil, '']).pluck(:data)
+          gps_values.each do |gps_value|
+            @lng << gps_value.split(',').last.to_f
+            @lat << gps_value.split(',').first.to_f
+          end
         end
       end
     when 'calendar'
@@ -171,7 +173,7 @@ class TablesController < ApplicationController
 
   # formulaire d'ajout / modification
   def fill
-    if params[:record_index]
+    if params[:record_index] && user_signed_in?
       # modification ligne existante
       @record_index = params[:record_index]
     else
@@ -184,7 +186,7 @@ class TablesController < ApplicationController
   def fill_do
     table = Table.find(params[:table_id])
     data = params[:data]
-    if data.keys.first.to_i.positive?
+    if data.keys.first.to_i.positive? && user_signed_in?
       # update
       record_index = data.keys.first
       values = data[record_index.to_s]
@@ -256,8 +258,9 @@ class TablesController < ApplicationController
           Value.create(field_id: field.id, 
                       record_index: record_index, 
                       data: value,
-                      user_id: current_user.id,
-                      created_at: created_at_date)
+                      user_id: current_user.try(:id) || 3,
+                      created_at: created_at_date,
+                      audit_comment: (table.public? && !user_signed_in?) ? 'Anonyme' : nil)
 
         end
 
@@ -266,7 +269,8 @@ class TablesController < ApplicationController
           if notifications = table.notifications.where(field_id: field.id, value: value)
             notifications.each do |notification|
               notification.update!(last_notif_sent_at: DateTime.now)
-              UserMailer.new_custom_notification(notification, record_index).deliver_now
+              mailer_response = UserMailer.new_custom_notification(notification, record_index).deliver_now
+              MailLog.create(user_id: notification.user_id, message_id: mailer_response.message_id, to: notification.send_to, subject: "Notification '#{table.name.humanize}:#{field.name.humanize}'")
             end
           end
         end
@@ -282,8 +286,10 @@ class TablesController < ApplicationController
         table = Table.find(Relation.find(params[:relation]).relation_with_id)
         url = details_path(table.slug, record_index: params[:value])
         redirect_to url, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
-      else
+      elsif user_signed_in?
         redirect_to table, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
+      else
+        redirect_to fill_path(table), notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
       end
     else
       redirect_to table, alert: "Aucune donnée enregistrée"
@@ -307,6 +313,11 @@ class TablesController < ApplicationController
   # GET /tables/new
   def new
     @table = Table.new
+    @table.name = "OBJET_#{DateTime.now.to_i}"
+    @table.lifo = true
+
+    @modèles = User.find(1).tables.first(4)
+
     if current_user.compte_démo?
       flash[:notice] = "(i)Un Objet permet de décrire quelque chose d'existant (ex: Voiture, Personne...) avec un ensemble d'attributs (Couleur, Puissance, Poids...). Une collection est constituée d'un ensemble d'objets de même nature"
     end
@@ -324,6 +335,15 @@ class TablesController < ApplicationController
     respond_to do |format|
       if @table.save
         @table.tables_users << TablesUser.create(table_id: @table.id, user_id: current_user.id, role: "Propriétaire")
+
+        if params[:model_id].present?
+          Table.find(params[:model_id]).fields.each do |f|
+            field = f.dup
+            field.row_order = @table.fields.maximum(:row_order).to_i + 1
+            field.table = @table
+            field.save
+          end
+        end
         format.html { redirect_to show_attrs_path(id: @table), notice: "Objet créé. Vous pouvez maintenant y ajouter des attributs" }
         format.json { render :show, status: :created, location: @table }
       else
@@ -486,7 +506,7 @@ class TablesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def table_params
-      params.require(:table).permit(:name, :record_index, :lifo, :notification, :show_on_startup_screen)
+      params.require(:table).permit(:name, :record_index, :lifo, :notification, :show_on_startup_screen, :public)
     end
 
     def is_user_authorized?

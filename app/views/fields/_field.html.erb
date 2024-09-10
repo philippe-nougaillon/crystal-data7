@@ -1,6 +1,5 @@
 <tr data-item-id=<%= "#{field.id}" %> class="item">
   <td><%= i + 1 %></td>
-  <td><b><%= field.name %></b></td>
   <td>
     <div class="d-flex flex-row flex-wrap gap-2">
       <span class="material-symbols-outlined text-black-50">
@@ -10,6 +9,7 @@
       <%= "= #{field.items}" unless field.items.blank? %>
     </div>
   </td>
+  <td><b><%= field.name %></b></td>
   <td>
     <% if field.obligatoire %>Obligatoire<% end %>
     <% if field.filtre %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_20_082437) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -133,6 +133,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_082437) do
     t.index ["user_id"], name: "index_logs_on_user_id"
   end
 
+  create_table "mail_logs", force: :cascade do |t|
+    t.string "to"
+    t.string "subject"
+    t.string "message_id"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_mail_logs_on_user_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.string "nom"
     t.bigint "filter_id", null: false
@@ -160,6 +170,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_082437) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "prompts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "table_id", null: false
+    t.string "query"
+    t.string "response"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "fields_id", default: [], array: true
+    t.index ["table_id"], name: "index_prompts_on_table_id"
+    t.index ["user_id"], name: "index_prompts_on_user_id"
+  end
+
   create_table "relations", force: :cascade do |t|
     t.bigint "field_id", null: false
     t.integer "table_id"
@@ -181,6 +203,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_082437) do
     t.string "slug"
     t.integer "record_index", default: 0, null: false
     t.boolean "show_on_startup_screen", default: false
+    t.boolean "public"
     t.index ["slug"], name: "index_tables_on_slug", unique: true
   end
 
@@ -232,12 +255,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_082437) do
   add_foreign_key "filters", "users"
   add_foreign_key "logs", "fields"
   add_foreign_key "logs", "users"
+  add_foreign_key "mail_logs", "users"
   add_foreign_key "messages", "fields"
   add_foreign_key "messages", "filters"
   add_foreign_key "messages", "users"
   add_foreign_key "notifications", "fields"
   add_foreign_key "notifications", "tables"
   add_foreign_key "notifications", "users"
+  add_foreign_key "prompts", "tables"
+  add_foreign_key "prompts", "users"
   add_foreign_key "relations", "fields"
   add_foreign_key "tables_users", "tables"
   add_foreign_key "tables_users", "users"
