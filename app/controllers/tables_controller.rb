@@ -185,7 +185,7 @@ class TablesController < ApplicationController
   # formulaire d'ajout / modification posté
   def fill_do
     table = Table.find(params[:table_id])
-    data = params[:data]
+    data = params["[data]"]
     if data.keys.first.to_i.positive? && user_signed_in?
       # update
       record_index = data.keys.first
