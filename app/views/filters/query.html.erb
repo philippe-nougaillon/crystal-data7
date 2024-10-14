@@ -1,6 +1,6 @@
 <div class="my-4 d-flex align-items-center text-success gap-2">
   <h1 class="mb-0 d-inline">
-    <%= @filter.name %>
+    Report : <%= @filter.name %>
     [<%= @filter.table.name.pluralize %>]
   </h1>
 </div>
@@ -60,7 +60,7 @@
     <% end %>
     </div>
     
-    <%= submit_tag 'Enregistrer et appliquer le filtre/report', class: 'btn btn-outline-success' %>
+    <%= submit_tag 'Enregistrer et appliquer le filtre', class: 'btn btn-outline-success' %>
   <% end %>
 </div>
 
@@ -68,7 +68,7 @@
   <ul class="nav nav-tabs w-100 mt-4">
     <li class="nav-item shadow-sm">
       <div class="nav-link fw-bold active">
-        <%= @filter.table.name.pluralize.humanize %> + Filtre/Report
+        <%= @filter.table.name.pluralize.humanize %> > <%= @filter.name %>
       </div>
     </li>
   </ul>
