@@ -41,7 +41,7 @@ class FiltersController < ApplicationController
   def update
     respond_to do |format|
       if @filter.update(filter_params)
-        format.html { redirect_to filter_url(@filter), notice: "Filtre modifié." }
+        format.html { redirect_to filter_url(@filter), notice: "Filtre/Report modifié." }
         format.json { render :show, status: :ok, location: @filter }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,14 +55,14 @@ class FiltersController < ApplicationController
     @filter.destroy
 
     respond_to do |format|
-      format.html { redirect_to filters_url, notice: "Filtre supprimé." }
+      format.html { redirect_to filters_url, notice: "Filtre/Report supprimé." }
       format.json { head :no_content }
     end
   end
 
   def query
-    params[:query] ||= @filter.query
-    @filter.update(query: params[:query])
+    params["[query]"] ||= @filter.query
+    @filter.update(query: params["[query]"])
     @records = @filter.get_filtered_records
 
     respond_to do |format|
@@ -112,9 +112,9 @@ class FiltersController < ApplicationController
       if current_user.compte_démo? && flash[:notice] == nil && flash[:alert] == nil
         flash[:notice] = case params[:action]
         when 'index'
-          "(i)Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères"
+          "(i)Les Filtres/Reports permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères"
         when 'query'
-          if params.keys.count == 3 # ne pas afficher l'aide quand on applique le filtre
+          if params.keys.count == 3 # ne pas afficher l'aide quand on applique le filtre/report
             "(i)Renseignez ici les critères de sélection afin d'obtenir une collection d'objets filtrés"
           end
         end

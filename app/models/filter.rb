@@ -48,9 +48,10 @@ class Filter < ApplicationRecord
           if Field.exists?(id: key)
             field = Field.find(key)
             if field.is_numeric
+              # Détermine s'il y a des symboles (ex:)
               if search_value.to_i.zero?
                 # TODO : Beware of SQL Injection
-                sql = "CAST(data AS float8) #{search_value}"
+                sql = "CAST(nullif(data, '') AS float8) #{search_value}"
               else
                 sql = "data = ?", search_value
               end
@@ -58,7 +59,7 @@ class Filter < ApplicationRecord
               unless query.last['start'].blank?
                 start_date = query.last['start']
                 end_date = query.last['end'].blank? ? start_date : query.last['end']
-                sql = "DATE(data) BETWEEN ? AND ? ", start_date, end_date
+                sql = "data BETWEEN ? AND ?", start_date, end_date
               end
             elsif field.datatype == "Oui_non?"
               unless query.last['yes'].blank?
