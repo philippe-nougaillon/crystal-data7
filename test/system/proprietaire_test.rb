@@ -134,7 +134,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la Collection d'Objets", match: :first
+    click_on "Terminer", match: :first
     click_on "(+) #{@manufacturer_table.name}"
     field = find('[data-testid="État"]')
     field.select "Nouveau"
@@ -153,7 +153,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la Collection d'Objets", match: :first
+    click_on "Terminer", match: :first
     click_on "(+) #{@manufacturer_table.name}"
     field = find('[data-testid="URL"]')
     field.fill_in with: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
@@ -172,7 +172,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la Collection d'Objets", match: :first
+    click_on "Terminer", match: :first
     click_on "(+) #{@manufacturer_table.name}"
     field = find('[data-testid="Couleur"]')
     field.set("#FF0000")
@@ -191,7 +191,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la Collection d'Objets", match: :first
+    click_on "Terminer", match: :first
     click_on "(+) #{@manufacturer_table.name}"
     field = find('[data-testid="Coordonnées"]')
     field.fill_in with: '48.85879287621989, 2.294761243572842'
@@ -213,7 +213,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la Collection d'Objets", match: :first
+    click_on "Terminer", match: :first
     click_on "(+) #{@manufacturer_table.name}"
     field = find('[data-testid="Image"]')
     field.attach_file(Rails.root.join("test/fixtures/files/sample.jpg"))
@@ -233,7 +233,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la Collection d'Objets", match: :first
+    click_on "Terminer", match: :first
     click_on "(+) #{@manufacturer_table.name}"
     field = find('[data-testid="PDF"]')
     field.attach_file(Rails.root.join("test/fixtures/files/sample.pdf"))
@@ -254,7 +254,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la Collection d'Objets", match: :first
+    click_on "Terminer", match: :first
     click_on "(+) #{@manufacturer_table.name}"
     field = find("[data-testid='#{@device_table.name.humanize}']")
     field.select "#{@device_model_name_value_3.data}, #{@device_release_date_value_3.data}"
@@ -279,7 +279,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 
-    click_on "Voir la Collection d'Objets", match: :first
+    click_on "Terminer", match: :first
     click_on "(+) #{@manufacturer_table.name}"
     field = find('[data-testid="Assigné à"]')
     field.select @user.name
