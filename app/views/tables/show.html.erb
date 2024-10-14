@@ -90,7 +90,7 @@
       <% end %>
       <% if @table.filters.any? %>
         <div>
-          <%= label_tag :filtre, "Filtre" %>
+          <%= label_tag :filtre, "Filtre/Report" %>
           <%= select_tag :filtre, options_from_collection_for_select(@table.filters, 'slug', 'name', params[:filtre]), include_blank: true, class:'form-select', onchange: 'this.form.submit()' %>
         </div>
       <% end %>
