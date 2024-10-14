@@ -18,39 +18,39 @@
             <%= field.name.humanize %>
           </label>
           <% if field.is_numeric %>
-            <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
+            <%= text_field_tag "[query][#{field.id}]", params["[query]"].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
             <% hint = 'ex: >= 30  ou  30 (pour une égalité)' %>
           <% elsif field.Date? %>
             <div class="d-flex gap-4 mb-0">
-              <%= date_field_tag "[query][#{field.id}][start]", params[:query].try(:[], field.id.to_s).try(:[], :start), class: 'form-control w-100', autofocus: index.zero? %>
-              <%= date_field_tag "[query][#{field.id}][end]", params[:query].try(:[], field.id.to_s).try(:[], :end), class: 'form-control w-100' %>
+              <%= date_field_tag "[query][#{field.id}][start]", params["[query]"].try(:[], field.id.to_s).try(:[], :start), class: 'form-control w-100', autofocus: index.zero? %>
+              <%= date_field_tag "[query][#{field.id}][end]", params["[query]"].try(:[], field.id.to_s).try(:[], :end), class: 'form-control w-100' %>
             </div>
             <% hint = 'Entrez une date ou une période (date de début / date de fin)' %>
           <% elsif field.Liste? %>
-            <%= select_tag "[query][#{field.id}]", options_for_select(field.items_splitted, params[:query].try(:[], field.id.to_s)), class: 'form-select w-100', autofocus: index.zero?, multiple: true %>
+            <%= select_tag "[query][#{field.id}]", options_for_select(field.items_splitted, params["[query]"].try(:[], field.id.to_s)), class: 'form-select w-100', autofocus: index.zero?, multiple: true %>
             <% hint = 'Appuyez sur MAJ ou CTRL pour faire un choix multiple' %>
           <% elsif field.Collection? %>
             <%# Checker si la liste vient d'une autre table %>
             <% if field.is_valid_table_params %>
-              <%= select_tag "[query][#{field.id}]", options_for_select(field.populate_linked_table.invert, params[:query].try(:[], field.id.to_s)), class: 'form-select w-100 overflow-x-auto', autofocus: index.zero?, multiple: true %>
+              <%= select_tag "[query][#{field.id}]", options_for_select(field.populate_linked_table.invert, params["[query]"].try(:[], field.id.to_s)), class: 'form-select w-100 overflow-x-auto', autofocus: index.zero?, multiple: true %>
               <% hint = 'Appuyez sur MAJ ou CTRL pour faire un choix multiple' %>
             <% end %>
           <% elsif field.Workflow? %>
             <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
-            <%= select_tag "[query][#{field.id}]", options_for_select(items.keys, params[:query].try(:[], field.id.to_s)), class: 'form-select w-100', 'data-testid': field.name, autofocus: index.zero?, multiple: true %>
+            <%= select_tag "[query][#{field.id}]", options_for_select(items.keys, params["[query]"].try(:[], field.id.to_s)), class: 'form-select w-100', 'data-testid': field.name, autofocus: index.zero?, multiple: true %>
             <% hint = 'Appuyez sur MAJ ou CTRL pour faire un choix multiple' %>
           <% elsif field.datatype == "Oui_non?" || field.Signature? %>
             <br>
             <%= label_tag "[query][#{field.id}][yes]", "Oui", class: '' %>
-            <%= check_box_tag "[query][#{field.id}][yes]", params[:query].try(:[], field.id.to_s).try(:[], :yes), params[:query].try(:[], field.id.to_s).try(:[], :yes) %>
+            <%= check_box_tag "[query][#{field.id}][yes]", params["[query]"].try(:[], field.id.to_s).try(:[], :yes), params["[query]"].try(:[], field.id.to_s).try(:[], :yes) %>
             <%= label_tag "[query][#{field.id}][no]", "Non", class: '' %>
-            <%= check_box_tag "[query][#{field.id}][no]", params[:query].try(:[], field.id.to_s).try(:[], :no), params[:query].try(:[], field.id.to_s).try(:[], :no)%>
+            <%= check_box_tag "[query][#{field.id}][no]", params["[query]"].try(:[], field.id.to_s).try(:[], :no), params["[query]"].try(:[], field.id.to_s).try(:[], :no)%>
           <% elsif field.Stars? %>
-            <%= select_tag "[query][#{field.id}]", options_for_select((0..5).to_a, params[:query].try(:[], field.id.to_s)), class: 'form-select w-100',include_blank: true, autofocus: index.zero? %>
+            <%= select_tag "[query][#{field.id}]", options_for_select((0..5).to_a, params["[query]"].try(:[], field.id.to_s)), class: 'form-select w-100',include_blank: true, autofocus: index.zero? %>
             <% hint = 'Choisissez une note entre 0 et 5' %>
           <% else %>
-            <%= text_field_tag "[query][#{field.id}]", params[:query].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
-            <% hint = 'ex: %john%  ou  john (pour une égalité)' %>
+            <%= text_field_tag "[query][#{field.id}]", params["[query]"].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
+            <% hint = 'ex: %john% ou john (pour une égalité)' %>
           <% end %>
           <p class="form-text">
             <%= hint %>

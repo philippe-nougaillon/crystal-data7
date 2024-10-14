@@ -61,8 +61,8 @@ class FiltersController < ApplicationController
   end
 
   def query
-    params[:query] ||= @filter.query
-    @filter.update(query: params[:query])
+    params["[query]"] ||= @filter.query
+    @filter.update(query: params["[query]"])
     @records = @filter.get_filtered_records
 
     respond_to do |format|

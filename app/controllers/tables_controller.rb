@@ -67,7 +67,7 @@ class TablesController < ApplicationController
           start_date = params[:date][field_id][:start].blank? ? Date.today : params[:date][field_id][:start]
           end_date = params[:date][field_id][:end].blank? ? start_date : params[:date][field_id][:end]
           field = Field.find(field_id)
-          filter_records = @table.values.where(field: field).where("DATE(data) BETWEEN ? AND ?", start_date, end_date).pluck(:record_index) 
+          filter_records = @table.values.where(field: field).where("data BETWEEN ? AND ?", start_date, end_date).pluck(:record_index) 
           @filters[field_id] = [start_date, end_date]
           @filter_results[field_id] = filter_records
         end
