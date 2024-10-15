@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, controllers: { 
+    registrations: 'users/registrations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
   
   devise_scope :user do
     authenticated :user do
@@ -46,6 +49,13 @@ Rails.application.routes.draw do
 
   resources :notifications, except: %i[show]
   resources :mail_logs, only: %i[index show]
+  resources :organisations, only: %i[show edit update]
+
+  namespace :admin do
+    get :stats
+    get :create_new_user
+    post :create_new_user_do
+  end
   
   get 'show_attrs', to: 'tables#show_attrs' 
   get 'tables/:id/fill', to: 'tables#fill', as: :fill
@@ -56,7 +66,6 @@ Rails.application.routes.draw do
   get 'tables/:id/details', to: 'tables#show_details', as: :details
   get 'tables/:id/related_tables', to: 'tables#related_tables', as: :related_tables
   get '/import', to: 'tables#import'
-  get 'admin/stats'
 
   post 'tables/:id/fill', to: 'tables#fill_do', as: :fill_do
   post '/add_user_do', to:'tables#add_user_do'

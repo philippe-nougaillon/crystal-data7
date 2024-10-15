@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_15_084134) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -143,6 +143,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
     t.index ["user_id"], name: "index_mail_logs_on_user_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.string "nom"
+    t.bigint "filter_id", null: false
+    t.bigint "field_id", null: false
+    t.string "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["field_id"], name: "index_messages_on_field_id"
+    t.index ["filter_id"], name: "index_messages_on_filter_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.bigint "table_id", null: false
     t.bigint "field_id", null: false
@@ -155,6 +168,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
     t.index ["field_id"], name: "index_notifications_on_field_id"
     t.index ["table_id"], name: "index_notifications_on_table_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "organisations", force: :cascade do |t|
+    t.string "nom"
+    t.string "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "prompts", force: :cascade do |t|
@@ -219,7 +239,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
+    t.integer "role", default: 0
+    t.bigint "organisation_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["organisation_id"], name: "index_users_on_organisation_id"
     t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
@@ -243,6 +266,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
   add_foreign_key "logs", "fields"
   add_foreign_key "logs", "users"
   add_foreign_key "mail_logs", "users"
+  add_foreign_key "messages", "fields"
+  add_foreign_key "messages", "filters"
+  add_foreign_key "messages", "users"
   add_foreign_key "notifications", "fields"
   add_foreign_key "notifications", "tables"
   add_foreign_key "notifications", "users"
@@ -251,5 +277,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
   add_foreign_key "relations", "fields"
   add_foreign_key "tables_users", "tables"
   add_foreign_key "tables_users", "users"
+  add_foreign_key "users", "organisations"
   add_foreign_key "values", "users"
 end

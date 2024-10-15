@@ -1,10 +1,14 @@
 require 'dotenv/load'
 
+Organisation.create!([
+  {nom: "Organisation_démo", slug: "a2603914-7707-4b8c-b439-fcb4dcaed70b"}
+])
+
 User.create!([
-  {name: "Démo",      email: "crystaldata.propriétaire@gmail.com", password: ENV['DEMO_PASSWORD'], password_confirmation: ENV['DEMO_PASSWORD']},
-  {name: "CDLecteur", email: "crystaldata.lecteur@gmail.com", password: ENV['LECTEUR_PASSWORD'], password_confirmation: ENV['LECTEUR_PASSWORD']},
-  {name: "CDCollecteur",email: "crystaldata.collecteur@gmail.com", password: ENV['COLLECTEUR_PASSWORD'], password_confirmation: ENV['COLLECTEUR_PASSWORD']},
-  {name: "CDÉditeur", email: "crystaldata.editeur@gmail.com", password: ENV['EDITEUR_PASSWORD'], password_confirmation: ENV['EDITEUR_PASSWORD']}
+  {name: "Démo",        email: "crystaldata.propriétaire@gmail.com", organisation_id: 1, role: "admin", password: ENV['DEMO_PASSWORD'], password_confirmation: ENV['DEMO_PASSWORD']},
+  {name: "CDLecteur",   email: "crystaldata.lecteur@gmail.com", organisation_id: 1, role: "user", password: ENV['LECTEUR_PASSWORD'], password_confirmation: ENV['LECTEUR_PASSWORD']},
+  {name: "CDCollecteur",email: "crystaldata.collecteur@gmail.com", organisation_id: 1, role: "user", password: ENV['COLLECTEUR_PASSWORD'], password_confirmation: ENV['COLLECTEUR_PASSWORD']},
+  {name: "CDÉditeur",   email: "crystaldata.editeur@gmail.com", organisation_id: 1, role: "user", password: ENV['EDITEUR_PASSWORD'], password_confirmation: ENV['EDITEUR_PASSWORD']}
 ])
 
 Table.create!([
