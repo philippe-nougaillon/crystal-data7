@@ -1,24 +1,10 @@
-<div class="d-flex flex-end align-items-center justify-content-between flex-wrap my-4 ">
-  <h1 class="text-secondary mb-0">
-    Profil
-  </h1>
-  <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger', 'data-turbo': false, title: 'Se déconnecter' do %>
-    Se déconnecter
-  <% end %>
-</div>
+<p style="color: green"><%= notice %></p>
 
-<div class="my-4">
-  <h2 class='fs-3 mb-4'>Informations personnelles</h2>  
-  <p>Nom : <b><%= @user.name %></b></p>
-  <p>Email : <b><%= @user.email %></b></p>
-  <i>Utilisateur depuis <%= time_ago_in_words(@user.created_at) %></i><br>
-</div>
+<%= render @user %>
 
 <div>
-  <h2 class='fs-3 mb-4'>Activité du compte</h2>
+  <%= link_to "Edit this user", edit_user_path(@user) %> |
+  <%= link_to "Back to users", users_path %>
 
-  <div class="mb-4">
-    <p>Nombre d'objets créés : <span class="badge bg-success"><%= @total_tables %></span></p>
-    <p>Nombre total d'objets dans vos collections : <span class="badge bg-success"><%= @total_lignes %></span></p>
-  </div>
+  <%= button_to "Destroy this user", @user, method: :delete %>
 </div>

@@ -14,7 +14,7 @@
       <ul class="navbar-nav">
         <% if user_signed_in? %>
           <li class="nav-item <%= 'active' if params[:controller] == 'users' %>">
-            <%= link_to current_user, title: "Profil utilisateur", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+            <%= link_to profil_users_path, title: "Profil utilisateur", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
               <span class="material-symbols-outlined fs-5 text-black-50">
                 badge
               </span>
@@ -36,6 +36,11 @@
               </span>
               Aide
             <% end %>
+          </li>
+          <li class="nav-item">
+            <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger', 'data-turbo': false, title: 'Se déconnecter' do %>
+            Se déconnecter
+          <% end %>
           </li>
         <% end %>
       </ul>

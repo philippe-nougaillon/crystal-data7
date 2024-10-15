@@ -3,7 +3,16 @@ class UsersController < ApplicationController
   before_action :is_user_authorized?, except: %i[connect_guest_user]
   skip_before_action :authenticate_user!, only: %i[connect_guest_user]
 
-  def show
+  def index
+    @users = current_user.organisation.users
+  end
+
+  # GET /users/1 or /users/1.json
+  # def show
+  # end
+
+  def profil
+    @user = current_user
     @total_tables, @total_lignes = 0, 0
 
     @user.tables.each do |table|
@@ -14,30 +23,28 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    # unless ['pierreemmanuel.dacquet@gmail.com', 'philippe.nougaillon@gmail.com'].include?(current_user.email)
-    #   AdminMailer.with(organisation: @organisation, reason: params[:reason]).suppression_organisation_notification.deliver_now
-    # end
+  def edit
+  end
 
-    table_ids = TablesUser.where(user_id: @user.id, role: 'Propriétaire').pluck(:table_id)
-
-    Table.where(id: table_ids).destroy_all
-    @user.destroy
-
-    # TODO: ???
-      
-    if ['pierreemmanuel.dacquet@gmail.com', 'philippe.nougaillon@gmail.com'].include?(current_user.email)
-      respond_to do |format|
-        format.html { redirect_to admin_stats_path }
-        format.json { head :no_content }
+  def update
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to users_url, notice: "Utilisateur modifié avec succès." }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
-    else
-      # sign_out
+    end
+  end
 
-      # respond_to do |format|
-      #   format.html { redirect_to root_path, notice: "Tout a bien été supprimé. En espérant vous revoir prochainement :)" }
-      #   format.json { head :no_content }
-      # end
+  # DELETE /users/1 or /users/1.json
+  def destroy
+    @user.destroy!
+
+    respond_to do |format|
+      format.html { redirect_to users_url, notice: "Utilisateur supprimé avec succès." }
+      format.json { head :no_content }
     end
   end
 

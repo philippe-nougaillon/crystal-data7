@@ -27,7 +27,10 @@ Rails.application.routes.draw do
   resources :values
   resources :blobs, only: [:new, :create]
   
-  resources :users do
+  resources :users, except: %i[show] do
+    collection do
+      get :profil
+    end
     get :connect_guest_user
   end
   

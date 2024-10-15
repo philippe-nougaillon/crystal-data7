@@ -70,6 +70,15 @@
       <% end %>
     </li>
 
+    <li class="nav-item">
+      <%= link_to users_path, title: "Liste des utilisateurs", class: "d-flex flex-column align-items-center text-decoration-none py-3 #{'bg-body-secondary shadow-sm' if params[:action] == 'assistant'}", 'data-turbo': 'false' do %>
+      <span class="material-symbols-outlined">
+        group
+      </span>
+      Utilisateurs
+      <% end %>
+    </li>
+
     <!--
     <% if user_signed_in? %>
       <li class="nav-item w-100">
