@@ -19,8 +19,7 @@
   </div>
 
   <div class="text-black-50">
-    Modifié il y a <%= time_ago_in_words(@table.last_update_at(@record_index)) %>
-    (le <%= l @table.last_update_at(@record_index) %>)
+    <%= t('tables.values_updated_at', time_ago: time_ago_in_words(@table.last_update_at(@record_index)), date: (l @table.last_update_at(@record_index))) %>
   </div>
 </div>
 

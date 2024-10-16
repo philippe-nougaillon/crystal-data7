@@ -1,7 +1,7 @@
 <div class="d-block d-md-flex justify-content-between gap-5">
   <%= form_for(@table, class: 'flex-grow-1 mt-4') do |f| %>
 
-    <%= f.label :name, "Nom" %>
+    <%= f.label :name, t('scaffold.name') %>
     <%= f.text_field :name, required: true,
                       autofocus: true,
                       autocomplete: :off, 

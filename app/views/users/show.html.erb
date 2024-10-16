@@ -1,24 +1,24 @@
 <div class="d-flex flex-end align-items-center justify-content-between flex-wrap my-4 ">
   <h1 class="text-secondary mb-0">
-    Profil
+    <%= t('misc.profile') %>
   </h1>
   <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger', 'data-turbo': false, title: 'Se déconnecter' do %>
-    Se déconnecter
+    <%= t('misc.sign_out') %>
   <% end %>
 </div>
 
 <div class="my-4">
-  <h2 class='fs-3 mb-4'>Informations personnelles</h2>  
-  <p>Nom : <b><%= @user.name %></b></p>
-  <p>Email : <b><%= @user.email %></b></p>
-  <i>Utilisateur depuis <%= time_ago_in_words(@user.created_at) %></i><br>
+  <h2 class='fs-3 mb-4'><%= t('misc.personal_information') %></h2>  
+  <p><%= t('misc.name') %> : <b><%= @user.name %></b></p>
+  <p><%= t('misc.email') %> : <b><%= @user.email %></b></p>
+  <i><%= t('misc.user_since', date: time_ago_in_words(@user.created_at)) %></i><br>
 </div>
 
 <div>
-  <h2 class='fs-3 mb-4'>Activité du compte</h2>
+  <h2 class='fs-3 mb-4'><%= t('misc.account_activity') %></h2>
 
   <div class="mb-4">
-    <p>Nombre d'objets créés : <span class="badge bg-success"><%= @total_tables %></span></p>
-    <p>Nombre total d'objets dans vos collections : <span class="badge bg-success"><%= @total_lignes %></span></p>
+    <p><%= t('misc.total_tables') %> <span class="badge bg-success"><%= @total_tables %></span></p>
+    <p><%= t('misc.total_values') %> <span class="badge bg-success"><%= @total_lignes %></span></p>
   </div>
 </div>

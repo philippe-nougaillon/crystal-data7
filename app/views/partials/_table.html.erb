@@ -61,13 +61,13 @@
   <% if action_name != 'show_details' %>
     <div class="d-block">
       <!-- TODO : faire une boucle pour avoir moins de code répétitif -->
-      <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "#{t('tables.export', table_name: table.name )} XLS" do %>
+      <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "#{t('tables.export', table_name: table.name, export_format: "XLS" )}" do %>
         XLS
       <% end %>
-      <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "#{t('tables.export', table_name: table.name )}  CSV" do %>
+      <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "#{t('tables.export', table_name: table.name, export_format: "CSV" )}" do %>
         CSV
       <% end %>
-      <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "#{t('tables.export', table_name: table.name )}  PDF" do %>
+      <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "#{t('tables.export', table_name: table.name, export_format: "PDF" )}" do %>
         PDF
       <% end %>
     </div>

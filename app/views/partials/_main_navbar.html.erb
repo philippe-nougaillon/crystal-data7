@@ -14,13 +14,13 @@
       <ul class="navbar-nav">
         <li class="mt-2">
           <% if I18n.locale == :fr %>
-            <%= link_to url_for(locale: 'en', only_path: true) do %>
+            <%= link_to url_for(request.params.merge(locale: 'en')) do %>
               <span class="material-symbols-outlined">
                 language_us
               </span>
             <% end %>
           <% else %>
-            <%= link_to url_for(locale: 'fr', only_path: true) do %>
+            <%= link_to url_for(request.params.merge(locale: 'fr')) do %>
               <span class="material-symbols-outlined">
                 language_french
               </span>
@@ -41,7 +41,7 @@
               <span class="material-symbols-outlined fs-5 text-black-50">
                 lock
               </span>
-              Sécurité
+              <%= t('security.title') %>
             <% end %>
           </li>
           <li class="nav-item <%= 'active' if params[:action] == 'a_propos' %>">
@@ -49,7 +49,7 @@
               <span class="material-symbols-outlined fs-5 text-black-50">
                 help
               </span>
-              Aide
+              <%= t('misc.help') %>
             <% end %>
           </li>
         <% end %>

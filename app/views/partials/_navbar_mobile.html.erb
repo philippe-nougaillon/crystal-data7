@@ -16,6 +16,21 @@
         </ul>
       </h1>
     <% end %>
+    <div class="mt-2">
+      <% if I18n.locale == :fr %>
+        <%= link_to url_for(request.params.merge(locale: 'en')) do %>
+          <span class="material-symbols-outlined">
+            language_us
+          </span>
+        <% end %>
+      <% else %>
+        <%= link_to url_for(request.params.merge(locale: 'fr')) do %>
+          <span class="material-symbols-outlined">
+            language_french
+          </span>
+        <% end %>
+      <% end %>
+    </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -69,7 +84,7 @@
               <span class="material-symbols-outlined">
                 lock
               </span>
-              Sécurité
+              <%= t('security.title') %>
             <% end %>
           </li>
           <li class="nav-item">
@@ -77,7 +92,7 @@
               <span class="material-symbols-outlined">
                 family_star
               </span>
-              Assistant
+              <%= t('misc.assistant') %>
             <% end %>
           </li>
           <li class="nav-item">
@@ -85,7 +100,7 @@
               <span class="material-symbols-outlined">
                 badge
               </span>
-              Profil
+              <%= t('misc.profile') %>
             <% end %>
           </li>
         <% end %>
@@ -95,13 +110,13 @@
             <span class="material-symbols-outlined">
               help
             </span>
-            Aide
+            <%= t('misc.help') %>
           <% end %>
         </li>
 
         <% if user_signed_in? %>
           <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger btn-sm', 'data-turbo': false, title: 'Se déconnecter' do %>
-            Déconnexion
+            <%= t('misc.sign_out') %>
           <% end %>
         <% end %>
         
@@ -109,28 +124,28 @@
           <% if policy(@table).show_attrs? %>
             <li class="nav-item text-end">
               <%= link_to show_attrs_path(id:@table), class:'nav-link', title:"Modifier les attributs de l'Objet '#{@table.name}'" do %> 
-                Modifier Attributs
+                <%= t('tables.modify_attributes') %>
               <% end %>
             </li>
           <% end %>
           <% if policy(@table).edit? %>
             <li class="nav-item text-end">
               <%= link_to edit_table_path(id:@table), class:'nav-link', title:"Modifier l'Objet '#{@table.name}'" do %> 
-                Modifier Objet
+                <%= t('tables.modify_object') %>
               <% end %>
             </li>
           <% end %>
           <% if policy(@table).partages? %>
             <li class="nav-item text-end">
               <%= link_to partages_path(@table), class:'nav-link', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" do %>
-                Partages
+                <%= t('navbar.sharing') %>
               <% end %>
             </li>
           <% end %>
           <% if policy(@table).logs? %>
             <li class="nav-item text-end">
               <%= link_to logs_path(id:@table), class:'nav-link', title:"Historique des modifications de l'Objet '#{@table.name}'" do %>
-                Activité
+                <%= t('tables.activity') %>
               <% end %>
             </li>
           <% end %>

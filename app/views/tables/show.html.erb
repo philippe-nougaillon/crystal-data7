@@ -10,7 +10,7 @@
           <% if policy(@table).show_attrs? %>
             <li class="nav-item">
               <%= link_to show_attrs_path(id: @table), class: 'nav-link', title: t('tables.navbar.attributes_title', table_name: @table.name) do %> 
-                <%= t('tables.navbar.attributes') %>
+                <%= t('tables.attributes') %>
               <% end %>
             </li>
           <% end %>
@@ -32,7 +32,7 @@
             <p class="mb-0">|</p>
             <li class="nav-item">
               <%= link_to logs_path(id: @table), class: 'nav-link', title: t('tables.navbar.activity_title', table_name: @table.name) do %>
-                <%= t('tables.navbar.activity') %>
+                <%= t('tables.activity') %>
               <% end %>
             </li>
           <% end %>

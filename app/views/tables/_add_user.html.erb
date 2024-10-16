@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "partage_frame" do %>
   <h2 class="text-black-50 my-3">
-    Partager l'objet '<%= @table.name %>' avec un autre utilisateur
+    <%= t('tables.share_with_user', table: @table.name) %>
   </h2>
 
   <%= form_for :user, url: '/add_user_do' do %>
@@ -9,25 +9,25 @@
 
       <div class="col-sm-5">
         <div class="mb-4">
-          <%= radio_button_tag :type_partage, 'list', true, data: { 'action': 'change->partage#change'}, class: 'form-check-input' %> Collaborateurs
-          <%= radio_button_tag :type_partage, 'text', false, data: { 'action': 'change->partage#change', 'partage-target': 'source' }, class: 'form-check-input ms-5' %> Autre
+          <%= radio_button_tag :type_partage, 'list', true, data: { 'action': 'change->partage#change'}, class: 'form-check-input' %> <%= t('tables.collaborators') %>
+          <%= radio_button_tag :type_partage, 'text', false, data: { 'action': 'change->partage#change', 'partage-target': 'source' }, class: 'form-check-input ms-5' %> <%= t('tables.other') %>
         </div>
 
         <div data-partage-target='text' class="mb-4">
           <%= label_tag :email_text, "Email" %>
           <%= text_field_tag :email_text, nil, class:'form-control w-100', type: :email %>
-          <div class="form-text">L'utilisateur doit déjà exister</div>
+          <div class="form-text"><%= t('tables.user_have_to_exist') %></div>
         </div>
 
         <div data-partage-target='list' class="mb-4">
-          <%= label_tag :email_list, 'Choisissez parmi vos collaborateurs' %>
+          <%= label_tag :email_list, t('tables.choose_collaborator') %>
           <%= select_tag :email_list, options_for_select(others), include_blank: true, class: 'form-select w-100 mb-4' %>
         </div>
 
         <%= label_tag :role, 'Rôle' %>
         <%= select_tag :role, options_for_select(TablesUser.roles.keys.reject { |e| e == "Propriétaire" }), class:'form-select', required: true %>
         <br>
-        <%= submit_tag "Partager", class: 'btn btn-outline-primary', 'data-turbo-frame': "_top" %>
+        <%= submit_tag t('tables.share'), class: 'btn btn-outline-primary', 'data-turbo-frame': "_top" %>
       </div>
     </div>
   <% end %>

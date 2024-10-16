@@ -285,11 +285,11 @@ class TablesController < ApplicationController
       if params[:relation].present? && params[:value].present?
         table = Table.find(Relation.find(params[:relation]).relation_with_id)
         url = details_path(table.slug, record_index: params[:value])
-        redirect_to url, notice: t('notice.value.updated_created', status: update ? 'modifiées' : 'ajoutées')
+        redirect_to url, notice: t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
       elsif user_signed_in?
-        redirect_to table, notice: t('notice.value.updated_created', status: update ? 'modifiées' : 'ajoutées')
+        redirect_to table, notice: t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
       else
-        redirect_to fill_path(table), notice: t('notice.value.updated_created', status: update ? 'modifiées' : 'ajoutées')
+        redirect_to fill_path(table), notice: t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
       end
     else
       redirect_to table, alert: t('notice.value.no_save')
