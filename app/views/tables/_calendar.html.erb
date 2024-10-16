@@ -5,7 +5,7 @@
   <% records_index = @date_values.where(data: date).pluck(:record_index) %>
   <% if records_index.any? %>
     <% records_index.each do |record_index| %>
-      <%= link_to details_path(@table.slug, record_index:), title: 'Voir les détails de cette ligne', class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
+      <%= link_to details_path(@table.slug, record_index:), title: t('tables.details'), class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
         <div class="shadow-sm pb-3 px-2 bg-light">
           <% @table.values.joins(:field).where(record_index: record_index).where.not('field.datatype': ['Date', 'Signature', 'QRCode', 'Image', 'Fichier', 'PDF']).first(5).pluck(:data).each_with_index do |value, index| %>
             <br>
@@ -19,16 +19,16 @@
 <% end %>
 
 <h2 class="mt-6 mb-3">
-  Synchronisation du calendrier
+  <%= t('tables.sync_calendar') %>
 </h2>
 <p>
-  Ajouter le lien ci-dessous à votre calendrier personnel (Google Agenda, Apple Calendar, Outlook, ...) pour que les <%= @table.name.pluralize %> avec des attributs de type Date apparaissent automatiquement. Vous pouvez filtrer les <%= @table.name.pluralize %> en sélectionnant un filtre préalablement créé.
+  <%= t('tables.sync_calendar_notice', tables: @table.name.pluralize )%>
 </p>
 
 <div class="input-group mb-3">
   <input type="text" class="form-control" value=<%= root_url + icalendar_table_path(@table, user: current_user.slug, filtre: params[:filtre]) %> id="calendar-clipboard">
   <span id="myTooltip" onclick="copyLink()" class="btn btn-outline-secondary" style="cursor: pointer;">
-    Copier
+    <%= t('tables.copy') %>
   </span>
 </div>
 
@@ -40,6 +40,6 @@
     navigator.clipboard.writeText(copyText.value);
     
     var tooltip = document.getElementById("myTooltip");
-    tooltip.innerHTML = "Copié!";
+    tooltip.innerHTML = '<%= j(t('tables.copied')) %>';
   }
 </script>

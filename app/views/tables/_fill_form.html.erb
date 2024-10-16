@@ -43,8 +43,8 @@
             <canvas id="signature-pad" class="form-control" width=400 height=200></canvas>
 
             <div style="margin-top: 8px;">
-              <button id="save" class="btn btn-sm btn-outline-success">Valider cette signature</button>
-              <a id="clear" class="btn btn-sm btn-outline-dark">Effacer</a>
+              <button id="save" class="btn btn-sm btn-outline-success"><%= t('tables.validate_signature') %></button>
+              <a id="clear" class="btn btn-sm btn-outline-dark"><%= t('tables.clear') %></a>
             </div>
           </div>
 
@@ -70,14 +70,14 @@
         <% when 'GPS' %>
           <div data-controller="geolocation" class="input-group flex-row">
             <%= text_field_tag field_name, field_value, class: 'form-control', 'data-geolocation-target': 'gpstextfield', required: field.obligatoire, 'data-testid': field.name %>
-            <button type="button" data-action="click->geolocation#search" class="btn btn-outline-primary btn-sm p-0" title="Position actuelle">
+            <button type="button" data-action="click->geolocation#search" class="btn btn-outline-primary btn-sm p-0" title=<%= t('tables.actual_position') %>>
               <span class="material-symbols-outlined mt-1 px-2">
                 my_location
               </span>
             </button>
           </div>
           <p class="form-text">
-            Patience, cela peut prendre quelques secondes...
+            <%= t('tables.wait') %>
           </p>
         <% when 'Collection' %>
           <%# Checker si la liste vient d'une autre table %>
@@ -96,7 +96,7 @@
         <% when 'Utilisateur' %>
           <%= select_tag field_name, options_for_select(@table.users.pluck(:name), field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Vidéo_YouTube' %>
-          <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', required: field.obligatoire, placeholder: "ex: https://www.youtube.com/embed/eY67d0_ywiE", 'data-testid': field.name, title: 'Copier le lien YouTube (Partage/Intégration/src=LeLienÀCopier)' %>
+          <%= text_field_tag field_name, field_value, autofocus: (index == 0), class: 'form-control w-100', required: field.obligatoire, placeholder: "ex: https://www.youtube.com/embed/eY67d0_ywiE", 'data-testid': field.name, title: t('tables.youtube_hint') %>
         <% when 'QRCode', 'Distance' %>
           <%= text_field_tag field_name, field_value, class: 'form-control w-100', disabled: true, 'data-testid': field.name %>
         <% when 'UUID' %>
@@ -114,11 +114,11 @@
           </div>
 
           <div class="my-2 d-flex" style="gap: 4px;">
-            <a class="btn btn-sm btn-outline-success w-100" id="startButton">Scanner</a>
-            <a class="btn btn-sm btn-outline-dark w-100" id="resetButton">Effacer</a>
+            <a class="btn btn-sm btn-outline-success w-100" id="startButton"><%= t('tables.scan') %></a>
+            <a class="btn btn-sm btn-outline-dark w-100" id="resetButton"><%= t('tables.clear') %></a>
           </div>
 
-          <%= text_field_tag field_name, field_value, class: 'form-control w-100 mt-4', required: field.obligatoire, placeholder: "Aucune valeur scannée (appuyez sur 'Scanner' ci-dessus)", 'data-testid': field.name %>
+          <%= text_field_tag field_name, field_value, class: 'form-control w-100 mt-4', required: field.obligatoire, placeholder: t('tables.no_scan'), 'data-testid': field.name %>
 
           <%= render partial:'partials/script_qrscan', locals: {field_name:} %>
         <% when 'Stars' %>
@@ -135,14 +135,14 @@
         <% when 'Météo' %>
           <div data-controller="weather" class="input-group flex-row">
             <%= text_field_tag field_name, field_value, class: 'form-control', 'data-weather-target': 'weathertextfield', required: field.obligatoire, 'data-testid': field.name %>
-            <button type="button" data-action="click->weather#search" class="btn btn-outline-primary btn-sm p-0" title="Position actuelle">
+            <button type="button" data-action="click->weather#search" class="btn btn-outline-primary btn-sm p-0" title=<%= t('tables.acutal_position') %>>
               <span class="material-symbols-outlined mt-1 px-2">
                 my_location
               </span>
             </button>
           </div>
           <p class="form-text">
-            Patience, cela peut prendre quelques secondes...
+            <%= t('tables.wait') %>
           </p>
         <% end %>
       </fieldset>
@@ -150,10 +150,10 @@
   </div>
 
   <% if aperçu && @table.fields.count.zero? %>
-    <p class="mt-4 px-1">Aucun attribut n'a encore été ajouté à cet objet...</p>
+    <p class="mt-4 px-1"><%= t('tables.no_attribute') %></p>
   <% end %>
   <div class="d-flex flex-wrap align-items-center gap-2 mt-4 <%= aperçu ? 'px-1' : '' %>">
-    <%= submit_tag "Enregistrer", id:'submit', class: 'btn btn-outline-primary' %>
-    <%= link_to_unless aperçu, "Annuler", table_path(@table) %>
+    <%= submit_tag t('scaffold.submit'), id:'submit', class: 'btn btn-outline-primary' %>
+    <%= link_to_unless aperçu, t('scaffold.cancel'), table_path(@table) %>
   </div>
 </div>

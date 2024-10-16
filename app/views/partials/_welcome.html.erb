@@ -1,13 +1,10 @@
 <%= image_tag "undraw_Real_time_sync_re_nky7.png", class:'w-100 w-sm-75 mx-auto' %>
 <h1 class="text-primary">CrystalDATA</h1>
-<h2 class="fw-normal fs-4">Vos données métier 'In da Cloud'</h2>
+<h2 class="fw-normal fs-4"><%= t('misc.homepage_subtitle') %></h2>
 <h3 class="fw-light fs-5">
-    CrystalData est un gestionnaire d'informations NO-CODE qui vous permet de créer  
-    des collections d'objets métiers (ex: Clients, Interventions, Technicien, Frais, Projets, etc.), 
-    de les lier (Clients <==> Interventions <==> Techniciens <==> Frais) 
-    et de les partager en ligne avec vos collaborateurs.
+    <%= t('misc.homepage_description') %>
 </h3>
 <div class="d-flex flex-row flex-wrap gap-4 mt-2">
-    <%= link_to "En savoir plus", a_propos_path, class: "btn btn-outline-primary flex-fill" %>
-    <%= link_to "Mode invité (Se connecter à une démonstration)", user_connect_guest_user_path(1), class: 'btn btn-outline-success flex-fill' %>
+    <%= link_to t('misc.learn_more'), a_propos_path, class: "btn btn-outline-primary flex-fill" %>
+    <%= link_to t('misc.demo'), user_connect_guest_user_path(1), class: 'btn btn-outline-success flex-fill' %>
 </div>

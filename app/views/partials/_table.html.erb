@@ -11,7 +11,7 @@
               update
             </span>
             <span class="text-nowrap text-black">
-              MÀJ
+              <%= t('scaffold.updated_at') %>
               <% if params[:sort_by] == '0' %>
                 <span class="text-decoration-none text-warning "><%= (session[:order_by] == 'ASC') ? '△' : '▽' %></span>
               <% end %>
@@ -50,23 +50,24 @@
 <% end %>
 <div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
   <p class="flex-fill mb-0">
-    Affichage de 
+    <%= t('pagination.display_of') %>
     <%= @records_size || '0' %>
     <%= table.name.pluralize(@records_size) %>
     
     <% if action_name == 'show' %>
-      sur <%= @records.size %> au total
+      <%= t('pagination.total', records_count: @records.size) %>
     <% end %>
   </p>
   <% if action_name != 'show_details' %>
     <div class="d-block">
-      <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "Exporter la collection d'objets '#{table.name}' au format XLS" do %>
+      <!-- TODO : faire une boucle pour avoir moins de code répétitif -->
+      <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "#{t('tables.export', table_name: table.name )} XLS" do %>
         XLS
       <% end %>
-      <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "Exporter la collection d'objets '#{table.name}' au format CSV" do %>
+      <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "#{t('tables.export', table_name: table.name )}  CSV" do %>
         CSV
       <% end %>
-      <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "Exporter la collection d'objets '#{table.name}' au format PDF" do %>
+      <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "#{t('tables.export', table_name: table.name )}  PDF" do %>
         PDF
       <% end %>
     </div>

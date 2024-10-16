@@ -1,6 +1,6 @@
 <div class="my-4 d-flex align-items-center text-warning gap-2">
   <h1 class="mb-0">
-    Notifications
+    <%= t('notifications.index') %>
   </h1>
 </div>
 
@@ -8,11 +8,11 @@
   <table class="table table-hover border align-middle">
     <thead>
       <tr class="table-secondary">
-        <th>Objet</th>
-        <th>Attribut</th>
-        <th>Valeur de déclenchement</th>
-        <th>Notification envoyée à</th>
-        <th>Dernière notification envoyée</th>
+        <th><%= t('notifications.object') %></th>
+        <th><%= t('misc.attribute') %></th>
+        <th><%= t('notifications.trigger_value') %></th>
+        <th><%= t('notifications.send_to') %></th>
+        <th><%= t('notifications.last_sent') %></th>
         <th></th>
       </tr>
     </thead>
@@ -26,7 +26,7 @@
         <tr>
           <td colspan=7>
             <i>
-              Aucune notification pour l'instant...
+              <%= t('notifications.no_notification') %>
             </i>
           </td>
         </tr>
@@ -36,5 +36,5 @@
   </table>
 </div>
 
-<%= link_to "Nouvelle notification", new_notification_path, class: 'btn btn-outline-primary' %>
-<%= link_to "Voir l'historique des emails envoyés", mail_logs_path, class: 'btn btn-outline-secondary' %>
+<%= link_to t('notifications.new'), new_notification_path, class: 'btn btn-outline-primary' %>
+<%= link_to t('notifications.mail_log'), mail_logs_path, class: 'btn btn-outline-secondary' %>

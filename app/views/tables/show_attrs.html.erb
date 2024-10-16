@@ -1,6 +1,6 @@
 <div class="mt-4 d-flex align-items-center text-primary gap-2">
 	<h1 class="mb-0 d-inline">
-		Attributs de l'objet '<%= @table.name %>'
+		<%= t('tables.attributes', table: @table.name) %>
 	</h1>
 </div>
 
@@ -11,10 +11,10 @@
 				<thead>
 					<tr>
 						<th class="col-md-1">#</th>
-						<th>Type de données</th>
-						<th>Nom de l'attribut</th>
-						<th>Options</th>
-						<th>Visibilité</th>
+						<th><%= t('tables.datatype') %></th>
+						<th><%= t('tables.attribute_name') %></th>
+						<th><%= t('tables.options') %></th>
+						<th><%= t('tables.visibility') %></th>
 						<th></th>
 					</tr>
 				</thead>
@@ -25,14 +25,14 @@
 				<% else %>
 					<tr>
 						<td colspan="6" class="text-center">
-							Aucun attribut n'a été ajouté à cet objet.
+							<%= t('tables.no_attribute') %>
 						</td>
 					</tr>
 				<% end %>
 			</table>
 		</div>
 		<div class="flex-grow-1 mt-4">
-			<h3 class="text-primary mb-4">Ajouter un nouvel attribut</h3>
+			<h3 class="text-primary mb-4"><%= t('tables.new_attribute') %></h3>
 
 			<% if @field %>	
 				<%= render partial:'fields/form' %>
@@ -40,7 +40,7 @@
 		</div>
 	</div>
 	<div class="d-none d-md-block mx-auto">
-		<h4 class="text-secondary text-center mb-0">Aperçu mobile</h4>
+		<h4 class="text-secondary text-center mb-0"><%= t('tables.phone_preview') %></h4>
 		<div class="mockup-phone">
 			<%= render partial: 'fill_form', locals: {aperçu: true} %>
 		</div>

@@ -15,7 +15,7 @@
           <% if Value.is_valid_date?(value) %>
             <%= link_to_if is_link, l(value.to_date), details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2' %>
           <% else %>
-            Erreur
+            <%= t('tables.error') %>
           <% end %>
         <% end %>
       <% when 'Texte_long' %>
@@ -42,7 +42,7 @@
         <% if linked_table %>
           <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2', 'data-testid': "Voir les détails de #{field.items.tr('[]','').split('.').first} à la ligne n°#{value}" %>
         <% else %>
-          Aucune relation trouvée
+          <%= t('tables.collection_not_found') %>
         <% end %>
       <% when 'Utilisateur' %>
         <%= value %>
@@ -51,7 +51,7 @@
           <iframe width="200" height="120" src="<%= value %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         <% else %>
           <div class="d-flex gap-2">
-            <span class="material-symbols-outlined text-black-50" title="Pour afficher la vidéo directement, veuillez copier le lien d'intégration de la vidéo YouTube" role="button">
+            <span class="material-symbols-outlined text-black-50" title="<%= t('tables.youtube_error') %>" role="button">
               error
             </span>
             <%= link_to value, value, target: "_blank", data: { turbo_frame: "_top" }, class: 'text-black' %>
