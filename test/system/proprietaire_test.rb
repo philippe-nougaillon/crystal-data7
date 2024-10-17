@@ -130,7 +130,7 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
 
     page.select "Statut", from: "Type de données"
     fill_in "Nom", with: "État"
-    fill_in "Paramètres", with: "Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary"
+    fill_in "Paramètres", with: "Nouveau:bleu,Confirmé:vert,Annulé:rouge,Archivé:gris"
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 

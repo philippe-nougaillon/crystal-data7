@@ -26,6 +26,34 @@ class Field < ApplicationRecord
 	scope :détaillable, -> { where(visibility: 'Vue_Détails').or(where(visibility: 'Liste_et_Détails')) }
 	scope :ordered, -> { order(:row_order) }
 
+	COLOR_MAPPINGS =  {
+    "bleu" => "primary",
+    "blue" => "primary",
+    "gris" => "secondary",
+    "gray" => "secondary",
+		"grey" => "secondary",
+    "vert" => "success",
+    "green" => "success",
+    "jaune" => "warning text-dark",
+    "yellow" => "warning text-dark",
+    "rouge" => "danger",
+    "red" => "danger",
+		"bleuclair" => "info text-dark",
+    "lightblue" => "info text-dark",
+    "blanc" => "light text-dark",
+    "white" => "light text-dark",
+    "noir" => "dark",
+    "black" => "dark"
+  }
+
+	def self.bootstrap_class(color_name)
+		if color_name
+			COLOR_MAPPINGS[color_name.downcase.gsub(/[\s_]/, '')]
+		else
+			"secondary"
+		end
+  end
+
 	# evaluer [1] + [2] ou [1] * [2]
 	def evaluate(table, record_index)
 		formule_to_evaluate = self.items # ex: "[Temps passé] + [prix Heure]"
@@ -276,12 +304,16 @@ private
 	def check_options
 		case self.datatype
 		when 'Statut'
-			unless self.items.count(':') > 0 && self.items_splitted.any?
-				errors.add(:erreur, ": Paramètres du statut incorrects")
+			if self.items.blank?
+				errors.add(:erreur, I18n.t('errors.statut_parameter_blank'))
+			elsif self.items.count(':') == 0
+				errors.add(:erreur, I18n.t('errors.statut_parameter_no_separator'))
+			elsif self.items.count(':') != self.items_splitted.count
+				errors.add(:erreur, I18n.t('errors.statut_parameter_invalid_value'))
 			end
 		when 'Liste'
 			unless self.items.count(',') > 0 || self.items.count('[') > 0
-				errors.add(:erreur, ": Paramètres de la liste incorrects")
+				errors.add(:erreur, I18n.t('errors.list_parameter_invalid'))
 			end
 		end
 	end
