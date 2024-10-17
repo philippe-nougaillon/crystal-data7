@@ -2,7 +2,7 @@
 
   <div class="my-4 d-flex align-items-center text-secondary gap-2">
     <h1 class="mb-0 d-inline">
-      Activité (modifications sur l'objet '<%= @table.name %>')
+      <%= t('tables.audit_title', table: @table.name) %>
     </h1>
   </div>
 
@@ -10,11 +10,11 @@
     <%= form_tag(request.path, method: :get, class: 'd-flex mb-4 gap-4 align-items-end') do %>
 
       <div>
-        <%= label_tag "Utilisateur" %>
+        <%= label_tag t('misc.users') %>
         <%= select_tag :user_id, options_from_collection_for_select(@table.users, "id", "name", params[:user_id]), include_blank:true, onchange: 'this.form.submit()', class:'form-select' %>
       </div>
 
-      <%= submit_tag 'Filtrer', class: 'btn btn-outline-primary' %>
+      <%= submit_tag t('misc.filter'), class: 'btn btn-outline-primary' %>
     <% end %>
   <% end %>
 
@@ -22,15 +22,15 @@
     <table class="table table-hover table-bordered border align-middle">
       <thead>
         <tr>
-          <th>Il y a</th>
-          <th>Qui</th>
-          <th>IP</th>
-          <th>Action</th>
-          <th>Index</th>
-          <th>Attribut</th>
-          <th>Avant</th>
-          <th>Après</th>
-          <th>Commentaires</th>
+          <th><%= t('misc.time_ago') %></th>
+          <th><%= t('misc.who') %></th>
+          <th><%= t('misc.ip') %></th>
+          <th><%= t('misc.action') %></th>
+          <th><%= t('misc.index') %></th>
+          <th><%= t('misc.attribute') %></th>
+          <th><%= t('misc.before') %></th>
+          <th><%= t('misc.after') %></th>
+          <th><%= t('misc.comments') %></th>
         </tr>
       </thead>
 
@@ -42,6 +42,6 @@
     </table>
   </div>
 
-  <%= page_entries_info @audits, entry_name: 'changement' %>
+  <%= page_entries_info @audits, entry_name: t('misc.change') %>
   <%= paginate @audits, theme: 'twitter-bootstrap-4' %>
 <% end %>

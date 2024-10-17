@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center w-100 mt-5">
   <div class="card p-5">
-    <h1 class="text-primary mb-4">S'inscrire</h1>
+    <h1 class="text-primary mb-4"><%= t('auth.register') %></h1>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <% if @user.errors.any? %>
@@ -17,24 +17,24 @@
 
       <div class="w-100" style="gap: 1rem">
         <div>
-          <%= f.label :name, "Nom ou Pseudo" %>
+          <%= f.label :name, t('auth.name_pseudo') %>
           <%= f.text_field :name, required: true, class: 'form-control w-100' %>
         </div>
         <div>
-          <%= f.label :email, "Adresse email" %>
+          <%= f.label :email, t('auth.email') %>
           <%= f.text_field :email, required:true, class: 'form-control w-100', type: :email %>
         </div>
         <div>
-          <%= f.label :password, "Mot de passe" %>
-          <%= f.password_field :password, required:true, class: 'form-control w-100', hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+          <%= f.label :password, t('auth.password') %>
+          <%= f.password_field :password, required:true, class: 'form-control w-100', hint: (t('auth.minimum_password_length', length: @minimum_password_length) if @minimum_password_length) %>
         </div>
         <div>
-          <%= f.label :password_confirmation, "Confirmation" %>
+          <%= f.label :password_confirmation, t('auth.password_confirmation') %>
           <%= f.password_field :password_confirmation, class: 'form-control w-100' %>
         </div>
         <div class="col-sm-offset-1 col-sm-3 mt-4 w-100" style="gap: 1rem">
-          <%= f.submit "Créer le compte", class: 'btn btn-outline-primary' %>
-          <%= link_to "Annuler", unauthenticated_root_path, class:'btn btn-outline-dark' %>
+          <%= f.submit t('auth.create'), class: 'btn btn-outline-primary' %>
+          <%= link_to t('scaffold.back'), unauthenticated_root_path, class:'btn btn-outline-dark' %>
         </div>
       </div>
     <% end %>

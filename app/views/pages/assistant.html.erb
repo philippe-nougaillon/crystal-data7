@@ -1,16 +1,16 @@
 <h1 class="text-2xl mt-4 text-info">
-    Assistant (IA)
+    <%= t('assistant.title') %>
 </h1>
 
 <h4 class="my-4">
-    Posez une question à l'Assistant, basée sur les données d'une collection
+    <%= t('assistant.subtitle') %>
 </h4>
 
 <%= form_tag assistant_path, method: :get, class:'w-100 mb-5' do %>
 
     <div class="d-flex flex-row">
         <div class="mb-3 w-25 pe-4">
-            <%= label_tag :table_id, "Collection", class: 'form-label' %>
+            <%= label_tag :table_id, t('misc.table'), class: 'form-label' %>
             <%= select_tag :table_id, 
                             options_from_collection_for_select(current_user.tables.order(:name), 'id', 'name', params[:table_id]), 
                             include_blank: true,
@@ -19,22 +19,22 @@
 
         
         <div class="mb-3 w-25">
-            <%= label_tag :fields_ids, "Attributs sources", class: 'form-label' %>
+            <%= label_tag :fields_ids, t('assistant.source_field'), class: 'form-label' %>
             <%= select_tag :fields_ids, 
                             options_from_collection_for_select(@fields || [], 'id', 'name', params[:fields_ids]), 
                             class: 'form-select w-100', multiple: true, required: true %>
             <p class="form-text">
-                Appuyez sur MAJ ou CTRL pour faire un choix multiple
+                <%= t('misc.select_hint') %>
             </p>
         </div>
     </div>
 
     <div>
-        <%= label_tag :prompt, "Quelle est votre question ?", class: "label mb-2" %>
-        <%= text_area_tag :prompt, params[:prompt], class: 'form-control w-50', rows: 5, required: true, placeholder: "Quel client revient le plus souvent ? \r\nGénère-moi les 3 prochaines interventions à prévoir ? \r\nTu es statisticien. Calcule-moi la moyenne des durées ?" %>
+        <%= label_tag :prompt, t('assistant.question?'), class: "label mb-2" %>
+        <%= text_area_tag :prompt, params[:prompt], class: 'form-control w-50', rows: 5, required: true, placeholder: t('assistant.question_hint') %>
     </div>
 
-    <%= submit_tag "Poser la question", class: 'btn btn-outline-info mt-4' %>
+    <%= submit_tag t('assistant.submit'), class: 'btn btn-outline-info mt-4' %>
 <% end %>
 
 <div class="mt-4">

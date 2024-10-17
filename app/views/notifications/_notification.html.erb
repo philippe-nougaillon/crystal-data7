@@ -3,13 +3,13 @@
   <td><%= notification.field.name %></td>
   <td><%= notification.value %></td>
   <td><%= notification.send_to %></td>
-  <td><%= "il y a #{time_ago_in_words(notification.last_notif_sent_at)}" if notification.last_notif_sent_at %></td>
+  <td><%= t('scaffold.time_ago', time: notification.last_notif_sent_at) if notification.last_notif_sent_at %></td>
   <td style="text-align: right; white-space: nowrap;">
     <% if policy(notification).edit? %>
-      <%= link_to "Modifier", edit_notification_path(notification), class: 'btn btn-sm btn-outline-primary me-2' %>
+      <%= link_to t('scaffold.update'), edit_notification_path(notification), class: 'btn btn-sm btn-outline-primary me-2' %>
     <% end %>
     <% if policy(notification).destroy? %>
-      <%= button_to "X", notification, method: :delete, 'data-turbo-confirm': "Êtes-vous certain.e", class: 'btn btn-sm btn-outline-danger', form_class: 'float-end' %>
+      <%= button_to t('scaffold.destroy'), notification, method: :delete, 'data-turbo-confirm': t('scaffold.sure?'), class: 'btn btn-sm btn-outline-danger', form_class: 'float-end' %>
     <% end %>
   </td>
 </tr>

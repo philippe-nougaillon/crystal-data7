@@ -4,16 +4,16 @@
   <% value = log.audited_changes['data'] %>
   <% old_value = log.audited_changes['old_value'] %>
   <td><%= "#{ time_ago_in_words(log.created_at) } (#{ l log.created_at })" %></td>
-  <td><%= log.user ? log.user.name.humanize : 'Administrateur' %></td>
+  <td><%= log.user ? log.user.name.humanize : t('misc.admin') %></td>
   <td><%= log.remote_address %></td>
-  <td><%= log.audited_changes['old_value'] ? 'Modification' : 'Création' %>
+  <td><%= log.audited_changes['old_value'] ? t('scaffold.modification') : t('misc.creation') %>
   <td><%= record_index %></td>
   <td><%= field.name %></td>
   <td>
     <% if field.Collection? %>
       <%= field.get_linked_table_record(old_value.to_i) %>
     <% elsif field.Signature? %>
-      <%= old_value.blank? ? 'Pas signé' : 'Signé' %>
+      <%= old_value.blank? ? t('misc.not_signed') : t('misc.signed') %>
     <% else %>
       <%= truncate(old_value, length: 50) %>
     <% end %>
@@ -22,7 +22,7 @@
     <% if field.Collection? %>
       <%= field.get_linked_table_record(value.to_i) %>
     <% elsif field.Signature? %>
-      <%= value.blank? ? 'Pas signé' : 'Signé' %>
+      <%= value.blank? ? t('misc.not_signed') : t('misc.signed') %>
     <% else %>
       <%= truncate(value, length: 50) %>
     <% end %>

@@ -1,12 +1,12 @@
 <% content_for :title, "Modifier utilisateur" %>
 
-<h1>Modifier utilisateur</h1>
+<h1><%= t('users.update_user') %></h1>
 
 <%= render "form", user: @user %>
 
 <br>
 
 <div>
-  <%= link_to "Voir", @user %> |
-  <%= link_to "Retour", users_path %>
+  <%= link_to t('misc.see'), @user %> |
+  <%= link_to t('scaffold.back'), users_path %>
 </div>

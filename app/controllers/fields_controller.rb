@@ -22,10 +22,10 @@ class FieldsController < ApplicationController
             @field.values.create(record_index: (index + 1), user_id: @field.table.values.where(record_index: index + 1).pluck(:user_id).uniq.first || current_user.id)
           end
         end
-        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Nouvel attribut ajouté.' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: t('notice.field.new') }
         format.json { render :show, status: :created, location: @field }
       else
-        format.html { redirect_to show_attrs_path(id: @field.table.slug), alert: @field.errors.full_messages.join(', '), status: :unprocessable_entity }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), alert: @field.errors.full_messages.join(', ') }
         format.json { render json: @field.errors, status: :unprocessable_entity }
       end
     end
@@ -36,7 +36,7 @@ class FieldsController < ApplicationController
   def update
     respond_to do |format|
       if @field.update(field_params)
-        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: 'Attribut modifié avec succès.' }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: t('notice.field.updated') }
         format.json { render :show, status: :ok, location: @field }
       else
         format.html { redirect_to show_attrs_path(id: @field.table.slug), alert: @field.errors.full_messages.join(', '), status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class FieldsController < ApplicationController
     @table.values.where(field_id:@field.id).destroy_all
     @field.destroy
     respond_to do |format|
-      format.html { redirect_to show_attrs_path(id: @field.table), notice: 'Attribut supprimé.' }
+      format.html { redirect_to show_attrs_path(id: @field.table), notice: t('notice.field.destroyed') }
       format.json { head :no_content }
     end
   end

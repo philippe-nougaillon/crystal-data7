@@ -1,4 +1,4 @@
-<%= link_to details_path(@table.slug, record_index: record_index), title: 'Voir les détails', class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
+<%= link_to details_path(@table.slug, record_index: record_index), title: t('tables.details'), class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
   <div class="shadow p-4 bg-white flex-fill">
     <p class="fw-bold">
       <% first_field = @table.fields.first %>
@@ -38,9 +38,9 @@
           <%= number_to_currency(value) %>
         <% when 'Formule' %>
           <%= field.evaluate(@table, record_index) %>
-        <% when 'Workflow' %>
+        <% when 'Statut' %>
           <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
-          <% color = items[value] %>
+          <% color = Field.bootstrap_class(items[value]) %>
           <span class="badge bg-<%= color %>"><%= value %></span>
         <% when 'URL' %>
           <%= link_to URI.parse(value).host, value, target: "_blank" %>

@@ -5,18 +5,18 @@
   </div>
 
   <div class="w-75 border p-4 p-sm-5">
-    <h2 class="text-center mb-5 text-secondary">Connexion</h2>
+    <h2 class="text-center mb-5 text-secondary"><%= t('auth.connection') %></h2>
     <%= form_for resource, url: session_path(resource_name) do |f| %>
       <%= f.text_field :email, required: true, class: 'form-control w-100 mb-4', placeholder:'Adresse mail', type: :email %>
       <%= f.password_field :password, required: true, class: 'form-control w-100 mb-4', placeholder:'Mot de passe' %>
       <div class="d-inline">
         <%= f.check_box :remember_me, as: :boolean if devise_mapping.rememberable? %>
-        <%= f.label(:remember_me, "Maintenir la connexion ?") %>
+        <%= f.label(:remember_me, t('auth.remember_me?')) %>
       </div>
 
       <div class='d-flex gap-4 my-4'>
-        <%= f.submit "Se connecter", class: 'btn btn-outline-primary' %>
-        <%= link_to "S'inscrire", new_registration_path(resource_name), class: 'btn btn-outline-secondary' %> 
+        <%= f.submit t('auth.login'), class: 'btn btn-outline-primary' %>
+        <%= link_to t('auth.register'), new_registration_path(resource_name), class: 'btn btn-outline-secondary' %> 
       </div>
     <% end %>
 

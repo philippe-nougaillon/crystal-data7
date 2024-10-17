@@ -98,14 +98,14 @@ class LecteurFlowTest < ApplicationSystemTestCase
   #   assert_text "Attribut supprimé."
   # end
 
-  # test "create workflow field" do
+  # test "create statut field" do
   #   visit tables_url
   #   click_on "Stocks"
   #   click_on "Attributs"
 
   #   fill_in "Nom", with: "État"
-  #   page.select "Workflow", from: "Type de données"
-  #   fill_in "Paramètres", with: "Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary"
+  #   page.select "Statut", from: "Type de données"
+  #   fill_in "Paramètres", with: "Nouveau:bleu,Confirmé:vert,Annulé:rouge,Archivé:gris"
   #   click_button "Ajouter cet attribut"
   #   assert_text "Nouvel attribut ajouté."
 

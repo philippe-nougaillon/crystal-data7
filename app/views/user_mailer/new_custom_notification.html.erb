@@ -2,4 +2,12 @@
 <br>
 La valeur de l'attribut <b><%= @notification.field.name.humanize %></b> de l'objet <b>#<%= @record_index %></b> vient de passer à '<b><%= @notification.value %></b>'.
 <br><br>
-<%= link_to "Voir les détails de l'objet ##{@record_index}", details_url(@notification.table.slug, record_index: @record_index) %>
+<%= link_to "Voir les détails de l'objet ##{@record_index}", details_url(id: @notification.table.slug, record_index: @record_index) %>
+
+<hr style="margin-top: 30px; border: 1px solid #ccc">
+
+<h1>Notification '<%= @notification.table.name.humanize %>'</h1>
+<br>
+The value of the attribute <b><%= @notification.field.name.humanize %></b> of the object <b>#<%= @record_index %></b> just went to'<b><%= @notification.value %></b>'.
+<br><br>
+<%= link_to "See the details of the object ##{@record_index}", details_url(id: @notification.table.slug, record_index: @record_index) %>

@@ -6,10 +6,10 @@
   <td><%= user.email %></td>
   <td>
     <% if policy(user).edit? || current_user.compte_démo? %>
-      <%= link_to "Modifier", edit_user_path(user), title: "Modifier l'utilisateur '#{user.name}'", class: 'btn btn-outline-warning btn-sm me-2' %>
+      <%= link_to t('scaffold.update'), edit_user_path(user), title: t('users.update_title', user: user.name), class: 'btn btn-outline-warning btn-sm me-2' %>
     <% end %>
     <% if policy(user).destroy? || current_user.compte_démo? %>
-      <%= link_to 'X', user, title: "Supprimer l'utilisateur '#{user.name}'", 'data-turbo-method': :delete, 'data-turbo-confirm': "Êtes-vous certain.e de vouloir supprimer l'utilisateur '#{user.name}' ?", class: 'btn btn-outline-danger btn-sm' %>
+      <%= link_to t('scaffold.destroy'), user, title: t('users.destroy_title', user: user.name), 'data-turbo-method': :delete, 'data-turbo-confirm': "Êtes-vous certain.e de vouloir supprimer l'utilisateur '#{user.name}' ?", class: 'btn btn-outline-danger btn-sm' %>
     <% end %>
   </td>
 </tr>

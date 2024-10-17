@@ -1,7 +1,7 @@
 <%= form_for(@notification) do |f| %>
   <% if @notification.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@notification.errors.count, "error") %> prohibited this notification from being saved:</h2>
+      <h2><%= t('errors.messages.not_saved', count: @notification.errors.count) %></h2>
 
       <ul>
       <% @notification.errors.full_messages.each do |message| %>
@@ -12,17 +12,17 @@
   <% end %>
 
   <div>
-    <%= f.label :field_id, "Attribut à surveiller" %><br>
+    <%= f.label :field_id, t('notifications.attribute_label') %><br>
     <%= f.select :field_id, options_from_collection_for_select(@fields, 'id', 'field_with_table', @notification.field_id), {include_blank: true, required: true}, class: 'form-select w-sm-25' %>
   </div>
 
   <div class="my-4">
-    <%= f.label :value, "Valeur qui déclenchera la notification" %><br>
-    <%= f.text_field :value, class: "form-control w-sm-25", required: true, placeholder: "ex: Terminé" %>
+    <%= f.label :value, t('notifications.trigger_value_label') %><br>
+    <%= f.text_field :value, class: "form-control w-sm-25", required: true, placeholder: t('notifications.trigger_value_hint') %>
   </div>
 
   <div>
-    <%= f.label :send_to, "Envoyer notification à (emails séparés par des virgules)" %><br>
+    <%= f.label :send_to, t('notifications.send_to_label') %><br>
     <%= f.text_area :send_to, value: @notification.send_to || current_user.email, rows: 5, class: "form-control w-sm-50", required: true %>
   </div>
 

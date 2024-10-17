@@ -13,8 +13,9 @@
       </ul>
       <ul class="navbar-nav">
         <% if user_signed_in? %>
+          
           <li class="nav-item <%= 'active' if params[:controller] == 'users' %>">
-            <%= link_to profil_users_path, title: "Profil utilisateur", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+            <%= link_to users_path, title: "Profil utilisateur", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
               <span class="material-symbols-outlined fs-5 text-black-50">
                 badge
               </span>
@@ -26,7 +27,7 @@
               <span class="material-symbols-outlined fs-5 text-black-50">
                 lock
               </span>
-              Sécurité
+              <%= t('security.title') %>
             <% end %>
           </li>
           <li class="nav-item <%= 'active' if params[:action] == 'a_propos' %>">
@@ -34,15 +35,30 @@
               <span class="material-symbols-outlined fs-5 text-black-50">
                 help
               </span>
-              Aide
+              <%= t('misc.help') %>
             <% end %>
           </li>
           <li class="nav-item">
-            <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger', 'data-turbo': false, title: 'Se déconnecter' do %>
-            Se déconnecter
-          <% end %>
+            <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger text-dark', 'data-turbo': false, title: t('auth.logout_title') do %>
+              <%= t('auth.logout') %>
+            <% end %>
           </li>
         <% end %>
+        <li class="mt-2 mx-2">
+          <% if I18n.locale == :fr %>
+            <%= link_to url_for(request.params.merge(locale: 'en')) do %>
+              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
+                language language_french
+              </span>
+            <% end %>
+          <% else %>
+            <%= link_to url_for(request.params.merge(locale: 'fr')) do %>
+              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
+                language language_us
+              </span>
+            <% end %>
+          <% end %>
+        </li>
       </ul>
     </div>
   </div>

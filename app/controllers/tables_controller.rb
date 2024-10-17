@@ -206,7 +206,7 @@ class TablesController < ApplicationController
       table.fields.each do |field|
         value = values[field.id.to_s]
         if field.obligatoire and value.blank?
-          flash[:alert] = "Champ(s) obligatoire(s) manquant(s)"
+          flash[:alert] = t('notice.table.missing_required_field')
           redirect_to action: 'fill', record_index: record_index
           return
         end  
@@ -285,14 +285,14 @@ class TablesController < ApplicationController
       if params[:relation].present? && params[:value].present?
         table = Table.find(Relation.find(params[:relation]).relation_with_id)
         url = details_path(table.slug, record_index: params[:value])
-        redirect_to url, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
+        redirect_to url, notice: t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
       elsif user_signed_in?
-        redirect_to table, notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
+        redirect_to table, notice: t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
       else
-        redirect_to fill_path(table), notice: "Données #{update ? 'modifiées' : 'ajoutées'} avec succès :)"
+        redirect_to fill_path(table), notice: t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
       end
     else
-      redirect_to table, alert: "Aucune donnée enregistrée"
+      redirect_to table, alert: t('notice.value.no_save')
     end
   end  
 
@@ -301,9 +301,9 @@ class TablesController < ApplicationController
       record_index = params[:record_index].to_i
       if @table.record_can_be_destroy?(record_index)
         @table.values.where(record_index: record_index).delete_all
-        flash[:notice] = "Enregistrement ##{record_index} supprimé avec succès"
+        flash[:notice] = t('notice.table.delete_record', record_index: record_index)
       else
-        flash[:alert] = "Cet enregistrement n'a pas été supprimé car il est utilisé dans d'autres Tables !"
+        flash[:alert] = t('notice.table.error_delete_record')
       end
     end  
 
@@ -319,7 +319,7 @@ class TablesController < ApplicationController
     @modèles = User.find(1).tables.first(4)
 
     if current_user.compte_démo?
-      flash[:notice] = "(i)Un Objet permet de décrire quelque chose d'existant (ex: Voiture, Personne...) avec un ensemble d'attributs (Couleur, Puissance, Poids...). Une collection est constituée d'un ensemble d'objets de même nature"
+      flash[:notice] = t('notice.table.new_hint')
     end
   end
 
@@ -344,7 +344,7 @@ class TablesController < ApplicationController
             field.save
           end
         end
-        format.html { redirect_to show_attrs_path(id: @table), notice: "Objet créé. Vous pouvez maintenant y ajouter des attributs" }
+        format.html { redirect_to show_attrs_path(id: @table), notice: t('notice.table.new') }
         format.json { render :show, status: :created, location: @table }
       else
         format.html { render :new }
@@ -358,7 +358,7 @@ class TablesController < ApplicationController
   def update
     respond_to do |format|
       if @table.update(table_params)
-        format.html { redirect_to table_path(id: @table), notice: 'Objet modifié.' }
+        format.html { redirect_to table_path(id: @table), notice: t('notice.table.updated') }
         format.json { render :show, status: :ok, location: @table }
       else
         format.html { render :edit }
@@ -376,7 +376,7 @@ class TablesController < ApplicationController
     @table.destroy
 
     respond_to do |format|
-      format.html { redirect_to tables_url, notice: 'Objet supprimé.'}
+      format.html { redirect_to tables_url, notice: t('notice.table.destroyed')}
       format.json { head :no_content }
     end
   end
@@ -388,9 +388,9 @@ class TablesController < ApplicationController
     result = ImportCollection.new(params[:upload], current_user, params[:col_sep], params[:table_id]).call
 
     if result
-      flash[:notice] = "Importation terminée. Table '#{current_user.tables.last.name.humanize}' créée avec succès."
+      flash[:notice] = t('notice.table.imported', table: current_user.tables.last.name.humanize)
     else
-      flash[:alert] = "L'importation a échoué. => '#{result.last}'"
+      flash[:alert] = t('notice.table.import_failed', error: result.last)
     end
     redirect_to tables_path
   end
@@ -399,18 +399,18 @@ class TablesController < ApplicationController
     session[:type_partage] = params[:type_partage]
 
     if not TablesUser.roles.keys.reject { |e| e == "Propriétaire" }.include?(params[:role])
-      redirect_to add_user_path(@table), alert: "Rôle indisponible"
+      redirect_to add_user_path(@table), alert: t('notice.table.unavailable_role')
     elsif @user = User.find_by(email: (params[:type_partage] == "text") ? params[:email_text] : params[:email_list])
       unless @table.users.include?(@user)
         # ajoute le nouvel utilisateur aux utilisateurs de la table
         @table.tables_users << TablesUser.create(table_id: @table.id, user_id: @user.id, role: params[:role])
         UserMailer.notification_nouveau_partage(@user, @table).deliver_now
-        flash[:notice] = "Partage de la table '#{@table.name}' avec l'utilisateur '#{@user.name}' activé"
+        flash[:notice] = t('notice.table.shared', table: @table.name, user: @user.name)
       else
-        flash[:alert] = "Partage de la table '#{@table.name}' avec l'utilisateur '#{@user.name}' déjà existant !"
+        flash[:alert] = t('notice.table.already_shared', table: @table.name, user: @user.name)
       end
     else
-      flash[:alert] = "Utilisateur inconnu ! Demandez-lui de créer un compte depuis la page d'accueil."
+      flash[:alert] = t('notice.table.user_not_found')
     end
     redirect_to partages_path(@table)
   end
@@ -422,7 +422,7 @@ class TablesController < ApplicationController
     @user = User.find(params[:user_id])
     # supprime l'utilisateur que si ce n'est pas le dernier
     @table.users.delete(@user) if @table.users.count > 1
-    flash[:notice] = "Le partage avec l'utilisateur '#{@user.name}' a été désactivé !"
+    flash[:notice] = t('notice.table.share_deactivated', user: @user.name)
     redirect_to request.referrer
   end 
 
@@ -462,7 +462,7 @@ class TablesController < ApplicationController
       end
       @sum = Hash.new(0)
     else
-      redirect_to @table, alert: "donnée non existante"
+      redirect_to @table, alert: t('notice.table.no_value')
     end
   end
   
@@ -517,15 +517,15 @@ class TablesController < ApplicationController
       if current_user.compte_démo? && flash[:notice] == nil && flash[:alert] == nil
         flash[:notice] = case params[:action]
         when 'index'
-          "(i)Pour créer un nouvel objet, utilisez le bouton 'Nouvel Objet' ci-dessus"
+          t('notice.table.new_button')
         when 'show_attrs'
-          "(i)Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste...)."
+          t('notice.table.description')
         when 'partages'
-          "(i)Partagez vos collections d'objet avec d'autres utilisateurs"
+          t('notice.table.share')
         when 'logs'
-          "(i)Chaque modification d'un objet est consignée dans un historique (quand, qui, quoi, valeur avant, valeur après)"
+          t('notice.table.logs')
         when 'securite'
-          "(i)Chaque partage d'objet et autorisations sont personnalisables. Cliquez sur + pour partager un objet avec un utilisateur"
+          t('notice.table.security')
         end
       end
     end

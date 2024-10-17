@@ -123,14 +123,14 @@ class ProprietaireFlowTest < ApplicationSystemTestCase
     assert_text "Attribut supprimé."
   end
 
-  test "create workflow field" do
+  test "create statut field" do
     visit tables_url
     click_on @manufacturer_table.name
     click_on "Attributs"
 
-    page.select "Workflow", from: "Type de données"
+    page.select "Statut", from: "Type de données"
     fill_in "Nom", with: "État"
-    fill_in "Paramètres", with: "Nouveau:primary,Confirmé:success,Annulé:danger,Archivé:secondary"
+    fill_in "Paramètres", with: "Nouveau:bleu,Confirmé:vert,Annulé:rouge,Archivé:gris"
     click_button "Ajouter cet attribut"
     assert_text "Nouvel attribut ajouté."
 

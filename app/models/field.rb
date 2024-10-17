@@ -16,7 +16,7 @@ class Field < ApplicationRecord
 
 	after_save :add_or_update_relation, if: Proc.new { |field| field.Collection? }
 
-	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID, :Signature, :Tags, :Email, :QRScan, :Stars, :Météo]
+	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Statut, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID, :Signature, :Tags, :Email, :QRScan, :Stars, :Météo]
 	enum operation: [:Somme, :Moyenne]
 	enum visibility:[:Liste_et_Détails, :Vue_Liste, :Vue_Détails]
 
@@ -25,6 +25,34 @@ class Field < ApplicationRecord
 	scope :listable, 	-> { where(visibility: 'Vue_Liste').or(where(visibility: 'Liste_et_Détails')) }
 	scope :détaillable, -> { where(visibility: 'Vue_Détails').or(where(visibility: 'Liste_et_Détails')) }
 	scope :ordered, -> { order(:row_order) }
+
+	COLOR_MAPPINGS =  {
+    "bleu" => "primary",
+    "blue" => "primary",
+    "gris" => "secondary",
+    "gray" => "secondary",
+		"grey" => "secondary",
+    "vert" => "success",
+    "green" => "success",
+    "jaune" => "warning text-dark",
+    "yellow" => "warning text-dark",
+    "rouge" => "danger",
+    "red" => "danger",
+		"bleuclair" => "info text-dark",
+    "lightblue" => "info text-dark",
+    "blanc" => "light text-dark",
+    "white" => "light text-dark",
+    "noir" => "dark",
+    "black" => "dark"
+  }
+
+	def self.bootstrap_class(color_name)
+		if color_name
+			COLOR_MAPPINGS[color_name.downcase.gsub(/[\s_]/, '')]
+		else
+			"secondary"
+		end
+  end
 
 	# evaluer [1] + [2] ou [1] * [2]
 	def evaluate(table, record_index)
@@ -204,7 +232,7 @@ class Field < ApplicationRecord
 			'text_snippet'
 		when 'Image'
 			'image'
-		when 'Workflow'
+		when 'Statut'
 			'steppers'
 		when 'URL'
 			'link'
@@ -275,13 +303,17 @@ private
 
 	def check_options
 		case self.datatype
-		when 'Workflow'
-			unless self.items.count(':') > 0 && self.items_splitted.any?
-				errors.add(:erreur, ": Paramètres du workflow incorrects")
+		when 'Statut'
+			if self.items.blank?
+				errors.add(:erreur, I18n.t('errors.statut_parameter_blank'))
+			elsif self.items.count(':') == 0
+				errors.add(:erreur, I18n.t('errors.statut_parameter_no_separator'))
+			elsif self.items.count(':') != self.items_splitted.count
+				errors.add(:erreur, I18n.t('errors.statut_parameter_invalid_value'))
 			end
 		when 'Liste'
 			unless self.items.count(',') > 0 || self.items.count('[') > 0
-				errors.add(:erreur, ": Paramètres de la liste incorrects")
+				errors.add(:erreur, I18n.t('errors.list_parameter_invalid'))
 			end
 		end
 	end

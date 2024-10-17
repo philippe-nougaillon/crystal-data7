@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   before_action :set_layout_variables
   before_action :prepare_exception_notifier
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_locale
 
   def after_sign_in_path_for(user)
     if user.favorite_table.present?
@@ -34,12 +35,20 @@ private
 
   def user_not_authorized
     if user_signed_in? && current_user.compte_démo?
-      msg = "Vous n'êtes pas autorisé à effectuer cette action avec le compte démonstration. Veuillez créer un compte pour avoir toutes les fonctionnalités."
+      msg = t('notice.user.demo_not_authorized')
     else
-      msg = "Vous n'êtes pas autorisé à effectuer cette action."
+      msg = t('notice.user.not_authorized')
     end
     flash[:alert] = msg
     redirect_to(request.referrer || authenticated_root_path)
+  end
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+  def default_url_options
+    { locale: I18n.locale }
   end
 
 protected

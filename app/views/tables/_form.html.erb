@@ -1,7 +1,7 @@
 <div class="d-block d-md-flex justify-content-between gap-5">
   <%= form_for(@table, class: 'flex-grow-1 mt-4') do |f| %>
 
-    <%= f.label :name, "Nom" %>
+    <%= f.label :name, t('scaffold.name') %>
     <%= f.text_field :name, required: true,
                       autofocus: true,
                       autocomplete: :off, 
@@ -9,46 +9,46 @@
                       disabled: action_name == "edit",
                       'data-testid': 'Name' %>
     <p class="form-text">
-      ex: Article, Intervention, Technicien...
+      <%= t('tables.object_name_example') %>
     </p>
 
     <% if @table.new_record? %>
-      <%= label_tag :model_id, "Modèle d'objet" %>
+      <%= label_tag :model_id, t('tables.model') %>
       <%= select_tag :model_id, options_from_collection_for_select(@modèles, 'id', 'name_with_fields'), class: 'form-control mb-4 w-sm-50', include_blank: true %>
     <% end %>
 
     <div class="form-check mb-4">
       <%= f.check_box :lifo, class: 'form-check-input' %>
-      <%= f.label :lifo, "Trier ?", class: 'form-check-label' %>
+      <%= f.label :lifo, t('tables.sort?'), class: 'form-check-label' %>
       <p class="form-text">
-        Trier la collection par date de modification (le dernier objet modifié apparaît en haut de la collection)
+        <%= t('tables.sort_hint') %>
       </p>
     </div>
 
     <div class="form-check mb-4">
       <%= f.check_box :notification, class: 'form-check-input' %>
-      <%= f.label :notification, "Notification ?", class: 'form-check-label' %>
+      <%= f.label :notification, t('tables.notification?'), class: 'form-check-label' %>
       <p class="form-text">
-        Si vous voulez être notifié à chaque ajout d'un nouvel objet dans cette collection
+        <%= t('tables.notification_hint') %>
       </p>
     </div>
 
     <div class="form-check mb-4">
       <%= f.check_box :show_on_startup_screen, class: 'form-check-input' %>
-      <%= f.label :show_on_startup_screen, "Collection favorite ?", class: 'form-check-label' %>
+      <%= f.label :show_on_startup_screen, t('tables.favorite_table?'), class: 'form-check-label' %>
       <p class="form-text">
-        Pour voir cette collection directement sur la page d'accueil
+        <%= t('tables.favorite_table_hint') %>
       </p>
     </div>
 
     <div class="form-check mb-4">
       <%= f.check_box :public, class: 'form-check-input' %>
-      <%= f.label :public, "Formulaire public", class: 'form-check-label' %>
+      <%= f.label :public, t('tables.public_form?'), class: 'form-check-label' %>
       <p class="form-text">
-        Rendre le formulaire accessible sans connexion (pour la saisie de données uniquement)
+        <%= t('tables.public_form_hint') %>
       </p>
     </div>
 
-    <%= f.submit @table.new_record? ? "Continuer" : "Modifier cet objet", class: 'btn btn-outline-primary' %>
+    <%= f.submit @table.new_record? ? t('misc.continue') : t('tables.edit_table'), class: 'btn btn-outline-primary' %>
   <% end %>
 </div>

@@ -26,5 +26,5 @@
   map.addControl(new mapboxgl.FullscreenControl());
   map.addControl(new mapboxgl.NavigationControl());
   
-  setTimeout(function(){ map.setLayoutProperty('country-label', 'text-field', ['get', 'name_fr']); }, 3000);
+  setTimeout(function(){ map.setLayoutProperty('country-label', 'text-field', ['get', '<%= j(t('tables.map_langage')) %>']); }, 3000);
 </script>
