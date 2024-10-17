@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 private
 
   def set_layout_variables
-    @sitename ||= "CrystalDATA"
+    @sitename ||= "Aikku FORM"
     @sitename.concat(" v0.5.0 ")
   end
 

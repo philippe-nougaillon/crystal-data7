@@ -73,11 +73,15 @@
 </div>
 
 <div class="mt-3">
-  <%= link_to new_table_path, class: 'btn btn-outline-primary me-2' do %>
-    Nouvel Objet
+  <% if policy(Table).new? %>
+    <%= link_to new_table_path, class: 'btn btn-outline-primary me-2' do %>
+      Nouvel Objet
+    <% end %>
   <% end %>
 
-  <%= link_to import_path, class: 'btn btn-outline-info' do %>
-    Importer
+  <% if policy(Table).import? %>
+    <%= link_to import_path, class: 'btn btn-outline-info' do %>
+      Importer
+    <% end %>
   <% end %>
 </div>

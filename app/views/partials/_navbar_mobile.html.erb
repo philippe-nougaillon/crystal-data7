@@ -9,8 +9,8 @@
         <ul class="navbar-nav">
           <li class="nav-item ps-1">
             <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'text-decoration-none link-black' do %>
-              <%= image_tag 'icons/crystaldata.png', style: "height: 2rem" %>
-              CrystalDATA
+            <%= image_tag 'icons/aikku.png', style: "height: 2rem" %>
+            FORM
             <% end %>
           </li>
         </ul>

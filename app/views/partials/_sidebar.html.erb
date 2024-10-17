@@ -22,62 +22,64 @@
       <% end %>
     </li>
 
-    <li class="nav-item">
-      <%= link_to filters_path, title: "Liste des Filtres/Reports", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-success #{'bg-body-secondary shadow-sm' if params[:controller] == 'filters'}" do %>
-      <span class="material-symbols-outlined">
-        analytics
-      </span>
-      Reports
-      <% end %>
-    </li>
+    <% if current_user.admin? %>
+      <li class="nav-item">
+        <%= link_to filters_path, title: "Liste des Filtres/Reports", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-success #{'bg-body-secondary shadow-sm' if params[:controller] == 'filters'}" do %>
+        <span class="material-symbols-outlined">
+          analytics
+        </span>
+        Reports
+        <% end %>
+      </li>
 
-    <li class="nav-item">
-      <%= link_to notifications_path, title: "Liste des Notifications", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-warning #{'bg-body-secondary shadow-sm' if params[:controller] == 'notifications'}" do %>
-      <span class="material-symbols-outlined">
-        notifications_active
-      </span>
-      Notifs
-      <% end %>
-    </li>
+      <li class="nav-item">
+        <%= link_to notifications_path, title: "Liste des Notifications", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-warning #{'bg-body-secondary shadow-sm' if params[:controller] == 'notifications'}" do %>
+        <span class="material-symbols-outlined">
+          notifications_active
+        </span>
+        Notifs
+        <% end %>
+      </li>
 
-    <!--
-    <li class="nav-item">
-      <%= link_to graphs_path, title: "Graphiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-secondary #{'bg-body-secondary shadow-sm' if params[:action] == 'graphs'}", 'data-turbo': 'false' do %>
-      <span class="material-symbols-outlined">
-        Query_stats
-      </span>
-      Graphs
-      <% end %>
-    </li>
-    
+      <!--
+      <li class="nav-item">
+        <%= link_to graphs_path, title: "Graphiques", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-secondary #{'bg-body-secondary shadow-sm' if params[:action] == 'graphs'}", 'data-turbo': 'false' do %>
+        <span class="material-symbols-outlined">
+          Query_stats
+        </span>
+        Graphs
+        <% end %>
+      </li>
+      
 
-    <li class="nav-item">
-      <%= link_to securite_tables_path, title: "Liste des accès", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-danger #{'bg-body-secondary shadow-sm' if params[:action] == 'securite'}", 'data-turbo': 'false' do %>
-      <span class="material-symbols-outlined">
-        lock
-      </span>
-      Sécurité
-      <% end %>
-    </li>
-    -->
+      <li class="nav-item">
+        <%= link_to securite_tables_path, title: "Liste des accès", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-danger #{'bg-body-secondary shadow-sm' if params[:action] == 'securite'}", 'data-turbo': 'false' do %>
+        <span class="material-symbols-outlined">
+          lock
+        </span>
+        Sécurité
+        <% end %>
+      </li>
+      -->
 
-    <li class="nav-item">
-      <%= link_to assistant_path, title: "Assistant", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-info #{'bg-body-secondary shadow-sm' if params[:action] == 'assistant'}", 'data-turbo': 'false' do %>
-      <span class="material-symbols-outlined">
-        family_star
-      </span>
-      Assistant
-      <% end %>
-    </li>
+      <li class="nav-item">
+        <%= link_to assistant_path, title: "Assistant", class: "d-flex flex-column align-items-center text-decoration-none py-3 link-info #{'bg-body-secondary shadow-sm' if params[:action] == 'assistant'}", 'data-turbo': 'false' do %>
+        <span class="material-symbols-outlined">
+          family_star
+        </span>
+        Assistant
+        <% end %>
+      </li>
 
-    <li class="nav-item">
-      <%= link_to users_path, title: "Liste des utilisateurs", class: "d-flex flex-column align-items-center text-decoration-none py-3 #{'bg-body-secondary shadow-sm' if params[:action] == 'assistant'}", 'data-turbo': 'false' do %>
-      <span class="material-symbols-outlined">
-        group
-      </span>
-      Utilisateurs
-      <% end %>
-    </li>
+      <li class="nav-item">
+        <%= link_to users_path, title: "Liste des utilisateurs", class: "d-flex flex-column align-items-center text-decoration-none py-3 #{'bg-body-secondary shadow-sm' if params[:action] == 'assistant'}", 'data-turbo': 'false' do %>
+        <span class="material-symbols-outlined">
+          group
+        </span>
+        Utilisateurs
+        <% end %>
+      </li>
+    <% end %>
 
     <!--
     <% if user_signed_in? %>

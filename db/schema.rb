@@ -143,19 +143,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_15_084134) do
     t.index ["user_id"], name: "index_mail_logs_on_user_id"
   end
 
-  create_table "messages", force: :cascade do |t|
-    t.string "nom"
-    t.bigint "filter_id", null: false
-    t.bigint "field_id", null: false
-    t.string "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["field_id"], name: "index_messages_on_field_id"
-    t.index ["filter_id"], name: "index_messages_on_filter_id"
-    t.index ["user_id"], name: "index_messages_on_user_id"
-  end
-
   create_table "notifications", force: :cascade do |t|
     t.bigint "table_id", null: false
     t.bigint "field_id", null: false
@@ -266,9 +253,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_15_084134) do
   add_foreign_key "logs", "fields"
   add_foreign_key "logs", "users"
   add_foreign_key "mail_logs", "users"
-  add_foreign_key "messages", "fields"
-  add_foreign_key "messages", "filters"
-  add_foreign_key "messages", "users"
   add_foreign_key "notifications", "fields"
   add_foreign_key "notifications", "tables"
   add_foreign_key "notifications", "users"
