@@ -29,7 +29,7 @@ class NotificationsController < ApplicationController
 
     respond_to do |format|
       if @notification.save
-        format.html { redirect_to notifications_url, notice: "Notification créée avec succès." }
+        format.html { redirect_to notifications_url, notice: t('notice.notification.new') }
         format.json { render :show, status: :created, location: @notification }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +42,7 @@ class NotificationsController < ApplicationController
   def update
     respond_to do |format|
       if @notification.update(notification_params)
-        format.html { redirect_to notifications_url, notice: "Notification modifiée avec succès." }
+        format.html { redirect_to notifications_url, notice: t('notice.notification.updated') }
         format.json { render :show, status: :ok, location: @notification }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +56,7 @@ class NotificationsController < ApplicationController
     @notification.destroy!
 
     respond_to do |format|
-      format.html { redirect_to notifications_url, notice: "Notification supprimée avec succès." }
+      format.html { redirect_to notifications_url, notice: t('notice.notification.destroyed') }
       format.json { head :no_content }
     end
   end

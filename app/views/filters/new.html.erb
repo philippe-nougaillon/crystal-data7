@@ -1,9 +1,9 @@
 <h1 class="text-success my-4">
-  Nouveau report
+  <%= t('filters.new') %>
 </h1>
 
 <%= render "form", filter: @filter %>
 
 <div class="mt-4">
-  <%= link_to "Retour", filters_path %>
+  <%= link_to t('scaffold.back'), filters_path %>
 </div>

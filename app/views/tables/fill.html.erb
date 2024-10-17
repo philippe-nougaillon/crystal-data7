@@ -1,5 +1,5 @@
 <h1 class="text-primary my-4">
-  <%= "#{(params[:record_index] && user_signed_in?) ? 'Modification' : 'Ajout'} '#{@table.name}'" %>
+  <%= "#{(params[:record_index] && user_signed_in?) ? t('scaffold.modification') : t('scaffold.add')} '#{@table.name}'" %>
 </h1>
 <%= form_tag fill_do_path(relation: params[:relation], value: params[:value]), multipart: true do %>
 

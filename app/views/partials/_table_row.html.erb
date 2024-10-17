@@ -8,12 +8,12 @@
     <% end %>
 
     <td style="vertical-align: middle;">
-      il y a <%= time_ago_in_words(table.last_update_at(record_index)) %>
+      <%= t('scaffold.time_ago', time: time_ago_in_words(table.last_update_at(record_index))) %>
     </td>
 
     <td style="text-align: right; vertical-align: middle; white-space: nowrap;">
       <% if policy(table).show_details? %>
-        <%= link_to details_path(table.slug, record_index:), title: 'Voir les détails de cette ligne', class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
+        <%= link_to details_path(table.slug, record_index:), title: t('tables.details_line'), class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
           <span class="material-symbols-outlined">
             more_horiz
           </span>
