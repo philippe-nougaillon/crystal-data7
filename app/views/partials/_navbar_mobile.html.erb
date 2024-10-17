@@ -19,14 +19,14 @@
     <div class="mt-2">
       <% if I18n.locale == :fr %>
         <%= link_to url_for(request.params.merge(locale: 'en')) do %>
-          <span class="material-symbols-outlined">
-            language_french
+          <span class="material-symbols-outlined" style="letter-spacing: -12px;">
+            language language_french
           </span>
         <% end %>
       <% else %>
         <%= link_to url_for(request.params.merge(locale: 'fr')) do %>
-          <span class="material-symbols-outlined">
-            language_us
+          <span class="material-symbols-outlined" style="letter-spacing: -12px;">
+            language language_us
           </span>
         <% end %>
       <% end %>
