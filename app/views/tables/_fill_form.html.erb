@@ -59,7 +59,7 @@
           <% end %>
           <br>
           <%= file_field_tag field_name, class:'w-100', required: field.obligatoire, 'data-testid': field.name %>
-        <% when 'Workflow' %>
+        <% when 'Statut' %>
           <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
           <%= select_tag field_name, options_for_select(items.keys, field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'URL' %>

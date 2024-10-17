@@ -34,7 +34,7 @@
               <%= select_tag "[query][#{field.id}]", options_for_select(field.populate_linked_table.invert, params["[query]"].try(:[], field.id.to_s)), class: 'form-select w-100 overflow-x-auto', autofocus: index.zero?, multiple: true %>
               <% hint = t('misc.select_hint') %>
             <% end %>
-          <% elsif field.Workflow? %>
+          <% elsif field.Statut? %>
             <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
             <%= select_tag "[query][#{field.id}]", options_for_select(items.keys, params["[query]"].try(:[], field.id.to_s)), class: 'form-select w-100', 'data-testid': field.name, autofocus: index.zero?, multiple: true %>
             <% hint = t('misc.select_hint') %>

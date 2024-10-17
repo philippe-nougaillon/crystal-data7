@@ -15,14 +15,14 @@ export default class extends Controller {
   change() {
     var type = this.sourceTarget;
 
-    if (['Formule', 'Liste', 'Workflow', 'Collection', 'QRCode', 'Distance'].includes(type.value)) {
+    if (['Formule', 'Liste', 'Statut', 'Collection', 'QRCode', 'Distance'].includes(type.value)) {
       this.paramsTarget.style.display = 'block';
       this.numberTarget.style.display = 'none';
       if (type.value == "Formule" ) {
         this.paramsTarget.children[2].innerHTML = "ex: [Temps] * [Coût horaire] OU [Prix HT] * 1.2 "
       } else if (type.value == "Liste" ) {
         this.paramsTarget.children[2].innerHTML = "ex : À faire,Fait,Annulé OU Monsieur, Madame, Mademoiselle"
-      } else if (type.value == "Workflow") {
+      } else if (type.value == "Statut") {
         this.paramsTarget.children[2].innerHTML = "ex : Nouveau:primary, Confirmé:success, Annulé:danger, Archivé:secondary"
       } else if (type.value == "Collection") {
         this.paramsTarget.children[2].innerHTML = "ex : [Technicien.\"Nom,Prénom,Expérience\"]"

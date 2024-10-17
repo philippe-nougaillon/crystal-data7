@@ -16,7 +16,7 @@ class Field < ApplicationRecord
 
 	after_save :add_or_update_relation, if: Proc.new { |field| field.Collection? }
 
-	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Workflow, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID, :Signature, :Tags, :Email, :QRScan, :Stars, :Météo]
+	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Statut, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID, :Signature, :Tags, :Email, :QRScan, :Stars, :Météo]
 	enum operation: [:Somme, :Moyenne]
 	enum visibility:[:Liste_et_Détails, :Vue_Liste, :Vue_Détails]
 
@@ -204,7 +204,7 @@ class Field < ApplicationRecord
 			'text_snippet'
 		when 'Image'
 			'image'
-		when 'Workflow'
+		when 'Statut'
 			'steppers'
 		when 'URL'
 			'link'
@@ -275,9 +275,9 @@ private
 
 	def check_options
 		case self.datatype
-		when 'Workflow'
+		when 'Statut'
 			unless self.items.count(':') > 0 && self.items_splitted.any?
-				errors.add(:erreur, ": Paramètres du workflow incorrects")
+				errors.add(:erreur, ": Paramètres du statut incorrects")
 			end
 		when 'Liste'
 			unless self.items.count(',') > 0 || self.items.count('[') > 0
