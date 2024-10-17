@@ -12,21 +12,6 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       </ul>
       <ul class="navbar-nav">
-        <li class="mt-2">
-          <% if I18n.locale == :fr %>
-            <%= link_to url_for(request.params.merge(locale: 'en')) do %>
-              <span class="material-symbols-outlined">
-                language_us
-              </span>
-            <% end %>
-          <% else %>
-            <%= link_to url_for(request.params.merge(locale: 'fr')) do %>
-              <span class="material-symbols-outlined">
-                language_french
-              </span>
-            <% end %>
-          <% end %>
-        </li>
         <% if user_signed_in? %>
           <li class="nav-item <%= 'active' if params[:controller] == 'users' %>">
             <%= link_to current_user, title: "Profil utilisateur", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
@@ -53,6 +38,21 @@
             <% end %>
           </li>
         <% end %>
+        <li class="mt-2">
+          <% if I18n.locale == :fr %>
+            <%= link_to url_for(request.params.merge(locale: 'en')) do %>
+              <span class="material-symbols-outlined">
+                language_french
+              </span>
+            <% end %>
+          <% else %>
+            <%= link_to url_for(request.params.merge(locale: 'fr')) do %>
+              <span class="material-symbols-outlined">
+                language_us
+              </span>
+            <% end %>
+          <% end %>
+        </li>
       </ul>
     </div>
   </div>

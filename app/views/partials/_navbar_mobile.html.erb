@@ -20,13 +20,13 @@
       <% if I18n.locale == :fr %>
         <%= link_to url_for(request.params.merge(locale: 'en')) do %>
           <span class="material-symbols-outlined">
-            language_us
+            language_french
           </span>
         <% end %>
       <% else %>
         <%= link_to url_for(request.params.merge(locale: 'fr')) do %>
           <span class="material-symbols-outlined">
-            language_french
+            language_us
           </span>
         <% end %>
       <% end %>
