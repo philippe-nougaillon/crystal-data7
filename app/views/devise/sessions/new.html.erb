@@ -7,8 +7,8 @@
   <div class="w-75 border p-4 p-sm-5">
     <h2 class="text-center mb-5 text-secondary"><%= t('auth.connection') %></h2>
     <%= form_for resource, url: session_path(resource_name) do |f| %>
-      <%= f.text_field :email, required: true, class: 'form-control w-100 mb-4', placeholder:'Adresse mail', type: :email %>
-      <%= f.password_field :password, required: true, class: 'form-control w-100 mb-4', placeholder:'Mot de passe' %>
+      <%= f.text_field :email, required: true, class: 'form-control w-100 mb-4', placeholder: t('auth.email'), type: :email %>
+      <%= f.password_field :password, required: true, class: 'form-control w-100 mb-4', placeholder: t('auth.password') %>
       <div class="d-inline">
         <%= f.check_box :remember_me, as: :boolean if devise_mapping.rememberable? %>
         <%= f.label(:remember_me, t('auth.remember_me?')) %>
