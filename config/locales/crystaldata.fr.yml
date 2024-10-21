@@ -105,7 +105,7 @@ fr:
     graph_navbar: "Graphs"
     help: "Aide"
     home: "Accueil"
-    homepage_description: "CrystalData est un gestionnaire d'informations NO-CODE qui vous permet de créer des collections d'objets métiers (ex: Clients, Interventions, Technicien, Frais, Projets, etc.), de les lier (Clients <==> Interventions <==> Techniciens <==> Frais) et de les partager en ligne avec vos collaborateurs."
+    homepage_description: "Aikku ACCESS est un gestionnaire d'informations NO-CODE qui vous permet de créer des collections d'objets métiers (ex: Clients, Interventions, Technicien, Frais, Projets, etc.), de les lier (Clients <==> Interventions <==> Techniciens <==> Frais) et de les partager en ligne avec vos collaborateurs."
     homepage_subtitle: "Vos données métier 'In da Cloud'"
     index: "Index"
     ip: "IP"

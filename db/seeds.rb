@@ -5,10 +5,10 @@ Organisation.create!([
 ])
 
 User.create!([
-  {name: "Démo",        email: "crystaldata.propriétaire@gmail.com", organisation_id: 1, role: "admin", password: ENV['DEMO_PASSWORD'], password_confirmation: ENV['DEMO_PASSWORD']},
-  {name: "CDLecteur",   email: "crystaldata.lecteur@gmail.com", organisation_id: 1, role: "user", password: ENV['LECTEUR_PASSWORD'], password_confirmation: ENV['LECTEUR_PASSWORD']},
-  {name: "CDCollecteur",email: "crystaldata.collecteur@gmail.com", organisation_id: 1, role: "user", password: ENV['COLLECTEUR_PASSWORD'], password_confirmation: ENV['COLLECTEUR_PASSWORD']},
-  {name: "CDÉditeur",   email: "crystaldata.editeur@gmail.com", organisation_id: 1, role: "user", password: ENV['EDITEUR_PASSWORD'], password_confirmation: ENV['EDITEUR_PASSWORD']}
+  {name: "Démo",        email: "aikku-access.propriétaire@gmail.com", organisation_id: 1, role: "admin", password: ENV['DEMO_PASSWORD'], password_confirmation: ENV['DEMO_PASSWORD']},
+  {name: "CDLecteur",   email: "aikku-access.lecteur@gmail.com", organisation_id: 1, role: "user", password: ENV['LECTEUR_PASSWORD'], password_confirmation: ENV['LECTEUR_PASSWORD']},
+  {name: "CDCollecteur",email: "aikku-access.collecteur@gmail.com", organisation_id: 1, role: "user", password: ENV['COLLECTEUR_PASSWORD'], password_confirmation: ENV['COLLECTEUR_PASSWORD']},
+  {name: "CDÉditeur",   email: "aikku-access.editeur@gmail.com", organisation_id: 1, role: "user", password: ENV['EDITEUR_PASSWORD'], password_confirmation: ENV['EDITEUR_PASSWORD']}
 ])
 
 Table.create!([

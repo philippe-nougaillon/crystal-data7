@@ -4,7 +4,7 @@
       <li class="nav-item ps-1">
         <%= link_to root_path, class:"text-decoration-none d-flex align-items-center gap-2 pb-1" do %>
           <%= image_tag 'icons/aikku.png', style: "height: 2rem" %>
-          FORM
+          ACCESS
         <% end %>
       </li>
     </ul>
@@ -31,7 +31,7 @@
             <% end %>
           </li>
           <li class="nav-item <%= 'active' if params[:action] == 'a_propos' %>">
-            <%= link_to a_propos_path, title: "À Propos de CrystalDATA", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+            <%= link_to a_propos_path, title: "À Propos de #{@sitename}", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
               <span class="material-symbols-outlined fs-5 text-black-50">
                 help
               </span>

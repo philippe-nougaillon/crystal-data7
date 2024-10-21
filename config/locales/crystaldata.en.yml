@@ -105,7 +105,7 @@ en:
     graph_navbar: "Graphs"
     help: "Help"
     home: "Home"
-    homepage_description: "Crystaldata is a NO-Code information manager that allows you to create collections of business objects (eg customers, interventions, technician, costs, projects, etc.), to link them (customers <==> Interventions <==> Technicians <==> costs) and to share them online with your employees."
+    homepage_description: "Aikku ACCESS is a NO-Code information manager that allows you to create collections of business objects (eg customers, interventions, technician, costs, projects, etc.), to link them (customers <==> Interventions <==> Technicians <==> costs) and to share them online with your employees."
     homepage_subtitle: "Your business data 'In da Cloud'"
     index: "Index"
     ip: "IP"

@@ -1,13 +1,13 @@
 <div class="mb-5">
 	<div class="d-flex justify-content-between align-items-center">
 		<div>
-			<h1 class="text-primary mb-2">CrystalDATA</h1>
+			<h1 class="text-primary mb-2"><%= @sitename %></h1>
 			<h2 class="fw-normal fs-4 mt-0">
 				Your business data 'In da Cloud'
 				<span class="fw-lighter text-secondary fs-6">Go, go, go... It's your birthday!</span>
 			</h2>
 		</div>
-		<%= image_tag 'icons/crystaldata.png', class:'mt-3', style: "height: 8rem" %>
+		<%= image_tag 'icons/aikku.png', class:'mt-3', style: "height: 8rem" %>
 	</div>
 
 	<h3 class="fw-bold text-dark my-4">For whom and for what use?</h3>
@@ -18,7 +18,7 @@
 		You are a service company with teams in the field and
 		Are you looking for a method of managing your interventions (e.g. construction, after -sales service, installation, maintenance)?
 		<br><br>
-		Crystaldata is a NO-Code information manager that allows you to create
+		<%= @sitename %> is a NO-Code information manager that allows you to create
 		Collections of business objects (eg customers, interventions, technician, costs, projects, etc.),
 		To link them (customers <=> interventions <=> Technicians <=> Frais)
 		And to share them online with your employees, in complete safety.
@@ -28,7 +28,7 @@
 	<p class="fs-5 fw-light w-sm-75">
 		Are you responsible for a team and the smooth running of a project program?
 		<br><br>
-		Crystaldata allows you to quickly create, and without making a line of code, a tool for monitoring the state of each project,
+		<%= @sitename %> allows you to quickly create, and without making a line of code, a tool for monitoring the state of each project,
 		to be notified when a significant change of state is recorded, and to see your dates of deadlines
 		in a 'calendar' view or in your personal agenda (Google Calendar/Outlook/etc.).
 	</p>
@@ -37,7 +37,7 @@
 	<p class="fs-5 fw-light w-sm-75">
 		Are you looking for a simple tool to manage your files, documents, report, and your information collected in the field?
 		<br><br>
-		Crystaldata has been designed to be usable on a smartphone in order to collect data as close as possible to their origin and whatever their nature (text, number, photo, PDF, etc.).
+		<%= @sitename %> has been designed to be usable on a smartphone in order to collect data as close as possible to their origin and whatever their nature (text, number, photo, PDF, etc.).
 		Context data, such as the weather statement, the GPS position, can be acquired automatically.
 		A graphic generation tool allows you to view information in the form of a curve or histogram.
 	</p>
@@ -108,7 +108,7 @@
 
 	</ul>
 
-	<h3 class="fw-bold text-dark my-4">The Crystaldata object and its attributes</h3>
+	<h3 class="fw-bold text-dark my-4">The <%= @sitename %> object and its attributes</h3>
 
 	<p class="fs-5 fw-light w-sm-75">
 		An object consists of attributes (ex: name, brand, color, age, price, Qty in stock, etc.) and
@@ -436,7 +436,7 @@
 	This is why I started the development of this No-Code and Open-Source tool, 10 years ago,
 	in order to cover the basic functions of an open information platform.
 	<br><br>
-	Crystaldata therefore aims to offer a small concentrate of my database experience,
+	<%= @sitename %> therefore aims to offer a small concentrate of my database experience,
 	And, why not, to lay the foundations of a future tailor -made application/platform, yours,
 	Integrating all your specificities, business rules, status, services, etc.
 </p>
@@ -444,7 +444,7 @@
 <h3 class="fw-bold text-dark my-4">Development, support and services</h3>
 
 <p class="mt-3">
-	<i>Crystaldata was developed in Ruby on Rails by Philippe and Pierre-Emmanuel</i>
+	<i><%= @sitename %> was developed in Ruby on Rails by Philippe and Pierre-Emmanuel</i>
 </p>
 
 <div class="row mt-3">
