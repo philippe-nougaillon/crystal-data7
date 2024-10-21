@@ -13,12 +13,6 @@
       </ul>
       <ul class="navbar-nav">
         <% if user_signed_in? %>
-          <li class="d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" title= <%= t('navbar.profile_title') %>>
-            <span class="material-symbols-outlined fs-5 text-black-50">
-              badge
-            </span>
-            <%= current_user.name %> (<%= current_user.role %>)
-          </li>
           <% if policy(User).index? %>
             <li class="nav-item <%= 'active' if params[:controller] == 'users' %>">
               <%= link_to users_path, title: t('navbar.users_title'), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
@@ -47,10 +41,28 @@
               <%= t('misc.help') %>
             <% end %>
           </li>
-          <li class="nav-item">
-            <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger text-dark', 'data-turbo': false, title: t('auth.logout_title') do %>
-              <%= t('auth.logout') %>
-            <% end %>
+          <li class="nav-item dropdown d-flex align-items-center">
+            <label tabindex="0" class="avatar online avatar-placeholder" style="cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
+              <% if current_user.avatar.attached? %>
+                <div style="width: 2.5rem; border-radius: 100%; background-color: rgb(100 116 139);">
+                  <%= image_tag(current_user.avatar, size:'25x25') %>
+                </div>
+              <% else %>
+                <div style="width: 2rem; border-radius: 100%; background-color: rgb(15 23 42);">
+                  <span class="text-light"><%= current_user.name.first.humanize %></span>
+                </div>
+              <% end %>
+            </label>
+            <ul class="dropdown-menu dropdown-menu-end py-0">
+              <li class="text-center text-black my-2" title= <%= t('navbar.profile_title') %>>
+                <%= current_user.name %> (<%= current_user.role %>)
+              </li>
+              <li>
+                <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger text-black w-100 hover-text-white', 'data-turbo': false, title: t('auth.logout_title') do %>
+                  <%= t('auth.logout') %>
+                <% end %>
+              </li>
+            </ul>
           </li>
         <% end %>
         <li class="mt-2 mx-2">

@@ -12,6 +12,8 @@ class User < ApplicationRecord
           :omniauthable,
           omniauth_providers: [:google_oauth2]
 
+  has_one_attached :avatar
+
   belongs_to :organisation, optional: true
   has_many :tables_users, dependent: :destroy
   has_many :tables, through: :tables_users
@@ -60,8 +62,7 @@ class User < ApplicationRecord
         user.name = auth.info.name
         user.organisation = Organisation.create(nom: "Mon_organisation")
         user.role = "admin"
-
-
+        user.avatar.attach(io: URI.open(auth.info.image), filename:"photo.png")
 
         # If you are using confirmable and the provider(s) you use validate emails, 
         # uncomment the line below to skip the confirmation emails.
