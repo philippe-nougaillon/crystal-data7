@@ -90,7 +90,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def securite?
-    user
+    user && user.admin?
   end
 
 end
