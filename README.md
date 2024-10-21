@@ -15,10 +15,10 @@
 
 ### Développement, support et services
 
-Aikku ACCESS a été développé par [Studio 'Philnoug & Partners'](https://www.philnoug.com)
+Aikku ACCESS a été développé par [Studio 'Philnoug & Partners'](https://www.aikku.eu)
 
 ### Besoin d'une nouvelle fonctionnalité ou d'une application sur mesure ? Nous vous la développons !
 
-Pour en savoir plus, [contactez-nous](https://www.philnoug.com/contact)
+Pour en savoir plus, [contactez-nous](https://www.aikku.eu/contact)
 
 
