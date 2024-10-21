@@ -16,21 +16,6 @@
         </ul>
       </h1>
     <% end %>
-    <div class="mt-2">
-      <% if I18n.locale == :fr %>
-        <%= link_to url_for(request.params.merge(locale: 'en')) do %>
-          <span class="material-symbols-outlined" style="letter-spacing: -12px;">
-            language language_french
-          </span>
-        <% end %>
-      <% else %>
-        <%= link_to url_for(request.params.merge(locale: 'fr')) do %>
-          <span class="material-symbols-outlined" style="letter-spacing: -12px;">
-            language language_us
-          </span>
-        <% end %>
-      <% end %>
-    </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -113,6 +98,22 @@
             <%= t('misc.help') %>
           <% end %>
         </li>
+
+        <div class="mt-2">
+          <% if I18n.locale == :fr %>
+            <%= link_to url_for(request.params.merge(locale: 'en')), class: 'text-black-50' do %>
+              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
+                language language_french
+              </span>
+            <% end %>
+          <% else %>
+            <%= link_to url_for(request.params.merge(locale: 'fr')), class: 'text-black-50' do %>
+              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
+                language language_us
+              </span>
+            <% end %>
+          <% end %>
+        </div>
 
         <% if user_signed_in? %>
           <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger btn-sm text-dark', 'data-turbo': false do %>

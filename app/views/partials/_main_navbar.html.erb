@@ -41,7 +41,24 @@
               <%= t('misc.help') %>
             <% end %>
           </li>
-          <li class="nav-item dropdown d-flex align-items-center">
+        <% end %>
+        <li class="mt-2 me-2">
+          <% if I18n.locale == :fr %>
+            <%= link_to url_for(request.params.merge(locale: 'en')), title: t('navbar.switch_language_title'), class: 'text-black-50' do %>
+              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
+                language language_french
+              </span>
+            <% end %>
+          <% else %>
+            <%= link_to url_for(request.params.merge(locale: 'fr')), title: t('navbar.switch_language_title'), class: 'text-black-50' do %>
+              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
+                language language_us
+              </span>
+            <% end %>
+          <% end %>
+        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item dropdown d-flex align-items-center ms-2">
             <label tabindex="0" class="avatar online avatar-placeholder" style="cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
               <% if current_user.avatar.attached? %>
                 <div style="width: 2.5rem; border-radius: 100%; background-color: rgb(100 116 139);">
@@ -65,21 +82,6 @@
             </ul>
           </li>
         <% end %>
-        <li class="mt-2 mx-2">
-          <% if I18n.locale == :fr %>
-            <%= link_to url_for(request.params.merge(locale: 'en')), title: t('navbar.switch_language_title') do %>
-              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
-                language language_french
-              </span>
-            <% end %>
-          <% else %>
-            <%= link_to url_for(request.params.merge(locale: 'fr')), title: t('navbar.switch_language_title') do %>
-              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
-                language language_us
-              </span>
-            <% end %>
-          <% end %>
-        </li>
       </ul>
     </div>
   </div>
