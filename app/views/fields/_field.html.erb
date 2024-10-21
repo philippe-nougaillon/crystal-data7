@@ -5,7 +5,7 @@
       <span class="material-symbols-outlined text-black-50">
         <%= field.icon %>
       </span>
-      <%= field.datatype.humanize %>
+      <%= t("fields.datatype.#{field.datatype}") %>
       <%= "= #{field.items}" unless field.items.blank? %>
     </div>
   </td>
