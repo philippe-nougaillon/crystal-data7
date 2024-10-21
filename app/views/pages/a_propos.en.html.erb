@@ -208,41 +208,41 @@
 		
 		<ul class="list-group list-group-flush my-4 m-3 gap-2 w-sm-75">
 			<li>
-				<b id="texte">Texte</b> :
+				<b id="texte"><%= t('fields.datatype.Texte') %></b> :
 				<ul>
 					<li>Simple text: can contain a chain of 255 characters maximum.The 'filter option?'Allows you to create a drop -down list containing the distinct values.</li>
-					<li>Long text: allows you to write long texts</li>
-					<li>Rich text: allows you to write and format a long text (fat, underlined, title, color, size, links, lists, etc.), using a small integrated text editor (Trix Editor)</li>
+					<li><%= t('fields.datatype.Texte_long') %>: allows you to write long texts</li>
+					<li><%= t('fields.datatype.Texte_riche') %>: allows you to write and format a long text (fat, underlined, title, color, size, links, lists, etc.), using a small integrated text editor (Trix Editor)</li>
 				</ul>
 			</i>
 			<li>
 				<b id="chiffres">Numbers</b> :
 				<ul>
-					<li>Number: to enter digital values, with or without decimal.The 'Operation' option at the bottom of the page 'will calculate the average or the sum of the attribute values.</li>
-					<li>Euros: ditto 'number' but displays the value with the Euros symbol (€).</li>
-					<li>Formula: field calculated from existing fields or a formula in Ruby language.(Ex: <i> [time spent] * [Time cost] </i> or <i> [price excl.
+					<li><%= t('fields.datatype.Nombre') %>: to enter digital values, with or without decimal.The 'Operation' option at the bottom of the page 'will calculate the average or the sum of the attribute values.</li>
+					<li><%= t('fields.datatype.Euros') %>: ditto 'number' but displays the value with the Euros symbol (€).</li>
+					<li><%= t('fields.datatype.Formule') %>: field calculated from existing fields or a formula in Ruby language.(Ex: <i> [time spent] * [Time cost] </i> or <i> [price excl.
 				</ul>
 			</li>
-			<li><b id="date">Date </b>: A date chosen in a calendar. </li>
-			<li><b id="oui_non">Yes/No </b>: allows you to choose between yes or no or none of the two. </li>
-			<li><b id="liste">List </b>: to contain a list of values, like 'Blue, White, Red' or 'to do, done, canceled'.The values ​​must be separated by a comma.</li>
-			<li><b id="liste_objet">List of objects (collection) </b>: to choose an object from the objects of another of your collections. (Ex: <i> [Technician. "Last name, first name, experience"] </i>) </li>
+			<li><b id="date"><%= t('fields.datatype.Date') %></b>: A date chosen in a calendar. </li>
+			<li><b id="oui_non"><%= t('fields.datatype.Oui_non?') %></b>: allows you to choose between yes or no or none of the two. </li>
+			<li><b id="liste"><%= t('fields.datatype.Liste') %></b>: to contain a list of values, like 'Blue, White, Red' or 'to do, done, canceled'.The values ​​must be separated by a comma.</li>
+			<li><b id="liste_objet">List of objects (<%= t('fields.datatype.Collection') %>)</b>: to choose an object from the objects of another of your collections. (Ex: <i> [Technician. "Last name, first name, experience"] </i>) </li>
 			<li>
-				<b id="fichier">File </b>:
+				<b id="fichier"><%= t('fields.datatype.Fichier') %></b>:
 				<ul>
-					<li>File: Allows you to link and store a file in an object (document, image, etc ...). </li>
-					<li> Image: ditto 'file' but displays an original image or image preview according to the context. </li>
-					<li> PDF: ditto 'file' but displays an overview of the first page of the PDF document. </li>
+					<li><%= t('fields.datatype.Fichier') %>: Allows you to link and store a file in an object (document, image, etc ...). </li>
+					<li><%= t('fields.datatype.Image') %>: ditto 'file' but displays an original image or image preview according to the context. </li>
+					<li><%= t('fields.datatype.PDF') %>: ditto 'file' but displays an overview of the first page of the PDF document. </li>
 				</ul>
 			</li>
-			<li><b id="utilisateur">User </b>: allows you to choose a user from those who have access to the table </li>
-			<li><b id="url">URL </b>: allows you to add a link to an internet resource via an URL (internal or external). </li>
-			<li><b id="email">Email </b>: to add a link to an email address. </li>
+			<li><b id="utilisateur"><%= t('fields.datatype.Utilisateur') %></b>: allows you to choose a user from those who have access to the table </li>
+			<li><b id="url"><%= t('fields.datatype.URL') %></b>: allows you to add a link to an internet resource via an URL (internal or external). </li>
+			<li><b id="email"><%= t('fields.datatype.Email') %></b>: to add a link to an email address. </li>
 			<li>
-				<b id="video">YouTube video </b>: allows you to add a link to a YouTube video and display the preview of the video in a miniature.
+				<b id="video"><%= t('fields.datatype.Vidéo_YouTube') %></b>: allows you to add a link to a YouTube video and display the preview of the video in a miniature.
 			</li>
-			<li><b id="couleur">Color </b>: a color chosen in a palette. </li>
-			<li><b id="localisation">localisation (gps)</b> :
+			<li><b id="couleur"><%= t('fields.datatype.Couleur') %></b>: a color chosen in a palette. </li>
+			<li><b id="localisation">Localisation (<%= t('fields.datatype.GPS') %>)</b> :
 				<ul>
 					<li>Capture the location of the user, if it requests it, by pressing the button<span class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-location-crosshairs"></i></li></span>
 					<li>Displays the rental on a card, based on the contact details indicated in "LNG, LAT" format.(Ex: <i> 48.85879287621989, 2,294761243572842 </i> to point on the Eiffel Tower). </li>
@@ -250,27 +250,27 @@
 				</ul>
 			</li>
 			<li>
-				<b id="qrcode">QR code </b>: to generate a QR code from the content of another attribute of the object.(Ex: <i> [n ° desérie], [Reference], [URL website] </i>)
+				<b id="qrcode"><%= t('fields.datatype.QRCode') %></b>: to generate a QR code from the content of another attribute of the object.(Ex: <i> [n ° desérie], [Reference], [URL website] </i>)
 			</li>
 			<li>
-				<b id="qrscan">QR Scan </b>: allows you to scan a QR code with the camera of your smartphone, tablet or computer.
+				<b id="qrscan"><%= t('fields.datatype.QRScan') %></b>: allows you to scan a QR code with the camera of your smartphone, tablet or computer.
 			</li>
 			<li>
-				<b id="signature">Signature </b>: allows you to sign manually with the mouse or on a touch screen.
+				<b id="signature"><%= t('fields.datatype.Signature') %></b>: allows you to sign manually with the mouse or on a touch screen.
 			</li>
 			<li>
-				<b id="uuid">Uuid </b>: automatically generates a unique identifier.(Udid = universally unique identify)
+				<b id="uuid"><%= t('fields.datatype.UUID') %></b>: automatically generates a unique identifier.(Udid = universally unique identify)
 			</li>
 			<li>
-				<b id="tags">Tags </b>: allows you to enter keywords separated by commas.(Ex: <i> Paris, France, Europe </i>)
+				<b id="tags"><%= t('fields.datatype.Tags') %></b>: allows you to enter keywords separated by commas.(Ex: <i> Paris, France, Europe </i>)
 			</li>
 			<li>
-				<b id="stars">Stars </b>: allows you to note an object with stars.(Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)
+				<b id="stars"><%= t('fields.datatype.Stars') %></b>: allows you to note an object with stars.(Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)
 			</li>
 			<li>
-				<b id="meteo">Weather </b>: allows you to display the current weather for your location.(Ex: <i> 22 ° C, light rain, 73% humidity </i>)
+				<b id="meteo"><%= t('fields.datatype.Météo') %></b>: allows you to display the current weather for your location.(Ex: <i> 22 ° C, light rain, 73% humidity </i>)
 			</li>
-			<li><b id="statut">Statut </b>: to add a statement to an object, associated with a color.(Ex: <i class = "text-break"> new:blue, confirmed:green, canceled:red, archived:gray </i>)
+			<li><b id="statut"><%= t('fields.datatype.Statut') %></b>: to add a statement to an object, associated with a color.(Ex: <i class = "text-break"> new:blue, confirmed:green, canceled:red, archived:gray </i>)
 				<ul>
 					<li>
 						Available colors:

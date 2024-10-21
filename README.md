@@ -15,7 +15,7 @@
 
 ### Développement, support et services
 
-CrystalDATA a été développé par [Studio 'Philnoug & Partners'](https://www.philnoug.com)
+Aikku FORM a été développé par [Studio 'Philnoug & Partners'](https://www.philnoug.com)
 
 ### Besoin d'une nouvelle fonctionnalité ou d'une application sur mesure ? Nous vous la développons !
 

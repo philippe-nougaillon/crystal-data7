@@ -76,6 +76,8 @@
             <i class="bi bi-star"></i>
           <% end %>
         </div>
+      <% when 'Oui_non?' %>
+        <%= link_to_if is_link, t("misc.#{value}"), details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2' %>
       <% else %>
         <%= link_to_if is_link, value, details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2' %>
       <% end %>
