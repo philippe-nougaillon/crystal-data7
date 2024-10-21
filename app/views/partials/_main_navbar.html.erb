@@ -15,7 +15,7 @@
         <% if user_signed_in? %>
           
           <li class="nav-item <%= 'active' if params[:controller] == 'users' %>">
-            <%= link_to users_path, title: "Profil utilisateur", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+            <%= link_to users_path, title: t('navbar.profile_title'), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
               <span class="material-symbols-outlined fs-5 text-black-50">
                 badge
               </span>
@@ -23,7 +23,7 @@
             <% end %>
           </li>
           <li class="nav-item <%= 'active' if params[:action] == 'securite' %>">
-            <%= link_to securite_tables_path, title: "Liste des accès", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+            <%= link_to securite_tables_path, title: t('navbar.security_title'), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
               <span class="material-symbols-outlined fs-5 text-black-50">
                 lock
               </span>
@@ -31,7 +31,7 @@
             <% end %>
           </li>
           <li class="nav-item <%= 'active' if params[:action] == 'a_propos' %>">
-            <%= link_to a_propos_path, title: "À Propos de #{@sitename}", class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+            <%= link_to a_propos_path, title: t('navbar.about_title', sitename: @sitename), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
               <span class="material-symbols-outlined fs-5 text-black-50">
                 help
               </span>
@@ -46,13 +46,13 @@
         <% end %>
         <li class="mt-2 mx-2">
           <% if I18n.locale == :fr %>
-            <%= link_to url_for(request.params.merge(locale: 'en')) do %>
+            <%= link_to url_for(request.params.merge(locale: 'en')), title: t('navbar.switch_language_title') do %>
               <span class="material-symbols-outlined" style="letter-spacing: -12px;">
                 language language_french
               </span>
             <% end %>
           <% else %>
-            <%= link_to url_for(request.params.merge(locale: 'fr')) do %>
+            <%= link_to url_for(request.params.merge(locale: 'fr')), title: t('navbar.switch_language_title') do %>
               <span class="material-symbols-outlined" style="letter-spacing: -12px;">
                 language language_us
               </span>

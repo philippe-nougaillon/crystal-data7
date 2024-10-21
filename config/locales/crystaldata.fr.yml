@@ -65,14 +65,14 @@ fr:
   filters:
     date_hint: "Entrez une date ou une période (date de début / date de fin)"
     filters: "Filtres"
-    index: "Reports"
+    index: "Requêtes"
     name: "Nom"
     name_hint: "ex: Factures de 2021"
-    new: "Nouveau report"
-    no_filter: "Aucun filtre/report pour l'instant..."
+    new: "Nouvelle requête"
+    no_filter: "Aucune requête pour l'instant..."
     numeric_hint: "ex: >= 30  ou  30 (pour une égalité)"
-    query_title: "Report : %{filter} [%{table}]"
-    save_query: "Enregistrer et appliquer le filtre"
+    query_title: "Requête : %{filter} [%{table}]"
+    save_query: "Enregistrer et appliquer la requête"
     star_hint: "Choisissez une note entre 0 et 5"
     text_hint: "ex: %john% ou john (pour une égalité)"
   maillogs:
@@ -110,7 +110,6 @@ fr:
     index: "Index"
     ip: "IP"
     learn_more: "En savoir plus"
-    no: "Non"
     Non: "Non"
     notifications_navbar: "Notifs"
     not_signed: "Pas signé"
@@ -129,17 +128,28 @@ fr:
     user_since: "Utilisateur depuis %{date}"
     users: "Utilisateurs"
     who: "Qui"
-    yes: "Oui"
+  navbar:
+    about_title: "À propos de %{sitename}"
+    assistant_title: "Assistant IA"
+    filters_title: "Liste des Requêtes"
+    graphs_title: "Graphiques"
+    home_title: "Page d'accueil ou une collection de votre objet favori"
+    notifications_title: "Liste des Notifications"
+    profile_title: "Profil utilisateur"
+    security_title: "Liste des accès"
+    switch_language_title: "Changer de langue / Switch language"
+    tables_title: "Liste des Objets"
+    users_title: "Liste des utilisateurs"
   notice:
     field:
       destroyed: "Attribut supprimé."
-      index: (i)Les Filtres/Reports permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères
+      index: (i)Les Requêtes permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères
       new: "Nouvel attribut ajouté."
       updated: "Attribut modifié avec succès."
     filter:
-      updated: "Filtre/Report modifié."
-      destroyed: "Filtre/Report supprimé."
-      query: "(i)Renseignez ici les critères de sélection afin d'obtenir une collection d'objets filtrés"
+      updated: "Requête modifiée."
+      destroyed: "Requête supprimée."
+      query: "(i)Renseignez ici les critères de sélection afin d'obtenir une collection d'objets filtrées"
     graph: "(i)Les graphiques permettent de visualiser une série de valeurs issues de vos collections"
     notification:
       destroyed: "Notification supprimée avec succès."
