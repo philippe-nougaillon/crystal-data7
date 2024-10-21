@@ -24,7 +24,6 @@ private
 
   def set_layout_variables
     @sitename ||= "Aikku ACCESS"
-    @sitename.concat(" v1.0 ")
   end
 
   def prepare_exception_notifier
