@@ -13,15 +13,15 @@
       <% end %>
     </li>
 
-    <% if current_user.admin? %>
       <li class="nav-item">
-        <%= link_to tables_path, title: t('navbar.tables_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 link-dark #{'bg-body-secondary shadow-sm' if params[:controller] == 'tables' && !((@table && @table.show_on_startup_screen) || params[:action] == 'securite')}" do %>
+        <%= link_to tables_path, title: t('navbar.tables_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 link-dark #{'bg-body-secondary shadow-sm' if params[:controller] == 'tables' && (( !(@table && @table.show_on_startup_screen) && current_user.admin? && params[:action] != 'securite') || current_user.user? && params[:action] == 'index') }" do %>
           <span class="material-symbols-outlined">
             database
           </span>
           <%= t('tables.title') %>
         <% end %>
       </li>
+    <% if current_user.admin? %>
       <li class="nav-item">
         <%= link_to filters_path, title: t('navbar.filters_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 link-success #{'bg-body-secondary shadow-sm' if params[:controller] == 'filters'}" do %>
           <span class="material-symbols-outlined">
@@ -87,7 +87,7 @@
             <span class="material-symbols-outlined">
               database
             </span>
-            <%= table.name %>
+            <%= truncate(table.name, length: 11) %>
           <% end %>
         </li>
       <% end%>
