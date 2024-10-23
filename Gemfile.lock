@@ -432,6 +432,7 @@ DEPENDENCIES
   langchainrb (~> 0.13.4)
   mailgun-ruby (~> 1.2)
   matrix (~> 0.4.2)
+  net-pop (~> 0.1.2)
   omniauth (~> 2.1)
   omniauth-google-oauth2 (~> 1.1)
   omniauth-rails_csrf_protection (~> 1.0)
