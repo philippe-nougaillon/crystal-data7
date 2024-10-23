@@ -43,6 +43,6 @@
   </td>
   <td style="text-align: right; white-space: nowrap;">
     <%= link_to t('scaffold.update'), edit_field_path(id: field.slug, anchor: 'field_edit'), title: t('tables.update_attribute'), class: 'btn btn-outline-secondary btn-sm me-2' %>
-    <%= link_to t('scaffold.destroy'), field, title: t('tables.destroy_attribute'), 'data-turbo-method': :delete, 'data-turbo-confirm': t('tables.destroy_attibrute_confirm'), class: 'btn btn-outline-danger btn-sm' %>
+    <%= link_to t('scaffold.destroy'), field, title: t('tables.destroy_attribute'), 'data-turbo-method': :delete, 'data-turbo-confirm': t('tables.destroy_attribute_confirm'), class: 'btn btn-outline-danger btn-sm' %>
   </td>
 </tr>
