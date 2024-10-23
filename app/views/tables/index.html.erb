@@ -73,11 +73,15 @@
 </div>
 
 <div class="mt-3">
-  <%= link_to new_table_path, class: 'btn btn-outline-primary me-2' do %>
-    <%= t('tables.new') %>
+  <% if policy(Table).new? %>
+    <%= link_to new_table_path, class: 'btn btn-outline-primary me-2' do %>
+      <%= t('tables.new') %>
+    <% end %>
   <% end %>
 
-  <%= link_to import_path, class: 'btn btn-outline-info' do %>
-    <%= t('scaffold.import') %>
+  <% if policy(Table).import? %>
+    <%= link_to import_path, class: 'btn btn-outline-info' do %>
+      <%= t('scaffold.import') %>
+    <% end %>
   <% end %>
 </div>

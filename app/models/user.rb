@@ -12,6 +12,9 @@ class User < ApplicationRecord
           :omniauthable,
           omniauth_providers: [:google_oauth2]
 
+  has_one_attached :avatar
+
+  belongs_to :organisation, optional: true
   has_many :tables_users, dependent: :destroy
   has_many :tables, through: :tables_users
   has_many :fields, through: :tables
@@ -20,8 +23,11 @@ class User < ApplicationRecord
   has_many :mail_logs, dependent: :destroy
   has_many :prompts, dependent: :destroy
 
-  validates :name, :email, presence:true
+  validates :name, :email, :role, presence:true
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create	
+
+  enum role: {user: 0,
+              admin: 1}
 
   after_create :new_user_notification
   after_create :welcome_email
@@ -53,12 +59,17 @@ class User < ApplicationRecord
         user.email = auth.info.email
         user.password = Devise.friendly_token[0, 20]
         user.password_confirmation = user.password
-        user.name = auth.info.name   # assuming the user model has a name
+        user.name = auth.info.name
+        user.organisation = Organisation.create(nom: "Mon_organisation")
+        user.role = "admin"
+        user.avatar.attach(io: URI.open(auth.info.image), filename:"photo.png")
+
         # If you are using confirmable and the provider(s) you use validate emails, 
         # uncomment the line below to skip the confirmation emails.
         # user.skip_confirmation!
 
         user.save
+        # UserMailer.welcome(user).deliver_now if user.save
 
         user
       end

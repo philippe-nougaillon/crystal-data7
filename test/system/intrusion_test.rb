@@ -4,7 +4,7 @@ class IntrusionTest < ApplicationSystemTestCase
 
   test 'voir une table pas à nous' do
     visit root_url
-    @user = User.create(email: 'crystaldata-user@gmail.com', name: 'user', password: 'AZERTYUIOP', password_confirmation: 'AZERTYUIOP')
+    @user = User.create(email: 'aikku-access-user@gmail.com', name: 'user', password: 'AZERTYUIOP', password_confirmation: 'AZERTYUIOP')
     fill_in 'user[email]', with: @user.email
     fill_in 'user[password]', with: @user.password
     click_on 'Se connecter'

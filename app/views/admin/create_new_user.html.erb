@@ -1,0 +1,51 @@
+<h1 class="text-dark my-4">
+  Nouvel utilisateur
+</h1>
+
+<%= form_with(model: @user, class: "contents", url: "create_new_user_do", html: { autocomplete: "off" }) do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(@user.errors.count, "erreur") %> empêche(nt) cet utilisateur d'être sauvegardé :</h2>
+
+      <ul>
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mt-4">
+    <%= form.label :name, "Nom ou Pseudo", style: "display: block" %>
+    <%= form.text_field :name, class: 'form-control w-50', required: true %>
+  </div>
+
+  <div class="mt-4">
+    <%= form.label :email, style: "display: block" %>
+    <%= form.email_field :email, class: 'form-control w-50', required: true %>
+  </div>
+
+  <div class="mt-4">
+    <%= form.label :password, style: "display: block" %>
+    <%= form.password_field :password, class: 'form-control w-50' %>
+  </div>
+  <div class="mt-4">
+    <%= form.label :password_confirmation, style: "display: block" %>
+    <%= form.password_field :password_confirmation, class: 'form-control w-50' %>
+  </div>
+
+  <div data-controller="toggle-agent-service">
+    <div class="my-4">
+      <%= form.label :role, "Rôle" %>
+      <%= form.select :role, options_for_select(User.roles.keys, @user.role), {}, class: 'form-select' %>
+    </div>
+  </div>
+
+  <div class="inline">
+    <%= form.submit "Créer l'utilisateur", class: "btn btn-outline-primary" %>
+  </div>
+<% end %>
+
+<div class="mt-4">
+  <%= link_to "Annuler", users_path %>
+</div>

@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :prepare_exception_notifier
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
+  before_action :set_tables
 
   def after_sign_in_path_for(user)
     if user.favorite_table.present?
@@ -23,8 +24,7 @@ class ApplicationController < ActionController::Base
 private
 
   def set_layout_variables
-    @sitename ||= "CrystalDATA"
-    @sitename.concat(" v1.0 ")
+    @sitename ||= "Aikku ACCESS"
   end
 
   def prepare_exception_notifier
@@ -49,6 +49,12 @@ private
 
   def default_url_options
     { locale: I18n.locale }
+  end
+
+  def set_tables
+    if user_signed_in? && current_user.user?
+      @tables = current_user.tables
+    end
   end
 
 protected

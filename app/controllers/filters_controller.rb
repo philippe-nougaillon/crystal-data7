@@ -114,7 +114,7 @@ class FiltersController < ApplicationController
         when 'index'
           t('notice.field.index')
         when 'query'
-          if params.keys.count == 3 # ne pas afficher l'aide quand on applique le filtre/report
+          if params.keys.count == 3 # ne pas afficher l'aide quand on applique la requête
             t('notice.filter.query')
           end
         end

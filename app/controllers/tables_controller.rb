@@ -488,7 +488,7 @@ class TablesController < ApplicationController
       records_index = @values.pluck(:record_index).uniq
     end
 
-    filename = "CrystalDATA_Agenda_iCal"
+    filename = "#{@sitename.gsub(' ', '_')}_Agenda_iCal"
     response.headers['Content-Disposition'] = 'attachment; filename="' + filename + '.ics"'
     headers['Content-Type'] = "text/calendar; charset=UTF-8"
     render plain: AgendaToIcalendar.new(@table, records_index).call
