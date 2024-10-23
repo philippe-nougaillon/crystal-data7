@@ -80,6 +80,7 @@
               <%= t('misc.assistant') %>
             <% end %>
           </li>
+          <!--
           <li class="nav-item">
             <%= link_to users_path, class: 'nav-link link-secondary d-flex align-items-center gap-1' do %>
               <span class="material-symbols-outlined">
@@ -88,6 +89,7 @@
               <%= t('misc.profile') %>
             <% end %>
           </li>
+          -->
         <% end %>
 
         <li class="nav-item">
@@ -116,9 +118,29 @@
         </div>
 
         <% if user_signed_in? %>
-          <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger btn-sm text-dark', 'data-turbo': false do %>
-            <%= t('auth.logout') %>
-          <% end %>
+          <li class="nav-item dropdown d-flex align-items-center">
+            <label tabindex="0" class="avatar online avatar-placeholder" style="cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
+              <% if current_user.avatar.attached? %>
+                <div style="width: 2rem; border-radius: 100%; background-color: rgb(100 116 139);">
+                  <%= image_tag(current_user.avatar, size:'25x25') %>
+                </div>
+              <% else %>
+                <div style="width: 2rem; border-radius: 100%; background-color: rgb(15 23 42);">
+                  <span class="fs-6 text-light"><%= current_user.name.first.humanize %></span>
+                </div>
+              <% end %>
+            </label>
+            <ul class="dropdown-menu py-0">
+              <li class="text-center text-black my-2" title= <%= t('navbar.profile_title') %>>
+                <%= current_user.name %> (<%= current_user.role %>)
+              </li>
+              <li>
+                <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger text-black w-100 hover-text-white', 'data-turbo': false, title: t('auth.logout_title') do %>
+                  <%= t('auth.logout') %>
+                <% end %>
+              </li>
+            </ul>
+          </li>
         <% end %>
         
         <% if controller_name == "tables" && action_name == "show" %>

@@ -58,15 +58,15 @@
           <% end %>
         </li>
         <% if user_signed_in? %>
-          <li class="nav-item dropdown d-flex align-items-center ms-2">
+          <li class="nav-item dropdown d-flex align-items-center ms-4">
             <label tabindex="0" class="avatar online avatar-placeholder" style="cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
               <% if current_user.avatar.attached? %>
-                <div style="width: 2.5rem; border-radius: 100%; background-color: rgb(100 116 139);">
+                <div style="width: 2rem; border-radius: 100%; background-color: rgb(100 116 139);">
                   <%= image_tag(current_user.avatar, size:'25x25') %>
                 </div>
               <% else %>
-                <div style="width: 2.5rem; border-radius: 100%; background-color: rgb(15 23 42);">
-                  <span class="fs-5 text-light"><%= current_user.name.first.humanize %></span>
+                <div style="width: 2rem; border-radius: 100%; background-color: rgb(15 23 42);">
+                  <span class="fs-6 text-light"><%= current_user.name.first.humanize %></span>
                 </div>
               <% end %>
             </label>

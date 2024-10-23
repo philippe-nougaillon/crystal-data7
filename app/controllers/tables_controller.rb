@@ -121,10 +121,10 @@ class TablesController < ApplicationController
       end
 
     when 'map'
+      @lng = []
+      @lat = []
       if @table.fields.exists?(datatype: ['GPS'])
         @data = []
-        @lng = []
-        @lat = []
         fields_id = @table.fields.where.not(datatype: ['GPS']).first(7).pluck(:id)
         if fields_id.any?
           fields_id.each do |field|
@@ -303,7 +303,7 @@ class TablesController < ApplicationController
         @table.values.where(record_index: record_index).delete_all
         flash[:notice] = t('notice.table.delete_record', record_index: record_index)
       else
-        flash[:alert] = t('notice.table.error_delete_record')
+        flash[:alert] = t('notice.table.error_delete_record_used')
       end
     end  
 

@@ -21,7 +21,7 @@
                       onchange: 'this.form.submit()' %>
     </div>
 
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <%= label_tag :search_subject, t('maillogs.subject') %>
       <%= select_tag :search_subject, options_for_select(@mail_logs.pluck(:subject).uniq.sort, params[:search_subject]), include_blank: true, onchange:'this.form.submit()', class:"form-select form-select-sm w-full" %>
     </div>
