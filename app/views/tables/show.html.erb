@@ -95,7 +95,7 @@
         </div>
       <% end %>
       <% if policy(@table).fill? || current_user.compte_démo? %>
-        <%= link_to "(+) #{@table.name}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end', title: t('tables.navbar.add_new_object', table_name: @table.name) %>
+        <%= link_to "(+) #{@table.name}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end', title: t('tables.navbar.new_object', table_name: @table.name) %>
       <% end %>
     </div>
 
@@ -147,7 +147,7 @@
     <% if @records.any? %>
       <%= render partial: 'map', locals: { records: @records, table: @table } %>
     <% else %>
-      <p>Aucune donnée à afficher sur la carte.</p>
+      <p><%= t('tables.no_data_map') %></p>
     <% end %>
   <% when 'graph' %>
     <%= render partial: 'graph', locals: { records: @records, table: @table } %>

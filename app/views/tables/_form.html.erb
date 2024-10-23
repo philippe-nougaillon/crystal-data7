@@ -1,7 +1,7 @@
 <div class="d-block d-md-flex justify-content-between gap-5">
   <%= form_for(@table, class: 'flex-grow-1 mt-4') do |f| %>
 
-    <%= f.label :name, t('scaffold.name') %>
+    <%= f.label :name, "#{t('scaffold.name')} *" %>
     <%= f.text_field :name, required: true,
                       autofocus: true,
                       autocomplete: :off, 
@@ -14,7 +14,7 @@
 
     <% if @table.new_record? %>
       <%= label_tag :model_id, t('tables.model') %>
-      <%= select_tag :model_id, options_from_collection_for_select(@modèles, 'id', 'name_with_fields'), class: 'form-control mb-4 w-sm-50', include_blank: true %>
+      <%= select_tag :model_id, options_from_collection_for_select(@modèles, 'id', 'name_with_fields'), class: 'form-select mb-4 w-sm-50', include_blank: true %>
     <% end %>
 
     <div class="form-check mb-4">
