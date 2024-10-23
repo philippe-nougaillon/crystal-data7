@@ -27,30 +27,7 @@ Rails.application.routes.draw do
     end
     resources :values
     resources :blobs, only: [:new, :create]
-    
-    resources :users do
-      get :connect_guest_user
-    end
-    
-    resources :fields, only: %i[create edit update destroy] do
-      post :update_row_order, on: :collection
-    end
-    
-    controller :pages do
-      get :a_propos, to: 'pages#a_propos'
-      get :graphs, to: 'pages#graphs'
-      get :assistant, to: "pages#assistant"
-    end
-    
-    resources :filters do
-      member do
-        get :query
-      end
-    end
-    
-    resources :values
-    resources :blobs, only: [:new, :create]
-    
+
     resources :users, except: %i[show] do
       collection do
         get :profil
@@ -61,11 +38,12 @@ Rails.application.routes.draw do
     resources :fields, only: %i[create edit update destroy] do
       post :update_row_order, on: :collection
     end
-  
+    
     controller :pages do
       get :a_propos, to: 'pages#a_propos'
       get :graphs, to: 'pages#graphs'
       get :assistant, to: "pages#assistant"
+      get :mentions_legales, to: "pages#mentions_legales"
     end
     
     resources :filters do

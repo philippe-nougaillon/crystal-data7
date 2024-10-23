@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_action :info_notice, only: %i[graphs]
-  skip_before_action :authenticate_user!, only: %i[a_propos]
+  skip_before_action :authenticate_user!, only: %i[a_propos mentions_legales]
 
   def a_propos
   end
@@ -67,6 +67,9 @@ class PagesController < ApplicationController
         end
       end
     end
+  end
+
+  def mentions_legales
   end
 
   private
