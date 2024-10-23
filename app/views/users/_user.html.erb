@@ -1,0 +1,28 @@
+<tr id="<%= dom_id user %>" class="hover">
+  <td>
+    <div class="avatar avatar-placeholder">
+      <% if user.avatar.attached? %>
+        <div style="width: 4rem; border-radius: 100%; background-color: rgb(100 116 139);">
+          <%= image_tag user.avatar, class:"camino-avatar" %>
+        </div>
+      <% else %>
+        <div style="width: 3rem; border-radius: 100%; background-color: rgb(15 23 42);">
+          <span class="text-2xl text-white"><%= user.name.first.humanize %></span>
+        </div>
+      <% end %>
+    </div>
+  </td>
+  <td class="fw-bold">
+    <%= user.name %>
+  </td>
+  <td><%= user.role.upcase %></td>
+  <td><%= user.email %></td>
+  <td>
+    <% if policy(user).edit? || current_user.compte_démo? %>
+      <%= link_to t('scaffold.update'), edit_user_path(user), title: t('users.update_title', user: user.name), class: 'btn btn-outline-warning btn-sm me-2' %>
+    <% end %>
+    <% if policy(user).destroy? || current_user.compte_démo? %>
+      <%= link_to t('scaffold.destroy'), user, title: t('users.destroy_title', user: user.name), 'data-turbo-method': :delete, 'data-turbo-confirm': "Êtes-vous certain.e de vouloir supprimer l'utilisateur '#{user.name}' ?", class: 'btn btn-outline-danger btn-sm' %>
+    <% end %>
+  </td>
+</tr>

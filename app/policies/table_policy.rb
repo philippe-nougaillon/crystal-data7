@@ -14,7 +14,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def new?
-    index? && (!(user.compte_démo?) || Rails.env.development?)
+    index? && user.admin? && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def create?
@@ -50,7 +50,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def import?
-    user && (!(user.compte_démo?) || Rails.env.development?)
+    user && user.admin? && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def import_do?
@@ -90,7 +90,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def securite?
-    user
+    user && user.admin?
   end
 
 end

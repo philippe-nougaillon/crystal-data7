@@ -367,3 +367,45 @@ div.d-flex{
   overflow-y: auto;
   // box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
 }
+
+// Avatar
+
+.avatar {
+  position: relative;
+  display: inline-flex;
+  >div {
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+  &.avatar-placeholder>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  &.online:before {
+    content: "";
+    position: absolute;
+    z-index: 10;
+    display: block;
+    border-radius: 9999px;
+    --tw-bg-opacity: 1;
+    background-color: hsl(158 64% 52%);
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: white;
+    width: 15%;
+    height: 15%;
+    top: 7%;
+    right: 7%;
+  }
+}
+
+.hover-text-white:hover{
+  color: white !important;
+}

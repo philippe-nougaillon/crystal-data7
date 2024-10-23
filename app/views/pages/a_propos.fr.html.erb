@@ -1,13 +1,13 @@
 <div class="mb-5">
 	<div class="d-flex justify-content-between align-items-center">
 		<div>
-			<h1 class="text-primary mb-2">CrystalDATA</h1>
+			<h1 class="text-primary mb-2"><%= @sitename %></h1>
 			<h2 class="fw-normal fs-4 mt-0">
 				Vos données métier 'In da Cloud' 
 				<span class="fw-lighter text-secondary fs-6">Go, go, go... It's your birthday!</span>
 			</h2>
 		</div>
-		<%= image_tag 'icons/crystaldata.png', class:'mt-3', style: "height: 8rem" %>
+		<%= image_tag 'icons/aikku.png', class:'mt-3', style: "height: 8rem" %>
 	</div>
 
 	<h3 class="fw-bold text-dark my-4">Pour qui et pour quel usage ?</h3>
@@ -18,7 +18,7 @@
 		Vous êtes une entreprise de service avec des équipes sur le terrain et
 		vous cherchez une méthode de gestion de vos interventions (ex: BTP, SAV, Installation, Maintenance) ?
 		<br><br>
-		CrystalData est un gestionnaire d'informations NO-CODE qui vous permet de créer  
+		<%= @sitename %> est un gestionnaire d'informations NO-CODE qui vous permet de créer  
 		des collections d'objets métiers (ex: Clients, Interventions, Technicien, Frais, Projets, etc.), 
 		de les lier (Clients <=> Interventions <=> Techniciens <=> Frais) 
 		et de les partager en ligne avec vos collaborateurs, en toute sécurité.
@@ -28,7 +28,7 @@
 	<p class="fs-5 fw-light w-sm-75">
 		Vous êtes responsable d'une équipe et du bon déroulement d'un programme de projets ?
 		<br><br>
-		CrystalData vous permet de créé rapidement, et sans faire une ligne de code, un outil de suivi de l'état de chaque projet,
+		<%= @sitename %> vous permet de créé rapidement, et sans faire une ligne de code, un outil de suivi de l'état de chaque projet,
 		d'être notifié quand un changement d'état important est enregistré, et de voir vos dates d'échéances 
 		dans une vue 'Calendrier' ou dans votre agenda personnel (Google Calendar/Outlook/etc.).     
 	</p>
@@ -37,7 +37,7 @@
 	<p class="fs-5 fw-light w-sm-75">
 		Vous êtes à la recherche d'un outil simple pour gérer vos dossiers, documents, rapport, et vos informations collectées sur le terrain ?
 		<br><br>
-		CrystalData a été conçu pour être utilisable sur un smartphone afin de collecter les données au plus près de leur origine et quelle que soit leur nature (Texte, Chiffre, Photo, PDF, etc.). 
+		<%= @sitename %> a été conçu pour être utilisable sur un smartphone afin de collecter les données au plus près de leur origine et quelle que soit leur nature (Texte, Chiffre, Photo, PDF, etc.). 
 		Des données de contexte, comme l'état de la météo, la position GPS, peuvent être acquises automatiquement.
 		Un outil de génération de Graphiques vous permet de visualiser les informations sous la forme d'une courbe ou d'un histogramme.
 	</p>
@@ -108,7 +108,7 @@
 
 	</ul>
 
-	<h3 class="fw-bold text-dark my-4">L'objet CrystalDATA et ses Attributs</h3>
+	<h3 class="fw-bold text-dark my-4">L'objet <%= @sitename %> et ses Attributs</h3>
 
 	<p class="fs-5 fw-light w-sm-75">
 		Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et 
@@ -298,11 +298,11 @@
 		la vue de détails de chaque Technicien affiche automatiquement ses Interventions et permet d'en saisir une nouvelle pour ce Technicien.  
 	</p>
 
-	<h3 class="fw-bold text-dark my-4">Filtres/Reports</h3>
+	<h3 class="fw-bold text-dark my-4">Requêtes</h3>
 	<p class="fs-5 fw-light w-sm-75">
-		Les Filtres/Reports permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères.
+		Les Requêtes permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères.
 		<br><br>
-		Ces filtres/reports acceptent des critères différents selon le type d'attribut :
+		Ces Requêtes acceptent des critères différents selon le type d'attribut :
 		<ul class="list-group mb-5 m-3 gap-2">
 			<li>
 				un attribut de type Texte est filtré avec %TXT% (Filtre tout ce qui contient les 3 lettres TXT) 
@@ -437,7 +437,7 @@
 	C'est pourquoi j'ai commencé le développement de cet outil NO-CODE et open-source, il y a 10 ans,  
 	dans le but de couvrir les fonctions de base d'une plateforme d'information ouverte.
 	<br><br>
-	CrystalDATA a donc pour ambition d'offrir un petit concentré de mon expérience des bases de données, 
+	<%= @sitename %> a donc pour ambition d'offrir un petit concentré de mon expérience des bases de données, 
 	et, pourquoi pas, de poser les fondations d'une future application/plateforme sur mesure, la vôtre, 
 	intégrant toutes vos spécificités, règles métier, Statut, Services, etc.
 </p>
@@ -445,42 +445,18 @@
 <h3 class="fw-bold text-dark my-4">Développement, support et services</h3>
 
 <p class="mt-3">
-	<i>CrystalDATA a été développé en Ruby on Rails par Philippe et Pierre-Emmanuel</i>
+	<%= @sitename %> a été développé en Ruby on Rails par AIKKU SAS
 </p>
-
-<div class="row mt-3">
-	<div class="col-sm-2">
-		<%= image_tag "philippe.webp",
-		class: "img-thumbnail rounded"
-		%>
-	<h5 class="font-bold">
-		Philippe N.
-	</h5>
-	<h6 class="italic text-xl">
-		Product Manager/Dev senior
-	</h6>
-	</div>
-	<div class="col-sm-2">
-	<%= image_tag "pierre-emmanuel.webp",
-		class: "img-thumbnail rounded"
-	%>
-	<h5 class="font-bold">
-		Pierre-Emmanuel D.
-	</h5>
-	<h6 class="italic">
-		Développeur junior
-	</h6>
-</div>
 
 <p class="fs-5 fw-light text-secondary mt-4">
 	Besoin d'une fonctionnalité ou d'une nouvelle application sur mesure ? Nous vous la développons !
 	<br><br>
 	Vous êtes à la recherche d'une application pour la gestion de projets, d'interventions, de planning, d'émargement ou de facturation ?
 	<br>
-	Consultez notre <%= link_to "catalogue de logiciels Open-Source", 'https://www.philnoug.com/logiciels', target: '_blank', class: 'link' %>
+	Consultez notre <%= link_to "catalogue de logiciels Open-Source", 'https://www.aikku.eu/logiciels', target: '_blank', class: 'link' %>
 	<br><br>
 	Nous pouvons aussi convertir vos anciennes applications PC/Windows (ex: VB/VBA/MS ACCESS/EXCEL/C#...) en une plateforme WEB.
 	<br><br>
 	Pour en savoir plus,
-	<%= link_to "contactez-nous", 'https://www.philnoug.com/contact', target: '_blank', class: 'link' %>
+	<%= link_to "contactez-nous", 'https://www.aikku.eu/contact', target: '_blank', class: 'link' %>
 </p>

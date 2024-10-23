@@ -23,8 +23,8 @@ ExceptionNotification.configure do |config|
 
   # Email notifier sends notifications by email.
   config.add_notifier :email, {
-    email_prefix: '[CRYSTAL DATA ERROR] ',
-    sender_address: %{"Crystal Data Notifier" <notifier@crystaldata.com>},
+    email_prefix: '[AIKKU ACCESS ERROR] ',
+    sender_address: %{"AIKKU ACCESS Notifier" <no-reply@aikku.eu>},
     exception_recipients: %w{philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com}
   }
 

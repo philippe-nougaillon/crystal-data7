@@ -1,13 +1,13 @@
 <div class="mb-5">
 	<div class="d-flex justify-content-between align-items-center">
 		<div>
-			<h1 class="text-primary mb-2">CrystalDATA</h1>
+			<h1 class="text-primary mb-2"><%= @sitename %></h1>
 			<h2 class="fw-normal fs-4 mt-0">
 				Your business data 'In da Cloud'
 				<span class="fw-lighter text-secondary fs-6">Go, go, go... It's your birthday!</span>
 			</h2>
 		</div>
-		<%= image_tag 'icons/crystaldata.png', class:'mt-3', style: "height: 8rem" %>
+		<%= image_tag 'icons/aikku.png', class:'mt-3', style: "height: 8rem" %>
 	</div>
 
 	<h3 class="fw-bold text-dark my-4">For whom and for what use?</h3>
@@ -18,7 +18,7 @@
 		You are a service company with teams in the field and
 		Are you looking for a method of managing your interventions (e.g. construction, after -sales service, installation, maintenance)?
 		<br><br>
-		Crystaldata is a NO-Code information manager that allows you to create
+		<%= @sitename %> is a NO-Code information manager that allows you to create
 		Collections of business objects (eg customers, interventions, technician, costs, projects, etc.),
 		To link them (customers <=> interventions <=> Technicians <=> Frais)
 		And to share them online with your employees, in complete safety.
@@ -28,7 +28,7 @@
 	<p class="fs-5 fw-light w-sm-75">
 		Are you responsible for a team and the smooth running of a project program?
 		<br><br>
-		Crystaldata allows you to quickly create, and without making a line of code, a tool for monitoring the state of each project,
+		<%= @sitename %> allows you to quickly create, and without making a line of code, a tool for monitoring the state of each project,
 		to be notified when a significant change of state is recorded, and to see your dates of deadlines
 		in a 'calendar' view or in your personal agenda (Google Calendar/Outlook/etc.).
 	</p>
@@ -108,7 +108,7 @@
 
 	</ul>
 
-	<h3 class="fw-bold text-dark my-4">The Crystaldata object and its attributes</h3>
+	<h3 class="fw-bold text-dark my-4">The <%= @sitename %> object and its attributes</h3>
 
 	<p class="fs-5 fw-light w-sm-75">
 		An object consists of attributes (ex: name, brand, color, age, price, Qty in stock, etc.) and
@@ -297,11 +297,11 @@
 		The detail view of each technician automatically displays their interventions and allows you to enter a new one for this technician.
 	</p>
 
-	<h3 class="fw-bold text-dark my-4">Filters/Reports</h3>
+	<h3 class="fw-bold text-dark my-4">Queries</h3>
 	<p class="fs-5 fw-light w-sm-75">
-		Filters/Reports make it possible to memorize selection criteria in order to obtain a filtered collection of objects, meeting its criteria.
+		Queries make it possible to memorize selection criteria in order to obtain a filtered collection of objects, meeting its criteria.
 		<br><br>
-		These filters/reports accept different criteria depending on the type of attribute:
+		These queries accept different criteria depending on the type of attribute:
 		<ul class="list-group mb-5 m-3 gap-2">
 			<li>
 				A text type attribute is filtered with % TXT % (filter everything that contains the 3 letters TXT)
@@ -436,7 +436,7 @@
 	This is why I started the development of this No-Code and Open-Source tool, 10 years ago,
 	in order to cover the basic functions of an open information platform.
 	<br><br>
-	Crystaldata therefore aims to offer a small concentrate of my database experience,
+	<%= @sitename %> therefore aims to offer a small concentrate of my database experience,
 	And, why not, to lay the foundations of a future tailor -made application/platform, yours,
 	Integrating all your specificities, business rules, status, services, etc.
 </p>
@@ -444,42 +444,18 @@
 <h3 class="fw-bold text-dark my-4">Development, support and services</h3>
 
 <p class="mt-3">
-	<i>Crystaldata was developed in Ruby on Rails by Philippe and Pierre-Emmanuel</i>
+	<%= @sitename %> was developed in Ruby on Rails by AIKKU SAS
 </p>
-
-<div class="row mt-3">
-	<div class="col-sm-2">
-		<%= image_tag "philippe.webp",
-		class: "img-thumbnail rounded"
-		%>
-	<h5 class="font-bold">
-		Philippe N.
-	</h5>
-	<h6 class="italic text-xl">
-		Product Manager/Dev senior
-	</h6>
-	</div>
-	<div class="col-sm-2">
-	<%= image_tag "pierre-emmanuel.webp",
-		class: "img-thumbnail rounded"
-	%>
-	<h5 class="font-bold">
-		Pierre-Emmanuel D.
-	</h5>
-	<h6 class="italic">
-		Junior developer
-	</h6>
-</div>
 
 <p class="fs-5 fw-light text-secondary mt-4">
 	Need feature or new tailor -made application?We are developing it!
 	<br><br>
 	Are you looking for an application for project management, interventions, planning, emarging or billing?
 	<br>
-	Consult our <%= link_to "Open-Source software catalog", 'https://www.philnoug.com/logiciels', target: '_blank', class: 'link' %>
+	Consult our <%= link_to "Open-Source software catalog", 'https://www.aikku.eu/logiciels', target: '_blank', class: 'link' %>
 	<br><br>
 	We can also convert your old PC/Windows applications (ex: VB/VBA/MS Access/Excel/C#...) to a web platform.
 	<br><br>
 	To find out more,
-	<%= link_to "Contact us", 'https://www.philnoug.com/contact', target: '_blank', class: 'link' %>
+	<%= link_to "Contact us", 'https://www.aikku.eu/contact', target: '_blank', class: 'link' %>
 </p>

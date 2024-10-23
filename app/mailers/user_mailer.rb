@@ -11,7 +11,7 @@ class UserMailer < ApplicationMailer
 	def welcome(user)
 		@user = user
 
-		mail(to: @user.email, subject: "[CrystalDATA] Bienvenue !")
+		mail(to: @user.email, subject: "[Aikku ACCESS] Bienvenue !")
 	end
 
 	def notification_nouveau_compte(user)
@@ -30,13 +30,13 @@ class UserMailer < ApplicationMailer
 	def new_user_notification
 		@user = params[:user]
 
-		mail(to: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com", subject:"[CrystalDATA] Un compte a été créé")
+		mail(to: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com", subject:"[Aikku ACCESS] Un compte a été créé")
 	end
 
 	def new_guest_notification(referrer)
 		@user = User.find(1)
 		@referrer = referrer
-		mail(to: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com", subject:"[CrystalDATA] Le compte démo est utilisé")
+		mail(to: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com", subject:"[Aikku ACCESS] Le compte démo est utilisé")
 	end
 
 	def new_custom_notification(notification, record_index)
@@ -44,7 +44,7 @@ class UserMailer < ApplicationMailer
 		@record_index = record_index
 		mail(to: @notification.send_to,
 				bcc: "philippe.nougaillon@gmail.com, pierreemmanuel.dacquet@gmail.com",
-				subject: "[CrystalDATA] Notification '#{@notification.table.name.humanize}' (#{@notification.field.name.humanize} = #{@notification.value})")
+				subject: "[Aikku ACCESS] Notification '#{@notification.table.name.humanize}' (#{@notification.field.name.humanize} = #{@notification.value})")
 	end
 
 end

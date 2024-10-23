@@ -14,7 +14,7 @@ FactoryBot.define do
   end
 
   factory :user do
-    name { Faker::Name::first_name }
+    name { Faker::Name.unique.first_name }
     email { "#{SecureRandom.hex(4)}@example.org" }
     password { SecureRandom.hex(8) }
     password_confirmation { password }

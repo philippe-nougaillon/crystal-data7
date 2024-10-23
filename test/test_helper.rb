@@ -24,9 +24,9 @@ class ActiveSupport::TestCase
     manufacturer_build_number_field = create(:field, table: @manufacturer_table, row_order: 2, datatype: "Liste", name: "Build Number", items: "[1,2,3,4,5]", filtre: true)
 
     # Manufacturer values
-    @manufacturer_name_value_1 = create(:value, field: manufacturer_name_field, record_index: 1, data: Faker::Device.manufacturer, user_id: @user.id)
-    manufacturer_name_value_2 = create(:value, field: manufacturer_name_field, record_index: 2, data: Faker::Device.manufacturer, user_id: @user.id)
-    manufacturer_name_value_3 = create(:value, field: manufacturer_name_field, record_index: 3, data: Faker::Device.manufacturer, user_id: @user.id)
+    @manufacturer_name_value_1 = create(:value, field: manufacturer_name_field, record_index: 1, data: Faker::Device.unique.manufacturer, user_id: @user.id)
+    manufacturer_name_value_2 = create(:value, field: manufacturer_name_field, record_index: 2, data: Faker::Device.unique.manufacturer, user_id: @user.id)
+    manufacturer_name_value_3 = create(:value, field: manufacturer_name_field, record_index: 3, data: Faker::Device.unique.manufacturer, user_id: @user.id)
     manufacturer_build_number_value_1 = create(:value, field: manufacturer_build_number_field, record_index: 1, data: 1, user_id: @user.id)
 
     # Device Table
@@ -39,9 +39,9 @@ class ActiveSupport::TestCase
     device_manufacturer_field = create(:field, table: @device_table, datatype: "Liste", row_order: 3, name: "Manufacturers", items: "[Manufacturer.Name]")
 
     # Device values
-    device_model_name_value_1 = create(:value, field: device_model_name_field, record_index: 1, data: Faker::Device.model_name, user_id: @user.id)
-    @device_model_name_value_2 = create(:value, field: device_model_name_field, record_index: 2, data: Faker::Device.model_name, user_id: @user.id)
-    @device_model_name_value_3 = create(:value, field: device_model_name_field, record_index: 3, data: Faker::Device.model_name, user_id: @user.id)
+    device_model_name_value_1 = create(:value, field: device_model_name_field, record_index: 1, data: Faker::Device.unique.model_name, user_id: @user.id)
+    @device_model_name_value_2 = create(:value, field: device_model_name_field, record_index: 2, data: Faker::Device.unique.model_name, user_id: @user.id)
+    @device_model_name_value_3 = create(:value, field: device_model_name_field, record_index: 3, data: Faker::Device.unique.model_name, user_id: @user.id)
     device_release_date_value_1 = create(:value, field: device_release_date_field, record_index: 1, data: '2023-12-25', user_id: @user.id)
     @device_release_date_value_2 = create(:value, field: device_release_date_field, record_index: 2, data: '2023-12-12', user_id: @user.id)
     @device_release_date_value_3 = create(:value, field: device_release_date_field, record_index: 3, data: '2023-10-02', user_id: @user.id)
