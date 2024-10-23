@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body>
-  	'<%= @table.users.first.name %>' partage avec vous la table <b><%= @table.name %></b>.<br><br>
+'<%= @table.users.first.name %>' partage avec vous la table <b><%= @table.name %></b>.<br><br>
 
-    Pour vous connecter, rendez-vous à cette adresse: <%= link_to root_url, root_url %>
-    <br>
-  </body>
-</html>
+Pour vous connecter, rendez-vous à cette adresse : <%= link_to root_url, root_url %>
+<br>
+
+<hr style="margin-top: 30px; border: 1px solid #ccc">
+
+'<%= @table.users.first.name %>' shares with you the table <b><%= @table.name %></b>.<br><br>
+
+To connect, go to this address: <%= link_to root_url, root_url %>
+<br>

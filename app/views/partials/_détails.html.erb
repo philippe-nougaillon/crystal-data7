@@ -34,9 +34,9 @@
               <%= number_to_currency(value) %>
             <% when 'Formule' %>
               <%= field.evaluate(@table, record_index) %>
-            <% when 'Workflow' %>
+            <% when 'Statut' %>
               <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
-              <% color = items[value] %>
+              <% color = Field.bootstrap_class(items[value]) %>
               <span class="badge bg-<%= color %>"><%= value %></span>
             <% when 'URL' %>
               <%= link_to URI.parse(value).host, value, target: "_blank" %>
@@ -51,7 +51,7 @@
                 <% linked_value = field.get_linked_table_record(value.to_i) %>
                 <%= link_to linked_value, details_path(Table.find(field.relation.relation_with_id).slug, record_index: value) %>
               <% else %>
-                Aucune relation trouvée
+                <%= t('tables.collection_not_found') %>
               <% end %>
             <% when 'Utilisateur' %>
               <%= value %>
@@ -74,6 +74,8 @@
               <% (5 - value.to_i).times do %>
                 <i class="bi bi-star"></i>
               <% end %>
+            <% when 'Oui_non?' %>
+              <%= t("misc.#{value}") %>
             <% else %>
               <%= value %>
             <% end %>

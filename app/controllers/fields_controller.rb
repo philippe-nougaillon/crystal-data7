@@ -25,7 +25,7 @@ class FieldsController < ApplicationController
         format.html { redirect_to show_attrs_path(id: @field.table.slug), notice: t('notice.field.new') }
         format.json { render :show, status: :created, location: @field }
       else
-        format.html { redirect_to show_attrs_path(id: @field.table.slug), alert: @field.errors.full_messages.join(', '), status: :unprocessable_entity }
+        format.html { redirect_to show_attrs_path(id: @field.table.slug), alert: @field.errors.full_messages.join(', ') }
         format.json { render json: @field.errors, status: :unprocessable_entity }
       end
     end

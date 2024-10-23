@@ -6,8 +6,8 @@
     <div class="d-flex flex-row flex-wrap gap-2">
       <div>
         <%= f.label :datatype, t('tables.datatype') %>
-        <span data-action="change->type#change">
-          <%= f.select :datatype, options_for_select(@fields, @field.datatype), {}, class: 'form-select', data: { 'type-target': 'source' }, disabled: !@field.new_record? %>
+        <span data-action="change->type#change" data-type-datatypes="<%= @fields.map { |field| [field, t("fields.datatype.#{field}")] }.to_h.to_json %>">
+          <%= f.select :datatype, options_for_select(@fields.map { |field| [t("fields.datatype.#{field}"), field] }, @field.datatype), {}, class: 'form-select', data: { 'type-target': 'source' }, disabled: !@field.new_record? %>
         </span>
       </div>
 
@@ -66,3 +66,14 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  const translations = {
+    formula_hint: "<%= t('fields.formula_hint') %>",
+    list_hint: "<%= t('fields.list_hint') %>",
+    status_hint: "<%= t('fields.status_hint') %>",
+    collection_hint: "<%= t('fields.collection_hint') %>",
+    qrcode_hint: "<%= t('fields.qrcode_hint') %>",
+    distance_hint: "<%= t('fields.distance_hint') %>"
+  };
+</script>

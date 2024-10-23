@@ -10,10 +10,10 @@
       <%= link_to t('scaffold.update'), fill_url(@table.slug, record_index: @record_index), 'data-turbo': 'false', class:'btn btn-sm btn-outline-primary', 'data-testid': "Modifier ligne n°#{ @record_index }" %>
     <% end %>
     <% if policy(@table).delete_record? %>
-      <%= link_to t('scaffold.destroy'), delete_record_url(@table.slug, record_index: @record_index), title: 'Supprimer la ligne', 'data-turbo-method': :delete, class:'btn btn-sm btn-outline-danger', 'data-turbo-confirm': 'Confirmez-vous la suppression ?', 'data-testid': "Supprimer ligne n°#{@record_index}" %>
+      <%= link_to t('scaffold.destroy'), delete_record_url(@table.slug, record_index: @record_index), title: t('tables.delete_record'), 'data-turbo-method': :delete, class:'btn btn-sm btn-outline-danger', 'data-turbo-confirm': 'Confirmez-vous la suppression ?', 'data-testid': "Supprimer ligne n°#{@record_index}" %>
     <% end %>
     <% if policy(@table).logs? %>
-      <%= link_to t('tables.activity'), logs_path(record_index: @record_index), title:"Affiche l'activité de #{@table.name} en bas de cette page", data: { turbo_frame: "audit_frame" } %>
+      <%= link_to t('tables.activity'), logs_path(record_index: @record_index), title: t('tables.record_activity_title', table: @table.name), data: { turbo_frame: "audit_frame" } %>
     <% end %>
     <%= link_to t('scaffold.back'), table_path(@table) %>
   </div>

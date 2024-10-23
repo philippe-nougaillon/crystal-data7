@@ -15,21 +15,21 @@ export default class extends Controller {
   change() {
     var type = this.sourceTarget;
 
-    if (['Formule', 'Liste', 'Workflow', 'Collection', 'QRCode', 'Distance'].includes(type.value)) {
+    if (['Formule', 'Liste', 'Statut', 'Collection', 'QRCode', 'Distance'].includes(type.value)) {
       this.paramsTarget.style.display = 'block';
       this.numberTarget.style.display = 'none';
-      if (type.value == "Formule" ) {
-        this.paramsTarget.children[2].innerHTML = "ex: [Temps] * [Coût horaire] OU [Prix HT] * 1.2 "
-      } else if (type.value == "Liste" ) {
-        this.paramsTarget.children[2].innerHTML = "ex : À faire,Fait,Annulé OU Monsieur, Madame, Mademoiselle"
-      } else if (type.value == "Workflow") {
-        this.paramsTarget.children[2].innerHTML = "ex : Nouveau:primary, Confirmé:success, Annulé:danger, Archivé:secondary"
+      if (type.value == "Formule") {
+        this.paramsTarget.children[2].innerHTML = translations.formula_hint;
+      } else if (type.value == "Liste") {
+        this.paramsTarget.children[2].innerHTML = translations.list_hint;
+      } else if (type.value == "Statut") {
+        this.paramsTarget.children[2].innerHTML = translations.status_hint;
       } else if (type.value == "Collection") {
-        this.paramsTarget.children[2].innerHTML = "ex : [Technicien.\"Nom,Prénom,Expérience\"]"
+        this.paramsTarget.children[2].innerHTML = translations.collection_hint;
       } else if (type.value == "QRCode") {
-        this.paramsTarget.children[2].innerHTML = "ex : [Référence]"
+        this.paramsTarget.children[2].innerHTML = translations.qrcode_hint;
       } else if (type.value == "Distance") {
-        this.paramsTarget.children[2].innerHTML = "ex : [Chantier(GPS)] - [Maison(GPS)] OU [Chantier(GPS)] - 48.85879287621989, 2.294761243572842"
+        this.paramsTarget.children[2].innerHTML = translations.distance_hint;
       }
     } else if (type.value == "Nombre" || type.value == "Euros" ) {
       this.paramsTarget.style.display = 'none';

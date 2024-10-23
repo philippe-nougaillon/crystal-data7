@@ -37,7 +37,7 @@
 	<p class="fs-5 fw-light w-sm-75">
 		Are you looking for a simple tool to manage your files, documents, report, and your information collected in the field?
 		<br><br>
-		Crystaldata has been designed to be usable on a smartphone in order to collect data as close as possible to their origin and whatever their nature (text, number, photo, PDF, etc.).
+		<%= @sitename %> has been designed to be usable on a smartphone in order to collect data as close as possible to their origin and whatever their nature (text, number, photo, PDF, etc.).
 		Context data, such as the weather statement, the GPS position, can be acquired automatically.
 		A graphic generation tool allows you to view information in the form of a curve or histogram.
 	</p>
@@ -117,132 +117,132 @@
 		The types of attributes available are:
 
 		<div class="mt-4">
-			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary btn-lg', title: 'Texte' do %>
+			<%= link_to a_propos_path(anchor: 'text'), class: 'btn btn-outline-primary btn-lg', title: 'Texte' do %>
 				<span class="material-symbols-outlined text-dark align-middle">abc</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary btn-lg', title: 'Texte long' do %>
+			<%= link_to a_propos_path(anchor: 'text'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Texte_long') do %>
 				<span class="material-symbols-outlined text-dark align-middle">notes</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'texte'), class: 'btn btn-outline-primary btn-lg', title: 'Texte riche' do %>
+			<%= link_to a_propos_path(anchor: 'text'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Texte_riche') do %>
 				<span class="material-symbols-outlined text-dark align-middle">text_snippet</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary btn-lg', title: 'Nombre' do %>
+			<%= link_to a_propos_path(anchor: 'numbers'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Nombre') do %>
 				<span class="material-symbols-outlined text-dark align-middle">tag</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary btn-lg', title: 'Euros' do %>
+			<%= link_to a_propos_path(anchor: 'numbers'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Euros') do %>
 				<span class="material-symbols-outlined text-dark align-middle">euro</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'chiffres'), class: 'btn btn-outline-primary btn-lg', title: 'Formule' do %>
+			<%= link_to a_propos_path(anchor: 'numbers'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Formule') do %>
 				<span class="material-symbols-outlined text-dark align-middle">calculate</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'date'), class: 'btn btn-outline-primary btn-lg', title: 'Date' do %>
+			<%= link_to a_propos_path(anchor: 'date'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Date') do %>
 				<span class="material-symbols-outlined text-dark align-middle">calendar_today</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'oui_non'), class: 'btn btn-outline-primary btn-lg', title: 'Oui/Non?' do %>
+			<%= link_to a_propos_path(anchor: 'yes_no'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Oui_non?') do %>
 				<span class="material-symbols-outlined text-dark align-middle">help</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'liste'), class: 'btn btn-outline-primary btn-lg', title: 'Liste de choix' do %>
+			<%= link_to a_propos_path(anchor: 'list'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.List') do %>
 				<span class="material-symbols-outlined text-dark align-middle">format_list_numbered</span>
 			<% end %>
 
 		</div>
 		<div class="mt-4">
-			<%= link_to a_propos_path(anchor: 'liste_objet'), class: 'btn btn-outline-primary btn-lg', title: "Liste d'objets (Collection)" do %>
+			<%= link_to a_propos_path(anchor: 'object_list'), class: 'btn btn-outline-primary btn-lg', title: "List of objects (#{t('fields.datatype.Collection')})" do %>
 				<span class="material-symbols-outlined text-dark align-middle">database</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary btn-lg', title: 'Fichier' do %>
+			<%= link_to a_propos_path(anchor: 'file'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Fichier') do %>
 				<span class="material-symbols-outlined text-dark align-middle">description</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary btn-lg', title: 'Image' do %>
+			<%= link_to a_propos_path(anchor: 'file'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Image') do %>
 				<span class="material-symbols-outlined text-dark align-middle">image</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'fichier'), class: 'btn btn-outline-primary btn-lg', title: 'Document PDF' do %>
+			<%= link_to a_propos_path(anchor: 'file'), class: 'btn btn-outline-primary btn-lg', title: 'PDF document' do %>
 				<span class="material-symbols-outlined text-dark align-middle">picture_as_pdf</span>
 			<% end %>		
-			<%= link_to a_propos_path(anchor: 'utilisateur'), class: 'btn btn-outline-primary btn-lg', title: 'Utilisateur' do %>
+			<%= link_to a_propos_path(anchor: 'user'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Utilisateur') do %>
 				<span class="material-symbols-outlined text-dark align-middle">person</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'url'), class: 'btn btn-outline-primary btn-lg', title: 'Lien URL' do %>
+			<%= link_to a_propos_path(anchor: 'url'), class: 'btn btn-outline-primary btn-lg', title: 'URL link' do %>
 				<span class="material-symbols-outlined text-dark align-middle">link</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'email'), class: 'btn btn-outline-primary btn-lg', title: 'Adresse email' do %>
+			<%= link_to a_propos_path(anchor: 'email'), class: 'btn btn-outline-primary btn-lg', title: 'E-mail address' do %>
 				<span class="material-symbols-outlined text-dark align-middle">mail</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'video'), class: 'btn btn-outline-primary btn-lg', title: 'Vidéo YouTube' do %>
+			<%= link_to a_propos_path(anchor: 'video'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Vidéo_YouTube') do %>
 				<span class="material-symbols-outlined text-dark align-middle">play_circle</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'couleur'), class: 'btn btn-outline-primary btn-lg', title: 'Couleur' do %>
+			<%= link_to a_propos_path(anchor: 'color'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Couleur') do %>
 				<span class="material-symbols-outlined text-dark align-middle">palette</span>
 			<% end %>
 		</div>
 		
 		<div class="mt-4">
-			<%= link_to a_propos_path(anchor: 'localisation'), class: 'btn btn-outline-primary btn-lg', title: 'Localisation GPS' do %>
+			<%= link_to a_propos_path(anchor: 'location'), class: 'btn btn-outline-primary btn-lg', title: 'GPS location' do %>
 				<span class="material-symbols-outlined text-dark align-middle">my_location</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'qrcode'), class: 'btn btn-outline-primary btn-lg', title: 'QR Code' do %>
+			<%= link_to a_propos_path(anchor: 'qrcode'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.QRCode') do %>
 				<span class="material-symbols-outlined text-dark align-middle">qr_code_2</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'qrscan'), class: 'btn btn-outline-primary btn-lg', title: 'Scanner à QR Code' do %>
+			<%= link_to a_propos_path(anchor: 'qrscan'), class: 'btn btn-outline-primary btn-lg', title: 'QR Code Scanner' do %>
 				<span class="material-symbols-outlined text-dark align-middle">barcode_reader</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'signature'), class: 'btn btn-outline-primary btn-lg', title: 'Signature manuscrite' do %>
+			<%= link_to a_propos_path(anchor: 'signature'), class: 'btn btn-outline-primary btn-lg', title: 'Handwritten signature' do %>
 				<span class="material-symbols-outlined text-dark align-middle">signature</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'uuid'), class: 'btn btn-outline-primary btn-lg', title: 'UDID' do %>
+			<%= link_to a_propos_path(anchor: 'uuid'), class: 'btn btn-outline-primary btn-lg', title: 'UUID (Universally Unique IDentify)' do %>
 				<span class="material-symbols-outlined text-dark align-middle">key</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'tags'), class: 'btn btn-outline-primary btn-lg', title: 'Tags' do %>
+			<%= link_to a_propos_path(anchor: 'tags'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Tags') do %>
 				<span class="material-symbols-outlined text-dark align-middle">sell</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'stars'), class: 'btn btn-outline-primary btn-lg', title: 'Etoiles' do %>
+			<%= link_to a_propos_path(anchor: 'stars'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Stars') do %>
 				<span class="material-symbols-outlined text-dark align-middle">star</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'meteo'), class: 'btn btn-outline-primary btn-lg', title: 'Etoiles' do %>
+			<%= link_to a_propos_path(anchor: 'weather'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Météo') do %>
 				<span class="material-symbols-outlined text-dark align-middle">partly_cloudy_day</span>
 			<% end %>
-			<%= link_to a_propos_path(anchor: 'workflow'), class: 'btn btn-outline-primary btn-lg', title: 'Workflow' do %>
+			<%= link_to a_propos_path(anchor: 'status'), class: 'btn btn-outline-primary btn-lg', title: t('fields.datatype.Statut') do %>
 				<span class="material-symbols-outlined text-dark align-middle">steppers</span>
 			<% end %>
 		</div>
 		
 		<ul class="list-group list-group-flush my-4 m-3 gap-2 w-sm-75">
 			<li>
-				<b id="texte">Texte</b> :
+				<b id="text"><%= t('fields.datatype.Texte') %></b> :
 				<ul>
 					<li>Simple text: can contain a chain of 255 characters maximum.The 'filter option?'Allows you to create a drop -down list containing the distinct values.</li>
-					<li>Long text: allows you to write long texts</li>
-					<li>Rich text: allows you to write and format a long text (fat, underlined, title, color, size, links, lists, etc.), using a small integrated text editor (Trix Editor)</li>
+					<li><%= t('fields.datatype.Texte_long') %>: allows you to write long texts</li>
+					<li><%= t('fields.datatype.Texte_riche') %>: allows you to write and format a long text (fat, underlined, title, color, size, links, lists, etc.), using a small integrated text editor (Trix Editor)</li>
 				</ul>
 			</i>
 			<li>
-				<b id="chiffres">Numbers</b> :
+				<b id="numbers">Numbers</b> :
 				<ul>
-					<li>Number: to enter digital values, with or without decimal.The 'Operation' option at the bottom of the page 'will calculate the average or the sum of the attribute values.</li>
-					<li>Euros: ditto 'number' but displays the value with the Euros symbol (€).</li>
-					<li>Formula: field calculated from existing fields or a formula in Ruby language.(Ex: <i> [time spent] * [Time cost] </i> or <i> [price excl.
+					<li><%= t('fields.datatype.Nombre') %>: to enter digital values, with or without decimal.The 'Operation' option at the bottom of the page 'will calculate the average or the sum of the attribute values.</li>
+					<li><%= t('fields.datatype.Euros') %>: ditto 'number' but displays the value with the Euros symbol (€).</li>
+					<li><%= t('fields.datatype.Formule') %>: field calculated from existing fields or a formula in Ruby language.(Ex: <i> [time spent] * [Time cost] </i> or <i> [price excl.]* 1.2</i>
 				</ul>
 			</li>
-			<li><b id="date">Date </b>: A date chosen in a calendar. </li>
-			<li><b id="oui_non">Yes/No </b>: allows you to choose between yes or no or none of the two. </li>
-			<li><b id="liste">List </b>: to contain a list of values, like 'Blue, White, Red' or 'to do, done, canceled'.The values ​​must be separated by a comma.</li>
-			<li><b id="liste_objet">List of objects (collection) </b>: to choose an object from the objects of another of your collections. (Ex: <i> [Technician. "Last name, first name, experience"] </i>) </li>
+			<li><b id="date"><%= t('fields.datatype.Date') %></b>: a date chosen in a calendar. </li>
+			<li><b id="yes_no"><%= t('fields.datatype.Oui_non?') %></b>: allows you to choose between yes or no or none of the two. </li>
+			<li><b id="list"><%= t('fields.datatype.Liste') %></b>: to contain a list of values, like 'Blue, White, Red' or 'to do, done, canceled'.The values ​​must be separated by a comma.</li>
+			<li><b id="liste_objet">List of objects (<%= t('fields.datatype.Collection') %>)</b>: to choose an object from the objects of another of your collections. (Ex: <i> [Technician. "Last name, first name, experience"] </i>) </li>
 			<li>
-				<b id="fichier">File </b>:
+				<b id="file"><%= t('fields.datatype.Fichier') %></b>:
 				<ul>
-					<li>File: Allows you to link and store a file in an object (document, image, etc ...). </li>
-					<li> Image: ditto 'file' but displays an original image or image preview according to the context. </li>
-					<li> PDF: ditto 'file' but displays an overview of the first page of the PDF document. </li>
+					<li><%= t('fields.datatype.Fichier') %>: Allows you to link and store a file in an object (document, image, etc ...). </li>
+					<li><%= t('fields.datatype.Image') %>: ditto 'file' but displays an original image or image preview according to the context. </li>
+					<li><%= t('fields.datatype.PDF') %>: ditto 'file' but displays an overview of the first page of the PDF document. </li>
 				</ul>
 			</li>
-			<li><b id="utilisateur">User </b>: allows you to choose a user from those who have access to the table </li>
-			<li><b id="url">URL </b>: allows you to add a link to an internet resource via an URL (internal or external). </li>
-			<li><b id="email">Email </b>: to add a link to an email address. </li>
+			<li><b id="user"><%= t('fields.datatype.Utilisateur') %></b>: allows you to choose a user from those who have access to the table </li>
+			<li><b id="url"><%= t('fields.datatype.URL') %></b>: allows you to add a link to an internet resource via an URL (internal or external). </li>
+			<li><b id="email"><%= t('fields.datatype.Email') %></b>: to add a link to an email address. </li>
 			<li>
-				<b id="video">YouTube video </b>: allows you to add a link to a YouTube video and display the preview of the video in a miniature.
+				<b id="video"><%= t('fields.datatype.Vidéo_YouTube') %></b>: allows you to add a link to a YouTube video and display the preview of the video in a miniature.
 			</li>
-			<li><b id="couleur">Color </b>: a color chosen in a palette. </li>
-			<li><b id="localisation">localisation (gps)</b> :
+			<li><b id="color"><%= t('fields.datatype.Couleur') %></b>: a color chosen in a palette. </li>
+			<li><b id="location">Location (<%= t('fields.datatype.GPS') %>)</b> :
 				<ul>
 					<li>Capture the location of the user, if it requests it, by pressing the button<span class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-location-crosshairs"></i></li></span>
 					<li>Displays the rental on a card, based on the contact details indicated in "LNG, LAT" format.(Ex: <i> 48.85879287621989, 2,294761243572842 </i> to point on the Eiffel Tower). </li>
@@ -250,38 +250,38 @@
 				</ul>
 			</li>
 			<li>
-				<b id="qrcode">QR code </b>: to generate a QR code from the content of another attribute of the object.(Ex: <i> [n ° desérie], [Reference], [URL website] </i>)
+				<b id="qrcode"><%= t('fields.datatype.QRCode') %></b>: to generate a QR code from the content of another attribute of the object.(Ex: <i> [n ° desérie], [Reference], [URL website] </i>)
 			</li>
 			<li>
-				<b id="qrscan">QR Scan </b>: allows you to scan a QR code with the camera of your smartphone, tablet or computer.
+				<b id="qrscan"><%= t('fields.datatype.QRScan') %></b>: allows you to scan a QR code with the camera of your smartphone, tablet or computer.
 			</li>
 			<li>
-				<b id="signature">Signature </b>: allows you to sign manually with the mouse or on a touch screen.
+				<b id="signature"><%= t('fields.datatype.Signature') %></b>: allows you to sign manually with the mouse or on a touch screen.
 			</li>
 			<li>
-				<b id="uuid">Uuid </b>: automatically generates a unique identifier.(Udid = universally unique identify)
+				<b id="uuid"><%= t('fields.datatype.UUID') %></b>: automatically generates a unique identifier.(Udid = universally unique identify)
 			</li>
 			<li>
-				<b id="tags">Tags </b>: allows you to enter keywords separated by commas.(Ex: <i> Paris, France, Europe </i>)
+				<b id="tags"><%= t('fields.datatype.Tags') %></b>: allows you to enter keywords separated by commas.(Ex: <i> Paris, France, Europe </i>)
 			</li>
 			<li>
-				<b id="stars">Stars </b>: allows you to note an object with stars.(Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)
+				<b id="stars"><%= t('fields.datatype.Stars') %></b>: allows you to note an object with stars.(Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)
 			</li>
 			<li>
-				<b id="meteo">Weather </b>: allows you to display the current weather for your location.(Ex: <i> 22 ° C, light rain, 73% humidity </i>)
+				<b id="weather"><%= t('fields.datatype.Météo') %></b>: allows you to display the current weather for your location.(Ex: <i> 22 ° C, light rain, 73% humidity </i>)
 			</li>
-			<li><b id="workflow">Workflow </b>: to add a statement to an object, associated with a color.(Ex: <i class = "text-break"> new: primary, confirmed: success, canceled: danger, archived: secondary </i>)
+			<li><b id="status"><%= t('fields.datatype.Statut') %></b>: to add a statement to an object, associated with a color.(Ex: <i class = "text-break"> new:blue, confirmed:green, canceled:red, archived:gray </i>)
 				<ul>
 					<li>
 						Available colors:
-						<span class="badge bg-primary">Primary</span>
-						<span class="badge bg-secondary">Secondary</span>
-						<span class="badge bg-success">Success</span>
-						<span class="badge bg-danger">Danger</span>
-						<span class="badge bg-warning text-dark">Warning</span>
-						<span class="badge bg-info text-dark">Info</span>
-						<span class="badge bg-light text-dark">Light</span>
-						<span class="badge bg-dark">Dark</span>
+						<span class="badge bg-primary">Blue</span>
+						<span class="badge bg-secondary">Gray</span>
+						<span class="badge bg-success">Green</span>
+						<span class="badge bg-danger">Red</span>
+						<span class="badge bg-warning text-dark">Yellow</span>
+						<span class="badge bg-info text-dark">LightBlue</span>
+						<span class="badge bg-light text-dark">White</span>
+						<span class="badge bg-dark">Black</span>
 					</li>
 				</ul>
 			</li>
@@ -291,10 +291,10 @@
 	<h3 class="fw-bold text-dark my-4">Relations between objects</h3>
 	<p class="fs-5 fw-light w-sm-75">
 		The relationships between objects are created with the 'collection' attribute.
-Example: an intervention object will have an 'technician' attribute which will allow you to choose a technician in the collection of the same name.
-These relationships are also visible in view of the details of an object.
-Thus, when a technician object is linked to interventions,
-The detail view of each technician automatically displays their interventions and allows you to enter a new one for this technician.
+		Example: an intervention object will have an 'technician' attribute which will allow you to choose a technician in the collection of the same name.
+		These relationships are also visible in view of the details of an object.
+		Thus, when a technician object is linked to interventions,
+		The detail view of each technician automatically displays their interventions and allows you to enter a new one for this technician.
 	</p>
 
 	<h3 class="fw-bold text-dark my-4">Filters/Reports</h3>
@@ -356,9 +356,9 @@ The detail view of each technician automatically displays their interventions an
 
 <p class="fs-5 fw-light w-sm-75">
 	Business applications developer for over 30 years, I have often helped my customers spend
-an information system in silos, where business business data is locked up
-in Excel sheets, to a platform type system where the data is centralized and
-Shared between services from a single source of trust (<b> single source of truth </b>).
+	an information system in silos, where business business data is locked up
+	in Excel sheets, to a platform type system where the data is centralized and
+	Shared between services from a single source of trust (<b> single source of truth </b>).
 </p>
 
 <p class="fs-5 fw-light w-sm-75">	
@@ -438,7 +438,7 @@ Shared between services from a single source of trust (<b> single source of trut
 	<br><br>
 	Crystaldata therefore aims to offer a small concentrate of my database experience,
 	And, why not, to lay the foundations of a future tailor -made application/platform, yours,
-	Integrating all your specificities, business rules, workflow, services, etc.
+	Integrating all your specificities, business rules, status, services, etc.
 </p>
 
 <h3 class="fw-bold text-dark my-4">Development, support and services</h3>

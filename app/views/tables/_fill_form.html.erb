@@ -25,8 +25,8 @@
           <%= text_field_tag field_name, field_value, class: 'form-control w-100', type: 'date', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'Oui_non?' %>
           <div class="d-flex flex-row gap-2 mt-2">
-            <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui'), class:'form-check-input', 'data-testid': field.name %> Oui 
-            <%= radio_button_tag field_name, 'Non', (field_value == 'Non'), class:'form-check-input ms-3', 'data-testid': field.name %> Non
+            <%= radio_button_tag field_name, 'Oui', (field_value == 'Oui'), class:'form-check-input', 'data-testid': field.name %> <%= t('misc.Oui') %>
+            <%= radio_button_tag field_name, 'Non', (field_value == 'Non'), class:'form-check-input ms-3', 'data-testid': field.name %> <%= t('misc.Non') %>
           </div>
         <% when 'Liste' %>
           <%= select_tag field_name, options_for_select(field.items_splitted, field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
@@ -59,7 +59,7 @@
           <% end %>
           <br>
           <%= file_field_tag field_name, class:'w-100', required: field.obligatoire, 'data-testid': field.name %>
-        <% when 'Workflow' %>
+        <% when 'Statut' %>
           <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
           <%= select_tag field_name, options_for_select(items.keys, field_value), include_blank: true, class: 'form-select w-100', required: field.obligatoire, 'data-testid': field.name %>
         <% when 'URL' %>

@@ -14,9 +14,9 @@
   <td>
     <% if mail_log.created_at > 5.days.ago && !status_ko %>
       <% if status = @result_opened["items"].find{|item| item["message"]["headers"]["message-id"] == mail_log.message_id } %>
-        <span class="text-info">OUVERT</span>
+        <span class="text-info"><%= t('maillogs.opened') %></span>
       <% end %>
     <% end %>
   </td>
-  <td><%= link_to 'Voir', mail_log %></td>
+  <td><%= link_to t('misc.see'), mail_log %></td>
 </tr>

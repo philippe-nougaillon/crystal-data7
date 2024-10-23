@@ -34,15 +34,15 @@
               <%= select_tag "[query][#{field.id}]", options_for_select(field.populate_linked_table.invert, params["[query]"].try(:[], field.id.to_s)), class: 'form-select w-100 overflow-x-auto', autofocus: index.zero?, multiple: true %>
               <% hint = t('misc.select_hint') %>
             <% end %>
-          <% elsif field.Workflow? %>
+          <% elsif field.Statut? %>
             <% items = field.items_splitted.map{|e| e.split(':')}.to_h %>
             <%= select_tag "[query][#{field.id}]", options_for_select(items.keys, params["[query]"].try(:[], field.id.to_s)), class: 'form-select w-100', 'data-testid': field.name, autofocus: index.zero?, multiple: true %>
             <% hint = t('misc.select_hint') %>
           <% elsif field.datatype == "Oui_non?" || field.Signature? %>
             <br>
-            <%= label_tag "[query][#{field.id}][yes]", t('misc.yes'), class: '' %>
+            <%= label_tag "[query][#{field.id}][yes]", t('misc.Oui'), class: '' %>
             <%= check_box_tag "[query][#{field.id}][yes]", params["[query]"].try(:[], field.id.to_s).try(:[], :yes), params["[query]"].try(:[], field.id.to_s).try(:[], :yes) %>
-            <%= label_tag "[query][#{field.id}][no]", t('misc.no'), class: '' %>
+            <%= label_tag "[query][#{field.id}][no]", t('misc.Non'), class: '' %>
             <%= check_box_tag "[query][#{field.id}][no]", params["[query]"].try(:[], field.id.to_s).try(:[], :no), params["[query]"].try(:[], field.id.to_s).try(:[], :no)%>
           <% elsif field.Stars? %>
             <%= select_tag "[query][#{field.id}]", options_for_select((0..5).to_a, params["[query]"].try(:[], field.id.to_s)), class: 'form-select w-100',include_blank: true, autofocus: index.zero? %>
