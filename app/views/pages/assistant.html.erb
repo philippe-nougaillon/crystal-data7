@@ -17,16 +17,17 @@
                             class: 'form-select w-100', onchange: 'this.form.submit()', required: true %>
         </div>
 
-        
-        <div class="mb-3 w-25">
-            <%= label_tag :fields_ids, t('assistant.source_field'), class: 'form-label' %>
-            <%= select_tag :fields_ids, 
-                            options_from_collection_for_select(@fields || [], 'id', 'name', params[:fields_ids]), 
-                            class: 'form-select w-100', multiple: true, required: true %>
-            <p class="form-text">
-                <%= t('misc.select_hint') %>
-            </p>
-        </div>
+        <% if params[:table_id] %>
+            <div class="mb-3 w-25">
+                <%= label_tag :fields_ids, t('assistant.source_field'), class: 'form-label' %>
+                <%= select_tag :fields_ids, 
+                                options_from_collection_for_select(@fields || [], 'id', 'name', params[:fields_ids]), 
+                                class: 'form-select w-100', multiple: true, required: true %>
+                <p class="form-text">
+                    <%= t('misc.select_hint') %>
+                </p>
+            </div>
+        <% end %>
     </div>
 
     <div>

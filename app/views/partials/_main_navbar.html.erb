@@ -65,8 +65,8 @@
                   <%= image_tag(current_user.avatar, size:'25x25') %>
                 </div>
               <% else %>
-                <div style="width: 2rem; border-radius: 100%; background-color: rgb(15 23 42);">
-                  <span class="text-light"><%= current_user.name.first.humanize %></span>
+                <div style="width: 2.5rem; border-radius: 100%; background-color: rgb(15 23 42);">
+                  <span class="fs-5 text-light"><%= current_user.name.first.humanize %></span>
                 </div>
               <% end %>
             </label>
