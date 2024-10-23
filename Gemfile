@@ -110,4 +110,4 @@ gem "langchainrb", "~> 0.13.4"
 gem "ruby-openai", "~> 7.1"
 gem "tiktoken_ruby", "~> 0.0.9"
 
-gem "net-pop", "~> 0.1.2"
+gem "net-pop", github: 'ruby/net-pop'
