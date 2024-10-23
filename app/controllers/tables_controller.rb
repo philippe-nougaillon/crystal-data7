@@ -370,11 +370,7 @@ class TablesController < ApplicationController
   # DELETE /tables/1
   # DELETE /tables/1.json
   def destroy
-    # supprime les champs
-    @table.fields.delete_all
-
     @table.destroy
-
     respond_to do |format|
       format.html { redirect_to tables_url, notice: t('notice.table.destroyed')}
       format.json { head :no_content }

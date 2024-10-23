@@ -30,6 +30,9 @@ class CollectionToXls < ApplicationService
         elsif field.Signature?
           value = values[index].blank? ? 'Pas signé' : 'Signé'
           fields_to_export << value
+        elsif field.QRCode?
+          value = values[index].blank? ? 'Indisponible' : 'Disponible'
+          fields_to_export << value
         else
           fields_to_export << values[index]
         end

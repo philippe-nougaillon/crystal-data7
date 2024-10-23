@@ -20,6 +20,9 @@ class CollectionToCsv < ApplicationService
           elsif field.Signature?
             value = values[index].blank? ? 'Pas signé' : 'Signé'
             cols << value
+          elsif field.QRCode?
+            value = values[index].blank? ? 'Indisponible' : 'Disponible'
+            cols << value
           else
             cols << (values[index] ? values[index].to_s.gsub("'", " ") : nil) 
           end
