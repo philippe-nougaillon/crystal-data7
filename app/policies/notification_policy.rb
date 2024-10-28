@@ -6,28 +6,26 @@ class NotificationPolicy < ApplicationPolicy
   end
 
   def index?
-    user
+    user && user.admin?
   end
 
   def new?
-    user
+    index?
   end
 
   def create?
-    new?
+    new? && (!(user.compte_démo?) || Rails.env.development?)
   end
   
   def edit?
-    user
-    # record.user_id == user.id
+    index? && record.organisation.users.pluck(:id).include?(user.id)
   end
 
   def update?
-    edit?
+    edit? && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def destroy?
-    user
-    # record.user_id == user.id && (!(user.compte_démo?) || Rails.env.development?)
+    index? && record.organisation.users.pluck(:id).include?(user.id) && (!(user.compte_démo?) || Rails.env.development?)
   end
 end

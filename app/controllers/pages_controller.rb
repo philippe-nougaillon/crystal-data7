@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_action :info_notice, only: %i[graphs]
+  before_action :user_authorized?
   skip_before_action :authenticate_user!, only: %i[a_propos mentions_legales]
 
   def a_propos
@@ -74,10 +75,13 @@ class PagesController < ApplicationController
 
   private
 
+  def user_authorized?
+    authorize :pages
+  end
+
   def info_notice
     if current_user.compte_démo? && flash[:notice] == nil && flash[:alert] == nil && params.keys.size == 2
       flash[:notice] = t('notice.graph')
     end
   end
-  
 end

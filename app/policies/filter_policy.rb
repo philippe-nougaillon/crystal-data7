@@ -6,11 +6,11 @@ class FilterPolicy < ApplicationPolicy
   end
 
   def index?
-    user
+    user && user.admin?
   end
 
   def new?
-    user
+    index?
   end
 
   def create?
@@ -18,7 +18,7 @@ class FilterPolicy < ApplicationPolicy
   end
   
   def edit?
-    record.user_id == user.id
+    index? && record.table.organisation.users.pluck(:id).include?(user.id) && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def update?
@@ -26,10 +26,10 @@ class FilterPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.user_id == user.id && (!(user.compte_démo?) || Rails.env.development?)
+    edit?
   end
 
   def query?
-    record.user_id == user.id
+    edit?
   end
 end
