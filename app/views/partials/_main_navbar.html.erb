@@ -15,8 +15,8 @@
         <% if user_signed_in? %>
           <% if policy(User).index? %>
             <li class="nav-item <%= 'active' if params[:controller] == 'users' %>">
-              <%= link_to users_path, title: t('navbar.users_title'), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 me-3" do %>
-                <span class="material-symbols-outlined fs-5 text-black-50">
+              <%= link_to users_path, title: t('navbar.users_title'), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 link-secondary me-3" do %>
+                <span class="material-symbols-outlined fs-5">
                   group
                 </span>
                 Utilisateurs
@@ -24,8 +24,8 @@
             </li>
           <% end %>
           <li class="nav-item <%= 'active' if params[:action] == 'a_propos' %>">
-            <%= link_to a_propos_path, title: t('navbar.about_title', sitename: @sitename), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 me-3" do %>
-              <span class="material-symbols-outlined fs-5 text-black-50">
+            <%= link_to a_propos_path, title: t('navbar.about_title', sitename: @sitename), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 link-secondary me-3" do %>
+              <span class="material-symbols-outlined fs-5">
                 help
               </span>
               <%= t('misc.help') %>
