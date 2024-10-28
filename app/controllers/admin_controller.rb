@@ -12,6 +12,12 @@ class AdminController < ApplicationController
   def create_new_user_do
     @user = User.new(params.require(:user).permit(:name, :email, :password, :role))
     @user.organisation = current_user.organisation
+    params[:user][:filter_ids].shift
+    params[:user][:filter_ids].each do |filter_id|
+      unless FiltersUser.find_by(filter_id: filter_id, user_id: @user.id)
+        @user.filters_users << FiltersUser.create(filter_id: filter_id, user_id: @user.id)
+      end
+    end
 
     respond_to do |format|
       if @user.save

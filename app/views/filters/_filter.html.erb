@@ -2,6 +2,13 @@
   <td><%= link_to filter.name, query_filter_path(filter), class: 'text-primary' %></td>
   <td><%= filter.table.name.pluralize %></td>
   <td><%= filter.query_humanized %></td>
+  <td>
+    <div class="d-flex flex-column">
+      <% filter.users.order(:name).each do |user| %>
+        <p><%= user.name %></p>
+      <% end %>
+    </div>
+  </td>
   <td>il y a <%= time_ago_in_words(filter.updated_at) %></td>
   <td>
     <% if policy(filter).destroy? %>

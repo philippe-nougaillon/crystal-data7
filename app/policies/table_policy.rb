@@ -10,7 +10,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def show?
-    record.instance_of?(Table) && record.users.include?(user)
+    record.instance_of?(Table) && (user.admin? || (user.filters.pluck(:table_id)).include?(record.id))
   end
 
   def new?
@@ -78,7 +78,8 @@ class TablePolicy < ApplicationPolicy
   end
 
   def show_details?
-    record.users.include?(user)
+    #TODO : Checker qu'un user a accès à ce record, pas juste checker sur la table (peut-être avec get_filtered_records)
+    record.users.include?(user) && (user.admin? || (user.filters.pluck(:table_id)).include?(record.id))
   end
 
   def related_tables?

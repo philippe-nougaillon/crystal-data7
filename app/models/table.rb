@@ -4,8 +4,9 @@ class Table < ApplicationRecord
 
 	audited
 
-	has_many :tables_users, dependent: :destroy
-	has_many :users, through: :tables_users
+	belongs_to :organisation
+
+	has_many :users, through: :organisation
 	has_many :fields, dependent: :destroy
 	has_many :values, through: :fields, dependent: :destroy
 	has_many :logs, through: :fields, dependent: :destroy
@@ -86,38 +87,26 @@ class Table < ApplicationRecord
 	  allow_destroy
 	end
 
-	def shared_with(user)
-		users_infos = ""
-		self.tables_users.includes(:user).each do |tables_user|
-			unless tables_user.user == user
-				users_infos += "#{tables_user.user.name}(#{tables_user.role}) "
-			end
-		end
-		return users_infos
-	end
+	# def shared_with(user)
+	# 	users_infos = ""
+	# 	self.tables_users.includes(:user).each do |tables_user|
+	# 		unless tables_user.user == user
+	# 			users_infos += "#{tables_user.user.name}(#{tables_user.role}) "
+	# 		end
+	# 	end
+	# 	return users_infos
+	# end
 
 	def role_number(user)
-		TablesUser.roles[self.tables_users.find_by(user_id: user.id).role]
+		User.roles[self.users.find_by(id: user.id).role]
 	end
 
 	def role_name(user)
-		self.tables_users.find_by(user_id: user.id).role
-	end
-
-	def lecteur?(user)
-		self.tables_users.exists?(user_id: user.id) && self.tables_users.find_by(user_id: user.id).role == 'Lecteur'
-	end
-
-	def collecteur?(user)
-		self.tables_users.exists?(user_id: user.id) && self.tables_users.find_by(user_id: user.id).role == 'Collecteur'
-	end
-
-	def éditeur?(user)
-		self.tables_users.exists?(user_id: user.id) && self.tables_users.find_by(user_id: user.id).role == 'Éditeur'
+		self.users.find_by(id: user.id).role
 	end
 
 	def propriétaire?(user)
-		self.tables_users.exists?(user_id: user.id) && self.tables_users.find_by(user_id: user.id).role == 'Propriétaire'
+		self.users.include?(user) && user.admin?
 	end
 
 	def name_pluralized

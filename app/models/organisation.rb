@@ -5,6 +5,8 @@ class Organisation < ApplicationRecord
   audited
 
   has_many :users
+  has_many :tables
+  has_many :filters, through: :tables
 
   private
   def slug_candidates

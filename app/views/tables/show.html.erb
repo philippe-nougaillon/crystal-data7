@@ -88,7 +88,7 @@
           </div>
         <% end %>
       <% end %>
-      <% if @table.filters.any? %>
+      <% if @table.filters.any? && current_user.admin? %>
         <div>
           <%= label_tag :filtre, t('tables.filter') %>
           <%= select_tag :filtre, options_from_collection_for_select(@table.filters, 'slug', 'name', params[:filtre]), include_blank: true, class: 'form-select', onchange: 'this.form.submit()' %>

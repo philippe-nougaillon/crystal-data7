@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_15_084134) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_28_105304) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -109,6 +109,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_15_084134) do
     t.index ["user_id"], name: "index_filters_on_user_id"
   end
 
+  create_table "filters_users", force: :cascade do |t|
+    t.bigint "filter_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["filter_id"], name: "index_filters_users_on_filter_id"
+    t.index ["user_id"], name: "index_filters_users_on_user_id"
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -198,6 +207,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_15_084134) do
     t.integer "record_index", default: 0, null: false
     t.boolean "show_on_startup_screen", default: false
     t.boolean "public"
+    t.bigint "organisation_id", null: false
+    t.index ["organisation_id"], name: "index_tables_on_organisation_id"
     t.index ["slug"], name: "index_tables_on_slug", unique: true
   end
 
@@ -250,6 +261,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_15_084134) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "filters", "tables"
   add_foreign_key "filters", "users"
+  add_foreign_key "filters_users", "filters"
+  add_foreign_key "filters_users", "users"
   add_foreign_key "logs", "fields"
   add_foreign_key "logs", "users"
   add_foreign_key "mail_logs", "users"
@@ -259,6 +272,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_15_084134) do
   add_foreign_key "prompts", "tables"
   add_foreign_key "prompts", "users"
   add_foreign_key "relations", "fields"
+  add_foreign_key "tables", "organisations"
   add_foreign_key "tables_users", "tables"
   add_foreign_key "tables_users", "users"
   add_foreign_key "users", "organisations"

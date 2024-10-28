@@ -18,6 +18,9 @@
   <td><%= user.role.upcase %></td>
   <td><%= user.email %></td>
   <td>
+    <%= user.filters.pluck(:name).sort.join(', ') %>
+  </td>
+  <td>
     <% if policy(user).edit? || current_user.compte_démo? %>
       <%= link_to t('scaffold.update'), edit_user_path(user), title: t('users.update_title', user: user.name), class: 'btn btn-outline-warning btn-sm me-2' %>
     <% end %>

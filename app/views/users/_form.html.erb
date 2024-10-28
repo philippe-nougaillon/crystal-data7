@@ -26,5 +26,14 @@
     <%= f.select :role, options_for_select(User.roles.keys, @user.role), {}, class: 'form-select' %>
   </div>
 
+  <div class="my-4">
+    <%= f.label :filter_ids, t('filters.filters') %>
+    <%= f.select :filter_ids, options_from_collection_for_select(current_user.organisation.filters, :id, :name, @user.filters.pluck(:id)), {}, class: 'form-select', multiple: true %>
+    <p class="form-text">
+      Permet de restreindre les données vues par l'utilisateur
+    </p>
+  </div>
+  
+
   <%= f.submit t('scaffold.save'), class: 'btn btn-outline-success mt-4' %>
 <% end %>

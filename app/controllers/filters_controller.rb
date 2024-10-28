@@ -5,7 +5,7 @@ class FiltersController < ApplicationController
 
   # GET /filters or /filters.json
   def index
-    @filters = current_user.filters.ordered
+    @filters = current_user.organisation.filters.ordered
   end
 
   # GET /filters/1 or /filters/1.json

@@ -280,16 +280,7 @@ private
 	def add_or_update_relation
 		sources = self.items.tr('[]','').split('.')
 		source_fields = sources.last.tr('"','').split(',')
-		source_table = self.table.users.first.tables.find_by(name: sources.first)
-		####
-		# TODO 
-		# Utiliser self.table.users.first.tables.find_by(name: sources.first)
-		# est correct pour l'instant, mais posera problème si l'order des User change,
-		# ou si d'autres users peuvent ajouter/modifier des fields
-		# (user propriétaires / policy autorisant pas seulement le propriétaire)
-		# la solution serait d'avoir accès au current_user, il faudrait donc déplacer
-		# la fonction dans le controller, ou passer le current_user en paramètre
-		####
+		source_table = self.table.organisation.tables.find_by(name: sources.first)
 
 		if source_table
 			Relation.find_or_initialize_by(field_id: self.id).tap do |relation|

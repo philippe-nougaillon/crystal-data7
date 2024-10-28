@@ -1,6 +1,9 @@
 class Filter < ApplicationRecord
   belongs_to :table
 
+  has_many :filters_users
+  has_many :users, through: :filters_users
+
   extend FriendlyId
 	friendly_id :slug_candidates, use: :slugged
 

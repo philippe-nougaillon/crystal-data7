@@ -39,7 +39,7 @@ class ImportCollection < ApplicationService
           if is_new_table
             table = Table.new(name: File.basename(filename,'.csv'))
             if table.save
-              table.tables_users << TablesUser.create(table_id: table.id, user_id: @current_user.id, role: "Propriétaire")
+              table.organisation_id = current_user.organisation.id
               first_data_row = CSV.read(filename_with_path, headers: true, col_sep: @col_sep, encoding: 'UTF-8').first
               row.each_with_index do |key, index|
                 sample_data = first_data_row ? first_data_row[index] : ""

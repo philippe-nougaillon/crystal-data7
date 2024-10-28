@@ -15,10 +15,10 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   belongs_to :organisation, optional: true
-  has_many :tables_users, dependent: :destroy
-  has_many :tables, through: :tables_users
+  has_many :tables, through: :organisation
   has_many :fields, through: :tables
-  has_many :filters, dependent: :destroy
+  has_many :filters_users
+  has_many :filters, through: :filters_users
   has_many :notifications, dependent: :destroy
   has_many :mail_logs, dependent: :destroy
   has_many :prompts, dependent: :destroy
@@ -45,9 +45,9 @@ class User < ApplicationRecord
   end
 
   # Retourne les emails des utilisateurs qui ont des tables en commun avec l'utilisateur, mais qui ne sont pas dans la table envoyée en paramètre
-  def others(table)
-    User.where.not(id: table.users.pluck(:id)).where(id: self.tables.map { |t| t.users.pluck(:id)}.flatten.uniq).pluck(:email)
-  end
+  # def others(table)
+  #   User.where.not(id: table.users.pluck(:id)).where(id: self.tables.map { |t| t.users.pluck(:id)}.flatten.uniq).pluck(:email)
+  # end
 
   def self.from_omniauth(auth)
     require "open-uri"

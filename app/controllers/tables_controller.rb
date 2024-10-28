@@ -7,7 +7,11 @@ class TablesController < ApplicationController
   # GET /tables
   # GET /tables.json
   def index
-    @tables = current_user.tables.includes(:fields)
+    if current_user.admin?
+      @tables = current_user.tables.includes(:fields)
+    else
+      @tables = Table.where(id: current_user.filters.pluck(:table_id)).includes(:fields)
+    end
   end
 
   # GET /tables/1
@@ -21,11 +25,6 @@ class TablesController < ApplicationController
     @filters = {}
     @filter_results = {}
     @values = @table.values
-
-    # Limite les enregistrement aux collecteurs
-    if @table.collecteur?(current_user)
-      @values = @values.where(user_id: current_user.id)
-    end
 
     # recherche les lignes 
     unless params.permit(:search).blank?
@@ -74,8 +73,14 @@ class TablesController < ApplicationController
       end
     end
 
-    if params[:filtre].present?
+    # TODO : 
+    # N'accepter le filtre demandé que si c'est un admin?
+    # S'il n'y a pas de filtre et que ce n'est pas un admin : appliquer le FilterUser
+    # Sinon, si c'est un admin, tout afficher : @records = @filter_results.values.reduce(:&)
+    if params[:filtre].present? && current_user.admin?
       @records = @table.filters.find_by(slug: params[:filtre]).get_filtered_records
+    elsif current_user.user?
+      @records = current_user.filters.where(table_id: @table.id).first.get_filtered_records
     else
       @records = @filter_results.values.reduce(:&)
     end
@@ -339,8 +344,6 @@ class TablesController < ApplicationController
 
     respond_to do |format|
       if @table.save
-        @table.tables_users << TablesUser.create(table_id: @table.id, user_id: current_user.id, role: "Propriétaire")
-
         if params[:model_id].present?
           Table.find(params[:model_id]).fields.each do |f|
             field = f.dup
@@ -396,25 +399,25 @@ class TablesController < ApplicationController
     redirect_to tables_path
   end
 
-  def add_user_do
-    session[:type_partage] = params[:type_partage]
+  # def add_user_do
+  #   session[:type_partage] = params[:type_partage]
 
-    if not TablesUser.roles.keys.reject { |e| e == "Propriétaire" }.include?(params[:role])
-      redirect_to add_user_path(@table), alert: t('notice.table.unavailable_role')
-    elsif @user = User.find_by(email: (params[:type_partage] == "text") ? params[:email_text] : params[:email_list])
-      unless @table.users.include?(@user)
-        # ajoute le nouvel utilisateur aux utilisateurs de la table
-        @table.tables_users << TablesUser.create(table_id: @table.id, user_id: @user.id, role: params[:role])
-        UserMailer.notification_nouveau_partage(@user, @table).deliver_now
-        flash[:notice] = t('notice.table.shared', table: @table.name, user: @user.name)
-      else
-        flash[:alert] = t('notice.table.already_shared', table: @table.name, user: @user.name)
-      end
-    else
-      flash[:alert] = t('notice.table.user_not_found')
-    end
-    redirect_to partages_path(@table)
-  end
+  #   if not TablesUser.roles.keys.reject { |e| e == "Propriétaire" }.include?(params[:role])
+  #     redirect_to add_user_path(@table), alert: t('notice.table.unavailable_role')
+  #   elsif @user = User.find_by(email: (params[:type_partage] == "text") ? params[:email_text] : params[:email_list])
+  #     unless @table.users.include?(@user)
+  #       # ajoute le nouvel utilisateur aux utilisateurs de la table
+  #       @table.tables_users << TablesUser.create(table_id: @table.id, user_id: @user.id, role: params[:role])
+  #       UserMailer.notification_nouveau_partage(@user, @table).deliver_now
+  #       flash[:notice] = t('notice.table.shared', table: @table.name, user: @user.name)
+  #     else
+  #       flash[:alert] = t('notice.table.already_shared', table: @table.name, user: @user.name)
+  #     end
+  #   else
+  #     flash[:alert] = t('notice.table.user_not_found')
+  #   end
+  #   redirect_to partages_path(@table)
+  # end
 
   def partages
   end
@@ -495,9 +498,6 @@ class TablesController < ApplicationController
 
     date_records = @table.values.joins(:field).where('field.datatype': 'Date').pluck(:record_index)
     @values = @table.values.where(record_index: date_records)
-    if @table.collecteur?(user)
-      @values = @values.where(user_id: user.id)
-    end
 
     if params[:filtre].present?
       records_index = @table.filters.find_by(slug: params[:filtre]).get_filtered_records

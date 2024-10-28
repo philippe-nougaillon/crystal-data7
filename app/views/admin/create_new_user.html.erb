@@ -34,11 +34,17 @@
     <%= form.password_field :password_confirmation, class: 'form-control w-50' %>
   </div>
 
-  <div data-controller="toggle-agent-service">
-    <div class="my-4">
-      <%= form.label :role, "Rôle" %>
-      <%= form.select :role, options_for_select(User.roles.keys, @user.role), {}, class: 'form-select' %>
-    </div>
+  <div class="my-4">
+    <%= form.label :role, "Rôle" %>
+    <%= form.select :role, options_for_select(User.roles.keys), {}, class: 'form-select' %>
+  </div>
+
+  <div class="my-4">
+    <%= form.label :filter_ids, t('filters.filters') %>
+    <%= form.select :filter_ids, options_from_collection_for_select(current_user.organisation.filters, :id, :name), {required: true}, class: 'form-select', multiple: true %>
+    <p class="form-text">
+      Permet de restreindre les données vues par l'utilisateur
+    </p>
   </div>
 
   <div class="inline">
