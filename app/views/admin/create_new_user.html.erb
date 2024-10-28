@@ -44,6 +44,7 @@
     <%= form.select :filter_ids, options_from_collection_for_select(current_user.organisation.filters, :id, :name), {required: true}, class: 'form-select', multiple: true %>
     <p class="form-text">
       <%= t('users.filter_hint') %>
+      <%= t('misc.select_hint') %>
     </p>
   </div>
 
