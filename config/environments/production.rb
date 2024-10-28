@@ -91,5 +91,5 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: 'crystal-data.philnoug.com', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: 'access.aikku.eu', protocol: 'https' }
 end

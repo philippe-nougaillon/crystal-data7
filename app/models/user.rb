@@ -30,7 +30,7 @@ class User < ApplicationRecord
               admin: 1}
 
   after_create :new_user_notification
-  after_create :welcome_email
+  #after_create :welcome_email
 
   def favorite_table
     if self.tables.where(show_on_startup_screen: true).present?
