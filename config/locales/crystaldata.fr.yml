@@ -64,15 +64,15 @@ fr:
     status_hint: "ex : Nouveau:bleu, Confirmé:vert, Annulé:rouge, Archivé:gris"
   filters:
     date_hint: "Entrez une date ou une période (date de début / date de fin)"
+    criteria: "Critères"
     filters: "Filtres"
-    index: "Requêtes"
     name: "Nom"
     name_hint: "ex: Factures de 2021"
-    new: "Nouvelle requête"
-    no_filter: "Aucune requête pour l'instant..."
+    new: "Nouveau filtre"
+    no_filter: "Aucun filtre pour l'instant..."
     numeric_hint: "ex: >= 30  ou  30 (pour une égalité)"
-    query_title: "Requête : %{filter} [%{table}]"
-    save_query: "Enregistrer et appliquer la requête"
+    query_title: "Filtre : %{filter} [%{table}]"
+    save_query: "Enregistrer et appliquer le filtre"
     star_hint: "Choisissez une note entre 0 et 5"
     text_hint: "ex: %john% ou john (pour une égalité)"
   maillogs:
@@ -131,7 +131,7 @@ fr:
   navbar:
     about_title: "À propos de %{sitename}"
     assistant_title: "Assistant IA"
-    filters_title: "Liste des Requêtes"
+    filters_title: "Liste des Filtres"
     graphs_title: "Graphiques"
     home_title: "Page d'accueil ou une collection de votre objet favori"
     notifications_title: "Liste des Notifications"
@@ -143,12 +143,12 @@ fr:
   notice:
     field:
       destroyed: "Attribut supprimé."
-      index: (i)Les Requêtes permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères
+      index: (i)Les Filtres permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères
       new: "Nouvel attribut ajouté."
       updated: "Attribut modifié avec succès."
     filter:
-      updated: "Requête modifiée."
-      destroyed: "Requête supprimée."
+      updated: "Filtre modifié."
+      destroyed: "Filtre supprimé."
       query: "(i)Renseignez ici les critères de sélection afin d'obtenir une collection d'objets filtrées"
     graph: "(i)Les graphiques permettent de visualiser une série de valeurs issues de vos collections"
     notification:
@@ -332,7 +332,10 @@ fr:
     youtube_error: "Pour afficher la vidéo directement, veuillez copier le lien d'intégration de la vidéo YouTube"
     youtube_hint: "Copier le lien YouTube (Partage/Intégration/src=LeLienÀCopier)"
   users:
-    new: "Nouvel Utilisateur"
+    create: "Créer l'utilisateur"
     destroy_title: "Supprimer l'utilisateur '%{user}'"
+    filter_hint: "Permet de restreindre les données vues par l'utilisateur"
+    name_pseudo: "Nom ou Pseudo"
+    new: "Nouvel Utilisateur"
     update_title: "Modifier l'utilisateur '%{user}'"
     update_user: "Modifier l'utilisateur"

@@ -1,5 +1,5 @@
 <h1 class="text-dark my-4">
-  Nouvel utilisateur
+  <%= t('users.new') %>
 </h1>
 
 <%= form_with(model: @user, class: "contents", url: "create_new_user_do", html: { autocomplete: "off" }) do |form| %>
@@ -16,12 +16,12 @@
   <% end %>
 
   <div class="mt-4">
-    <%= form.label :name, "Nom ou Pseudo", style: "display: block" %>
+    <%= form.label :name, t('users.name_pseudo'), style: "display: block" %>
     <%= form.text_field :name, class: 'form-control w-50', required: true %>
   </div>
 
   <div class="mt-4">
-    <%= form.label :email, style: "display: block" %>
+    <%= form.label :email, t('misc.email'), style: "display: block" %>
     <%= form.email_field :email, class: 'form-control w-50', required: true %>
   </div>
 
@@ -35,7 +35,7 @@
   </div>
 
   <div class="my-4">
-    <%= form.label :role, "Rôle" %>
+    <%= form.label :role, t('misc.role') %>
     <%= form.select :role, options_for_select(User.roles.keys), {}, class: 'form-select' %>
   </div>
 
@@ -43,15 +43,15 @@
     <%= form.label :filter_ids, t('filters.filters') %>
     <%= form.select :filter_ids, options_from_collection_for_select(current_user.organisation.filters, :id, :name), {required: true}, class: 'form-select', multiple: true %>
     <p class="form-text">
-      Permet de restreindre les données vues par l'utilisateur
+      <%= t('users.filter_hint') %>
     </p>
   </div>
 
   <div class="inline">
-    <%= form.submit "Créer l'utilisateur", class: "btn btn-outline-primary" %>
+    <%= form.submit t('users.create'), class: "btn btn-outline-primary" %>
   </div>
 <% end %>
 
 <div class="mt-4">
-  <%= link_to "Annuler", users_path %>
+  <%= link_to t('scaffold.cancel'), users_path %>
 </div>

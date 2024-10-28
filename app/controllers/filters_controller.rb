@@ -62,7 +62,11 @@ class FiltersController < ApplicationController
 
   def query
     params["[query]"] ||= @filter.query
-    @filter.update(query: params["[query]"])
+    if current_user.compte_démo?
+      flash[:alert] = t('notice.user.demo_not_authorized')
+    else
+      @filter.update(query: params["[query]"])
+    end
     @records = @filter.get_filtered_records
 
     respond_to do |format|

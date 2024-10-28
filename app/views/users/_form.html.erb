@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="mb-4">
-    <%= f.label :name, t('scaffold.name'), class: 'form-label' %>
+    <%= f.label :name, t('users.name_pseudo'), class: 'form-label' %>
     <%= f.text_field :name, class: 'form-control w-50', required: true, autofocus: true %>
   </div>
 
@@ -30,7 +30,7 @@
     <%= f.label :filter_ids, t('filters.filters') %>
     <%= f.select :filter_ids, options_from_collection_for_select(current_user.organisation.filters, :id, :name, @user.filters.pluck(:id)), {}, class: 'form-select', multiple: true %>
     <p class="form-text">
-      Permet de restreindre les données vues par l'utilisateur
+      <%= t('users.filter_hint') %>
     </p>
   </div>
   
