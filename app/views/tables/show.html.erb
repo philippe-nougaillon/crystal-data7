@@ -90,7 +90,7 @@
       <% end %>
       <% if @table.filters.any? %>
         <div>
-          <%= label_tag :filtre, t('tables.navbar.filter') %>
+          <%= label_tag :filtre, t('tables.filter') %>
           <%= select_tag :filtre, options_from_collection_for_select(@table.filters, 'slug', 'name', params[:filtre]), include_blank: true, class: 'form-select', onchange: 'this.form.submit()' %>
         </div>
       <% end %>
