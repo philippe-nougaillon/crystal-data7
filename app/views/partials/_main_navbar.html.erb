@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <ul class="navbar-nav">
       <li class="nav-item ps-1">
-        <%= link_to root_path, class:"text-decoration-none d-flex align-items-center gap-2 pb-1" do %>
+        <%= link_to root_path, class:"text-decoration-none d-flex align-items-center gap-2 pb-1 fw-bold" do %>
           <%= image_tag 'icons/aikku.png', style: "height: 2rem" %>
           ACCESS
         <% end %>
@@ -15,7 +15,7 @@
         <% if user_signed_in? %>
           <% if policy(User).index? %>
             <li class="nav-item <%= 'active' if params[:controller] == 'users' %>">
-              <%= link_to users_path, title: t('navbar.users_title'), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+              <%= link_to users_path, title: t('navbar.users_title'), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 me-3" do %>
                 <span class="material-symbols-outlined fs-5 text-black-50">
                   group
                 </span>
@@ -23,18 +23,8 @@
               <% end %>
             </li>
           <% end %>
-          <% if policy(Table).securite? %>
-            <li class="nav-item <%= 'active' if params[:action] == 'securite' %>">
-              <%= link_to securite_tables_path, title: t('navbar.security_title'), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
-                <span class="material-symbols-outlined fs-5 text-black-50">
-                  lock
-                </span>
-                <%= t('security.title') %>
-              <% end %>
-            </li>
-          <% end %>
           <li class="nav-item <%= 'active' if params[:action] == 'a_propos' %>">
-            <%= link_to a_propos_path, title: t('navbar.about_title', sitename: @sitename), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 px-3" do %>
+            <%= link_to a_propos_path, title: t('navbar.about_title', sitename: @sitename), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 text-black-50 me-3" do %>
               <span class="material-symbols-outlined fs-5 text-black-50">
                 help
               </span>
@@ -42,7 +32,7 @@
             <% end %>
           </li>
         <% end %>
-        <li class="mt-2 me-2">
+        <li class="mt-2">
           <% if I18n.locale == :fr %>
             <%= link_to url_for(request.params.merge(locale: 'en')), title: t('navbar.switch_language_title'), class: 'text-black-50' do %>
               <span class="material-symbols-outlined" style="letter-spacing: -12px;">
@@ -72,7 +62,7 @@
             </label>
             <ul class="dropdown-menu dropdown-menu-end py-0">
               <li class="text-center text-black my-2" title= <%= t('navbar.profile_title') %>>
-                <%= current_user.name %> (<%= current_user.role %>)
+                <%= current_user.name %> (<%= current_user.role.humanize %>)
               </li>
               <li>
                 <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger text-black w-100 hover-text-white', 'data-turbo': false, title: t('auth.logout_title') do %>

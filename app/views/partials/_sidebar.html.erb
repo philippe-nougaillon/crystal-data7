@@ -42,27 +42,6 @@
         <% end %>
       </li>
 
-      <!--
-      <li class="nav-item">
-        <%= link_to graphs_path, title: t('navbar.graphs_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 link-secondary #{'bg-body-secondary shadow-sm' if params[:action] == 'graphs'}", 'data-turbo': 'false' do %>
-          <span class="material-symbols-outlined">
-            Query_stats
-          </span>
-          <%= t('misc.graphique_navbar') %>
-        <% end %>
-      </li>
-      
-
-      <li class="nav-item">
-        <%= link_to securite_tables_path, title: t('navbar.security_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 link-danger #{'bg-body-secondary shadow-sm' if params[:action] == 'securite'}", 'data-turbo': 'false' do %>
-          <span class="material-symbols-outlined">
-            lock
-          </span>
-          <%= t('security.title') %>
-        <% end %>
-      </li>
-      -->
-
       <li class="nav-item">
         <%= link_to assistant_path, title: t('navbar.assistant_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 link-info #{'bg-body-secondary shadow-sm' if params[:action] == 'assistant'}", 'data-turbo': 'false' do %>
           <span class="material-symbols-outlined">
@@ -72,16 +51,6 @@
         <% end %>
       </li>
 
-      <!--
-      <li class="nav-item">
-        <%= link_to users_path, title: t('navbar.users_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 #{'bg-body-secondary shadow-sm' if params[:action] == 'assistant'}", 'data-turbo': 'false' do %>
-          <span class="material-symbols-outlined">
-            group
-          </span>
-          Utilisateurs
-        <% end %>
-      </li>
-      -->
     <% else %>
       <% @tables.each do |table| %>
         <li class="nav-item">

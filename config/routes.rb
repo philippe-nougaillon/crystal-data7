@@ -18,9 +18,9 @@ Rails.application.routes.draw do
     root 'devise/sessions#new'
     
     resources :tables do
-      collection do
-        get :securite
-      end
+      # collection do
+      #   get :securite
+      # end
       member do
         get :icalendar
       end

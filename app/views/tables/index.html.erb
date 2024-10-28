@@ -20,20 +20,23 @@
         <% @tables.each do | table | %>
           <tr>
             <td>
-              <%= link_to table.name, table, class: ' text-primary' %>
-              <% if table.show_on_startup_screen? %>
-                <span class="material-symbols-outlined text-primary fs-6">
-                  diamond
-                </span>
-              <% end %>
-              <% if table.public? %>
-                <%= link_to fill_path(table), target: :_blank do %>
-                  <span class="material-symbols-outlined text-secondary" title="<%= t('tables.public_form_tooltip') %>">
-                    public
-                  </span>
+              <div class="d-flex">
+                <%= link_to table.name, table, class: 'text-primary' %>
+                <% if table.show_on_startup_screen? %>
+                  <%= link_to table.name do %>
+                    <span class="material-symbols-outlined text-primary fs-6">
+                      home
+                    </span>
+                  <% end %>
                 <% end %>
-              <% end %>
-              <br>
+                <% if table.public? %>
+                  <%= link_to fill_path(table), target: :_blank do %>
+                    <span class="material-symbols-outlined text-primary fs-6" title="<%= t('tables.public_form_tooltip') %>">
+                      public
+                    </span>
+                  <% end %>
+                <% end %>
+              </div>
               <%= table.field_names %></td>
             <td>
               <%= t('scaffold.time_ago', time: time_ago_in_words(table.values.maximum(:updated_at))) unless table.size.zero? %>
