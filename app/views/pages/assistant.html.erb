@@ -21,7 +21,7 @@
             <div class="mb-3 w-25">
                 <%= label_tag :fields_ids, t('assistant.source_field'), class: 'form-label' %>
                 <%= select_tag :fields_ids, 
-                                options_from_collection_for_select(@fields || [], 'id', 'name', params[:fields_ids]), 
+                                options_from_collection_for_select(@fields || [], 'id', 'name', params[:fields_ids] || @fields.pluck(:id)), 
                                 class: 'form-select w-100', multiple: true, required: true %>
                 <p class="form-text">
                     <%= t('misc.select_hint') %>
