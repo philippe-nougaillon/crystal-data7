@@ -13,7 +13,7 @@
             <span class="text-nowrap text-black">
               <%= t('scaffold.updated_at') %>
               <% if params[:sort_by] == '0' %>
-                <span class="text-decoration-none text-warning "><%= (session[:order_by] == 'ASC') ? '△' : '▽' %></span>
+                <span class="text-decoration-none text-black-50"><%= (session[:order_by] == 'ASC') ? '△' : '▽' %></span>
               <% end %>
             </span>
           <% end %>
