@@ -459,28 +459,32 @@ class TablesController < ApplicationController
 
   def show_details
     unless params[:record_index].blank?
-      @record_index = params[:record_index]
-      @relation = Relation.where(relation_with_id: @table.id).first
-      if @relation
-        @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
+      if current_user.admin? || current_user.filters.where(table_id: @table.id).first.get_filtered_records.include?(params[:record_index].to_i)
+        @record_index = params[:record_index]
+        @relation = Relation.where(relation_with_id: @table.id).first
+        if @relation
+          @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
 
-        if params[:sort_by]
-          # ordre de tri ASC/DESC
-          order_by = (params[:sort_by] == session[:sort_by]) ? ((session[:order_by] == "DESC") ? "ASC" : "DESC") : "ASC"
-          
-          if params[:sort_by] == '0'
-            @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order("values.updated_at #{order_by}").pluck(:record_index)
-          elsif ['Euros', 'Nombre', 'Formule'].include?(Field.find(params[:sort_by]).datatype)
-            @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order(Arel.sql("CAST(data AS float8) #{order_by}")).pluck(:record_index)
-          else
-            @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order("data #{order_by}").pluck(:record_index)
+          if params[:sort_by]
+            # ordre de tri ASC/DESC
+            order_by = (params[:sort_by] == session[:sort_by]) ? ((session[:order_by] == "DESC") ? "ASC" : "DESC") : "ASC"
+            
+            if params[:sort_by] == '0'
+              @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order("values.updated_at #{order_by}").pluck(:record_index)
+            elsif ['Euros', 'Nombre', 'Formule'].include?(Field.find(params[:sort_by]).datatype)
+              @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order(Arel.sql("CAST(data AS float8) #{order_by}")).pluck(:record_index)
+            else
+              @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order("data #{order_by}").pluck(:record_index)
+            end
+            
+            session[:sort_by] = params[:sort_by]
+            session[:order_by] = order_by
           end
-          
-          session[:sort_by] = params[:sort_by]
-          session[:order_by] = order_by
         end
+        @sum = Hash.new(0)
+      else
+        redirect_to request.referrer || root_path, alert: t('notice.user.not_authorized')
       end
-      @sum = Hash.new(0)
     else
       redirect_to @table, alert: t('notice.table.no_value')
     end

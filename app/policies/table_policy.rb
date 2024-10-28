@@ -78,7 +78,6 @@ class TablePolicy < ApplicationPolicy
   end
 
   def show_details?
-    #TODO : Checker qu'un user a accès à ce record, pas juste checker sur la table (peut-être avec get_filtered_records)
     record.users.include?(user) && (user.admin? || (user.filters.pluck(:table_id)).include?(record.id))
   end
 
