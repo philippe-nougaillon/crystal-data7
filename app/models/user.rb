@@ -16,7 +16,6 @@ class User < ApplicationRecord
 
   belongs_to :organisation, optional: true
   belongs_to :team, optional: true
-  has_many :filters, through: :team
   has_many :tables, through: :organisation
   has_many :fields, through: :tables
   has_many :notifications, dependent: :destroy

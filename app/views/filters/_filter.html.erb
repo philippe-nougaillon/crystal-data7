@@ -4,8 +4,10 @@
   <td><%= filter.query_humanized %></td>
   <td>
     <div class="d-flex flex-column">
-      <% filter.users.order(:name).each do |user| %>
-        <p><%= user.name %></p>
+      <% filter.teams.each do |team| %>
+        <% team.users.order(:name).each do |user| %>
+          <p><%= user.name %></p>
+        <% end %>
       <% end %>
     </div>
   </td>

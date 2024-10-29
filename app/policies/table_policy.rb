@@ -38,7 +38,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def fill?
-    record.public? || (record.users.include?(user) && record.role_number(user) >= 1)
+    record.public? || (record.users.include?(user) && (user.admin? || (user.team.filters.pluck(:table_id)).include?(record.id)))
   end
 
   def fill_do?
