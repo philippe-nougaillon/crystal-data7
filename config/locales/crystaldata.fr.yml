@@ -64,6 +64,7 @@ fr:
     status_hint: "ex : Nouveau:bleu, Confirmé:vert, Annulé:rouge, Archivé:gris"
   filters:
     date_hint: "Entrez une date ou une période (date de début / date de fin)"
+    delete_disabled_hint: "Il y a une équipe qui utilise ce filtre. La suppression n'est pas possible"
     criteria: "Critères"
     filters: "Filtres"
     name: "Nom"

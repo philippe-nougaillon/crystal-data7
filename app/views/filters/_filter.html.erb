@@ -5,7 +5,11 @@
   <td>il y a <%= time_ago_in_words(filter.updated_at) %></td>
   <td>
     <% if policy(filter).destroy? %>
-      <%= button_to "X", filter, method: :delete, 'data-turbo-confirm': "Êtes-vous certain.e", class: 'btn btn-sm btn-outline-danger float-end' %>
+      <% if filter.teams.any? %>
+        <%= button_to "X", filter, method: :delete, 'data-turbo-confirm': t('scaffold.sure?'), class: 'btn btn-sm btn-outline-danger float-end', disabled: true, title: t('filters.delete_disabled_hint') %>
+      <% else %>
+        <%= button_to "X", filter, method: :delete, 'data-turbo-confirm': t('scaffold.sure?'), class: 'btn btn-sm btn-outline-danger float-end' %>
+      <% end %>
     <% end %>
   </td>
 </tr>
