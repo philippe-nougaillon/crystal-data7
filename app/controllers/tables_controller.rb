@@ -500,23 +500,24 @@ class TablesController < ApplicationController
   def icalendar
     user = User.find_by(slug: params[:user])
     @table = user.tables.find_by(slug: params[:id])
-    authorize @table
 
-    date_records = @table.values.joins(:field).where('field.datatype': 'Date').pluck(:record_index)
-    @values = @table.values.where(record_index: date_records)
+    if user.admin? || (user.team.filters.pluck(:table_id)).include?(@table.id)
+      date_records = @table.values.joins(:field).where('field.datatype': 'Date').pluck(:record_index)
+      @values = @table.values.where(record_index: date_records)
 
-    if params[:filtre].present? && user.admin?
-      records_index = @table.filters.find_by(slug: params[:filtre]).get_filtered_records
-    elsif user.user?
-      records_index = user.team.filters.where(table_id: @table.id).first.get_filtered_records
-    else
-      records_index = @values.pluck(:record_index).uniq
+      if params[:filtre].present? && user.admin?
+        records_index = @table.filters.find_by(slug: params[:filtre]).get_filtered_records
+      elsif user.user?
+        records_index = user.team.filters.where(table_id: @table.id).first.get_filtered_records
+      else
+        records_index = @values.pluck(:record_index).uniq
+      end
+
+      filename = "#{@sitename.gsub(' ', '_')}_Agenda_iCal"
+      response.headers['Content-Disposition'] = 'attachment; filename="' + filename + '.ics"'
+      headers['Content-Type'] = "text/calendar; charset=UTF-8"
+      render plain: AgendaToIcalendar.new(@table, records_index).call
     end
-
-    filename = "#{@sitename.gsub(' ', '_')}_Agenda_iCal"
-    response.headers['Content-Disposition'] = 'attachment; filename="' + filename + '.ics"'
-    headers['Content-Type'] = "text/calendar; charset=UTF-8"
-    render plain: AgendaToIcalendar.new(@table, records_index).call
   end
 
   def securite

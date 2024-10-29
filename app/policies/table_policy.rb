@@ -85,10 +85,6 @@ class TablePolicy < ApplicationPolicy
     show_details?
   end
 
-  def icalendar?
-    record.users.include?(user) && (user.admin? || (user.team.filters.pluck(:table_id)).include?(record.id))
-  end
-
   def securite?
     user && user.admin?
   end
