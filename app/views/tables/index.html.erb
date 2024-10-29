@@ -8,6 +8,9 @@
   <table class="table table-hover w-100 border align-middle">
     <thead>
       <tr class="table-light">
+        <% if current_user.admin? && @tables.where(show_on_startup_screen: true).or(@tables.where(public: true)).any? %>
+          <th></th>
+        <% end %>
         <th><%= t('scaffold.name') %></th>
         <th><%= t('scaffold.updated_at') %></th>
         <th></th>
@@ -19,9 +22,8 @@
       <% if @tables.any? %>
         <% @tables.each do | table | %>
           <tr>
-            <td>
-              <div class="d-flex">
-                <%= link_to table.name, table, class: 'text-primary' %>
+            <% if current_user.admin? && @tables.where(show_on_startup_screen: true).or(@tables.where(public: true)).any? %>
+              <td>
                 <% if table.show_on_startup_screen? %>
                   <%= link_to table.name do %>
                     <span class="material-symbols-outlined text-primary fs-6">
@@ -36,7 +38,11 @@
                     </span>
                   <% end %>
                 <% end %>
-              </div>
+              </td>
+            <% end%>
+            <td>
+              <%= link_to table.name, table, class: 'text-primary' %>
+              <br>
               <%= table.field_names %></td>
             <td>
               <%= t('scaffold.time_ago', time: time_ago_in_words(table.values.maximum(:updated_at))) unless table.size.zero? %>
