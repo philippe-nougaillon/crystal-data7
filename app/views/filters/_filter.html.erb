@@ -6,7 +6,9 @@
   <td>
     <% if policy(filter).destroy? %>
       <% if filter.teams.any? %>
-        <%= button_to "X", filter, method: :delete, 'data-turbo-confirm': t('scaffold.sure?'), class: 'btn btn-sm btn-outline-danger float-end', disabled: true, title: t('filters.delete_disabled_hint') %>
+        <p class="btn btn-sm btn-outline-secondary float-end mb-0" title="<%= t('filters.delete_disabled_hint') %>">
+          X
+        </p>
       <% else %>
         <%= button_to "X", filter, method: :delete, 'data-turbo-confirm': t('scaffold.sure?'), class: 'btn btn-sm btn-outline-danger float-end' %>
       <% end %>
