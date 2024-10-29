@@ -73,10 +73,6 @@ class TablesController < ApplicationController
       end
     end
 
-    # TODO : 
-    # N'accepter le filtre demandé que si c'est un admin?
-    # S'il n'y a pas de filtre et que ce n'est pas un admin : appliquer le FilterUser
-    # Sinon, si c'est un admin, tout afficher : @records = @filter_results.values.reduce(:&)
     if params[:filtre].present? && current_user.admin?
       @records = @table.filters.find_by(slug: params[:filtre]).get_filtered_records
     elsif current_user.user?
