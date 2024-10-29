@@ -18,7 +18,9 @@
   <td><%= user.role.upcase %></td>
   <td><%= user.email %></td>
   <td>
-    <%= user.filters.pluck(:name).sort.join(', ') %>
+    <% if user.team %>
+      <%= user.team.filters.pluck(:name).sort.join(', ') %>
+    <% end %>
   </td>
   <td>
     <% if policy(user).edit? || current_user.compte_démo? %>

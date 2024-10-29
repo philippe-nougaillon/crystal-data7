@@ -29,14 +29,6 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        params[:user][:filter_ids].shift
-        params[:user][:filter_ids].each do |filter_id|
-          unless FiltersUser.find_by(filter_id: filter_id, user_id: @user.id)
-            @user.filters_users << FiltersUser.create(filter_id: filter_id, user_id: @user.id)
-          end
-        end
-        FiltersUser.where(user_id: @user.id).where.not(filter_id: params[:user][:filter_ids]).destroy_all
-
         format.html { redirect_to users_url, notice: "Utilisateur modifié avec succès." }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -72,7 +64,7 @@ class UsersController < ApplicationController
   end
   
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :remember_me)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :remember_me, :role, :team_id)
   end
 
   def is_user_authorized?

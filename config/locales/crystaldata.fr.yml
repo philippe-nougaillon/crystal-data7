@@ -334,8 +334,8 @@ fr:
   users:
     create: "Créer l'utilisateur"
     destroy_title: "Supprimer l'utilisateur '%{user}'"
-    filter_hint: "Permet de restreindre les données vues par l'utilisateur"
     name_pseudo: "Nom ou Pseudo"
     new: "Nouvel Utilisateur"
+    team_hint: "Permet de donner accès aux informations accessibles à l'équipe"
     update_title: "Modifier l'utilisateur '%{user}'"
     update_user: "Modifier l'utilisateur"

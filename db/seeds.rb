@@ -6,9 +6,13 @@ Organisation.create!([
 
 organisation = Organisation.find_by(slug: "a2603914-7707-4b8c-b439-fcb4dcaed70b")
 
+Team.create!([
+  {name: "Carrefour", organisation_id: organisation.id}
+])
+
 User.create!([
   {name: "Démo",        email: "aikku-access.propriétaire@gmail.com", organisation_id: organisation.id, role: "admin", password: ENV['DEMO_PASSWORD'], password_confirmation: ENV['DEMO_PASSWORD']},
-  {name: "AikkuUser",   email: "aikku-access.user@gmail.com", organisation_id: organisation.id, role: "user", password: ENV['LECTEUR_PASSWORD'], password_confirmation: ENV['LECTEUR_PASSWORD']},
+  {name: "AikkuUser",   email: "aikku-access.user@gmail.com", organisation_id: organisation.id, role: "user", password: ENV['LECTEUR_PASSWORD'], password_confirmation: ENV['LECTEUR_PASSWORD'], team_id: 1},
   # {name: "AikkuCollecteur",email: "aikku-access.collecteur@gmail.com", organisation_id: 1, role: "user", password: ENV['COLLECTEUR_PASSWORD'], password_confirmation: ENV['COLLECTEUR_PASSWORD']},
   # {name: "AikkuÉditeur",   email: "aikku-access.editeur@gmail.com", organisation_id: 1, role: "user", password: ENV['EDITEUR_PASSWORD'], password_confirmation: ENV['EDITEUR_PASSWORD']}
 ])
@@ -180,6 +184,6 @@ Filter.create!([
 ])
 
 
-FiltersUser.create!([
-  {filter_id: 2, user_id: 2}
+FiltersTeam.create!([
+  {filter_id: 2, team_id: 1}
 ])

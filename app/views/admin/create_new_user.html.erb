@@ -40,11 +40,10 @@
   </div>
 
   <div class="my-4">
-    <%= form.label :filter_ids, t('filters.filters') %>
-    <%= form.select :filter_ids, options_from_collection_for_select(current_user.organisation.filters, :id, :name), {required: true}, class: 'form-select', multiple: true %>
+    <%= f.label :team_id, t('misc.team') %>
+    <%= f.select :team_id, options_from_collection_for_select(current_user.organisation.teams, :id, :name, @user.team_id), {}, class: 'form-select' %>
     <p class="form-text">
-      <%= t('users.filter_hint') %>
-      <%= t('misc.select_hint') %>
+      <%= t('users.team_hint') %>
     </p>
   </div>
 
