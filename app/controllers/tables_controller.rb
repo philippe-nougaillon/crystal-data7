@@ -341,6 +341,7 @@ class TablesController < ApplicationController
   # POST /tables.json
   def create
     @table = Table.new(table_params)
+    @table.organisation = current_user.organisation
 
     respond_to do |format|
       if @table.save
