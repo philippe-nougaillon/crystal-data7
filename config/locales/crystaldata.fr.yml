@@ -335,10 +335,12 @@ fr:
     youtube_error: "Pour afficher la vidéo directement, veuillez copier le lien d'intégration de la vidéo YouTube"
     youtube_hint: "Copier le lien YouTube (Partage/Intégration/src=LeLienÀCopier)"
   teams:
+    created: "Équipe créée avec succès."
     new: "Nouvelle Équipe"
     filter_hint: "Permet de restreindre les données vues par cette équipe"
   users:
     create: "Créer l'utilisateur"
+    created: "Utilisateur créé avec succès."
     destroy_title: "Supprimer l'utilisateur '%{user}'"
     name_pseudo: "Nom ou Pseudo"
     new: "Nouvel Utilisateur"

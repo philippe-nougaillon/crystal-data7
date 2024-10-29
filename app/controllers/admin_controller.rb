@@ -15,7 +15,7 @@ class AdminController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to users_url, notice: "Utilisateur créé avec succès." }
+        format.html { redirect_to users_url, notice: t('users.created') }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :create_new_user, status: :unprocessable_entity }
@@ -43,7 +43,7 @@ class AdminController < ApplicationController
         end
         FiltersTeam.where(team_id: @team.id).where.not(filter_id: params[:team][:filter_ids]).destroy_all
 
-        format.html { redirect_to users_url, notice: "Utilisateur créé avec succès." }
+        format.html { redirect_to users_url, notice: t('teams.created') }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :create_new_user, status: :unprocessable_entity }

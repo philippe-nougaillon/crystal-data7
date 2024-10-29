@@ -336,10 +336,12 @@ en:
     youtube_hint: "Copy the YouTube link (Share/embed/src = linktocopy)"
     youtube_error: "To display the video directly, please copy the youtube video integration link"
   teams:
-    new: "New team"
+    created: "Team successfully created."
+    new: "New Team"
     filter_hint: "Allows you to restrict the data visible by this team"
   users:
     create: "Create the user"
+    created: "User successfully created."
     destroy_title: "Delete the user '%{user}'"
     name_pseudo: "Name or Pseudo"
     new: "New User"
