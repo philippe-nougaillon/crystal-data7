@@ -1,6 +1,6 @@
 class TablesController < ApplicationController
-  before_action :set_table, except: [:new, :create, :import, :import_do, :index, :securite]
-  before_action :is_user_authorized?
+  before_action :set_table, except: [:new, :create, :import, :import_do, :index, :securite, :icalendar]
+  before_action :is_user_authorized?, except: %i[ icalendar ]
   before_action :info_notice, only: %i[index show_attrs partages logs securite]
   skip_before_action :authenticate_user!, only: %i[ icalendar fill fill_do ]
 
@@ -499,12 +499,16 @@ class TablesController < ApplicationController
 
   def icalendar
     user = User.find_by(slug: params[:user])
+    @table = user.tables.find_by(slug: params[:id])
+    authorize @table
 
     date_records = @table.values.joins(:field).where('field.datatype': 'Date').pluck(:record_index)
     @values = @table.values.where(record_index: date_records)
 
-    if params[:filtre].present?
+    if params[:filtre].present? && user.admin?
       records_index = @table.filters.find_by(slug: params[:filtre]).get_filtered_records
+    elsif user.user?
+      records_index = user.team.filters.where(table_id: @table.id).first.get_filtered_records
     else
       records_index = @values.pluck(:record_index).uniq
     end
