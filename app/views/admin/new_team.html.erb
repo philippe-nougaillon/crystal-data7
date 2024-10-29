@@ -1,0 +1,34 @@
+<h1 class="text-dark my-4">
+  <%= t('teams.new') %>
+</h1>
+
+<%= form_with(model: @team, class: "contents", url: "create_team", html: { autocomplete: "off" }) do |f| %>
+  <% if @team.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t('errors.messages.not_saved', count: @team.errors.count) %></h2>
+
+      <ul>
+        <% @team.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= f.label :name, t('scaffold.name'), class: 'form-label' %>
+    <%= f.text_field :name, class: 'form-control w-50', required: true, autofocus: true %>
+  </div>
+
+  <div class="my-4">
+    <%= f.label :filter_ids, t('filters.filters') %>
+    <%= f.select :filter_ids, options_from_collection_for_select(current_user.organisation.filters, :id, :name, @team.filters.pluck(:id)), {}, class: 'form-select', multiple: true %>
+    <p class="form-text">
+      <%= t('teams.filter_hint') %>
+      <br>
+      <%= t('misc.select_hint') %>
+    </p>
+  </div>
+
+  <%= f.submit t('scaffold.save'), class: 'btn btn-outline-success mt-4' %>
+<% end %>

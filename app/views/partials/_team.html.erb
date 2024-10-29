@@ -1,0 +1,5 @@
+<tr>
+  <td><b><%= team.name %></b></td>
+  <td><%= team.users.pluck(:name).sort.join(', ') %></td>
+  <td><%= team.filters.pluck(:name).sort.join(', ') %></td>
+</tr>

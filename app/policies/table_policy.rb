@@ -10,7 +10,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def show?
-    record.instance_of?(Table) && (user.admin? || (user.filters.pluck(:table_id)).include?(record.id))
+    record.instance_of?(Table) && (user.admin? || (user.team.filters.pluck(:table_id)).include?(record.id))
   end
 
   def new?
@@ -38,7 +38,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def fill?
-    record.public? || (record.users.include?(user) && record.role_number(user) >= 1)
+    record.public? || (record.users.include?(user) && (user.admin? || (user.team.filters.pluck(:table_id)).include?(record.id)))
   end
 
   def fill_do?
@@ -78,7 +78,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def show_details?
-    record.users.include?(user) && (user.admin? || (user.filters.pluck(:table_id)).include?(record.id))
+    record.users.include?(user) && (user.admin? || (user.team.filters.pluck(:table_id)).include?(record.id))
   end
 
   def related_tables?

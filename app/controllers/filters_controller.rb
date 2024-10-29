@@ -15,6 +15,7 @@ class FiltersController < ApplicationController
   # GET /filters/new
   def new
     @filter = Filter.new
+    @teams = current_user.organisation.teams
   end
 
   # GET /filters/1/edit
@@ -62,7 +63,7 @@ class FiltersController < ApplicationController
 
   def query
     params["[query]"] ||= @filter.query
-    if current_user.compte_démo?
+    if current_user.compte_démo? && !Rails.env.development? 
       flash[:alert] = t('notice.user.demo_not_authorized')
     else
       @filter.update(query: params["[query]"])

@@ -27,15 +27,9 @@
   </div>
 
   <div class="my-4">
-    <%= f.label :filter_ids, t('filters.filters') %>
-    <%= f.select :filter_ids, options_from_collection_for_select(current_user.organisation.filters, :id, :name, @user.filters.pluck(:id)), {}, class: 'form-select', multiple: true %>
-    <p class="form-text">
-      <%= t('users.filter_hint') %>
-      <br>
-      <%= t('misc.select_hint') %>
-    </p>
+    <%= f.label :team_id, t('misc.team') %>
+    <%= f.select :team_id, options_from_collection_for_select(current_user.organisation.teams, :id, :name, @user.team_id), {include_blank: true, required: true}, class: 'form-select' %>
   </div>
-  
 
   <%= f.submit t('scaffold.save'), class: 'btn btn-outline-success mt-4' %>
 <% end %>

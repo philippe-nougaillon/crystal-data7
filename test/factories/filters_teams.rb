@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :filters_user do
+  factory :filters_team do
     filter { nil }
-    user { nil }
+    team { nil }
   end
 end
