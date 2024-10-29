@@ -10,7 +10,7 @@ class TablesController < ApplicationController
     if current_user.admin?
       @tables = current_user.tables.includes(:fields)
     else
-      @tables = Table.where(id: current_user.filters.pluck(:table_id)).includes(:fields)
+      @tables = Table.where(id: current_user.team.filters.pluck(:table_id)).includes(:fields)
     end
   end
 
@@ -80,7 +80,7 @@ class TablesController < ApplicationController
     if params[:filtre].present? && current_user.admin?
       @records = @table.filters.find_by(slug: params[:filtre]).get_filtered_records
     elsif current_user.user?
-      @records = current_user.filters.where(table_id: @table.id).first.get_filtered_records
+      @records = current_user.team.filters.where(table_id: @table.id).first.get_filtered_records
     else
       @records = @filter_results.values.reduce(:&)
     end
@@ -459,7 +459,7 @@ class TablesController < ApplicationController
 
   def show_details
     unless params[:record_index].blank?
-      if current_user.admin? || current_user.filters.where(table_id: @table.id).first.get_filtered_records.include?(params[:record_index].to_i)
+      if current_user.admin? || current_user.team.filters.where(table_id: @table.id).first.get_filtered_records.include?(params[:record_index].to_i)
         @record_index = params[:record_index]
         @relation = Relation.where(relation_with_id: @table.id).first
         if @relation

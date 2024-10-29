@@ -111,3 +111,5 @@ gem "ruby-openai", "~> 7.1"
 gem "tiktoken_ruby", "~> 0.0.9"
 
 gem "net-pop", github: 'ruby/net-pop'
+
+gem "acts-as-taggable-on", "~> 11.0"

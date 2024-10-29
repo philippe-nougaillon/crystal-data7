@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_28_105304) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_29_101603) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,6 +107,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_28_105304) do
     t.string "slug"
     t.index ["table_id"], name: "index_filters_on_table_id"
     t.index ["user_id"], name: "index_filters_on_user_id"
+  end
+
+  create_table "filters_teams", force: :cascade do |t|
+    t.bigint "filter_id", null: false
+    t.bigint "team_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["filter_id"], name: "index_filters_teams_on_filter_id"
+    t.index ["team_id"], name: "index_filters_teams_on_team_id"
   end
 
   create_table "filters_users", force: :cascade do |t|
@@ -222,6 +231,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_28_105304) do
     t.index ["user_id"], name: "index_tables_users_on_user_id"
   end
 
+  create_table "teams", force: :cascade do |t|
+    t.string "name"
+    t.bigint "organisation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organisation_id"], name: "index_teams_on_organisation_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email", default: "", null: false
@@ -239,9 +256,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_28_105304) do
     t.string "last_sign_in_ip"
     t.integer "role", default: 0
     t.bigint "organisation_id"
+    t.bigint "team_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organisation_id"], name: "index_users_on_organisation_id"
     t.index ["slug"], name: "index_users_on_slug", unique: true
+    t.index ["team_id"], name: "index_users_on_team_id"
   end
 
   create_table "values", force: :cascade do |t|
@@ -261,6 +280,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_28_105304) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "filters", "tables"
   add_foreign_key "filters", "users"
+  add_foreign_key "filters_teams", "filters"
+  add_foreign_key "filters_teams", "teams"
   add_foreign_key "filters_users", "filters"
   add_foreign_key "filters_users", "users"
   add_foreign_key "logs", "fields"
@@ -275,6 +296,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_28_105304) do
   add_foreign_key "tables", "organisations"
   add_foreign_key "tables_users", "tables"
   add_foreign_key "tables_users", "users"
+  add_foreign_key "teams", "organisations"
   add_foreign_key "users", "organisations"
+  add_foreign_key "users", "teams"
   add_foreign_key "values", "users"
 end

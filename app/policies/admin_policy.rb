@@ -16,4 +16,12 @@ class AdminPolicy < ApplicationPolicy
   def create_new_user_do?
     create_new_user?
   end
+
+  def new_team?
+    user && user.admin? && (!(user.compte_démo?) || Rails.env.development?)
+  end
+
+  def create_team?
+    new_team?
+  end
 end

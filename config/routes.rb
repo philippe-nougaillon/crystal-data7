@@ -60,6 +60,8 @@ Rails.application.routes.draw do
       get :stats
       get :create_new_user
       post :create_new_user_do
+      get :new_team
+      post :create_team
     end
     
     get 'show_attrs', to: 'tables#show_attrs' 
