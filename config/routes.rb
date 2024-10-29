@@ -66,8 +66,8 @@ Rails.application.routes.draw do
     
     get 'show_attrs', to: 'tables#show_attrs' 
     get 'tables/:id/fill', to: 'tables#fill', as: :fill
-    get 'tables/:id/partages', to:'tables#partages', as: :partages
-    get 'tables/:id/partages_delete', to:'tables#partages_delete', as: :annuler_partage
+    # get 'tables/:id/partages', to:'tables#partages', as: :partages
+    # get 'tables/:id/partages_delete', to:'tables#partages_delete', as: :annuler_partage
     get 'tables/:id/logs', to: 'tables#logs', as: :logs
     get 'tables/:id/activity', to: 'tables#activity', as: :activity
     get 'tables/:id/details', to: 'tables#show_details', as: :details
@@ -75,7 +75,7 @@ Rails.application.routes.draw do
     get '/import', to: 'tables#import'
 
     post 'tables/:id/fill', to: 'tables#fill_do', as: :fill_do
-    post '/add_user_do', to:'tables#add_user_do'
+    # post '/add_user_do', to:'tables#add_user_do'
     post '/import_do', to: 'tables#import_do'
 
     delete 'tables/:id/delete_record' => 'tables#delete_record', as: :delete_record

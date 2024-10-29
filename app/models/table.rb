@@ -87,16 +87,6 @@ class Table < ApplicationRecord
 	  allow_destroy
 	end
 
-	# def shared_with(user)
-	# 	users_infos = ""
-	# 	self.tables_users.includes(:user).each do |tables_user|
-	# 		unless tables_user.user == user
-	# 			users_infos += "#{tables_user.user.name}(#{tables_user.role}) "
-	# 		end
-	# 	end
-	# 	return users_infos
-	# end
-
 	def role_number(user)
 		User.roles[self.users.find_by(id: user.id).role]
 	end

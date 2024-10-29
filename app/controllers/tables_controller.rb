@@ -396,26 +396,6 @@ class TablesController < ApplicationController
     redirect_to tables_path
   end
 
-  # def add_user_do
-  #   session[:type_partage] = params[:type_partage]
-
-  #   if not TablesUser.roles.keys.reject { |e| e == "Propriétaire" }.include?(params[:role])
-  #     redirect_to add_user_path(@table), alert: t('notice.table.unavailable_role')
-  #   elsif @user = User.find_by(email: (params[:type_partage] == "text") ? params[:email_text] : params[:email_list])
-  #     unless @table.users.include?(@user)
-  #       # ajoute le nouvel utilisateur aux utilisateurs de la table
-  #       @table.tables_users << TablesUser.create(table_id: @table.id, user_id: @user.id, role: params[:role])
-  #       UserMailer.notification_nouveau_partage(@user, @table).deliver_now
-  #       flash[:notice] = t('notice.table.shared', table: @table.name, user: @user.name)
-  #     else
-  #       flash[:alert] = t('notice.table.already_shared', table: @table.name, user: @user.name)
-  #     end
-  #   else
-  #     flash[:alert] = t('notice.table.user_not_found')
-  #   end
-  #   redirect_to partages_path(@table)
-  # end
-
   def partages
   end
 
