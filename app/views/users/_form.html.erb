@@ -28,10 +28,7 @@
 
   <div class="my-4">
     <%= f.label :team_id, t('misc.team') %>
-    <%= f.select :team_id, options_from_collection_for_select(current_user.organisation.teams, :id, :name, @user.team_id), {include_blank: true}, class: 'form-select' %>
-    <p class="form-text">
-      <%= t('users.team_hint') %>
-    </p>
+    <%= f.select :team_id, options_from_collection_for_select(current_user.organisation.teams, :id, :name, @user.team_id), {include_blank: true, required: true}, class: 'form-select' %>
   </div>
 
   <%= f.submit t('scaffold.save'), class: 'btn btn-outline-success mt-4' %>

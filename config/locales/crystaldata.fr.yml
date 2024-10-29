@@ -121,6 +121,8 @@ fr:
     show: "Voir"
     signed: "Signé"
     table: "Collection"
+    team: "Équipe"
+    teams: "Équipes"
     time_ago: "Il y a"
     total_tables: "Nombre d'objets créés :"
     total_values: "Nombre total d'objets dans vos collections :"
@@ -331,6 +333,9 @@ fr:
     wait: "Patience, cela peut prendre quelques secondes..."
     youtube_error: "Pour afficher la vidéo directement, veuillez copier le lien d'intégration de la vidéo YouTube"
     youtube_hint: "Copier le lien YouTube (Partage/Intégration/src=LeLienÀCopier)"
+  teams:
+    new: "Nouvelle Équipe"
+    filter_hint: "Permet de restreindre les données vues par cette équipe"
   users:
     create: "Créer l'utilisateur"
     destroy_title: "Supprimer l'utilisateur '%{user}'"

@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def index
     @users = current_user.organisation.users
+    @teams = current_user.organisation.teams
   end
 
   # GET /users/1 or /users/1.json

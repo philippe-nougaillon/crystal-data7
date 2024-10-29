@@ -123,6 +123,7 @@ en:
     sign_out: "Logout"
     table: "Collection"
     team: "Team"
+    teams: "Teams"
     time_ago: "Time ago"
     total_tables: "Number of objects created:"
     total_values: "Total number of objects in your collections:"
@@ -333,6 +334,9 @@ en:
     wait: "Please wait, it can take a few seconds ..."
     youtube_hint: "Copy the YouTube link (Share/embed/src = linktocopy)"
     youtube_error: "To display the video directly, please copy the youtube video integration link"
+  teams:
+    new: "New team"
+    filter_hint: "Allows you to restrict the data visible by this team"
   users:
     create: "Create the user"
     destroy_title: "Delete the user '%{user}'"

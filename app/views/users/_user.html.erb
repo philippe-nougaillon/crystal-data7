@@ -18,7 +18,6 @@
   <td><%= user.role.upcase %></td>
   <td><%= user.email %></td>
   <td>
-    <%# user.team.filters.pluck(:name).sort.join(', ') %>
     <%= user.team.try(:name) %>
   </td>
   <td>
