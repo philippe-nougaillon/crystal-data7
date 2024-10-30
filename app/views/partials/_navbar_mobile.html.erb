@@ -141,13 +141,6 @@
               <% end %>
             </li>
           <% end %>
-          <% if policy(@table).partages? %>
-            <li class="nav-item text-end">
-              <%= link_to partages_path(@table), class:'nav-link' do %>
-                <%= t('tables.navbar.sharing') %>
-              <% end %>
-            </li>
-          <% end %>
           <% if policy(@table).logs? %>
             <li class="nav-item text-end">
               <%= link_to logs_path(id:@table), class:'nav-link' do %>

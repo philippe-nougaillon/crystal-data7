@@ -21,13 +21,6 @@
               <% end %>
             </li>
           <% end %>
-          <% if policy(@table).partages? %>
-            <li class="nav-item">
-              <%= link_to partages_path(@table), class: 'nav-link', title: t('tables.navbar.sharing_title', table_name: @table.name) do %>
-                <%= t('tables.navbar.sharing') %>
-              <% end %>
-            </li>
-          <% end %>
           <% if policy(@table).logs? %>
             <p class="mb-0">|</p>
             <li class="nav-item">
