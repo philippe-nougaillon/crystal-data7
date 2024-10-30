@@ -1,38 +1,67 @@
-stock_marque:
-  table_id: <%= ActiveRecord::FixtureSet.identify(:stocks) %>
-  name: Marque
+produit_nom:
+  table: produits
+  name: Nom
   datatype: Texte
   row_order: 1
-  slug: a
+  slug: <%= SecureRandom.uuid %>
 
-stock_catégorie:
-  table_id: <%= ActiveRecord::FixtureSet.identify(:stocks) %>
-  name: Catégorie
-  datatype: Liste
-  items: Automobile,Mobilier,Alimentation,Vêtements,Électronique
-  filtre: true
-  row_order: 2
-  slug: abcde
-
-intervention_marque_outil:
-  table_id: <%= ActiveRecord::FixtureSet.identify(:interventions) %>
-  name: Marque de l'outil
-  datatype: Liste
-  items: '[Stocks.Marque]'
-  row_order: 1
-  slug: abc
-
-intervention_lieu:
-  table_id: <%= ActiveRecord::FixtureSet.identify(:interventions) %>
-  name: Lieu
+produit_description:
+  table: produits
+  name: Description
   datatype: Texte
   row_order: 2
-  slug: abcd
+  slug: <%= SecureRandom.uuid %>
 
-intervention_date:
-  table_id: <%= ActiveRecord::FixtureSet.identify(:interventions) %>
-  name: Date
-  datatype: Date
-  filtre: true
-  row_order: 3
-  slug: abcdef
+étude_nom:
+  table: études
+  name: Nom
+  datatype: Texte
+  row_order: 1
+  slug: <%= SecureRandom.uuid %>
+
+étude_produit:
+  table: études
+  name: Produit
+  datatype: Collection
+  items: '[Produits."Nom,Description"]'
+  row_order: 2
+  slug: <%= SecureRandom.uuid %>
+
+# stock_marque:
+#   table_id: <%= ActiveRecord::FixtureSet.identify(:stocks) %>
+#   name: Marque
+#   datatype: Texte
+#   row_order: 1
+#   slug: a
+
+# stock_catégorie:
+#   table_id: <%= ActiveRecord::FixtureSet.identify(:stocks) %>
+#   name: Catégorie
+#   datatype: Liste
+#   items: Automobile,Mobilier,Alimentation,Vêtements,Électronique
+#   filtre: true
+#   row_order: 2
+#   slug: abcde
+
+# intervention_marque_outil:
+#   table_id: <%= ActiveRecord::FixtureSet.identify(:interventions) %>
+#   name: Marque de l'outil
+#   datatype: Liste
+#   items: '[Stocks.Marque]'
+#   row_order: 1
+#   slug: abc
+
+# intervention_lieu:
+#   table_id: <%= ActiveRecord::FixtureSet.identify(:interventions) %>
+#   name: Lieu
+#   datatype: Texte
+#   row_order: 2
+#   slug: abcd
+
+# intervention_date:
+#   table_id: <%= ActiveRecord::FixtureSet.identify(:interventions) %>
+#   name: Date
+#   datatype: Date
+#   filtre: true
+#   row_order: 3
+#   slug: abcdef

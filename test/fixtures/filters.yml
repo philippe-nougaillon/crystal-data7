@@ -1,11 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# one:
-#   name: MyString
-#   table: one
-#   query: 
-
-# two:
-#   name: MyString
-#   table: two
-#   query: 
+doliprane:
+  name: Doliprane
+  table: produits
+  query: {"<%= ActiveRecord::FixtureSet.identify(:produit_nom) %>": "Doliprane"}
+  user_id: <%= ActiveRecord::FixtureSet.identify(:paul_hudson) %>

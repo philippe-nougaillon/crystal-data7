@@ -326,6 +326,7 @@ en:
     table: "See in the form of a collection"
     title: "Objets"
     update_attribute: "Change the attribute"
+    update_attribute_testid: "Edit the attribute of Field n°%{field_slug}"
     user_have_to_exist: "The user must already exist"
     values_updated_at: "Modified %{time_ago} ago (the %{date})"
     visibility: "Visibility"

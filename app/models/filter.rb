@@ -1,7 +1,7 @@
 class Filter < ApplicationRecord
   belongs_to :table
 
-  has_many :filters_teams
+  has_many :filters_teams, dependent: :destroy
   has_many :teams, through: :filters_teams
 
   extend FriendlyId

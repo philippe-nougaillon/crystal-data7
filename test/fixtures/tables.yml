@@ -1,9 +1,23 @@
 stocks:
+  organisation: demo
   name: Stocks
   slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"
   record_index: 3
 
 interventions:
+  organisation: demo
   name: Interventions
   slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"
   record_index: 2
+
+produits:
+  organisation: sanofi
+  name: Produits
+  slug: <%= SecureRandom.uuid %>
+  record_index: 1
+
+études:
+  organisation: sanofi
+  name: Études
+  slug: <%= SecureRandom.uuid %>
+  record_index: 1

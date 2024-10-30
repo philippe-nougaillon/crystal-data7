@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+demo:
+  nom: Démo
+  slug: <%= SecureRandom.uuid %>
+
+sanofi:
+  nom: Sanofi
+  slug: <%= SecureRandom.uuid %>
+
+pierre_fabre:
+  nom : Pierre Fabre
+  slug: <%= SecureRandom.uuid %>

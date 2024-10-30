@@ -325,6 +325,7 @@ fr:
     table: "Voir sous forme de tableau"
     title: "Objets"
     update_attribute: "Modifier l'attribut"
+    update_attribute_testid: "Modifier l'attribut du field n°%{field_slug}"
     user_have_to_exist: "L'utilisateur doit déjà exister"
     values_updated_at: "Modifié il y a %{time_ago} (le %{date})"
     visibility: "Visibilité"
