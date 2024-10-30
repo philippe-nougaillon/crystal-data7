@@ -286,7 +286,7 @@ fr:
       new_object: "Ajouter un nouvel objet à cette collection"
       object: "Objet"
       object_title: "Modifier l'objet dans '%{table_name}'"
-      search : "Rerchercher"
+      search : "Rechercher"
       sharing: "Partages"
       sharing_title: "Partager l'objet '%{table_name}'"
       to: "Au"
