@@ -95,14 +95,14 @@
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Accédez à toutes vos collections en mobilité (Les écrans s'adaptent automatiquement aux smartphones/tablettes)
+			Access all your collections on the go (Screens automatically adapt to smartphones/tablets)
 		</li> 
 
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-    		Assistant (IA). 
+			Assistant (IA). 
 			Posez une question à l'Assistant, basée sur les données de vos collections d'objets
 		</li> 
 
@@ -210,9 +210,9 @@
 			<li>
 				<b id="texte"><%= t('fields.datatype.Texte') %></b> :
 				<ul>
-					<li>Texte simple : peut contenir une chaine de 255 caractères maximum. L'option 'Filtre ?' permet de créer une liste déroulante contenant les valeurs distinctes. </li>
-					<li><%= t('fields.datatype.Texte_long') %> : permet de rédiger de longs textes</li>
-					<li><%= t('fields.datatype.Texte_riche') %> : permet de rédiger et formater un texte long (gras, souligné, titre, couleur, taille, liens, listes, etc.), à l'aide d'un petit éditeur de texte intégré (TRIX Editor)</li>
+					<li>Texte simple : peut contenir une chaine de 255 caractères maximum. L'option 'Filtre ?' permet de créer une liste déroulante contenant les valeurs distinctes.</li>
+					<li><%= t('fields.datatype.Texte_long') %> : permet de rédiger de longs textes.</li>
+					<li><%= t('fields.datatype.Texte_riche') %> : permet de rédiger et formater un texte long (gras, souligné, titre, couleur, taille, liens, listes, etc.), à l'aide d'un petit éditeur de texte intégré (TRIX Editor).</li>
 				</ul>
 			</i>
 			<li>
@@ -225,9 +225,8 @@
 			</li>
 			<li><b id="date"><%= t('fields.datatype.Date') %></b> : une date choisie dans un calendrier.</li>
 			<li><b id="oui_non"><%= t('fields.datatype.Oui_non?') %></b> : permet de choisir entre Oui ou Non ou aucun des deux.</li>
-			<li><b id="liste"><%= t('fields.datatype.Liste') %></b> : pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.
-			</li>
-			<li><b id="liste_objet">Liste d'objets (<%= t('fields.datatype.Collection') %>)</b> : pour choisir un objet parmi les objets d'une autre de vos collections.(Ex: <i>[Technicien."Nom,Prénom,Expérience"]</i>)</li>
+			<li><b id="liste"><%= t('fields.datatype.Liste') %></b> : pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.</li>
+			<li><b id="liste_objet">Liste d'objets (<%= t('fields.datatype.Collection') %>)</b> : pour choisir un objet parmi les objets d'une autre de vos collections. (Ex: <i>[Technicien."Nom,Prénom,Expérience"]</i>)</li>
 			<li>
 				<b id="fichier"><%= t('fields.datatype.Fichier') %></b> :
 				<ul>
@@ -236,12 +235,10 @@
 					<li><%= t('fields.datatype.PDF') %> : idem 'Fichier' mais affiche un aperçu de la première page du document PDF.</li>
 				</ul>
 			</li>
-			<li><b id="utilisateur"><%= t('fields.datatype.Utilisateur') %></b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table</li>
+			<li><b id="utilisateur"><%= t('fields.datatype.Utilisateur') %></b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table.</li>
 			<li><b id="url"><%= t('fields.datatype.URL') %></b> : permet d'ajouter un lien vers une ressource internet via une URL (interne ou externe).</li>
 			<li><b id="email"><%= t('fields.datatype.Email') %></b> : pour ajouter un lien vers une adresse email.</li>
-			<li>
-				<b id="video"><%= t('fields.datatype.Vidéo_YouTube') %></b> : permet d'ajouter un lien vers une vidéo YouTube et d'afficher l'aperçu de la vidéo dans une miniature.  
-			</li>
+			<li><b id="video"><%= t('fields.datatype.Vidéo_YouTube') %></b> : permet d'ajouter un lien vers une vidéo YouTube et d'afficher l'aperçu de la vidéo dans une miniature.</li>
 			<li><b id="couleur"><%= t('fields.datatype.Couleur') %></b> : une couleur choisie dans une palette.</li>
 			<li><b id="localisation">Localisation (<%= t('fields.datatype.GPS') %>)</b> :
 				<ul>
@@ -250,28 +247,15 @@
 					<li>Distance : Permet de calculer la distance (à vol d'oiseau) entre deux positions GPS. (Ex: <i>[Chantier(GPS)] - [Maison(GPS)]</i> OU <i>[Chantier(GPS)] - 48.85879287621989, 2.294761243572842</i>)</li>
 				</ul>
 			</li>
+			<li><b id="qrcode"><%= t('fields.datatype.QRCode') %></b> : pour générer un QR Code à partir du contenu d'un autre attribut de l'objet. (Ex: <i>[N°deSérie],[Reference],[URL site web]</i>)</li>
+			<li><b id="qrscan"><%= t('fields.datatype.QRScan') %></b> : permet de scanner un QR Code avec la caméra de votre smartphone, tablette ou ordinateur.</li>
+			<li><b id="signature"><%= t('fields.datatype.Signature') %></b> : permet de signer manuellement avec la souris ou sur un écran tactile.</li>
+			<li><b id="uuid"><%= t('fields.datatype.UUID') %></b> : génère automatiquement un identifiant unique. (UUID = Universally Unique IDentifier)</li>
+			<li><b id="tags"><%= t('fields.datatype.Tags') %></b> : permet de saisir des mots-clés séparés par des virgules. (Ex: <i>Paris, France, Europe</i>)</li>
+			<li><b id="stars"><%= t('fields.datatype.Stars') %></b> : permet de noter un objet avec des étoiles. (Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)</li>
+			<li><b id="meteo"><%= t('fields.datatype.Météo') %></b> : permet d'afficher la météo actuelle de votre localisation. (Ex: <i>22°C, Pluie légère, 73% d'humidité</i>)</li>
 			<li>
-				<b id="qrcode"><%= t('fields.datatype.QRCode') %></b> : pour générer un QR Code à partir du contenu d'un autre attribut de l'objet. (Ex: <i>[N°deSérie],[Reference],[URL site web]</i>)
-			</li>
-			<li>
-				<b id="qrscan"><%= t('fields.datatype.QRScan') %></b> : permet de scanner un QR Code avec la caméra de votre smartphone, tablette ou ordinateur.
-			</li>
-			<li>
-				<b id="signature"><%= t('fields.datatype.Signature') %></b> : permet de signer manuellement avec la souris ou sur un écran tactile.
-			</li>
-			<li>
-				<b id="uuid"><%= t('fields.datatype.UUID') %></b> : génère automatiquement un identifiant unique. (UDID = Universally Unique IDentifier)
-			</li>
-			<li>
-				<b id="tags"><%= t('fields.datatype.Tags') %></b> : permet de saisir des mots-clés séparés par des virgules. (Ex: <i>Paris, France, Europe</i>)
-			</li>
-			<li>
-				<b id="stars"><%= t('fields.datatype.Stars') %></b> : permet de noter un objet avec des étoiles. (Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)
-			</li>
-			<li>
-				<b id="meteo"><%= t('fields.datatype.Météo') %></b> : permet d'afficher la météo actuelle de votre localisation. (Ex: <i>22°C, Pluie légère, 73% d'humidité</i>)
-			</li>
-			<li><b id="statut"><%= t('fields.datatype.Statut') %></b> : pour ajouter un état à un objet, associé à une couleur. (Ex: <i class="text-break">Nouveau:bleu,Confirmé:vert,Annulé:rouge,Archivé:gris</i>)
+				<b id="statut"><%= t('fields.datatype.Statut') %></b> : pour ajouter un état à un objet, associé à une couleur. (Ex: <i class="text-break">Nouveau:bleu,Confirmé:vert,Annulé:rouge,Archivé:gris</i>)
 				<ul>
 					<li>
 						Couleurs disponibles :
@@ -295,7 +279,7 @@
 		Exemple : un objet Intervention aura un attribut 'Technicien' qui permettra de choisir un technicien dans la collection du même nom.
 		Ces relations sont aussi visibles dans la vue détails d'un objet. 
 		Ainsi, quand un objet Technicien est lié à des Interventions, 
-		la vue de détails de chaque Technicien affiche automatiquement ses Interventions et permet d'en saisir une nouvelle pour ce Technicien.  
+		la vue de détails de chaque Technicien affiche automatiquement ses Interventions et permet d'en saisir une nouvelle pour ce Technicien.
 	</p>
 
 	<h3 class="fw-bold text-dark my-4">Requêtes</h3>
@@ -305,10 +289,10 @@
 		Ces Requêtes acceptent des critères différents selon le type d'attribut :
 		<ul class="list-group mb-5 m-3 gap-2">
 			<li>
-				un attribut de type Texte est filtré avec %TXT% (Filtre tout ce qui contient les 3 lettres TXT) 
+				un attribut de type Texte est filtré avec %TXT% (Filtre tout ce qui contient les 3 lettres TXT)
 			</li>
 			<li>		
-				un attribut numérique est filtré avec un signe et une valeur (Qté en stock: > 5) 
+				un attribut numérique est filtré avec un signe et une valeur (Qté en stock: > 5)
 			</li>
 		</ul>
 	</p>
@@ -316,7 +300,7 @@
 	<h3 class="fw-bold text-dark my-4">Notifications</h3>
 	<p class="fs-5 fw-light w-sm-75">
 		Les Notifications permettent d'être alerté par email après chaque ajout et modification d'objet dans une collection. 
-		Elles sont paramétrables pour chaque collection et chaque attribut. 
+		Elles sont paramétrables pour chaque collection et chaque attribut.
 		<br><br>
 		Exemple : être alerté quand un objet dans la collection 'Interventions' a un attribut 'Statut' égal à 'Terminé'.
 	</p>
@@ -329,7 +313,7 @@
 		<br>
 		Pour chaque équipe, il est possible d'avoir un filtre par collection.
 		<br>
-		Si sur une collection, il n'y a pas de filtre attribué à une équipe, cette dernière ne verra pas la collection. 
+		Si sur une collection, il n'y a pas de filtre attribué à une équipe, cette dernière ne verra pas la collection.
 	</p>
 
 
@@ -337,9 +321,9 @@
 	<p class="fs-5 fw-light w-sm-75">
 		Posez une question à l'Assistant, basée sur les données de vos collections d'objets
 		<br>
-		Exemples de question, en langage naturel, que l'on peut poser à l'Assistant : 
+		Exemples de question, en langage naturel, que l'on peut poser à l'Assistant :
 		<ul class="list-group m-3 mt-2 gap-2">
-			<li>Quel est le nom du client qui revient le plus souvent dans cette liste : [Client] ?
+			<li>Quel est le nom du client qui revient le plus souvent dans cette liste : [Client] ?</li>
 			<li>Génère-moi les 3 prochaines interventions à prévoir, en te basant sur cette liste : [Date, Client, Type] ?</li>
 			<li>Tu es statisticien. Calcule moi la moyenne des durées de cette liste : [Durée] ? (Celle-ci est à faire uniquement si vous doutez du sérieux de cet Assistant ;-)</li>
 		</ul>
@@ -448,12 +432,12 @@
 	<br><br>
 	Vous êtes à la recherche d'une application pour la gestion de projets, d'interventions, de planning, d'émargement ou de facturation ?
 	<br>
-	Consultez notre <%= link_to "catalogue de logiciels Open-Source", 'https://www.aikku.eu/logiciels', target: '_blank', class: 'link' %>
+	Consultez notre <%= link_to "catalogue de logiciels Open-Source", 'https://www.aikku.eu/fr/logiciels', target: '_blank', class: 'link' %>
 	<br><br>
 	Nous pouvons aussi convertir vos anciennes applications PC/Windows (ex: VB/VBA/MS ACCESS/EXCEL/C#...) en une plateforme WEB.
 	<br><br>
 	Pour en savoir plus,
-	<%= link_to "contactez-nous", 'https://www.aikku.eu/contact', target: '_blank', class: 'link' %>
+	<%= link_to "contactez-nous", 'https://www.aikku.eu/fr/contact', target: '_blank', class: 'link' %>
 	<br><br>
 	<%= link_to "Mentions légales", mentions_legales_path, class: 'link' %>
 </p>

@@ -10,85 +10,87 @@
 		<%= image_tag 'icons/aikku.png', class:'mt-3', style: "height: 8rem" %>
 	</div>
 
-	<h3 class="fw-bold text-dark my-4">For whom and for what use?</h3>
+	<h3 class="fw-bold text-dark my-4">For whom and for what purpose?</h3>
 
 	<h4 class="mb-2">Field Service Management (FSM)</h4>
 
 	<p class="fs-5 fw-light w-sm-75">
-		You are a service company with teams in the field and
-		Are you looking for a method of managing your interventions (e.g. construction, after -sales service, installation, maintenance)?
+		Are you a service company with field teams looking for a way to manage your interventions
+		(e.g., construction, after-sales service, installation, maintenance)?
 		<br><br>
-		<%= @sitename %> is a NO-Code information manager that allows you to create
-		Collections of business objects (eg customers, interventions, technician, costs, projects, etc.),
-		To link them (customers <=> interventions <=> Technicians <=> Frais)
-		And to share them online with your employees, in complete safety.
+		<%= @sitename %> is a NO-CODE information manager that allows you to create
+		collections of business objects (e.g., Clients, Interventions, Technicians, Expenses, Projects, etc.),
+		link them (Clients <=> Interventions <=> Technicians <=> Expenses),
+		and securely share them online with your collaborators.
 	</p>
 
 	<h4 class="mb-2">Project Management</h4>
 	<p class="fs-5 fw-light w-sm-75">
-		Are you responsible for a team and the smooth running of a project program?
+		Are you responsible for a team and the successful execution of a project program?
 		<br><br>
-		<%= @sitename %> allows you to quickly create, and without making a line of code, a tool for monitoring the state of each project,
-		to be notified when a significant change of state is recorded, and to see your dates of deadlines
-		in a 'calendar' view or in your personal agenda (Google Calendar/Outlook/etc.).
+		<%= @sitename %> allows you to quickly create a tool for tracking the status
+		of each project without writing a single line of code.
+		You’ll be notified when a significant status change is recorded,
+		and you can view your deadlines in a 'Calendar'
+		view or in your personal agenda (Google Calendar/Outlook/etc.).
 	</p>
 
 	<h4 class="mb-2">DATA Management</h4>
 	<p class="fs-5 fw-light w-sm-75">
-		Are you looking for a simple tool to manage your files, documents, report, and your information collected in the field?
+		Are you looking for a simple tool to manage your files, documents, reports, and information collected in the field?
 		<br><br>
-		<%= @sitename %> has been designed to be usable on a smartphone in order to collect data as close as possible to their origin and whatever their nature (text, number, photo, PDF, etc.).
-		Context data, such as the weather statement, the GPS position, can be acquired automatically.
-		A graphic generation tool allows you to view information in the form of a curve or histogram.
+		<%= @sitename %> was designed to be usable on a smartphone to collect data as close to its source as possible, regardless of its type (Text, Numbers, Photo, PDF, etc.).
+		Contextual data, such as weather conditions and GPS location, can be automatically acquired.
+		A graph generation tool allows you to visualize the information in the form of a curve or a histogram.
 	</p>
 
-	<h3 class="fw-bold text-dark my-4">Main features</h3>
+	<h3 class="fw-bold text-dark my-4">Key features</h3>
 
 	<ul class="list-group list-group-flush mb-5 w-sm-75">
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Create objects made up of various attributes, such as: text, number, euros, date, yes/no, choice list, file, image, PDF, GPS position, link to an object in another collection, QR code, weather...
+			Create Objects made up of various attributes, such as: Text, Number, Euros, Date, Yes/No, choice List, File, Image, PDF, GPS position, Link to an Object in another Collection, QR Code, Weather...
 		</li>
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Add, edit your objects in a form
+			Add and edit your objects in a form
 		</li>
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Search, filter and sort your items
+			Search, filter, and sort your objects
 		</li> 
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Share your objects of objects with other users
+			Share your object collections with other users
 		</li>		
 
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Export your collections in CSV, XSL and PDF
+			Export your collections in CSV, XLS, and PDF formats
 		</li> 
 
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Be notified after each adding an object in one of your collections, or when an attribute changes state
+			Be notified after each object is added to one of your collections, or when an attribute changes state
 		</li>
 
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Activity: Each modification of an object is recorded in a history (when, which, what, value before, value after)
+			Activity: every modification of an object is recorded in a history (when, who, what, value before, value after)
 		</li>		
 
 		<li class="list-group-item d-flex align-items-center gap-2">
@@ -102,8 +104,8 @@
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Assistant (IA).
-			Ask the assistant, based on data from your object collections
+			Assistant (AI).
+			Ask a question to the Assistant, based on the data from your object collections
 		</li> 
 
 	</ul>
@@ -111,10 +113,10 @@
 	<h3 class="fw-bold text-dark my-4">The <%= @sitename %> object and its attributes</h3>
 
 	<p class="fs-5 fw-light w-sm-75">
-		An object consists of attributes (ex: name, brand, color, age, price, Qty in stock, etc.) and
-		Each attribute has a specific type in order to best adapt to the data it will contain (text, number, date, list, yes/no, file, etc.)
+		An object is made up of attributes (e.g., Name, Brand, Color, Age, Price, Quantity in stock, etc.),
+		and each attribute has a specific type to best suit the data it will contain (Text, Number, Date, List, Yes/No, File, etc.).
 		<br><br>
-		The types of attributes available are:
+		The available attribute types are
 
 		<div class="mt-4">
 			<%= link_to a_propos_path(anchor: 'text'), class: 'btn btn-outline-primary btn-lg', title: 'Texte' do %>
@@ -210,67 +212,52 @@
 			<li>
 				<b id="text"><%= t('fields.datatype.Texte') %></b> :
 				<ul>
-					<li>Simple text: can contain a chain of 255 characters maximum.The 'filter option?'Allows you to create a drop -down list containing the distinct values.</li>
-					<li><%= t('fields.datatype.Texte_long') %>: allows you to write long texts</li>
-					<li><%= t('fields.datatype.Texte_riche') %>: allows you to write and format a long text (fat, underlined, title, color, size, links, lists, etc.), using a small integrated text editor (Trix Editor)</li>
+					<li>Simple text: can contain a string of up to 255 characters. The 'Filter?' option allows you to create a dropdown list containing distinct values.</li>
+					<li><%= t('fields.datatype.Texte_long') %>: allows you to write long texts.</li>
+					<li><%= t('fields.datatype.Texte_riche') %>: allows you to write and format long texts (bold, underline, title, color, size, links, lists, etc.) using a built-in text editor (TRIX Editor).</li>
 				</ul>
 			</i>
 			<li>
 				<b id="numbers">Numbers</b> :
 				<ul>
-					<li><%= t('fields.datatype.Nombre') %>: to enter digital values, with or without decimal.The 'Operation' option at the bottom of the page 'will calculate the average or the sum of the attribute values.</li>
-					<li><%= t('fields.datatype.Euros') %>: ditto 'number' but displays the value with the Euros symbol (€).</li>
-					<li><%= t('fields.datatype.Formule') %>: field calculated from existing fields or a formula in Ruby language.(Ex: <i> [time spent] * [Time cost] </i> or <i> [price excl.]* 1.2</i>
+					<li><%= t('fields.datatype.Nombre') %>: to enter numeric values, with or without decimals. The 'Operation at the bottom of the page' option will calculate the average or sum of the attribute values.</li>
+					<li><%= t('fields.datatype.Euros') %>: same as 'Number' but displays the value with the euro symbol (€).</li>
+					<li><%= t('fields.datatype.Formule') %>: calculated field based on existing fields or a formula in Ruby language. (e.g., <i>[Time Spent] * [Hourly Rate]</i> OR <i>[Price Excluding Tax] * 1.2</i>)</li>
 				</ul>
 			</li>
-			<li><b id="date"><%= t('fields.datatype.Date') %></b>: a date chosen in a calendar. </li>
-			<li><b id="yes_no"><%= t('fields.datatype.Oui_non?') %></b>: allows you to choose between yes or no or none of the two. </li>
-			<li><b id="list"><%= t('fields.datatype.Liste') %></b>: to contain a list of values, like 'Blue, White, Red' or 'to do, done, canceled'.The values ​​must be separated by a comma.</li>
-			<li><b id="liste_objet">List of objects (<%= t('fields.datatype.Collection') %>)</b>: to choose an object from the objects of another of your collections. (Ex: <i> [Technician. "Last name, first name, experience"] </i>) </li>
+			<li><b id="date"><%= t('fields.datatype.Date') %></b>: a date selected from a calendar.</li>
+			<li><b id="yes_no"><%= t('fields.datatype.Oui_non?') %></b>: allows you to choose between Yes, No, or neither.</li>
+			<li><b id="list"><%= t('fields.datatype.Liste') %></b>: to contain a list of values, such as 'Blue, White, Red' or 'To do, Done, Canceled'. The values must be separated by commas</li>
+			<li><b id="liste_objet">List of objects (<%= t('fields.datatype.Collection') %>)</b>: to select an object from another one of your collections. (e.g., <i>[Technician."Name, First Name, Experience"]</i>)</li>
 			<li>
 				<b id="file"><%= t('fields.datatype.Fichier') %></b>:
 				<ul>
-					<li><%= t('fields.datatype.Fichier') %>: Allows you to link and store a file in an object (document, image, etc ...). </li>
-					<li><%= t('fields.datatype.Image') %>: ditto 'file' but displays an original image or image preview according to the context. </li>
-					<li><%= t('fields.datatype.PDF') %>: ditto 'file' but displays an overview of the first page of the PDF document. </li>
+					<li><%= t('fields.datatype.Fichier') %>: allows you to link and store a file within an object (document, image, etc.).</li>
+					<li><%= t('fields.datatype.Image') %>: same as 'File' but displays a preview of the image or the original image, depending on the context.</li>
+					<li><%= t('fields.datatype.PDF') %>: same as 'File' but displays a preview of the first page of the PDF document. </li>
 				</ul>
 			</li>
-			<li><b id="user"><%= t('fields.datatype.Utilisateur') %></b>: allows you to choose a user from those who have access to the table </li>
-			<li><b id="url"><%= t('fields.datatype.URL') %></b>: allows you to add a link to an internet resource via an URL (internal or external). </li>
-			<li><b id="email"><%= t('fields.datatype.Email') %></b>: to add a link to an email address. </li>
-			<li>
-				<b id="video"><%= t('fields.datatype.Vidéo_YouTube') %></b>: allows you to add a link to a YouTube video and display the preview of the video in a miniature.
-			</li>
-			<li><b id="color"><%= t('fields.datatype.Couleur') %></b>: a color chosen in a palette. </li>
-			<li><b id="location">Location (<%= t('fields.datatype.GPS') %>)</b> :
+			<li><b id="user"><%= t('fields.datatype.Utilisateur') %></b>: allows you to select a user from those who have access to the table.</li>
+			<li><b id="url"><%= t('fields.datatype.URL') %></b>: allows you to add a link to an internet resource via a URL (internal or external).</li>
+			<li><b id="email"><%= t('fields.datatype.Email') %></b>: to add a link to an email address.</li>
+			<li><b id="video"><%= t('fields.datatype.Vidéo_YouTube') %></b>: allows you to add a link to a YouTube video and display a preview of the video in a thumbnail.</li>
+			<li><b id="color"><%= t('fields.datatype.Couleur') %></b>: a color selected from a palette.</li>
+			<li><b id="location">Location (<%= t('fields.datatype.GPS') %>)</b>:
 				<ul>
-					<li>Capture the location of the user, if it requests it, by pressing the button<span class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-location-crosshairs"></i></li></span>
-					<li>Displays the rental on a card, based on the contact details indicated in "LNG, LAT" format.(Ex: <i> 48.85879287621989, 2,294761243572842 </i> to point on the Eiffel Tower). </li>
-					<li>Distance: allows you to calculate the distance (on bird's flight) between two GPS positions.(Ex: <i> [Site (GPS)] - [House (GPS)] </i> or <i> [Site (GPS)] - 48.85879287621989, 2.294761243572842 </i>) </li>
+					<li>Captures the user's location, if requested, by pressing the button <span class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-location-crosshairs"></i></li></span>
+					<li>Displays the location on a map based on the coordinates provided in the format 'LNG, LAT'. (e.g., <i>48.85879287621989, 2.294761243572842</i> to point to the Eiffel Tower).</li>
+					<li>Distance: Allows you to calculate the distance (as the crow flies) between two GPS locations. (e.g., <i>[Construction Site(GPS)] - [House(GPS)]</i> OR <i>[Construction Site(GPS)] - 48.85879287621989, 2.294761243572842</i>)</li>
 				</ul>
 			</li>
+			<li><b id="qrcode"><%= t('fields.datatype.QRCode') %></b>: generates a QR Code from the content of another attribute of the object. (e.g., <i>[SerialNumber], [Reference], [Website URL]</i>)</li>
+			<li><b id="qrscan"><%= t('fields.datatype.QRScan') %></b>: allows you to scan a QR Code using the camera of your smartphone, tablet, or computer.</li>
+			<li><b id="signature"><%= t('fields.datatype.Signature') %></b>: allows you to sign manually with a mouse or on a touchscreen.</li>
+			<li><b id="uuid"><%= t('fields.datatype.UUID') %></b>: automatically generates a unique identifier. (UUID = Universally Unique Identifier)</li>
+			<li><b id="tags"><%= t('fields.datatype.Tags') %></b>: allows you to enter keywords separated by commas. (Ex: <i>Paris, France, Europe</i>)</li>
+			<li><b id="stars"><%= t('fields.datatype.Stars') %></b>: allows you to rate an object with stars. (Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)</li>
+			<li><b id="weather"><%= t('fields.datatype.Météo') %></b>: Displays the current weather at your location. (e.g., <i>22°C, Light rain, 73% humidity</i>)</li>
 			<li>
-				<b id="qrcode"><%= t('fields.datatype.QRCode') %></b>: to generate a QR code from the content of another attribute of the object.(Ex: <i> [n ° desérie], [Reference], [URL website] </i>)
-			</li>
-			<li>
-				<b id="qrscan"><%= t('fields.datatype.QRScan') %></b>: allows you to scan a QR code with the camera of your smartphone, tablet or computer.
-			</li>
-			<li>
-				<b id="signature"><%= t('fields.datatype.Signature') %></b>: allows you to sign manually with the mouse or on a touch screen.
-			</li>
-			<li>
-				<b id="uuid"><%= t('fields.datatype.UUID') %></b>: automatically generates a unique identifier.(Udid = universally unique identify)
-			</li>
-			<li>
-				<b id="tags"><%= t('fields.datatype.Tags') %></b>: allows you to enter keywords separated by commas.(Ex: <i> Paris, France, Europe </i>)
-			</li>
-			<li>
-				<b id="stars"><%= t('fields.datatype.Stars') %></b>: allows you to note an object with stars.(Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)
-			</li>
-			<li>
-				<b id="weather"><%= t('fields.datatype.Météo') %></b>: allows you to display the current weather for your location.(Ex: <i> 22 ° C, light rain, 73% humidity </i>)
-			</li>
-			<li><b id="status"><%= t('fields.datatype.Statut') %></b>: to add a statement to an object, associated with a color.(Ex: <i class = "text-break"> new:blue, confirmed:green, canceled:red, archived:gray </i>)
+				<b id="status"><%= t('fields.datatype.Statut') %></b>: to add a state to an object, associated with a color. (Ex: <i class = "text-break"> New:blue,Confirmed:green,Canceled:red,Archived:gray</i>)
 				<ul>
 					<li>
 						Available colors:
@@ -290,57 +277,56 @@
 
 	<h3 class="fw-bold text-dark my-4">Relations between objects</h3>
 	<p class="fs-5 fw-light w-sm-75">
-		The relationships between objects are created with the 'collection' attribute.
-		Example: an intervention object will have an 'technician' attribute which will allow you to choose a technician in the collection of the same name.
-		These relationships are also visible in view of the details of an object.
-		Thus, when a technician object is linked to interventions,
-		The detail view of each technician automatically displays their interventions and allows you to enter a new one for this technician.
+		Relations between objects are created with the 'Collection' attribute.  
+		Example: an Intervention object will have a 'Technician' attribute that allows selecting a technician from the same collection.  
+		These relationships are also visible in the object detail view.  
+		Thus, when a Technician object is linked to Interventions, the detail view of each Technician automatically displays their Interventions and allows entering a new one for that Technician.
 	</p>
 
 	<h3 class="fw-bold text-dark my-4">Queries</h3>
 	<p class="fs-5 fw-light w-sm-75">
-		Queries make it possible to memorize selection criteria in order to obtain a filtered collection of objects, meeting its criteria.
+		Queries allow you to save selection criteria in order to obtain a filtered collection of objects that meet those criteria.
 		<br><br>
-		These queries accept different criteria depending on the type of attribute:
+		These Queries accept different criteria depending on the attribute type:
 		<ul class="list-group mb-5 m-3 gap-2">
 			<li>
-				A text type attribute is filtered with % TXT % (filter everything that contains the 3 letters TXT)
+				A Text attribute is filtered with %TXT% (Filters everything that contains the letters TXT)
 			</li>
 			<li>		
-				A digital attribute is filtered with a sign and a value (Qty in stock:> 5)
+				A numeric attribute is filtered with a sign and a value (e.g., Stock quantity: > 5)
 			</li>
 		</ul>
 	</p>
 
 	<h3 class="fw-bold text-dark my-4">Notifications</h3>
 	<p class="fs-5 fw-light w-sm-75">
-		The notifications make it possible to be alerted by email after each addition and modification of objects in a collection.
-		They are configurable for each collection and each attribute.
+		Notifications allow you to be alerted by email after each addition and modification of an object in a collection.  
+		They can be configured for each collection and each attribute.
 		<br><br>
-		Example: to be alerted when an object in the 'Interventions' collection has an attribute 'status' equal to 'finished'.
+		Example: Be alerted when an object in the 'Interventions' collection has an attribute 'Status' equal to 'Completed'.
 	</p>
 
-	<h3 class="fw-bold text-dark my-4">Users ands Teams </h3>
+	<h3 class="fw-bold text-dark my-4">Users ands Teams</h3>
 	<p class="fs-5 fw-light w-sm-75">
 		You can create users and include them in a team.
 		<br>
-		A team has access to certain information that is defined in filters.
+		A team has access to certain information defined in the filters.
 		<br>
-		For each team, it is possible to have a filter per collection.
+		For each team, it is possible to have a filter for each collection.
 		<br>
-		If on a collection, there is no filter attributed to a team, the latter will not see the collection.
+		If no filter is assigned to a collection for a team, that team will not see the collection.
 	</p>
 
 
-	<h3 class="fw-bold text-dark my-4">Assistant (IA)</h3>
+	<h3 class="fw-bold text-dark my-4">Assistant (AI)</h3>
 	<p class="fs-5 fw-light w-sm-75">
-		Ask the assistant, based on data from your object collections
+		Ask a question to the Assistant based on the data from your object collections
 		<br>
-		Examples of questions, in natural language, which can be asked to the assistant:
+		Examples of questions you can ask the Assistant in natural language:
 		<ul class="list-group m-3 mt-2 gap-2">
-			<li>What is the name of the customer who returns most often in this list: [Customer]?
-			<li>Genate me the next 3 interventions to be expected, based on this list: [Date, customer, type]? </li>
-			<li>You are a statistician.Calculate me the average of the durations of this list: [Duration]?(This is to be done only if you doubt the seriousness of this assistant;-) </li>
+			<li>What is the name of the client that appears most frequently in this list: [Client]?</li>
+			<li>Generate the next 3 upcoming interventions, based on this list: [Date, Client, Type]?</li>
+			<li>You are a statistician. Calculate the average duration from this list: [Duration]? (This should only be done if you doubt the reliability of this Assistant ;-)</li>
 		</ul>
 	</p>
 
@@ -350,22 +336,13 @@
 <h3 class="fw-bold text-dark my-4">History and motivation</h3>
 
 <p class="fs-5 fw-light w-sm-75">
-	Business applications developer for over 30 years, I have often helped my customers spend
-	an information system in silos, where business business data is locked up
-	in Excel sheets, to a platform type system where the data is centralized and
-	Shared between services from a single source of trust (<b> single source of truth </b>).
+	Developer of business applications in companies for over 30 years, I have often helped my clients transition from a siloed information system, where business data is locked in Excel spreadsheets, to a platform-based system where data is centralized and shared across departments from a single trusted source (<b>Single Source of Truth</b>).
 </p>
 
 <p class="fs-5 fw-light w-sm-75">	
-	With an experience of more than 30 years on databases and the most interesting development tools of their eras
-	(Superbase 64, Yes You Can, Superdb, FoxPro, DBase 3/4, Paradox 3/4, Access, Delphi, VB4/5/6/SQL Server,
-	C#/sqlite/mysql, stack lamp, ruby ​​on rails, and so on ...), my vocation has always been to help my customers to cross
-	the step towards the decompartmentalization of their data with the objective of a more efficient management IT,
-	collaborative and focused on objectives.
+	With over 30 years of experience with the most interesting databases and development tools of their time (SuperBase 64, Yes You Can, SuperDB, FoxPro, dBase 3/4, Paradox 3/4, Access, Delphi, VB4/5/6/SQL Server, C#/SQLite/MySQL, LAMP stack, Ruby on Rails, and more...), my vocation has always been to help my clients move towards breaking down the silos of their data with the goal of achieving more efficient, collaborative, and goal-oriented business management IT.
 	<br><br>
-	Even if customer activity areas were not alike
-	(Auto, Social, Telecom, Pharma, Industry, VSE/SMEs), reasons were repeated and each new project
-	took place in an almost identical way:
+	Even though the business sectors of my clients were different (Car rental, Social, Telecom, Pharma, Industry, SMBs), recurring patterns emerged, and each new project followed a roughly identical process:
 </p>
 
 <div class="row my-5 w-sm-75">
@@ -375,7 +352,7 @@
 				<span class="material-symbols-outlined text-primary">
 					priority
 				</span>
-				Import Excel data
+				Import data from Excel
 			</li>
 			<li class="list-group-item d-flex align-items-center gap-2">
 				<span class="material-symbols-outlined text-primary">
@@ -387,13 +364,13 @@
 				<span class="material-symbols-outlined text-primary">
 					priority
 				</span>
-				Search, sort, filter and export the data
+				Search, sort, filter, and export data
 			</li>
 			<li class="list-group-item d-flex align-items-center gap-2">
 				<span class="material-symbols-outlined text-primary">
 					priority
 				</span>
-				Share data safely
+				Share data securely
 			</li>
 		</ul>
 	</div>
@@ -403,7 +380,7 @@
 				<span class="material-symbols-outlined text-primary">
 					priority
 				</span>
-				Bind data between them
+				Link data together
 			</li>
 			<li class="list-group-item d-flex align-items-center gap-2">
 				<span class="material-symbols-outlined text-primary">
@@ -415,7 +392,7 @@
 				<span class="material-symbols-outlined text-primary">
 					priority
 				</span>
-				Create personalized views
+				Create custom views
 			</li>
 			<li class="list-group-item d-flex align-items-center gap-2">
 				<span class="material-symbols-outlined text-primary">
@@ -428,12 +405,9 @@
 </div>
 
 <p class="fs-5 fw-light w-sm-75">
-	This is why I started the development of this No-Code and Open-Source tool, 10 years ago,
-	in order to cover the basic functions of an open information platform.
+	That's why I started developing this NO-CODE and open-source tool 10 years ago, with the goal of covering the basic functions of an open information platform.
 	<br><br>
-	<%= @sitename %> therefore aims to offer a small concentrate of my database experience,
-	And, why not, to lay the foundations of a future tailor -made application/platform, yours,
-	Integrating all your specificities, business rules, status, services, etc.
+	<%= @sitename %> thus aims to offer a small concentration of my database experience, and, why not, lay the foundations for a future custom application/platform, yours, integrating all your specificities, business rules, statuses, services, etc.
 </p>
 
 <h3 class="fw-bold text-dark my-4">Development, support and services</h3>
@@ -443,16 +417,16 @@
 </p>
 
 <p class="fs-5 fw-light text-secondary mt-4">
-	Need feature or new tailor -made application?We are developing it!
+	Need a feature or a custom application? We will develop it for you!
 	<br><br>
-	Are you looking for an application for project management, interventions, planning, emarging or billing?
+	Are you looking for an application for project management, interventions, scheduling, attendance tracking, or invoicing?
 	<br>
-	Consult our <%= link_to "Open-Source software catalog", 'https://www.aikku.eu/logiciels', target: '_blank', class: 'link' %>
+	Check out our <%= link_to "Open-Source software catalog", 'https://www.aikku.eu/en/logiciels', target: '_blank', class: 'link' %>
 	<br><br>
-	We can also convert your old PC/Windows applications (ex: VB/VBA/MS Access/Excel/C#...) to a web platform.
+	We can also convert your old PC/Windows applications (e.g., VB/VBA/MS ACCESS/EXCEL/C#...) into a web platform.
 	<br><br>
-	To find out more,
-	<%= link_to "Contact us", 'https://www.aikku.eu/contact', target: '_blank', class: 'link' %>
+	To learn more,
+	<%= link_to "contact us", 'https://www.aikku.eu/en/contact', target: '_blank', class: 'link' %>
 	<br><br>
 	<%= link_to "Legal notices", mentions_legales_path, class: 'link' %>
 </p>
