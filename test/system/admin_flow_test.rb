@@ -186,7 +186,7 @@ class AdminFlowTest < ApplicationSystemTestCase
   #   assert_selector('span[style="background-color: #ff0000"]')
   # end
 
-  # # TODO: la map ne s'affiche pas
+  # TODO: la map ne s'affiche pas
   # test "create gps field" do
   #   visit tables_url
   #   click_on @table_étude.name
@@ -306,7 +306,7 @@ class AdminFlowTest < ApplicationSystemTestCase
   #   click_on "(+) #{@table_étude.name}"
 
   #   # Ajout des values
-  #   field = find("[data-testid='#{@table_étude.fields.first.name}']")
+  #   field = find("[data-testid='#{@table_étude.fields.where(datatype: "Texte").first.name}']")
   #   field.fill_in with: Faker::Device.manufacturer
   #   click_button "Enregistrer"
   #   assert_text "Données ajoutées avec succès :)"
@@ -323,7 +323,7 @@ class AdminFlowTest < ApplicationSystemTestCase
   #   sleep(1)
   #   click_on "Modifier"
   #   assert_text "Modification '#{@table_étude.name}'"
-  #   field = find("[data-testid='#{@table_étude.fields.first.name}']")
+  #   field = find("[data-testid='#{@table_étude.fields.where(datatype: "Texte").first.name}']")
   #   field.fill_in with: Faker::Device.manufacturer
   #   click_button "Enregistrer"
   #   assert_text "Données modifiées avec succès :)"
@@ -355,11 +355,11 @@ class AdminFlowTest < ApplicationSystemTestCase
   #   page.accept_confirm do
   #     delete_button.click
   #   end
-  #   assert_text "Cet enregistrement n'a pas été supprimé car il est utilisé dans d'autres Tables !"
+  #   assert_text "Cet enregistrement n'a pas été supprimé car il est utilisé dans d'autres Collections !"
   #   assert_selector('[data-testid="Voir ligne n°1"]', visible: :all)
   # end
 
-  # #TODO : refaire l'items du field
+
   # test "créer un record à partir d'une relation" do
   #   visit tables_url
   #   click_on @table_étude.name

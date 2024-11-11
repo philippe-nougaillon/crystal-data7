@@ -23,7 +23,7 @@ produit_description:
   table: études
   name: Produit
   datatype: Collection
-  items: '[Produits."Nom,Description"]'
+  items: "[Produits.\"Nom,Description\"]"
   row_order: 2
   slug: <%= SecureRandom.uuid %>
 

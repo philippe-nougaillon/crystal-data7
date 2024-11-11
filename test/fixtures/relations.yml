@@ -1,10 +1,10 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# one:
-#   field: one
-#   table_id: 1
-#   relation_with_id: 1
-#   items: ["MyString","MyString"]
+relation_étude_produit:
+  field: étude_produit
+  table_id: <%= ActiveRecord::FixtureSet.identify(:études) %>
+  relation_with_id: <%= ActiveRecord::FixtureSet.identify(:produits) %>
+  items: ["Nom","Description"]
 
 # two:
 #   field: two
