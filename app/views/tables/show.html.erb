@@ -147,6 +147,14 @@
   <% else %>
     <%= render partial: 'calendar', locals: { records: @records, table: @table } %>
   <% end %>
+
+  <!-- Déjà affiché dans _table.html.erb pour coller avec l'export -->
+  <% unless params[:view] == 'table' %>
+    <div class="flex-fill mb-0">
+      <%== pagy_info(@pagy, item_name: @table.name.pluralize.humanize) %>
+      <%== pagy_bootstrap_nav(@pagy) %>
+    </div>
+  <% end %>
 <% else %>
   <p><%= t('tables.no_record') %></p>
 <% end %>

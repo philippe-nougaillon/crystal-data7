@@ -48,26 +48,21 @@
     <%= link_to "(+) #{table.name}", fill_path(table, relation: @relation, value: @record_index), class: 'btn btn-outline-primary mb-4', data: { turbo_frame: "_top" }  %>
   <% end %>
 <% end %>
-<div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
-  <p class="flex-fill mb-0">
-    <%= t('pagination.display_of') %>
-    <%= @records_size || '0' %>
-    <%= table.name.pluralize(@records_size) %>
-    
-    <% if action_name == 'show' %>
-      <%= t('pagination.total', records_count: @records.size) %>
-    <% end %>
-  </p>
+<div class="d-flex flex-wrap gap-2">
+  <div class="flex-fill mb-0">
+    <%== pagy_info(@pagy, item_name: table.name.pluralize.humanize) %>
+    <%== pagy_bootstrap_nav(@pagy) %>
+  </div>
   <% if action_name != 'show_details' %>
     <div class="d-block">
       <!-- TODO : faire une boucle pour avoir moins de code répétitif -->
-      <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "#{t('tables.export', table_name: table.name, export_format: "XLS" )}" do %>
+      <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "#{t('tables.export', table_name: table.name, export_format: "XLS" )}", onclick: "return confirm('#{j t('tables.export_confirm', table_name: table.name, export_format: "XLS")}');" do %>
         XLS
       <% end %>
-      <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "#{t('tables.export', table_name: table.name, export_format: "CSV" )}" do %>
+      <%= link_to url_for(params.merge(format: :csv)), class: 'btn btn-outline-primary btn-sm', title: "#{t('tables.export', table_name: table.name, export_format: "CSV" )}", onclick: "return confirm('#{j t('tables.export_confirm', table_name: table.name, export_format: "CSV")}');" do %>
         CSV
       <% end %>
-      <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "#{t('tables.export', table_name: table.name, export_format: "PDF" )}" do %>
+      <%= link_to url_for(params.merge(format: :pdf)), class: 'btn btn-outline-danger btn-sm', title: "#{t('tables.export', table_name: table.name, export_format: "PDF" )}", onclick: "return confirm('#{j t('tables.export_confirm', table_name: table.name, export_format: "PDF")}');" do %>
         PDF
       <% end %>
     </div>

@@ -1,13 +1,13 @@
 <% unless ['show_details', 'related_tables'].include?(action_name) && @relation.field == field %>
   <th>
-    <%= link_to url_for(params.permit!.merge(sort_by: field.id)), class:'text-decoration-none d-flex gap-2' do %>
+    <%= link_to url_for(params.permit!.merge(sort_by: field.id, order: (params[:order] == 'ASC' ? 'DESC' : 'ASC'))), class: 'text-decoration-none d-flex gap-2' do %>
       <span class="material-symbols-outlined text-black-50">
         <%= field.icon %>
       </span>
       <span class="text-nowrap text-black">
         <%= field.name.humanize %>
         <% if params[:sort_by] == field.id.to_s %>
-          <span class="text-decoration-none text-black-50"><%= (session[:order_by] == 'ASC') ? '△' : '▽' %></span>
+          <span class="text-decoration-none text-black-50"><%= (params[:order] == 'ASC') ? '△' : '▽' %></span>
         <% end %>
       </span>
     <% end %>

@@ -89,8 +89,13 @@ class TablesController < ApplicationController
     end     
 
     if params[:sort_by]
-      # ordre de tri ASC/DESC
-      order_by = (params[:sort_by] == session[:sort_by]) ? ((session[:order_by] == "DESC") ? "ASC" : "DESC") : "ASC"
+      if params[:sort_by] == session[:sort_by]
+        # Si le critère de tri est le même qu'avant, basculer l'ordre
+        order_by = params[:order] == 'ASC' ? 'ASC' : 'DESC'
+      else
+        # Si un nouveau critère de tri est choisi, trier en ordre croissant (ASC)
+        order_by = 'ASC'
+      end
       
       if params[:sort_by] == '0'
         @records = @table.values.records_at(@records).order("values.updated_at #{order_by}").pluck(:record_index).uniq
@@ -106,8 +111,13 @@ class TablesController < ApplicationController
                                 .pluck(:record_index)
       end
       
+      # Mise à jour de la session pour garder la trace de l'état du tri
       session[:sort_by] = params[:sort_by]
-      session[:order_by] = order_by
+      session[:order_by] = order_by 
+    else
+      # Si pas de paramètre, utiliser les valeurs par défaut (facultatif)
+      session[:sort_by] ||= '0' # Par exemple, tri par '0' au début
+      session[:order_by] ||= 'ASC'
     end
 
     case params[:view]
@@ -149,7 +159,10 @@ class TablesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html
+      format.html do
+        @pagy, @records = pagy_array(@records)
+      end
+
       format.xls do
         book = CollectionToXls.new(@table, @records).call
         file_contents = StringIO.new

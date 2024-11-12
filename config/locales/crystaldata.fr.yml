@@ -248,6 +248,7 @@ fr:
     clear: "Effacer"
     collaborators: "Collaborateurs"
     collection_not_found: "Aucune relation trouvée"
+    
     copied: "Copié!"
     copy: "Copier"
     datatype: "Type de données"
@@ -262,6 +263,7 @@ fr:
     editing: "Modification de l'Objet '%{table}'"
     error: "Erreur"
     export: "Exporter la collection d'objets '%{table_name}' au format %{export_format}"
+    export_confirm: "Confirmez-vous l'export de toute la collection d'objets '%{table_name}' au format %{export_format} ? Cela peut prendre un certain temps si vous avez beaucoup de données."
     favorite_table?: "Collection favorite ?"
     favorite_table_hint: "Pour voir cette collection directement sur la page d'accueil"
     filter?: "Filtre ?"
