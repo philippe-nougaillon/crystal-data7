@@ -105,7 +105,7 @@ class FiltersController < ApplicationController
     respond_to do |format|
       format.html do
         @sum = Hash.new(0)
-        @pagy, @records = pagy_array(@records)
+        @pagy, @records = pagy_array(@records) if @records
       end
 
       format.xls do
