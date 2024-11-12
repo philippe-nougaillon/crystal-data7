@@ -388,7 +388,7 @@ class TablesController < ApplicationController
   def import_do
     result = ImportCollection.new(params[:upload], current_user, params[:col_sep], params[:table_id]).call
 
-    if result
+    if result.first
       flash[:notice] = t('notice.table.imported', table: current_user.tables.last.name.humanize)
     else
       flash[:alert] = t('notice.table.import_failed', error: result.last)

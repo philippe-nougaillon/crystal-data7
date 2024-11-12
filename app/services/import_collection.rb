@@ -77,6 +77,7 @@ class ImportCollection < ApplicationService
       import_executed = false
       exception = e
     ensure
+      File.delete(filename_with_path) if File.exist?(filename_with_path)
       if !import_executed
         if is_new_table
           table.destroy
