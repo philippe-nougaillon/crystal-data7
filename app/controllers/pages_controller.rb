@@ -74,7 +74,7 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    if @table = Table.where(name: "cardio_train").first
+    if @table = Table.where(name: "cardio_train_5000").first
       @results = Hash.new
       @column_names = @table.fields
       @types = ['bar','line','pie','scatter', 'doughnut','polarArea', 'radar'] # bubble / mixed pas implémentés
