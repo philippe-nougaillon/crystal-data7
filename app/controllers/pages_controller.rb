@@ -73,6 +73,57 @@ class PagesController < ApplicationController
   def mentions_legales
   end
 
+  def dashboard
+    if @table = Table.where(name: "cardio_train").first
+      @results = Hash.new
+      @column_names = @table.fields
+      @types = ['bar','line','pie','scatter', 'doughnut','polarArea', 'radar'] # bubble / mixed pas implémentés
+      @filters = @table.filters
+
+      if params[:attribut_id].present?
+        if field = @table.fields.find_by(id: params[:attribut_id])
+          @values = field.values
+          if params[:filtre].present?
+            @values = @values.where(record_index: @table.filters.find_by(slug: params[:filtre]).get_filtered_records)
+          end
+          @results = @values.group(:data).order(:data).count(:id)
+
+          if field.Euros? || field.Nombre?
+            @results = @values.pluck(:record_index, :data).to_h
+            results_humanized = {}
+            @results.each do |k, v|
+              label = @table.values.records_at(k).pluck(:data).first(2)
+              results_humanized[label.insert(0,k)] = v
+            end
+            @results = results_humanized
+          elsif field.Collection?
+            results_humanized = {}
+            @results.each do |k, v|
+              results_humanized[field.get_linked_table_record(k)] = v
+            end
+            @results = results_humanized
+          elsif field.Signature?
+            results_humanized = {'Pas signé' => 0, 'Signé' => 0}
+            @results.each do |k, v|
+              if k.blank?
+                results_humanized['Pas signé'] += v
+              else
+                results_humanized['Signé'] += v
+              end
+            end
+            @results = results_humanized
+          end
+        end
+        
+        if params[:sort].present?
+          @results = @results.sort_by { |_, v| v }.to_h
+        end
+      end
+    else
+      redirect_back(fallback_location: root_path, alert: "La table de démonstration n'existe pas")
+    end
+  end
+
   private
 
   def user_authorized?

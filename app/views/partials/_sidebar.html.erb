@@ -23,7 +23,7 @@
           <%= t('tables.title') %>
         <% end %>
       </li>
-    <% if current_user.admin? %>
+    <% if user_signed_in? && current_user.admin? %>
       <li class="nav-item">
         <%= link_to filters_path, title: t('navbar.filters_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 link-success #{'bg-body-secondary shadow-sm' if params[:controller] == 'filters'}" do %>
           <span class="material-symbols-outlined">
@@ -39,6 +39,15 @@
             notifications_active
           </span>
           <%= t('misc.notifications_navbar') %>
+        <% end %>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to dashboard_path, title: t('navbar.dashboard_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 link-success #{'bg-body-secondary shadow-sm' if params[:action] == 'dashboard'}" do %>
+          <span class="material-symbols-outlined">
+            dashboard
+          </span>
+          <%= t('misc.dashboard') %>
         <% end %>
       </li>
 

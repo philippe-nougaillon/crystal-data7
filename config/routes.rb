@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       get :graphs, to: 'pages#graphs'
       get :assistant, to: "pages#assistant"
       get :mentions_legales, to: "pages#mentions_legales"
+      get :dashboard, to: 'pages#dashboard'
     end
     
     resources :filters do

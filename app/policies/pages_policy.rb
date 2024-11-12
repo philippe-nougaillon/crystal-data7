@@ -20,4 +20,8 @@ class PagesPolicy < ApplicationPolicy
   def assistant?
     user && user.admin?
   end
+
+  def dashboard?
+    user && user.admin?
+  end
 end

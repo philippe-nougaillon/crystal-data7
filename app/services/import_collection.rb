@@ -37,9 +37,9 @@ class ImportCollection < ApplicationService
       CSV.foreach(filename_with_path, headers: true, return_headers: true, col_sep: @col_sep, encoding: 'UTF-8') do |row|
         if row.header_row?
           if is_new_table
-            table = Table.new(name: File.basename(filename,'.csv'))
+            table.organisation_id = current_user.organisation_id
+            table.name = filename.split('.csv').first
             if table.save
-              table.organisation_id = current_user.organisation.id
               first_data_row = CSV.read(filename_with_path, headers: true, col_sep: @col_sep, encoding: 'UTF-8').first
               row.each_with_index do |key, index|
                 sample_data = first_data_row ? first_data_row[index] : ""
