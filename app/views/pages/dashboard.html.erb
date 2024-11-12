@@ -2,40 +2,47 @@
   Dashboard
 </h1>
 
-<div class="flex-fill ml-2 mt-4 lg:mt-0">
-  <%= form_tag dashboard_path, method: :get, class: 'flex-fill d-flex flex-column mt-4 gap-4' do %>
+<div class="ml-2 mt-4 lg:mt-0">
+  <%= form_tag dashboard_path, method: :get, class: 'flex-fill d-flex flex-row flex-wrap mt-4 gap-4 mb-4' do %>
 
     <div>
       <%= label_tag :attribut_id, "Attribut", class: "label" %>
       <%= select_tag :attribut_id, 
                       options_from_collection_for_select(@column_names, 'id', 'name', params[:attribut_id]),
                       include_blank: true,
-                      class: 'form-select w-100', 
-                      onchange: 'this.form.submit()' %>
+                      class: 'form-select w-100',
+                      required: true %>
     </div>
 
-    <% if params[:attribut_id].present? %>
-      <div class="col-sm-3">
-        <%= label_tag :type, t('misc.type') %>
-        <%= select_tag :type, 
-                  options_for_select(@types, params[:type]),
-                  include_blank: true,
-                  class: 'form-select w-100', 
-                  onchange: 'this.form.submit()' %>
-      </div>
+    <div>
+      <%= label_tag :type, t('misc.type') %>
+      <%= select_tag :type, 
+                options_for_select(@types, params[:type]),
+                include_blank: true,
+                class: 'form-select w-100' %>
+    </div>
 
-      <% unless params[:type] == 'scatter' %>
-        <div class="col-sm-3">
-          <%= check_box_tag :sort, 1, params[:sort], onchange:'this.form.submit()' %>
-          <%= label_tag :sort, t('misc.sort') %>
-        </div>
-      <% end %>
-
+    <% unless params[:type] == 'scatter' %>
       <div>
-        <%= label_tag :filtre, t('tables.filter') %>
-        <%= select_tag :filtre, options_from_collection_for_select(@filters, 'slug', 'name', params[:filtre]), include_blank: true, class: 'form-select', onchange: 'this.form.submit()' %>
+        <%= check_box_tag :sort, 1, params[:sort] %>
+        <%= label_tag :sort, t('misc.sort') %>
+        <br>
+
+        <div class="btn-group btn-group-sm flex-row" role="group" aria-label="Basic radio toggle button group">
+          <%= radio_button_tag :order, 'asc', params[:order] == 'asc', class:'btn-check', id:"btnradio1"%>
+          <label class="btn btn-outline-primary" for="btnradio1"><%= t('misc.ascending') %></label>
+          <%= radio_button_tag :order, 'desc', params[:order] == 'desc', class:'btn-check', id:"btnradio2" %>
+          <label class="btn btn-outline-primary" for="btnradio2"><%= t('misc.descending') %></label>
+        </div>
       </div>
     <% end %>
+
+    <div>
+      <%= label_tag :filtre, t('tables.filter') %>
+      <%= select_tag :filtre, options_from_collection_for_select(@filters, 'slug', 'name', params[:filtre]), include_blank: true, class: 'form-select'%>
+    </div>
+
+    <%= submit_tag "Lancer", class: 'btn btn-outline-primary mt-4', 'data-turbo': false %>
   <% end %>
 
   <canvas id="chart"></canvas> 
@@ -58,7 +65,6 @@
           'rgb(255,159,64)',
           'rgb(201, 203, 207)',
           ],
-        borderColor: "hsl(252, 82.9%, 67.8%)",
         data: <%= @results.values.to_json.html_safe %>,
       },
     ],

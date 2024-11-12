@@ -116,7 +116,11 @@ class PagesController < ApplicationController
         end
         
         if params[:sort].present?
-          @results = @results.sort_by { |_, v| v }.to_h
+          if params[:order] == 'asc'
+            @results = @results.sort_by { |_, v| v }.to_h
+          else 
+            @results = @results.sort_by { |_, v| -v }.to_h
+          end
         end
       end
     else
