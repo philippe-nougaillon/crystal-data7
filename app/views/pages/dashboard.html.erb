@@ -7,7 +7,7 @@
 <div class="ml-2 mt-4 lg:mt-0">
   <div class="d-flex flex-wrap">
     <% @graphs.each_with_index do |graph, i| %>
-      <div class="flex-fill w-25">
+      <div class="flex-fill w-sm-25 mb-5">
         <canvas id="chart<%= i %>"></canvas>
       </div>
       <script>

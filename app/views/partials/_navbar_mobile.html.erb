@@ -56,6 +56,15 @@
           </li>
 
           <li class="nav-item">
+            <%= link_to graphs_path, class: 'nav-link link-success d-flex align-items-center gap-1' do %>
+              <span class="material-symbols-outlined">
+                analytics
+              </span>
+              <%= t('misc.graphs') %>
+            <% end %>
+          </li>
+
+          <li class="nav-item">
             <%= link_to assistant_path, class: 'nav-link link-info d-flex align-items-center gap-1' do %>
               <span class="material-symbols-outlined">
                 family_star
