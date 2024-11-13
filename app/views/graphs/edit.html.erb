@@ -1,0 +1,12 @@
+<% content_for :title, "Editing graph" %>
+
+<h1>Editing graph</h1>
+
+<%= render "form", graph: @graph %>
+
+<br>
+
+<div>
+  <%= link_to "Show this graph", @graph %> |
+  <%= link_to "Back to graphs", graphs_path %>
+</div>

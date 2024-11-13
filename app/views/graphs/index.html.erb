@@ -1,0 +1,19 @@
+<div class="my-4 d-flex align-items-center text-dark gap-2">
+  <h1 class="mb-0">
+    <%= t('graphs.title') %>
+  </h1>
+</div>
+
+<%= link_to new_graph_path, class: 'btn btn-outline-primary me-2' do %>
+  <%= t('graphs.new') %>
+<% end %>
+<%= link_to t('misc.dashboard'), dashboard_path, 'data-turbo': false %>
+
+<div id="graphs" class="mt-4">
+  <% @graphs.each do |graph| %>
+    <%= render graph %>
+    <p>
+      <%= link_to "Show this graph", graph %>
+    </p>
+  <% end %>
+</div>

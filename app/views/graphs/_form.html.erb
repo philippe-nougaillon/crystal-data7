@@ -1,0 +1,16 @@
+
+<%= simple_form_for(@graph) do |f| %>
+  <div>
+    <%= f.input :name, as: :text %>
+    <%= f.association :field %>
+    <%= f.association :filter %>
+    <%= f.input :chart_type %>
+    <%= f.input :sort, label: "Sort?" %>
+    <%= f.input :desc, label: "Desc?" %>
+    <%= f.input :group, as: :text %>
+  </div>
+
+  <div>
+    <%= f.button :submit, class: 'btn btn-outline-primary' %>
+  </div>
+<% end %>

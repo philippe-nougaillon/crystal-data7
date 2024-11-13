@@ -8,6 +8,7 @@ class Organisation < ApplicationRecord
   has_many :tables
   has_many :filters, through: :tables
   has_many :teams
+  has_many :graphs
 
   private
   def slug_candidates

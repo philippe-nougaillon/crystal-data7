@@ -18,6 +18,7 @@ class User < ApplicationRecord
   belongs_to :team, optional: true
   has_many :tables, through: :organisation
   has_many :fields, through: :tables
+  has_many :filters, through: :organisation
   has_many :notifications, dependent: :destroy
   has_many :mail_logs, dependent: :destroy
   has_many :prompts, dependent: :destroy

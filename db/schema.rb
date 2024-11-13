@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_29_150246) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_13_081249) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -127,6 +127,22 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_29_150246) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "graphs", force: :cascade do |t|
+    t.bigint "organisation_id", null: false
+    t.bigint "field_id", null: false
+    t.bigint "filter_id"
+    t.string "name"
+    t.string "chart_type"
+    t.boolean "sort", default: false
+    t.boolean "desc", default: false
+    t.boolean "group", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["field_id"], name: "index_graphs_on_field_id"
+    t.index ["filter_id"], name: "index_graphs_on_filter_id"
+    t.index ["organisation_id"], name: "index_graphs_on_organisation_id"
   end
 
   create_table "logs", force: :cascade do |t|
@@ -263,6 +279,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_29_150246) do
   add_foreign_key "filters", "users"
   add_foreign_key "filters_teams", "filters"
   add_foreign_key "filters_teams", "teams"
+  add_foreign_key "graphs", "fields"
+  add_foreign_key "graphs", "filters"
+  add_foreign_key "graphs", "organisations"
   add_foreign_key "logs", "fields"
   add_foreign_key "logs", "users"
   add_foreign_key "mail_logs", "users"

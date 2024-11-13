@@ -76,6 +76,12 @@ fr:
     save_query: "Enregistrer et appliquer le filtre"
     star_hint: "Choisissez une note entre 0 et 5"
     text_hint: "ex: %john% ou john (pour une égalité)"
+  graphs:
+    desc?: "Décroissant ?"
+    group?: "Groupé ?"
+    new: "Nouveau Graphique"
+    sort?: "Trié ?"
+    title: "Graphiques"
   maillogs:
     description1: "Historique des mails envoyés via "
     description2: "avec Statut et État (OK = acheminé, OUVERT = vu), visiblent pendant 5 jours."
@@ -106,7 +112,7 @@ fr:
     done: "Terminer"
     email: "Email"
     filter: "Filtrer"
-    graph_navbar: "Graphs"
+    graphs: "Graphs"
     help: "Aide"
     home: "Accueil"
     homepage_description: "Aikku ACCESS est un gestionnaire d'informations NO-CODE qui vous permet de créer des collections d'objets métiers (ex: Clients, Interventions, Technicien, Frais, Projets, etc.), de les lier (Clients <==> Interventions <==> Techniciens <==> Frais) et de les partager en ligne avec vos collaborateurs."

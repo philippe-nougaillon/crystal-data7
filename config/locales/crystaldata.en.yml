@@ -76,6 +76,12 @@ en:
     save_query: "Save and apply the query"
     star_hint: "Choose a note between 0 and 5"
     text_hint: "ex: %john% or john (for equality)"
+  graphs:
+    desc?: "Descending ?"
+    group?: "Grouped ?"
+    new: "New Graph"
+    sort?: "Sorted ?"
+    title: "Graphs"
   maillogs:
     description1: "History of emails sent via"
     description2: "With status and state (OK = transported, OPENED = seen), visible for 5 days."
@@ -106,7 +112,7 @@ en:
     done: "End"
     email: "Email"
     filter: "Query"
-    graph_navbar: "Graphs"
+    graph: "Graphs"
     help: "Help"
     home: "Home"
     homepage_description: "Aikku ACCESS is a NO-Code information manager that allows you to create collections of business objects (eg customers, interventions, technician, costs, projects, etc.), to link them (customers <==> Interventions <==> Technicians <==> costs) and to share them online with your employees."
