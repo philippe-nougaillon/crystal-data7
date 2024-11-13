@@ -13,5 +13,8 @@ application.register("partage", PartageController)
 import TypeController from "./type_controller"
 application.register("type", TypeController)
 
+import UserController from "./user_controller"
+application.register("user", UserController)
+
 import WeatherController from "./weather_controller"
 application.register("weather", WeatherController)
