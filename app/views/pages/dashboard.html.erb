@@ -16,7 +16,7 @@
           labels: <%= @results[i].keys.to_json.html_safe %>,
           datasets: [
             {
-              label: "<%= "#{graph.filter ? graph.filter.get_filtered_records.count : graph.table.size}  #{graph.table.name_pluralized}" %>",
+              label: "<%= "#{graph.name}" %>",
               backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(75, 192, 192)',
