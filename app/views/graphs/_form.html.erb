@@ -1,13 +1,12 @@
-
 <%= simple_form_for(@graph) do |f| %>
   <div>
     <%= f.input :name, as: :text %>
     <%= f.association :field %>
     <%= f.association :filter %>
     <%= f.input :chart_type %>
-    <%= f.input :sort, label: "Sort?" %>
-    <%= f.input :desc, label: "Desc?" %>
-    <%= f.input :group, as: :text %>
+    <%= f.input :sort, label: "Trié ?" %>
+    <%= f.input :desc, label: "Descendant ?" %>
+    <%= f.input :group, label: "Groupé ?" %>
   </div>
 
   <div>
