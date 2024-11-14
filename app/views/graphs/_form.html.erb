@@ -17,7 +17,12 @@
   </div>
 
   <div class="mb-4 flex-fill">
-    <%= f.label :field_id, t('misc.attribute'), class: 'form-label' %>
+    <%= f.label :chart_type, t('graphs.type'), class: 'form-label' %>
+    <%= f.select :chart_type, options_for_select(@types, @graph.chart_type), {}, class: 'form-select w-100' %>
+  </div>
+
+  <div class="mb-4 flex-fill">
+    <%= f.label :field_id, t('graphs.source'), class: 'form-label' %>
     <%= f.select :field_id, option_groups_from_collection_for_select(@tables, :fields, :name, :id, :name, @graph.field_id), 
                             {}, class: "form-select w-100",
                             include_blank:true %>
@@ -26,11 +31,6 @@
   <div class="mb-4 flex-fill">
     <%= f.label :filter_id, t('tables.filter'), class: 'form-label' %>
     <%= f.select :filter_id, options_from_collection_for_select(@filters, 'id', 'name', @graph.filter_id), {}, include_blank: true, class: 'form-select w-100' %>
-  </div>
-
-  <div class="mb-4 flex-fill">
-    <%= f.label :chart_type, t('misc.type'), class: 'form-label' %>
-    <%= f.select :chart_type, options_for_select(@types, @graph.chart_type), {}, class: 'form-select w-100' %>
   </div>
 
   <div class="d-flex flex-wrap w-100 align-items-center gap-4">
@@ -49,7 +49,11 @@
       <%= f.label :group, t('graphs.group?'), class: 'form-check-label' %>
     </div>
 
+  </div>
+
+  <div class="d-inline mt-4">
     <%= f.submit class: 'btn btn-outline-primary', 'data-turbo': false %>
+    <%= link_to t('scaffold.back'), graphs_path %>
   </div>
 
 <% end %>

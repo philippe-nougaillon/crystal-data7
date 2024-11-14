@@ -1,8 +1,8 @@
 <tr id="<%= dom_id graph %>">
   <td><%= link_to graph.name.humanize, graph, 'data-turbo': false %></td>
-  <td><%= graph.field.name %></td>
-  <td><%= graph.filter.name %></td>
   <td><%= graph.chart_type.humanize %></td>
+  <td><%= graph.table.name %>/<%= graph.field.name %></td>
+  <td><%= graph.filter.name %></td>
   <td><%= graph.sort ? '✓' : '-' %></td>
   <td><%= graph.desc ? '✓' : '-' %></td>
   <td><%= graph.group ? '✓' : '-' %></td>

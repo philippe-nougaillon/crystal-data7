@@ -83,7 +83,9 @@ en:
     group?: "Grouped ?"
     new: "New Graph"
     sort?: "Sort by quantity?"
+    source: "Source (Collection/Attribute)"
     title: "Graphs"
+    type: "Graph type"
   maillogs:
     description1: "History of emails sent via"
     description2: "With status and state (OK = transported, OPENED = seen), visible for 5 days."

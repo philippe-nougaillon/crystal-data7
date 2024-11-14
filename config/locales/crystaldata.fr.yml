@@ -83,7 +83,9 @@ fr:
     group?: "Groupé ?"
     new: "Nouveau Graphique"
     sort?: "Trier par quantité ?"
+    source: "Source (Collection/Attribut)"
     title: "Graphiques"
+    type: "Type de graphique"
   maillogs:
     description1: "Historique des mails envoyés via "
     description2: "avec Statut et État (OK = acheminé, OUVERT = vu), visiblent pendant 5 jours."
