@@ -1,5 +1,5 @@
 <h1 class="text-2xl mt-4 text-secondary">
-  Dashboard
+  <%= t('misc.dashboard') %>
 </h1>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -7,11 +7,10 @@
 <div class="ml-2 mt-4 lg:mt-0">
   <div class="d-flex flex-wrap">
     <% @graphs.each_with_index do |graph, i| %>
-      <div class="flex-fill w-sm-25 mb-5">
+      <div class="flex-fill w-sm-33 mb-5">
         <canvas id="chart<%= i %>"></canvas>
       </div>
       <script>
-        // Les données pour chaque graphique sont générées directement en Ruby
         const data<%= i %> = {
           labels: <%= @results[i].keys.to_json.html_safe %>,
           datasets: [
@@ -37,7 +36,6 @@
           options: {},
         };
 
-        // Initialisation du graphique pour l'élément correspondant
         const chartElement<%= i %> = document.getElementById("chart<%= i %>");
         if (chartElement<%= i %>) {
           new Chart(chartElement<%= i %>, configChart<%= i %>);

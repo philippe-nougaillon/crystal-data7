@@ -113,6 +113,11 @@ div.d-flex{
     width: 50% !important;
   }
 }
+.w-sm-33 {
+  @media (min-width: 576px) {
+    width: 33% !important;
+  }
+}
 .w-sm-25{
   @media (min-width: 576px) {
     width: 25% !important;

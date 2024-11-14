@@ -43,11 +43,11 @@
       </li>
 
       <li class="nav-item">
-        <%= link_to graphs_path, title: t('navbar.graphs_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 link-success #{'bg-body-secondary shadow-sm' if params[:controller] == 'graphs'}" do %>
+        <%= link_to graphs_path, title: t('navbar.graphs_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 link-success #{'bg-body-secondary shadow-sm' if params[:controller] == 'graphs' || params[:action] == 'dashboard'}" do %>
           <span class="material-symbols-outlined">
             analytics
           </span>
-          <%= t('misc.graphs') %>
+          <%= t('graphs.title') %>
         <% end %>
       </li>
 

@@ -95,13 +95,13 @@
 
         <div class="mt-2">
           <% if I18n.locale == :fr %>
-            <%= link_to url_for(request.params.merge(locale: 'en')), class: 'text-black-50' do %>
+            <%= link_to url_for(request.params.merge(locale: 'en')), class: 'text-black-50', 'data-turbo': params[:action] != 'dashboard' do %>
               <span class="material-symbols-outlined" style="letter-spacing: -12px;">
                 language language_french
               </span>
             <% end %>
           <% else %>
-            <%= link_to url_for(request.params.merge(locale: 'fr')), class: 'text-black-50' do %>
+            <%= link_to url_for(request.params.merge(locale: 'fr')), class: 'text-black-50', 'data-turbo': params[:action] != 'dashboard' do %>
               <span class="material-symbols-outlined" style="letter-spacing: -12px;">
                 language language_us
               </span>

@@ -34,13 +34,13 @@
         <% end %>
         <li class="mt-2 <%= "px-4" unless user_signed_in? %>">
           <% if I18n.locale == :fr %>
-            <%= link_to url_for(request.params.merge(locale: 'en')), title: t('navbar.switch_language_title'), class: 'text-black-50' do %>
+            <%= link_to url_for(request.params.merge(locale: 'en')), title: t('navbar.switch_language_title'), class: 'text-black-50', 'data-turbo': params[:action] != 'dashboard' do %>
               <span class="material-symbols-outlined" style="letter-spacing: -12px;">
                 language language_french
               </span>
             <% end %>
           <% else %>
-            <%= link_to url_for(request.params.merge(locale: 'fr')), title: t('navbar.switch_language_title'), class: 'text-black-50' do %>
+            <%= link_to url_for(request.params.merge(locale: 'fr')), title: t('navbar.switch_language_title'), class: 'text-black-50', 'data-turbo': params[:action] != 'dashboard' do %>
               <span class="material-symbols-outlined" style="letter-spacing: -12px;">
                 language language_us
               </span>
