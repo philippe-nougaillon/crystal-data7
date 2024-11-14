@@ -9,7 +9,7 @@ class PagesPolicy < ApplicationPolicy
     true
   end
 
-  def graphs?
+  def graphique?
     user && user.admin?
   end
 

@@ -82,7 +82,7 @@ fr:
     edit: "Modification Graphique"
     group?: "Groupé ?"
     new: "Nouveau Graphique"
-    sort?: "Trié ?"
+    sort?: "Trier par quantité ?"
     title: "Graphiques"
   maillogs:
     description1: "Historique des mails envoyés via "

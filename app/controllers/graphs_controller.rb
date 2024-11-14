@@ -5,7 +5,7 @@ class GraphsController < ApplicationController
 
   # GET /graphs or /graphs.json
   def index
-    @graphs = current_user.organisation.graphs
+    @graphs = current_user.organisation.graphs.ordered
   end
 
   # GET /graphs/1 or /graphs/1.json

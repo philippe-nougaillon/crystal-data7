@@ -82,7 +82,7 @@ en:
     edit: "Editing Graph"
     group?: "Grouped ?"
     new: "New Graph"
-    sort?: "Sorted ?"
+    sort?: "Sort by quantity?"
     title: "Graphs"
   maillogs:
     description1: "History of emails sent via"

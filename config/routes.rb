@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     
     controller :pages do
       get :a_propos, to: 'pages#a_propos'
-      # get :graphs, to: 'pages#graphs'
+      get :graphique, to: 'pages#graphique'
       get :assistant, to: "pages#assistant"
       get :mentions_legales, to: "pages#mentions_legales"
       get :dashboard, to: 'pages#dashboard'

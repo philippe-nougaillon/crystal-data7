@@ -6,7 +6,7 @@ class PagesController < ApplicationController
   def a_propos
   end
 
-  def graphs
+  def graphique
     @tables = current_user.tables.order(:name)
     @results = Hash.new
     params[:type] ||= 'line'
@@ -87,7 +87,7 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    @graphs = current_user.organisation.graphs
+    @graphs = current_user.organisation.graphs.ordered
     @results = []
 
     @graphs.each_with_index do |graph, i|
@@ -110,7 +110,7 @@ class PagesController < ApplicationController
           # label = graph.table.values.records_at(k).pluck(:data).first(2)
           results_humanized[k] = v
         end
-        @results[i] = results_humanized
+        @results[i] = results_humanized.sort_by { |key, _| key.to_f }.to_h
       elsif field.Collection?
         results_humanized = {}
         @results[i].each do |k, v|
