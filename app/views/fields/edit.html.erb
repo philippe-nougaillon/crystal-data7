@@ -1,6 +1,6 @@
 <div class="my-4 d-flex align-items-center text-primary gap-2">
   <h1 class="mb-0">
-    Attributs de l'objet '<%= @field.table.name %>'
+    <%= t('tables.attributes_title', table: @field.table.name) %>
   </h1>
 </div>
 
@@ -11,10 +11,10 @@
 			<thead>
 				<tr>
 					<th class="col-md-1">#</th>
-					<th>Type de données</th>
-					<th>Nom de l'attribut</th>
-					<th>Options</th>
-					<th>Visibilité</th>
+						<th><%= t('tables.datatype') %></th>
+						<th><%= t('tables.attribute_name') %></th>
+						<th><%= t('tables.options') %></th>
+						<th><%= t('tables.visibility') %></th>
 					<th></th>
 				</tr>
 			</thead>
@@ -26,8 +26,6 @@
 <% end %>
 <br>
 
-<h3 id="field_edit" class="text-primary mb-4">Modification de l'attribut '<%= @field.name.humanize %>'</h3>
+<h3 id="field_edit" class="text-primary mb-4"><%= t('fields.edit', field: @field.name.humanize) %></h3>
 
 <%= render 'form' %>
-
-

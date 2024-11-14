@@ -1,5 +1,9 @@
-<h1 class="text-dark my-4">
+<h1 class="text-success my-4">
   <%= t('graphs.new') %>
 </h1>
 
 <%= render "form", graph: @graph %>
+
+<div class="mt-4">
+  <%= link_to t('scaffold.back'), graphs_path %>
+</div>

@@ -1,12 +1,10 @@
-<% content_for :title, "Editing graph" %>
+<h1 class="text-success my-4">
+  <%= t('graphs.edit') %>
+</h1>
 
-<h1>Editing graph</h1>
 
 <%= render "form", graph: @graph %>
 
-<br>
-
-<div>
-  <%= link_to "Show this graph", @graph %> |
-  <%= link_to "Back to graphs", graphs_path %>
+<div class="mt-4">
+  <%= link_to t('scaffold.back'), graphs_path %>
 </div>

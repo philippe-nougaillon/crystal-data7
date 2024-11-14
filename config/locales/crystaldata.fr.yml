@@ -28,6 +28,7 @@ fr:
     statut_parameter_no_separator: ": Le paramètre n'a pas de séparateur"
   fields:
     collection_hint: "ex : [Technicien.\"Nom,Prénom,Expérience\"]"
+    edit: "Modification de l'attribut '%{field}'"
     datatype: 
       Texte: "Texte"
       Nombre: "Nombre"
@@ -78,6 +79,7 @@ fr:
     text_hint: "ex: %john% ou john (pour une égalité)"
   graphs:
     desc?: "Décroissant ?"
+    edit: "Modification Graphique"
     group?: "Groupé ?"
     new: "Nouveau Graphique"
     sort?: "Trié ?"
@@ -165,7 +167,11 @@ fr:
       updated: "Filtre modifié."
       destroyed: "Filtre supprimé."
       query: "(i)Renseignez ici les critères de sélection afin d'obtenir une collection d'objets filtrées"
-    graph: "(i)Les graphiques permettent de visualiser une série de valeurs issues de vos collections"
+    graph: 
+      index: "(i)Les graphiques permettent de visualiser une série de valeurs issues de vos collections"
+      destroyed: "Graphique supprimé avec succès."
+      new: "Graphique créé avec succès."
+      updated: "Graphique modifié avec succès."
     notification:
       destroyed: "Notification supprimée avec succès."
       new: "Notification créée avec succès."
@@ -204,6 +210,7 @@ fr:
       updated_created: "Données %{status} avec succès :)"
   notifications:
     attribute_label: "Attribut à surveiller"
+    edit: "Modification Notification"
     index: "Notifications"
     last_sent: "Dernière notification envoyée"
     mail_log: "Voir l'historique des emails envoyés"

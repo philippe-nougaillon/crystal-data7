@@ -1,37 +1,17 @@
-<div id="<%= dom_id graph %>">
-  <p>
-    <strong>Name:</strong>
-    <%= graph.name %>
-  </p>
-
-  <p>
-    <strong>Field:</strong>
-    <%= graph.field_id %>
-  </p>
-
-  <p>
-    <strong>Filter:</strong>
-    <%= graph.filter_id %>
-  </p>
-
-  <p>
-    <strong>Type:</strong>
-    <%= graph.chart_type %>
-  </p>
-
-  <p>
-    <strong>Sort:</strong>
-    <%= graph.sort %>
-  </p>
-
-  <p>
-    <strong>Order:</strong>
-    <%= graph.desc %>
-  </p>
-
-  <p>
-    <strong>Group:</strong>
-    <%= graph.group %>
-  </p>
-
-</div>
+<tr id="<%= dom_id graph %>">
+  <td><b><%= graph.name.humanize %></b></td>
+  <td><%= graph.field.name %></td>
+  <td><%= graph.filter.name %></td>
+  <td><%= graph.chart_type %></td>
+  <td><%= graph.sort %></td>
+  <td><%= graph.desc %></td>
+  <td><%= graph.group %></td>
+  <td style="text-align: right; white-space: nowrap;">
+    <% if policy(graph).edit? %>
+      <%= link_to t('scaffold.update'), edit_graph_path(graph), class: 'btn btn-sm btn-outline-primary me-2' %>
+    <% end %>
+    <% if policy(graph).destroy? %>
+      <%= button_to t('scaffold.destroy'), graph, method: :delete, 'data-turbo-confirm': t('scaffold.sure?'), class: 'btn btn-sm btn-outline-danger', form_class: 'float-end' %>
+    <% end %>
+  </td>
+</tr>

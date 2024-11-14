@@ -1,19 +1,44 @@
-<div class="my-4 d-flex align-items-center text-dark gap-2">
+<div class="my-4 d-flex align-items-center text-success gap-2">
   <h1 class="mb-0">
     <%= t('graphs.title') %>
   </h1>
 </div>
 
+<div class="overflow-x-auto">
+  <table class="table table-hover border align-middle">
+    <thead>
+      <tr class="table-light">
+        <th><%= t('scaffold.name') %></th>
+        <th><%= t('misc.attribute') %></th>
+        <th><%= t('table.filters') %></th>
+        <th><%= t('misc.type') %></th>
+        <th><%= t('graphs.sort?') %></th>
+        <th><%= t('graphs.desc?') %></th>
+        <th><%= t('graphs.group?') %></th>
+        <th colspan=2></th>
+      </tr>
+    </thead>
+
+    <tbody id="graphs">
+      <% if @graphs.any? %>
+        <% @graphs.each do |graph| %>
+          <%= render graph %>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan=7>
+            <i>
+              <%= t('notifications.no_notification') %>
+            </i>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+
+  </table>
+</div>
+
 <%= link_to new_graph_path, class: 'btn btn-outline-primary me-2' do %>
   <%= t('graphs.new') %>
 <% end %>
-<%= link_to t('misc.dashboard'), dashboard_path, 'data-turbo': false %>
-
-<div id="graphs" class="mt-4">
-  <% @graphs.each do |graph| %>
-    <%= render graph %>
-    <p>
-      <%= link_to "Show this graph", graph %>
-    </p>
-  <% end %>
-</div>
+<%= link_to t('misc.dashboard'), dashboard_path, class: 'btn btn-outline-secondary', 'data-turbo': false %>

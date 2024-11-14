@@ -1,6 +1,7 @@
 class GraphsController < ApplicationController
   before_action :set_graph, only: %i[ show edit update destroy ]
   before_action :is_user_authorized?
+  before_action :set_form_variables, only: %i[ new edit ]
 
   # GET /graphs or /graphs.json
   def index
@@ -14,11 +15,6 @@ class GraphsController < ApplicationController
   # GET /graphs/new
   def new
     @graph = Graph.new
-    @grouped_fields = {}
-    @tables = current_user.tables
-    @fields = current_user.fields
-    @filters = current_user.filters
-    @types = ['bar','line','pie','scatter', 'doughnut','polarArea', 'radar'] # bubble / mixed pas implémentés
   end
 
   # GET /graphs/1/edit
@@ -32,7 +28,7 @@ class GraphsController < ApplicationController
 
     respond_to do |format|
       if @graph.save
-        format.html { redirect_to @graph, notice: "Graph was successfully created." }
+        format.html { redirect_to @graph, notice: t('notice.graph.new') }
         format.json { render :show, status: :created, location: @graph }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +41,7 @@ class GraphsController < ApplicationController
   def update
     respond_to do |format|
       if @graph.update(graph_params)
-        format.html { redirect_to @graph, notice: "Graph was successfully updated." }
+        format.html { redirect_to @graph, notice: t('notice.graph.updated') }
         format.json { render :show, status: :ok, location: @graph }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -59,7 +55,7 @@ class GraphsController < ApplicationController
     @graph.destroy!
 
     respond_to do |format|
-      format.html { redirect_to graphs_path, status: :see_other, notice: "Graph was successfully destroyed." }
+      format.html { redirect_to graphs_path, status: :see_other, notice: t('notice.graph.destroyed') }
       format.json { head :no_content }
     end
   end
@@ -68,6 +64,13 @@ class GraphsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_graph
       @graph = Graph.find(params[:id])
+    end
+
+    def set_form_variables
+      @tables = current_user.tables
+      @fields = current_user.fields
+      @filters = current_user.filters
+      @types = ['bar','line','pie','scatter', 'doughnut','polarArea', 'radar'] # bubble / mixed pas implémentés
     end
 
     # Only allow a list of trusted parameters through.

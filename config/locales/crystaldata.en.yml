@@ -28,6 +28,7 @@ en:
     statut_parameter_no_separator: ": The parameter does not have a separator"
   fields:
     collection_hint: "ex : [Technician.\"LastName,FirstName,Experience\"]"
+    edit: "Editing attribute '%{field}'"
     datatype:
       Texte: "Text"
       Nombre: "Number"
@@ -78,6 +79,7 @@ en:
     text_hint: "ex: %john% or john (for equality)"
   graphs:
     desc?: "Descending ?"
+    edit: "Editing Graph"
     group?: "Grouped ?"
     new: "New Graph"
     sort?: "Sorted ?"
@@ -166,7 +168,11 @@ en:
       updated: "Query modified."
       destroyed: "Query deleted."
       query: "(i)Inquire here the selection criteria in order to obtain a collection of filtered objects"
-    graph: "(i)The graphics allow you to view a series of values ​​from your collections"
+    graph: 
+      index: "(i)The graphics allow you to view a series of values ​​from your collections"
+      destroyed: "Graph successfully removed."
+      new: "Graph successfully created."
+      updated: "Graph successfully modified."
     notification:
       destroyed: "Notification successfully removed."
       new: "Notification successfully created."
@@ -205,6 +211,7 @@ en:
       updated_created: "Data %{status} successfully :)"
   notifications:
     attribute_label: "Attribute to monitor"
+    edit: "Editing Notification"
     index: "Notifications"
     last_sent: "Last notification sent"
     mail_log: "See the history of emails sent"

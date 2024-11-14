@@ -1,15 +1,55 @@
-<%= simple_form_for(@graph) do |f| %>
-  <div>
-    <%= f.input :name, as: :text %>
-    <%= f.association :field %>
-    <%= f.association :filter %>
-    <%= f.input :chart_type %>
-    <%= f.input :sort, label: "Trié ?" %>
-    <%= f.input :desc, label: "Descendant ?" %>
-    <%= f.input :group, label: "Groupé ?" %>
+<%= form_for(@graph, html: {class: 'd-flex flex-wrap align-items-center gap-2'}) do |f| %>
+  <% if @graph.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t('errors.messages.not_saved', count: @graph.errors.count) %></h2>
+
+      <ul>
+        <% @graph.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4 flex-fill">
+    <%= f.label :name, t('scaffold.name'), class: 'form-label' %>
+    <%= f.text_field :name, class: 'form-control w-100', required: true, autofocus: true, autocomplete: :off %>
   </div>
 
-  <div>
-    <%= f.button :submit, class: 'btn btn-outline-primary' %>
+  <div class="mb-4 flex-fill">
+    <%= f.label :field_id, t('misc.attribute'), class: 'form-label' %>
+    <%= f.select :field_id, option_groups_from_collection_for_select(@tables, :fields, :name, :id, :name), 
+                            {}, class: "form-select w-100",
+                            include_blank:true %>
   </div>
+
+  <div class="mb-4 flex-fill">
+    <%= f.label :filter_id, t('tables.filter'), class: 'form-label' %>
+    <%= f.select :filter_id, options_from_collection_for_select(@filters, 'id', 'name'), {}, include_blank: true, class: 'form-select w-100' %>
+  </div>
+
+  <div class="mb-4 flex-fill">
+    <%= f.label :chart_type, t('misc.type'), class: 'form-label' %>
+    <%= f.select :chart_type, options_for_select(@types), {}, class: 'form-select w-100' %>
+  </div>
+
+  <div class="d-flex flex-wrap w-100 align-items-center gap-4">
+    <div class="d-inline">
+      <%= f.check_box :sort, class: 'form-check-input' %>
+      <%= f.label :sort, t('graphs.sort?'), class: 'form-check-label' %>
+    </div>
+
+    <div class="d-inline">
+      <%= f.check_box :desc, class: 'form-check-input' %>
+      <%= f.label :desc, t('graphs.desc?'), class: 'form-check-label' %>
+    </div>
+
+    <div class="d-inline">
+      <%= f.check_box :group, class: 'form-check-input' %>
+      <%= f.label :group, t('graphs.group?'), class: 'form-check-label' %>
+    </div>
+
+    <%= f.submit class: 'btn btn-outline-primary' %>
+  </div>
+
 <% end %>

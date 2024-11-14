@@ -148,7 +148,7 @@ class PagesController < ApplicationController
 
   def info_notice
     if current_user.compte_démo? && flash[:notice] == nil && flash[:alert] == nil && params.keys.size == 2
-      flash[:notice] = t('notice.graph')
+      flash[:notice] = t('notice.graph.index')
     end
   end
 end
