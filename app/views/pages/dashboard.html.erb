@@ -1,7 +1,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="ml-2 mt-4 lg:mt-0">
-  <div class="d-flex flex-wrap gap-2">
+  <div class="d-flex flex-wrap">
     <% @graphs.each_with_index do |graph, i| %>
       <div class="w-sm-33 shadow-sm pt-3 px-2">
         <h2 class="text-center fs-5"><%= graph.name.humanize %></h2>
