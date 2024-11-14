@@ -1,10 +1,8 @@
-<p style="color: green"><%= notice %></p>
-
 <%= render @graph %>
 
 <div>
-  <%= link_to "Edit this graph", edit_graph_path(@graph) %> |
-  <%= link_to "Back to graphs", graphs_path %>
+  <%= link_to t('scaffold.edit'), edit_graph_path(@graph) %> |
+  <%= link_to t('scaffold.back'), graphs_path %>
 
-  <%= button_to "Destroy this graph", @graph, method: :delete %>
+  <%= button_to t('scaffold.destroy'), @graph, method: :delete %>
 </div>

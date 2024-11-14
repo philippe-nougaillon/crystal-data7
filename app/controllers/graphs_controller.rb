@@ -28,7 +28,7 @@ class GraphsController < ApplicationController
 
     respond_to do |format|
       if @graph.save
-        format.html { redirect_to @graph, notice: t('notice.graph.new') }
+        format.html { redirect_to graphs_path, notice: t('notice.graph.new') }
         format.json { render :show, status: :created, location: @graph }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -41,7 +41,7 @@ class GraphsController < ApplicationController
   def update
     respond_to do |format|
       if @graph.update(graph_params)
-        format.html { redirect_to @graph, notice: t('notice.graph.updated') }
+        format.html { redirect_to graphs_path, notice: t('notice.graph.updated') }
         format.json { render :show, status: :ok, location: @graph }
       else
         format.html { render :edit, status: :unprocessable_entity }

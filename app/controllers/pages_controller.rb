@@ -98,7 +98,7 @@ class PagesController < ApplicationController
         @values = @values.where(record_index: graph.filter.get_filtered_records)
       end
       # Stocke le nombre d'occurence pour chaque valeur
-      # TODO: Avec un champ ajouté à graph, il faut récupérer les records_index pour dire que tel value va dans tel groupe
+      # TODO: Avec un champ ajouté à graph pour grouper, il faut récupérer les records_index pour dire que tel value va dans tel groupe
       @results[i] = @values.group(:data).order(:data).count(:id)
 
       if field.Euros? || field.Nombre?

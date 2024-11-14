@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :graphs
   devise_for :users, controllers: { 
     registrations: 'users/registrations',
     omniauth_callbacks: 'users/omniauth_callbacks'
@@ -42,7 +41,7 @@ Rails.application.routes.draw do
     
     controller :pages do
       get :a_propos, to: 'pages#a_propos'
-      get :graphs, to: 'pages#graphs'
+      # get :graphs, to: 'pages#graphs'
       get :assistant, to: "pages#assistant"
       get :mentions_legales, to: "pages#mentions_legales"
       get :dashboard, to: 'pages#dashboard'
@@ -57,6 +56,7 @@ Rails.application.routes.draw do
     resources :notifications, except: %i[show]
     resources :mail_logs, only: %i[index show]
     resources :organisations, only: %i[show edit update]
+    resources :graphs
 
     namespace :admin do
       get :stats
