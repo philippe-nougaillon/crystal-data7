@@ -13,6 +13,14 @@ class GraphPolicy < ApplicationPolicy
     index? && record.organisation == user.organisation
   end
 
+  def new?
+    index? && (!(user.compte_démo?) || Rails.env.development?)
+  end
+
+  def create?
+    new?
+  end
+
   def edit?
     show? && (!(user.compte_démo?) || Rails.env.development?)
   end
