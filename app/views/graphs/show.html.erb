@@ -1,8 +1,56 @@
-<%= render @graph %>
+<div class="mx-auto shadow-sm mt-2 pt-4 px-5 <%= 'w-50' if ['pie','d'].include? @graph.chart_type %>">
+  <h1 class="mb-4"><%= @graph.name.humanize %></h1>
+  <canvas data-turbo="false" id="chart"></canvas>
 
-<div>
-  <%= link_to t('scaffold.edit'), edit_graph_path(@graph) %> |
-  <%= link_to t('scaffold.back'), graphs_path %>
-
-  <%= button_to t('scaffold.destroy'), @graph, method: :delete %>
+  <div class="d-flex float-end mt-4">
+    <% if policy(@graph).edit? %>
+      <%= link_to edit_graph_path(@graph), class: 'text-gray-300 hover-text-secondary' do %>
+        <span class="material-symbols-outlined">
+          edit
+        </span>
+      <% end %>
+    <% end %>
+    <% if policy(@graph).destroy? %>
+      <%= button_to @graph, method: :delete, data: {turbo_confirm: t('scaffold.sure?') }, class:'text-gray-300 hover-text-danger btn btn-sm p-0' do %>
+        <span class="material-symbols-outlined">
+          delete
+        </span>
+      <% end %>
+    <% end %>
+    <%= link_to t('scaffold.back'), graphs_path %>
+  </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  var data = {
+    labels: <%= @results.keys.to_json.html_safe %>,
+    datasets: [
+      {
+        label: "<%= "#{@graph.name}" %>",
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(75, 192, 192)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          "hsl(252, 82.9%, 67.8%)",
+          'rgb(255,159,64)',
+          'rgb(201, 203, 207)',
+        ],
+        data: <%= @results.values.to_json.html_safe %>,
+      },
+    ],
+  };
+
+  var configChart = {
+    type: "<%= @graph.chart_type %>",
+    data: data,
+    options: {},
+  };
+
+  var chartElement = document.getElementById("chart");
+  if (chartElement) {
+    new Chart(chartElement, configChart);
+  }
+</script>

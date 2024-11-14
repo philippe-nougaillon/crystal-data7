@@ -414,3 +414,15 @@ div.d-flex{
 .hover-text-white:hover{
   color: white !important;
 }
+
+.hover-text-danger:hover{
+  color: $danger !important;
+}
+
+.hover-text-secondary:hover {
+  color: $secondary !important;
+}
+
+.text-gray-300{
+  color: $gray-300 !important;
+}

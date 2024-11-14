@@ -10,6 +10,53 @@ class GraphsController < ApplicationController
 
   # GET /graphs/1 or /graphs/1.json
   def show
+    @results = {}
+
+    @results = Hash.new
+    field = @graph.field
+    @values = field.values
+    if @graph.filter
+      @values = @values.where(record_index: @graph.filter.get_filtered_records)
+    end
+    # Stocke le nombre d'occurence pour chaque valeur
+    # TODO: Avec un champ ajouté à graph pour grouper, il faut récupérer les records_index pour dire que tel value va dans tel groupe
+    @results = @values.group(:data).order(:data).count(:id)
+
+    if field.Euros? || field.Nombre?
+      if !@graph.group
+        @results = @values.pluck(:record_index, :data).to_h
+      end
+      results_humanized = {}
+      @results.each do |k, v|
+        # label = graph.table.values.records_at(k).pluck(:data).first(2)
+        results_humanized[k] = v
+      end
+      @results = results_humanized.sort_by { |key, _| key.to_f }.to_h
+    elsif field.Collection?
+      results_humanized = {}
+      @results.each do |k, v|
+        results_humanized[field.get_linked_table_record(k)] = v
+      end
+      @results = results_humanized
+    elsif field.Signature?
+      results_humanized = {'Pas signé' => 0, 'Signé' => 0}
+      @results.each do |k, v|
+        if k.blank?
+          results_humanized['Pas signé'] += v
+        else
+          results_humanized['Signé'] += v
+        end
+      end
+      @results = results_humanized
+    end
+
+    if @graph.sort
+      if @graph.desc
+        @results = @results.sort_by { |_, v| -v }.to_h
+      else 
+        @results = @results.sort_by { |_, v| v }.to_h
+      end
+    end
   end
 
   # GET /graphs/new
@@ -28,7 +75,7 @@ class GraphsController < ApplicationController
 
     respond_to do |format|
       if @graph.save
-        format.html { redirect_to graphs_path, notice: t('notice.graph.new') }
+        format.html { redirect_to @graph, notice: t('notice.graph.new') }
         format.json { render :show, status: :created, location: @graph }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -41,7 +88,7 @@ class GraphsController < ApplicationController
   def update
     respond_to do |format|
       if @graph.update(graph_params)
-        format.html { redirect_to graphs_path, notice: t('notice.graph.updated') }
+        format.html { redirect_to @graph, notice: t('notice.graph.updated') }
         format.json { render :show, status: :ok, location: @graph }
       else
         format.html { render :edit, status: :unprocessable_entity }

@@ -1,17 +1,30 @@
-<h1 class="text-2xl mt-4 text-secondary">
-  <%= t('misc.dashboard') %>
-</h1>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="ml-2 mt-4 lg:mt-0">
-  <div class="d-flex flex-wrap">
+  <div class="d-flex flex-wrap gap-2">
     <% @graphs.each_with_index do |graph, i| %>
-      <div class="flex-fill w-sm-33 mb-5">
-        <canvas id="chart<%= i %>"></canvas>
+      <div class="w-sm-33 shadow-sm pt-3 px-2">
+        <h2 class="text-center fs-5"><%= graph.name.humanize %></h2>
+        <canvas data-turbo="false" id="chart<%= i %>"></canvas>
+        <div class="d-flex flex-row justify-content-end">
+          <% if policy(graph).edit? %>
+            <%= link_to edit_graph_path(graph), class: 'text-gray-300 hover-text-secondary' do %>
+              <span class="material-symbols-outlined">
+                edit
+              </span>
+            <% end %>
+          <% end %>
+          <% if policy(graph).destroy? %>
+            <%= button_to graph, method: :delete, data: {turbo_confirm: t('scaffold.sure?') }, class:'text-gray-300 hover-text-danger btn btn-sm p-0' do %>
+              <span class="material-symbols-outlined">
+                delete
+              </span>
+            <% end %>
+          <% end %>
+        </div>
       </div>
       <script>
-        const data<%= i %> = {
+        var data<%= i %> = {
           labels: <%= @results[i].keys.to_json.html_safe %>,
           datasets: [
             {
@@ -30,13 +43,13 @@
           ],
         };
 
-        const configChart<%= i %> = {
+        var configChart<%= i %> = {
           type: "<%= graph.chart_type %>",
           data: data<%= i %>,
           options: {},
         };
 
-        const chartElement<%= i %> = document.getElementById("chart<%= i %>");
+        var chartElement<%= i %> = document.getElementById("chart<%= i %>");
         if (chartElement<%= i %>) {
           new Chart(chartElement<%= i %>, configChart<%= i %>);
         }

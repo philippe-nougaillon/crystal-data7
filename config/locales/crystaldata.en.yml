@@ -148,7 +148,7 @@ en:
   navbar:
     about_title: "About %{sitename}"
     assistant_title: "AI Assistant"
-    dashboard_title: "Dashboard demonstration"
+    dashboard_title: "Dashboard"
     filters_title: "Query list"
     graphs_title: "Graphs"
     home_title: "Home page or a collection of your favorite object"

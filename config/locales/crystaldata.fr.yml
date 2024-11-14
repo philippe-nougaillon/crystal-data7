@@ -147,7 +147,7 @@ fr:
   navbar:
     about_title: "À propos de %{sitename}"
     assistant_title: "Assistant IA"
-    dashboard_title: "Dashboard de démonstration"
+    dashboard_title: "Dashboard"
     filters_title: "Liste des Filtres"
     graphs_title: "Graphiques"
     home_title: "Page d'accueil ou une collection de votre objet favori"
