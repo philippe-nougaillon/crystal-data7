@@ -1,5 +1,6 @@
 class GraphsController < ApplicationController
   before_action :set_graph, only: %i[ show edit update destroy ]
+  before_action :is_user_authorized?
 
   # GET /graphs or /graphs.json
   def index
@@ -72,5 +73,9 @@ class GraphsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def graph_params
       params.require(:graph).permit(:field_id, :filter_id, :name, :chart_type, :sort, :desc, :group)
+    end
+
+    def is_user_authorized?
+      authorize @graph ? @graph : Graph
     end
 end
