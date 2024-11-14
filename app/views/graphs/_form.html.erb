@@ -1,4 +1,4 @@
-<%= form_for(@graph, html: {class: 'd-flex flex-wrap align-items-center gap-2'}) do |f| %>
+<%= form_for(@graph) do |f| %>
   <% if @graph.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('errors.messages.not_saved', count: @graph.errors.count) %></h2>
@@ -11,29 +11,33 @@
     </div>
   <% end %>
 
-  <div class="mb-4 flex-fill">
-    <%= f.label :name, t('scaffold.name'), class: 'form-label' %>
-    <%= f.text_field :name, class: 'form-control w-100', required: true, autofocus: true, autocomplete: :off %>
-  </div>
+  <div class="d-flex flex-wrap w-100 align-items-center gap-4 mb-4">
+    <div class="flex-1 mb-4">
+      <%= f.label :name, t('scaffold.name'), class: 'form-label' %>
+      <%= f.text_field :name, class: 'form-control w-100', required: true, autofocus: true, autocomplete: :off %>
+    </div>
 
-  <div class="mb-4 flex-fill">
-    <%= f.label :chart_type, t('graphs.type'), class: 'form-label' %>
-    <%= f.select :chart_type, options_for_select(@types, @graph.chart_type), {}, class: 'form-select w-100' %>
-  </div>
-
-  <div class="mb-4 flex-fill">
-    <%= f.label :field_id, t('graphs.source'), class: 'form-label' %>
-    <%= f.select :field_id, option_groups_from_collection_for_select(@tables, :fields, :name, :id, :name, @graph.field_id), 
-                            {}, class: "form-select w-100",
-                            include_blank:true %>
-  </div>
-
-  <div class="mb-4 flex-fill">
-    <%= f.label :filter_id, t('tables.filter'), class: 'form-label' %>
-    <%= f.select :filter_id, options_from_collection_for_select(@filters, 'id', 'name', @graph.filter_id), {}, include_blank: true, class: 'form-select w-100' %>
+    <div class="flex-1 mb-4">
+      <%= f.label :chart_type, t('graphs.type'), class: 'form-label' %>
+      <%= f.select :chart_type, options_for_select(@types, @graph.chart_type), {}, class: 'form-select w-100' %>
+    </div>
   </div>
 
   <div class="d-flex flex-wrap w-100 align-items-center gap-4">
+    <div class="flex-1 mb-4">
+      <%= f.label :field_id, t('graphs.source'), class: 'form-label' %>
+      <%= f.select :field_id, option_groups_from_collection_for_select(@tables, :fields, :name, :id, :name, @graph.field_id), 
+                              {}, class: "form-select w-100",
+                              include_blank:true %>
+    </div>
+
+    <div class="flex-1 mb-4">
+      <%= f.label :filter_id, t('tables.filter'), class: 'form-label' %>
+      <%= f.select :filter_id, options_from_collection_for_select(@filters, 'id', 'name', @graph.filter_id), {}, include_blank: true, class: 'form-select w-100' %>
+    </div>
+  </div>
+
+  <div class="d-flex flex-wrap w-100 align-items-center gap-4 mb-4">
     <div class="d-inline">
       <%= f.check_box :sort, class: 'form-check-input' %>
       <%= f.label :sort, t('graphs.sort?'), class: 'form-check-label' %>
@@ -51,8 +55,8 @@
 
   </div>
 
-  <div class="d-inline mt-4">
-    <%= f.submit class: 'btn btn-outline-primary', 'data-turbo': false %>
+  <div class="d-inline">
+    <%= f.submit class: 'btn btn-outline-primary me-2', 'data-turbo': false %>
     <%= link_to t('scaffold.back'), graphs_path %>
   </div>
 

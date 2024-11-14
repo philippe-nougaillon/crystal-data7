@@ -3,9 +3,6 @@
   <td><%= graph.chart_type.humanize %></td>
   <td><%= graph.table.name %>/<%= graph.field.name %></td>
   <td><%= graph.filter.name %></td>
-  <td><%= graph.sort ? '✓' : '-' %></td>
-  <td><%= graph.desc ? '✓' : '-' %></td>
-  <td><%= graph.group ? '✓' : '-' %></td>
   <td style="text-align: right; white-space: nowrap;">
     <% if policy(graph).edit? %>
       <%= link_to t('scaffold.update'), edit_graph_path(graph), class: 'btn btn-sm btn-outline-primary me-2' %>

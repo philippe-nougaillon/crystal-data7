@@ -78,9 +78,9 @@ en:
     star_hint: "Choose a note between 0 and 5"
     text_hint: "ex: %john% or john (for equality)"
   graphs:
-    desc?: "Descending ?"
+    desc?: "Descending?"
     edit: "Editing Graph"
-    group?: "Grouped ?"
+    group?: "Group?"
     new: "New Graph"
     sort?: "Sort by quantity?"
     source: "Source (Collection/Attribute)"
