@@ -27,13 +27,12 @@
     <div class="flex-1 mb-4">
       <%= f.label :field_id, t('graphs.source'), class: 'form-label' %>
       <%= f.select :field_id, option_groups_from_collection_for_select(@tables, :fields, :name, :id, :name, @graph.field_id), 
-                              {}, class: "form-select w-100",
-                              include_blank:true %>
+                              {include_blank: true, required: true}, class: "form-select w-100" %>
     </div>
 
     <div class="flex-1 mb-4">
       <%= f.label :filter_id, t('tables.filter'), class: 'form-label' %>
-      <%= f.select :filter_id, options_from_collection_for_select(@filters, 'id', 'name', @graph.filter_id), {}, include_blank: true, class: 'form-select w-100' %>
+      <%= f.select :filter_id, options_from_collection_for_select(@filters, 'id', 'name', @graph.filter_id), {include_blank: true}, class: 'form-select w-100' %>
     </div>
   </div>
 

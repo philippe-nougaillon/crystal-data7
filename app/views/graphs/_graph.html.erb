@@ -2,7 +2,7 @@
   <td><%= link_to graph.name.humanize, graph, 'data-turbo': false %></td>
   <td><%= graph.chart_type.humanize %></td>
   <td><%= graph.table.name %>/<%= graph.field.name %></td>
-  <td><%= graph.filter.name %></td>
+  <td><%= graph.filter.try(:name) %></td>
   <td style="text-align: right; white-space: nowrap;">
     <% if policy(graph).edit? %>
       <%= link_to t('scaffold.update'), edit_graph_path(graph), class: 'btn btn-sm btn-outline-primary me-2' %>
