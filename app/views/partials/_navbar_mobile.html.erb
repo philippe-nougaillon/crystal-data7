@@ -65,6 +65,15 @@
           </li>
 
           <li class="nav-item">
+            <%= link_to dashboard_path, class: 'nav-link link-secondary d-flex align-items-center gap-1', 'data-turbo': false do %>
+              <span class="material-symbols-outlined">
+                dashboard
+              </span>
+              <%= t('misc.dashboard') %>
+            <% end %>
+          </li>
+
+          <li class="nav-item">
             <%= link_to assistant_path, class: 'nav-link link-info d-flex align-items-center gap-1' do %>
               <span class="material-symbols-outlined">
                 family_star
