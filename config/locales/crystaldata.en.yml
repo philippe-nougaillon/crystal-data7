@@ -146,6 +146,7 @@ en:
     user: "User"
     user_since: "User since %{date}"
     users: "Users"
+    weight: "Weight"
     who: "Who"
   navbar:
     about_title: "About %{sitename}"

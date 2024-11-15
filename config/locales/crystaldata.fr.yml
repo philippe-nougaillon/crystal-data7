@@ -145,6 +145,7 @@ fr:
     user: "Utilisateur"
     user_since: "Utilisateur depuis %{date}"
     users: "Utilisateurs"
+    weight: "Poids"
     who: "Qui"
   navbar:
     about_title: "À propos de %{sitename}"

@@ -4,5 +4,5 @@ class Graph < ApplicationRecord
   belongs_to :filter, optional: true
   has_one :table, through: :field
 
-  scope :ordered, -> {order(:updated_at)}
+  scope :ordered, -> {order(poids: :desc)}
 end
