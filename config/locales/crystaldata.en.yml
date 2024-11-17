@@ -86,6 +86,8 @@ en:
     source: "Source (Collection/Attribute)"
     title: "Graphs"
     type: "Graph type"
+    visibility: "Visible?"
+    visibility?: "Visible on the dashboard?"
   maillogs:
     description1: "History of emails sent via"
     description2: "With status and state (OK = transported, OPENED = seen), visible for 5 days."

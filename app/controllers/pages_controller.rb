@@ -87,7 +87,7 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    @graphs = current_user.organisation.graphs.ordered
+    @graphs = current_user.organisation.graphs.visibles.ordered
     @results = []
 
     @graphs.each_with_index do |graph, i|

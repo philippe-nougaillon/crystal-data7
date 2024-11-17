@@ -86,6 +86,8 @@ fr:
     source: "Source (Collection/Attribut)"
     title: "Graphiques"
     type: "Type de graphique"
+    visibility: "Visible ?"
+    visibility?: "Visible sur le Dashboard ?"
   maillogs:
     description1: "Historique des mails envoyés via "
     description2: "avec Statut et État (OK = acheminé, OUVERT = vu), visiblent pendant 5 jours."

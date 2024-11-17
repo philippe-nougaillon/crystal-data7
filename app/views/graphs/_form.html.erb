@@ -52,9 +52,16 @@
     </div>
 
     <div class="d-inline">
+      <%= f.check_box :visibility, class: 'form-check-input' %>
+      <%= f.label :visibility, t('graphs.visibility?'), class: 'form-check-label' %>
+    </div>
+
+    <!--
+    <div class="d-inline">
       <%= f.check_box :group, class: 'form-check-input' %>
       <%= f.label :group, t('graphs.group?'), class: 'form-check-label' %>
     </div>
+    -->
 
   </div>
 

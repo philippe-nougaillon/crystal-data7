@@ -5,4 +5,5 @@ class Graph < ApplicationRecord
   has_one :table, through: :field
 
   scope :ordered, -> {order(poids: :desc)}
+  scope :visibles, -> {where(visibility: true)}
 end
