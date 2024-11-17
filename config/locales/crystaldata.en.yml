@@ -335,6 +335,7 @@ en:
     public_form?: "Public form?"
     public_form_hint: "Make the form accessible without connection (for data entry only)"
     public_form_tooltip: "Public form (click to see the URL to share)"
+    record: "Records"
     record_activity_title: "Displays the activity of this %{table} at the bottom of this page"
     required: "Required"
     required?: "Required?"

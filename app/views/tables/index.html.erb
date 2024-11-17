@@ -12,6 +12,7 @@
           <th></th>
         <% end %>
         <th><%= t('scaffold.name') %></th>
+        <th><%= t('tables.records') %></th>
         <th><%= t('scaffold.updated_at') %></th>
         <th></th>
         <th></th>
@@ -43,7 +44,11 @@
             <td>
               <%= link_to table.name, table, class: 'text-primary' %>
               <br>
-              <%= table.field_names %></td>
+              <%= table.field_names %>
+            </td>
+            <td>
+              <%= table.record_index %>
+            </td>
             <td>
               <%= t('scaffold.time_ago', time: time_ago_in_words(table.values.maximum(:updated_at))) unless table.size.zero? %>
             </td>
