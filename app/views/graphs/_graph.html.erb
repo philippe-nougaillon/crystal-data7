@@ -4,12 +4,14 @@
   <td><%= graph.table.name %>/<%= graph.field.name %></td>
   <td><%= graph.filter.try(:name) %></td>
   <td style="text-align: center"><%= graph.visibility ? '✓' : '-' %></td>
-  <td style="text-align: right; white-space: nowrap;">
-    <% if policy(graph).edit? %>
-      <%= link_to t('scaffold.update'), edit_graph_path(graph), class: 'btn btn-sm btn-outline-primary me-2' %>
-    <% end %>
-    <% if policy(graph).destroy? %>
-      <%= button_to t('scaffold.destroy'), graph, method: :delete, 'data-turbo-confirm': t('scaffold.sure?'), class: 'btn btn-sm btn-outline-danger', form_class: 'float-end' %>
-    <% end %>
+  <td>
+    <div class="d-flex">
+      <% if policy(graph).edit? %>
+        <%= link_to t('scaffold.update'), edit_graph_path(graph), class: 'btn btn-sm btn-outline-primary me-2' %>
+      <% end %>
+      <% if policy(graph).destroy? %>
+        <%= button_to t('scaffold.destroy'), graph, method: :delete, 'data-turbo-confirm': t('scaffold.sure?'), class: 'btn btn-sm btn-outline-danger', form_class: 'float-end' %>
+      <% end %>
+    </div>
   </td>
 </tr>
