@@ -78,6 +78,7 @@ fr:
     star_hint: "Choisissez une note entre 0 et 5"
     text_hint: "ex: %john% ou john (pour une égalité)"
   graphs:
+    dashboard?: "Dashboard ?"
     desc?: "Décroissant ?"
     edit: "Modification Graphique"
     group?: "Grouper par valeur ?"
@@ -86,7 +87,6 @@ fr:
     source: "Source (Collection/Attribut)"
     title: "Graphiques"
     type: "Type de graphique"
-    visibility: "Visible ?"
     visibility?: "Visible sur le Dashboard ?"
   maillogs:
     description1: "Historique des mails envoyés via "

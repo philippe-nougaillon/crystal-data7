@@ -78,6 +78,7 @@ en:
     star_hint: "Choose a note between 0 and 5"
     text_hint: "ex: %john% or john (for equality)"
   graphs:
+    dashboard?: "Dashboard?"
     desc?: "Descending?"
     edit: "Editing Graph"
     group?: "Group by value?"
@@ -86,7 +87,6 @@ en:
     source: "Source (Collection/Attribute)"
     title: "Graphs"
     type: "Graph type"
-    visibility: "Visible?"
     visibility?: "Visible on the dashboard?"
   maillogs:
     description1: "History of emails sent via"
