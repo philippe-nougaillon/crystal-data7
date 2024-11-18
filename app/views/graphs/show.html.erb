@@ -1,5 +1,5 @@
 <div class="mx-auto shadow-sm mt-2 pt-4 px-5 <%= 'w-50' if ['pie','d'].include? @graph.chart_type %>">
-  <h1 class="mb-4 text-warning"><%= @graph.name.humanize %></h1>
+  <h1 class="mb-4"><%= @graph.name.humanize %></h1>
   <canvas data-turbo="false" id="chart"></canvas>
 
   <div class="d-flex float-end mt-4">
