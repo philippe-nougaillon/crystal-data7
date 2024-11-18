@@ -1,8 +1,10 @@
-<div class="mx-auto shadow-sm mt-2 pt-4 px-5 <%= 'w-50' if ['pie','d'].include? @graph.chart_type %>">
-  <h1 class="mb-4"><%= @graph.name.humanize %></h1>
-  <canvas data-turbo="false" id="chart"></canvas>
+<div class="mx-auto mt-2 <%= 'w-50' if ['pie','d'].include? @graph.chart_type %>">
+  <div class="shadow-sm pt-4 pb-5 px-5">
+    <h1 class="mb-4"><%= @graph.name.humanize %></h1>
+    <canvas data-turbo="false" id="chart"></canvas>
+  </div>
 
-  <div class="d-flex float-end mt-4">
+  <div class="d-flex float-end mt-4 mb-2">
     <% if policy(@graph).edit? %>
       <%= link_to edit_graph_path(@graph), class: 'text-gray-300 hover-text-secondary' do %>
         <span class="material-symbols-outlined">
@@ -17,7 +19,7 @@
         </span>
       <% end %>
     <% end %>
-    <%= link_to t('scaffold.back'), params[:from_url] || graphs_path %>
+    <%= link_to t('scaffold.back'), params[:from_url] || graphs_path, class: 'ms-3' %>
   </div>
 </div>
 
