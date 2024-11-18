@@ -1,7 +1,7 @@
 fr:
   assistant:
     question?: "Quelle est votre question ?"
-    question_hint: "Quel client revient le plus souvent ? \r\nGénère-moi les 3 prochaines interventions à prévoir ? \r\nTu es statisticien. Calcule-moi la moyenne des durées ?"
+    question_hint: "Quel client revient le plus souvent ? \r\nGénère-moi les 3 prochaines interventions à prévoir ? \r\nTu es statisticien. Calcule-moi la moyenne des durées."
     source_field: "Attributs sources"
     submit: "Poser la question"
     subtitle: "Posez une question à l'Assistant, basée sur les données d'une collection"

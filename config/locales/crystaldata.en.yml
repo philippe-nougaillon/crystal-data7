@@ -1,7 +1,7 @@
 en:
   assistant:
     question?: "What is your question?"
-    question_hint: "Which customer is most often coming back?\r\nGenerate me the next 3 interventions to be expected?\r\nYou are statistician. Calculate me the average of the durations?"
+    question_hint: "Which customer is most often coming back?\r\nGenerate me the next 3 interventions to be expected?\r\nYou are statistician. Calculate me the average of the durations."
     source_field: "Source attributes"
     submit: "Submit request"
     subtitle: "Ask the assistant, based on data from a collection"

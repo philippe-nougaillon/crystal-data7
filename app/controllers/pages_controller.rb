@@ -64,14 +64,14 @@ class PagesController < ApplicationController
   end
 
   def assistant
-    @prompts = current_user.prompts.order(created_at: :desc).limit(10)
+    @prompts = current_user.prompts.ordered.limit(10)
 
     if params[:table_id].present?
       @fields = current_user.tables.find_by(id: params[:table_id]).fields.order(:name)
       if params[:fields_ids].present? && params[:prompt].present? && params[:commit].present?
         if table = current_user.tables.find_by(id: params[:table_id])
           prompt = params[:prompt]
-          values = table.values_at(params[:fields_ids])
+          values = table.values_at(params[:fields_ids], limit: 1000)
           query_with_collection_values = prompt + " dans cette liste : " + values + ' ?' 
           
           llm = Langchain::LLM::OpenAI.new(api_key: ENV["OPENAI_API_KEY"])
