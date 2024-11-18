@@ -5,8 +5,8 @@ export default class extends Controller {
   static targets = ['chartType', 'field', 'sort', 'desc']
   connect() {
     // console.log("Hello, Stimulus!", this.element)
-    this.changeType();
-    this.changeField();
+    // this.changeType();
+    // this.changeField();
     this.toggleSort();
   }
 
