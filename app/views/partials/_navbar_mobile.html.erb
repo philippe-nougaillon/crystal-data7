@@ -46,14 +46,6 @@
               <%= t('filters.filters') %>
             <% end %>
           </li>
-          <li class="nav-item">
-            <%= link_to notifications_path, class: 'nav-link link-warning d-flex align-items-center gap-1' do %>
-              <span class="material-symbols-outlined">
-                notifications_active
-              </span>
-              <%= t('misc.notifications_navbar') %>
-            <% end %>
-          </li>
 
           <li class="nav-item">
             <%= link_to graphs_path, class: 'nav-link link-success d-flex align-items-center gap-1' do %>
@@ -70,6 +62,15 @@
                 dashboard
               </span>
               <%= t('misc.dashboard') %>
+            <% end %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to notifications_path, class: 'nav-link link-warning d-flex align-items-center gap-1' do %>
+              <span class="material-symbols-outlined">
+                notifications_active
+              </span>
+              <%= t('misc.notifications_navbar') %>
             <% end %>
           </li>
 

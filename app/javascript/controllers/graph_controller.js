@@ -42,13 +42,13 @@ export default class extends Controller {
   }
 
   toggleSort() {
-    var sort = this.sortTarget;
-    if (sort.checked) {
-      this.descTarget.style.display = 'block';
-      this.descTarget.classList.add('d-inline');
-    } else {
-      this.descTarget.style.display = 'none';
-      this.descTarget.classList.remove('d-inline');
-    }
+    // var sort = this.sortTarget;
+    // if (sort.checked) {
+    //   this.descTarget.style.display = 'block';
+    //   this.descTarget.classList.add('d-inline');
+    // } else {
+    //   this.descTarget.style.display = 'none';
+    //   this.descTarget.classList.remove('d-inline');
+    // }
   }
 }

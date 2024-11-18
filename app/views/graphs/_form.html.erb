@@ -48,28 +48,30 @@
     </div>
     -->
     <div class="d-inline">
+      <%= f.check_box :group, class: 'form-check-input' %>
+      <%= f.label :group, t('graphs.group'), class: 'form-check-label', title: t('graphs.group_title') %>
+    </div>
+    
+    <div class="d-inline">
       <%= f.check_box :sort, class: 'form-check-input', data: { 'graph-target': 'sort', action: "click->graph#toggleSort" } %>
-      <%= f.label :sort, t('graphs.sort?'), class: 'form-check-label' %>
+      <%= f.label :sort, t('graphs.sort'), class: 'form-check-label', title: t('graphs.sort_title') %>
     </div>
 
+    <!--
     <div class="d-inline" data-graph-target="desc">
       <%= f.check_box :desc, class: 'form-check-input' %>
       <%= f.label :desc, t('graphs.desc?'), class: 'form-check-label' %>
     </div>
+    -->
+  </div>
 
-    <div class="d-inline">
-      <%= f.check_box :group, class: 'form-check-input' %>
-      <%= f.label :group, t('graphs.group?'), class: 'form-check-label' %>
-    </div>
-
-    <div class="d-inline">
-      <%= f.check_box :visibility, class: 'form-check-input' %>
-      <%= f.label :visibility, t('graphs.visibility?'), class: 'form-check-label' %>
-    </div>
+  <div class="mb-4">
+    <%= f.check_box :visibility, class: 'form-check-input' %>
+    <%= f.label :visibility, t('graphs.visibility?'), class: 'form-check-label' %>
   </div>
 
   <div class="d-inline">
-    <%= f.submit class: 'btn btn-outline-primary me-2', 'data-turbo': false %>
+    <%= f.submit t('scaffold.save'), class: 'btn btn-outline-primary me-2', 'data-turbo': false %>
     <%= link_to t('scaffold.back'), graphs_path %>
   </div>
 

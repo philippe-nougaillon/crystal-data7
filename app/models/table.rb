@@ -13,6 +13,7 @@ class Table < ApplicationRecord
 	has_many :filters, dependent: :destroy
 	has_many :relations, dependent: :destroy
 	has_many :notifications, dependent: :destroy
+	has_many :prompts, dependent: :destroy
 
 	validates :name, presence: true
 

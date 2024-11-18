@@ -9,6 +9,7 @@ class Field < ApplicationRecord
 	has_many :values, dependent: :destroy
 	has_many :logs, dependent: :destroy
 	has_one :relation, dependent: :destroy
+	has_many :graphs, dependent: :destroy
 
 	validates_presence_of :name
 	validates_presence_of :datatype

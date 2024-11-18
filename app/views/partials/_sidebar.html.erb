@@ -34,15 +34,6 @@
       </li>
 
       <li class="nav-item">
-        <%= link_to notifications_path, title: t('navbar.notifications_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 link-warning #{'bg-body-secondary shadow-sm' if params[:controller] == 'notifications'}" do %>
-          <span class="material-symbols-outlined">
-            notifications_active
-          </span>
-          <%= t('misc.notifications_navbar') %>
-        <% end %>
-      </li>
-
-      <li class="nav-item">
         <%= link_to graphs_path, title: t('navbar.graphs_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 link-success #{'bg-body-secondary shadow-sm' if params[:controller] == 'graphs'}" do %>
           <span class="material-symbols-outlined">
             analytics
@@ -57,6 +48,15 @@
             dashboard
           </span>
           <%= t('misc.dashboard') %>
+        <% end %>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to notifications_path, title: t('navbar.notifications_title'), class: "d-flex flex-column align-items-center text-decoration-none py-3 link-warning #{'bg-body-secondary shadow-sm' if params[:controller] == 'notifications'}" do %>
+          <span class="material-symbols-outlined">
+            notifications_active
+          </span>
+          <%= t('misc.notifications_navbar') %>
         <% end %>
       </li>
 
