@@ -1,0 +1,27 @@
+<% @prompts.each do |prompt| %>
+  <b><%= link_to_unless params[:id].present?, prompt.query, admin_assistant_logs_path(id: prompt.id) %></b>
+  <br>
+  Utilisateur : 
+  <%= prompt.user.email %>
+  <br>
+  Table :
+  <%= prompt.table.name %>
+  <br>
+  Créée le
+  <%= l(prompt.created_at, format: :long) %>
+  <br>
+  Fields :
+  <%= Field.where(id: prompt.fields_id).pluck(:id, :name) %>
+  <% if params[:id].present? %>
+    <% values = Table.find_by(id: prompt.table_id).values_at(prompt.fields_id, limit: 1000) %>
+    <br>
+    Taille requête (nb caractères): 
+    <%= values.size %>
+    <br>
+    Requête complète :
+    <br>
+    <%= prompt.query + " dans cette liste : " + values + ' ?' %>
+  <% end %>
+  <br>
+  <br>
+<% end %>

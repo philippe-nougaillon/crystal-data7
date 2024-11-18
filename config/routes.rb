@@ -62,6 +62,7 @@ Rails.application.routes.draw do
 
     namespace :admin do
       get :stats
+      get :assistant_logs
       get :create_new_user
       post :create_new_user_do
       get :new_team

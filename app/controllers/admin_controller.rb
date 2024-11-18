@@ -5,6 +5,14 @@ class AdminController < ApplicationController
     @users = User.order('users.current_sign_in_at DESC NULLS LAST').page(params[:page]).per(50)
   end
 
+  def assistant_logs
+    if params[:id].present?
+      @prompts = Prompt.where(id: params[:id])
+    else
+      @prompts = Prompt.ordered
+    end
+  end
+
   def create_new_user
     @user = User.new
   end

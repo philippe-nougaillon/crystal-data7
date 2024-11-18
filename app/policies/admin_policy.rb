@@ -9,6 +9,10 @@ class AdminPolicy < ApplicationPolicy
     user && ['pierreemmanuel.dacquet@gmail.com', 'philippe.nougaillon@gmail.com'].include?(user.email)
   end
 
+  def assistant_logs?
+    stats?
+  end
+
   def create_new_user?
     user && user.admin? && (!(user.compte_démo?) || Rails.env.development?)
   end
