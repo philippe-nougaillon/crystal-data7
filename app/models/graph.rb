@@ -4,6 +4,6 @@ class Graph < ApplicationRecord
   belongs_to :filter, optional: true
   has_one :table, through: :field
 
-  scope :ordered, -> {order(poids: :desc)}
+  scope :ordered, -> {order(updated_at: :desc)}
   scope :visibles, -> {where(visibility: true)}
 end
