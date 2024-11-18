@@ -6,7 +6,7 @@ class AdminPolicy < ApplicationPolicy
   end
 
   def stats?
-    user && ['pierreemmanuel.dacquet@gmail.com', 'philippe.nougaillon@gmail.com'].include?(user.email)
+    user && ['pierre-emmanuel.dacquet@aikku.eu', 'philippe.nougaillon@aikku.eu'].include?(user.email)
   end
 
   def assistant_logs?
