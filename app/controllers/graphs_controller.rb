@@ -107,6 +107,11 @@ class GraphsController < ApplicationController
     end
   end
 
+  def update_filters
+    @filters = Filter.where(table_id: Field.find_by(id:params[:field_id]).table_id)
+    render partial: 'filters_options', locals: { filters: @filters }
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_graph

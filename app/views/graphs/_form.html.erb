@@ -1,4 +1,4 @@
-<%= form_for(@graph) do |f| %>
+<%= form_for(@graph, html: {'data-controller': 'graph'}) do |f| %>
   <% if @graph.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('errors.messages.not_saved', count: @graph.errors.count) %></h2>
@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <div class="d-flex flex-wrap w-100 align-items-center gap-4 mb-4">
+  <div class="d-flex flex-wrap w-100 align-items-end gap-4 mb-4">
     <div class="flex-1 mb-4">
       <%= f.label :name, t('scaffold.name'), class: 'form-label' %>
       <%= f.text_field :name, class: 'form-control w-100', required: true, autofocus: true, autocomplete: :off %>
@@ -19,15 +19,19 @@
 
     <div class="flex-1 mb-4">
       <%= f.label :chart_type, t('graphs.type'), class: 'form-label' %>
-      <%= f.select :chart_type, options_for_select(@types, @graph.chart_type), {}, class: 'form-select w-100' %>
+      <span data-action="change->graph#changeType">
+        <%= f.select :chart_type, options_for_select(@types, @graph.chart_type), {}, class: 'form-select w-100', data: { 'graph-target': 'chartType' } %>
+      </span>
     </div>
   </div>
 
-  <div class="d-flex flex-wrap w-100 align-items-center gap-4">
+  <div class="d-flex flex-wrap w-100 align-items-end gap-4">
     <div class="flex-1 mb-4">
       <%= f.label :field_id, t('graphs.source'), class: 'form-label' %>
-      <%= f.select :field_id, option_groups_from_collection_for_select(@tables, :fields, :name, :id, :name, @graph.field_id), 
-                              {include_blank: true, required: true}, class: "form-select w-100" %>
+      <span data-action="change->graph#changeField">
+        <%= f.select :field_id, option_groups_from_collection_for_select(@tables, :fields, :name, :id, :name, @graph.field_id), 
+                                {include_blank: true, required: true}, class: "form-select w-100", data: { 'graph-target': 'field' } %>
+      </span>
     </div>
 
     <div class="flex-1 mb-4">
@@ -37,32 +41,31 @@
   </div>
 
   <div class="d-flex flex-wrap align-items-center w-100 gap-4 mb-4">
+    <!--
     <div>
       <%= f.label :poids, t('misc.weight'), class: 'form-label' %>
       <%= f.number_field :poids, class: 'form-control w-100', required: true, autofocus: true, autocomplete: :off %>
     </div>
+    -->
     <div class="d-inline">
-      <%= f.check_box :sort, class: 'form-check-input' %>
+      <%= f.check_box :sort, class: 'form-check-input', data: { 'graph-target': 'sort', action: "click->graph#toggleSort" } %>
       <%= f.label :sort, t('graphs.sort?'), class: 'form-check-label' %>
     </div>
 
-    <div class="d-inline">
+    <div class="d-inline" data-graph-target="desc">
       <%= f.check_box :desc, class: 'form-check-input' %>
       <%= f.label :desc, t('graphs.desc?'), class: 'form-check-label' %>
+    </div>
+
+    <div class="d-inline">
+      <%= f.check_box :group, class: 'form-check-input' %>
+      <%= f.label :group, t('graphs.group?'), class: 'form-check-label' %>
     </div>
 
     <div class="d-inline">
       <%= f.check_box :visibility, class: 'form-check-input' %>
       <%= f.label :visibility, t('graphs.visibility?'), class: 'form-check-label' %>
     </div>
-
-    <!--
-    <div class="d-inline">
-      <%= f.check_box :group, class: 'form-check-input' %>
-      <%= f.label :group, t('graphs.group?'), class: 'form-check-label' %>
-    </div>
-    -->
-
   </div>
 
   <div class="d-inline">

@@ -80,7 +80,7 @@ en:
   graphs:
     desc?: "Descending?"
     edit: "Editing Graph"
-    group?: "Group?"
+    group?: "Group by value?"
     new: "New Graph"
     sort?: "Sort by quantity?"
     source: "Source (Collection/Attribute)"

@@ -56,7 +56,9 @@ Rails.application.routes.draw do
     resources :notifications, except: %i[show]
     resources :mail_logs, only: %i[index show]
     resources :organisations, only: %i[show edit update]
-    resources :graphs
+    resources :graphs do
+      get :update_filters, on: :collection
+    end
 
     namespace :admin do
       get :stats

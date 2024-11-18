@@ -5,7 +5,7 @@ export default class extends Controller {
   static targets = ['source', 'team']
   connect() {
     // console.log("Hello, Stimulus!", this.element)
-    console.log(this.teamTarget.querySelector('select'))
+    this.change();
   }
 
   change() {

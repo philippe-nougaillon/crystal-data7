@@ -7,6 +7,9 @@ import { application } from "./application"
 import GeolocationController from "./geolocation_controller"
 application.register("geolocation", GeolocationController)
 
+import GraphController from "./graph_controller"
+application.register("graph", GraphController)
+
 import PartageController from "./partage_controller"
 application.register("partage", PartageController)
 

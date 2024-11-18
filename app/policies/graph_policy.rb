@@ -32,4 +32,8 @@ class GraphPolicy < ApplicationPolicy
   def destroy?
     show? && (!(user.compte_démo?) || Rails.env.development?)
   end
+
+  def update_filters?
+    index?
+  end
 end

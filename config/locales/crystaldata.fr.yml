@@ -80,7 +80,7 @@ fr:
   graphs:
     desc?: "Décroissant ?"
     edit: "Modification Graphique"
-    group?: "Grouper ?"
+    group?: "Grouper par valeur ?"
     new: "Nouveau Graphique"
     sort?: "Trier par quantité ?"
     source: "Source (Collection/Attribut)"
