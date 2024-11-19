@@ -115,7 +115,7 @@ class GraphsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_graph
-      @graph = Graph.find(params[:id])
+      @graph = Graph.find_by(slug: params[:id])
     end
 
     def set_form_variables

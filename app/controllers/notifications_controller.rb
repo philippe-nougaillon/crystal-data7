@@ -64,7 +64,7 @@ class NotificationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_notification
-      @notification = Notification.find(params[:id])
+      @notification = Notification.find_by(slug: params[:id])
     end
 
     def set_fields

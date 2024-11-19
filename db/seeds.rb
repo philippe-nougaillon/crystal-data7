@@ -7,7 +7,7 @@ Organisation.create!([
 organisation = Organisation.find_by(slug: "a2603914-7707-4b8c-b439-fcb4dcaed70b")
 
 Team.create!([
-  {name: "Carrefour", organisation_id: organisation.id}
+  {name: "Carrefour", organisation_id: organisation.id, slug: "b58071fe-c17b-4fe0-9b95-4f43dad70d2a"}
 ])
 
 User.create!([

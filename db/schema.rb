@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_17_104923) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_19_105916) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -142,6 +142,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_17_104923) do
     t.datetime "updated_at", null: false
     t.integer "poids", default: 0
     t.boolean "visibility", default: true
+    t.string "slug"
     t.index ["field_id"], name: "index_graphs_on_field_id"
     t.index ["filter_id"], name: "index_graphs_on_filter_id"
     t.index ["organisation_id"], name: "index_graphs_on_organisation_id"
@@ -179,6 +180,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_17_104923) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.datetime "last_notif_sent_at"
+    t.string "slug"
     t.index ["field_id"], name: "index_notifications_on_field_id"
     t.index ["table_id"], name: "index_notifications_on_table_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
@@ -235,6 +237,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_17_104923) do
     t.bigint "organisation_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
     t.index ["organisation_id"], name: "index_teams_on_organisation_id"
   end
 
