@@ -1,5 +1,5 @@
 <tr id="<%= dom_id graph %>">
-  <td><%= link_to graph.name.humanize, graph, 'data-turbo': false %></td>
+  <td><%= link_to graph.name.humanize, graph_path(graph, from_url: '/graphs'), 'data-turbo': false %></td>
   <td><%= graph.chart_type.humanize %></td>
   <td><%= graph.table.name %>/<%= graph.field.name %></td>
   <td><%= graph.filter.try(:name) %></td>
