@@ -64,6 +64,7 @@ fr:
     qrcode_hint: "ex : [Référence]"
     status_hint: "ex : Nouveau:bleu, Confirmé:vert, Annulé:rouge, Archivé:gris"
   filters:
+    applied_to: "Appliqué à"
     date_hint: "Entrez une date ou une période (date de début / date de fin)"
     delete_disabled_hint: "Il y a une équipe qui utilise ce filtre. La suppression n'est pas possible"
     criteria: "Critères"
@@ -80,8 +81,10 @@ fr:
   graphs:
     add_graph: "Ajouter un Graphique"
     dashboard?: "Dashboard ?"
+    delete_title: "Supprimer ce graphique"
     desc?: "Décroissant ?"
     edit: "Modification Graphique"
+    edit_title: "Modifier ce graphique"
     group: "Grouper"
     group_title: "Regrouper les enregistrements ayant la même valeur"
     new: "Nouveau Graphique"
@@ -370,6 +373,7 @@ fr:
   teams:
     created: "Équipe créée avec succès."
     new: "Nouvelle Équipe"
+    filters: "Filtres appliqués à la connexion"
     filter_hint: "Permet de restreindre les données vues par cette équipe"
   users:
     create: "Créer l'utilisateur"

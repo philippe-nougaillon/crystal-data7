@@ -64,6 +64,7 @@ en:
     qrcode_hint: "ex : [Reference]"
     status_hint: "ex : New:blue, Confirmed:green, Canceled:red, Archived:gray"
   filters:
+    applied_to: "Applied to"
     date_hint: "Enter a date or period (start date / end date)"
     delete_disabled_hint: "There is a team that uses this filter. Deletion is not possible"
     criteria: "Criteria"
@@ -80,8 +81,10 @@ en:
   graphs:
     add_graph: "Add a graphic"
     dashboard?: "Dashboard?"
+    delete_title: "Delete this graph"
     desc?: "Descending?"
     edit: "Editing Graph"
+    edit_title: "Edit this graph"
     group: "Group"
     group_title: "Group records with the same value"
     new: "New Graph"
@@ -369,8 +372,9 @@ en:
     youtube_error: "To display the video directly, please copy the youtube video integration link"
   teams:
     created: "Team successfully created."
-    new: "New Team"
+    filters: "Queries applied to connection"
     filter_hint: "Allows you to restrict the data visible by this team"
+    new: "New Team"
   users:
     create: "Create the user"
     created: "User successfully created."
