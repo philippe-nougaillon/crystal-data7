@@ -70,11 +70,11 @@
 </div>
 
 <script>
-  const scrollContainer = document.querySelector('.scroll-container');
+  var scrollContainer = document.querySelector('.scroll-container');
 
-  let isDown = false;
-  let startX;
-  let scrollLeft;
+  var isDown = false;
+  var startX;
+  var scrollLeft;
 
   scrollContainer.addEventListener('mousedown', (e) => {
     isDown = true;
@@ -96,8 +96,8 @@
   scrollContainer.addEventListener('mousemove', (e) => {
     if (!isDown) return;
     e.preventDefault();
-    const x = e.pageX - scrollContainer.offsetLeft;
-    const walk = (x - startX) * 2; // Ajustez la vitesse de défilement
+    var x = e.pageX - scrollContainer.offsetLeft;
+    var walk = (x - startX) * 2; // Ajustez la vitesse de défilement
     scrollContainer.scrollLeft = scrollLeft - walk;
   });
 </script>
