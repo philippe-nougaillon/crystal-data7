@@ -1,4 +1,4 @@
-<h1 class="text-dark my-4">
+<h1 class="my-4">
   <%= t('users.new') %>
 </h1>
 
@@ -37,9 +37,7 @@
   <div data-controller="user">
     <div class="my-4">
       <%= form.label :role, t('misc.role') %>
-      <span data-action="change->user#change">
-        <%= form.select :role, options_for_select(User.roles.keys), {}, class: 'form-select', data: { 'user-target': 'source' } %>
-      </span>
+      <%= form.select :role, options_for_select(User.roles.keys), {}, class: 'form-select', data: { 'user-target': 'source', action: "change->user#change" } %>
     </div>
 
     <div data-user-target='team' class="my-4">

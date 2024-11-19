@@ -21,14 +21,16 @@
     <%= f.text_field :email, class: 'form-control w-50', required: true %>
   </div>
 
-  <div class="my-4">
-    <%= f.label :role, t('misc.role') %>
-    <%= f.select :role, options_for_select(User.roles.keys, @user.role), {}, class: 'form-select' %>
-  </div>
+  <div data-controller="user">
+    <div class="my-4">
+      <%= f.label :role, t('misc.role') %>
+      <%= f.select :role, options_for_select(User.roles.keys, @user.role), {}, class: 'form-select', data: { 'user-target': 'source', action: "change->user#change" } %>
+    </div>
 
-  <div class="my-4">
-    <%= f.label :team_id, t('misc.team') %>
-    <%= f.select :team_id, options_from_collection_for_select(current_user.organisation.teams, :id, :name, @user.team_id), {include_blank: true, required: true}, class: 'form-select' %>
+    <div data-user-target='team' class="my-4">
+      <%= f.label :team_id, t('misc.team') %>
+      <%= f.select :team_id, options_from_collection_for_select(current_user.organisation.teams, :id, :name, @user.team_id), {include_blank: true, required: true}, class: 'form-select' %>
+    </div>
   </div>
 
   <%= f.submit t('scaffold.save'), class: 'btn btn-outline-success mt-4' %>
