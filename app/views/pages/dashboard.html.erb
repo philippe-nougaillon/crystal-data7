@@ -31,7 +31,7 @@
             labels: <%= @results[i].keys.to_json.html_safe %>,
             datasets: [
               {
-                label: "<%= "#{['pie', 'doughnut'].include?(graph.chart_type) ? graph.name : graph.table.name}" %>",
+                label: "<%= "#{['pie', 'doughnut'].include?(graph.chart_type) ? graph.name : graph.table.name.pluralize}" %>",
                 <% if ['pie','doughnut', 'bar'].include?(graph.chart_type) %>
                   backgroundColor: [
                     'rgba(255, 99, 132, 0.4)',
