@@ -10,9 +10,8 @@ class GraphsController < ApplicationController
 
   # GET /graphs/1 or /graphs/1.json
   def show
-    @results = {}
-
-    @results = Hash.new
+    @results = []
+    @results[0] = Hash.new
     field = @graph.field
     @values = field.values
     if @graph.filter
@@ -20,41 +19,41 @@ class GraphsController < ApplicationController
     end
     # Stocke le nombre d'occurence pour chaque valeur
     # TODO: Avec un champ ajouté à graph pour grouper, il faut récupérer les records_index pour dire que tel value va dans tel groupe
-    @results = @values.group(:data).order(:data).count(:id)
+    @results[0] = @values.group(:data).order(:data).count(:id)
 
     if field.Euros? || field.Nombre?
       if !@graph.group
-        @results = @values.pluck(:record_index, :data).to_h
+        @results[0] = @values.pluck(:record_index, :data).to_h
       end
       results_humanized = {}
-      @results.each do |k, v|
+      @results[0].each do |k, v|
         # label = graph.table.values.records_at(k).pluck(:data).first(2)
         results_humanized[k] = v
       end
-      @results = results_humanized.sort_by { |key, _| key.to_f }.to_h
+      @results[0] = results_humanized.sort_by { |key, _| key.to_f }.to_h
     elsif field.Collection?
       results_humanized = {}
-      @results.each do |k, v|
+      @results[0].each do |k, v|
         results_humanized[field.get_linked_table_record(k)] = v
       end
-      @results = results_humanized
+      @results[0] = results_humanized
     elsif field.Signature?
       results_humanized = {'Pas signé' => 0, 'Signé' => 0}
-      @results.each do |k, v|
+      @results[0].each do |k, v|
         if k.blank?
           results_humanized['Pas signé'] += v
         else
           results_humanized['Signé'] += v
         end
       end
-      @results = results_humanized
+      @results[0] = results_humanized
     end
 
     if @graph.sort
       if @graph.desc
-        @results = @results.sort_by { |_, v| -v }.to_h
+        @results[0] = @results[0].sort_by { |_, v| -v }.to_h
       else 
-        @results = @results.sort_by { |_, v| v }.to_h
+        @results[0] = @results[0].sort_by { |_, v| v }.to_h
       end
     end
   end

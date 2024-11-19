@@ -1,7 +1,7 @@
 <div class="mx-auto mt-2 <%= 'w-50' if ['pie','d'].include? @graph.chart_type %>">
   <div class="shadow-sm pt-4 pb-5 px-5">
     <h1 class="mb-4"><%= @graph.name.humanize %></h1>
-    <canvas data-turbo="false" id="chart"></canvas>
+    <canvas data-turbo="false" id="chart0"></canvas>
   </div>
 
   <div class="d-flex float-end mt-4 mb-2">
@@ -25,56 +25,4 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script>
-  var data = {
-    labels: <%= @results.keys.to_json.html_safe %>,
-    datasets: [
-      {
-        label: "<%= "#{['pie', 'doughnut'].include?(@graph.chart_type) ? @graph.name : @graph.table.name.pluralize}" %>",
-        <% if ['pie','doughnut', 'bar', 'polarArea', 'radar'].include?(@graph.chart_type) %>
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 205, 86, 0.2)',
-            'rgba(153, 101, 255, 0.2)',
-            'rgba(255,159,64, 0.2)',
-            'rgba(201, 203, 207, 0.2)',
-          ],
-          borderColor: [
-            'rgb(255, 99, 132)',
-            'rgb(75, 192, 192)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)',
-            'rgb(153, 102, 255)',
-            'rgb(255, 159, 64)',
-            'rgb(201, 203, 207)'
-          ],
-          borderWidth: 1,
-        <% else %>
-          backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(75, 192, 192)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)',
-            'rgb(153, 101, 255)',
-            'rgb(255,159,64)',
-            'rgb(201, 203, 207)'
-          ],
-        <% end %>
-        data: <%= @results.values.to_json.html_safe %>,
-      },
-    ],
-  };
-
-  var configChart = {
-    type: "<%= @graph.chart_type %>",
-    data: data,
-    options: {},
-  };
-
-  var chartElement = document.getElementById("chart");
-  if (chartElement) {
-    new Chart(chartElement, configChart);
-  }
-</script>
+<%= render partial: 'partials/graph_script', locals: {graph: @graph, i: 0} %>
