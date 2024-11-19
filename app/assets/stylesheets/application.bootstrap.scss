@@ -430,3 +430,11 @@ div.d-flex{
 .flex-1{
   flex: 1 1 0% !important;
 }
+
+.scroll-container{
+  overflow-x: auto;
+  cursor: grab;
+  &:active {
+    cursor: grabbing
+  }
+}
