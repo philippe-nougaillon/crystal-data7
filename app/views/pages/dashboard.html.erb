@@ -32,7 +32,7 @@
             datasets: [
               {
                 label: "<%= "#{['pie', 'doughnut'].include?(graph.chart_type) ? graph.name : graph.table.name.pluralize}" %>",
-                <% if ['pie','doughnut', 'bar'].include?(graph.chart_type) %>
+                <% if ['pie','doughnut', 'bar', 'polarArea', 'radar'].include?(graph.chart_type) %>
                   backgroundColor: [
                     'rgba(255, 99, 132, 0.4)',
                     'rgba(75, 192, 192, 0.4)',
