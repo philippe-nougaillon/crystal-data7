@@ -1,0 +1,12 @@
+<h1 class="my-4">
+  <%= t('teams.update_team') %>
+</h1>
+
+<%= render "form", user: @team %>
+
+<br>
+
+<div>
+  <%# link_to t('misc.show'), @team %>
+  <%= link_to t('scaffold.back'), users_path %>
+</div>

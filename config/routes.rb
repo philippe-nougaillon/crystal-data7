@@ -59,14 +59,13 @@ Rails.application.routes.draw do
     resources :graphs do
       get :update_filters, on: :collection
     end
+    resources :teams, except: %i[index show]
 
     namespace :admin do
       get :stats
       get :assistant_logs
       get :create_new_user
       post :create_new_user_do
-      get :new_team
-      post :create_team
     end
     
     get 'show_attrs', to: 'tables#show_attrs' 

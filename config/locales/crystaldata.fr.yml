@@ -66,7 +66,7 @@ fr:
   filters:
     applied_to: "Appliqué à"
     date_hint: "Entrez une date ou une période (date de début / date de fin)"
-    delete_disabled_hint: "Il y a une équipe qui utilise ce filtre. La suppression n'est pas possible"
+    delete_disabled_hint: "Il y a au moins une équipe qui utilise ce filtre. La suppression n'est pas possible"
     criteria: "Critères"
     filters: "Filtres"
     name: "Nom"
@@ -212,6 +212,10 @@ fr:
       unavailable_role: "Rôle indisponible"
       updated: "Objet modifié."
       user_not_found: "Utilisateur inconnu ! Demandez-lui de créer un compte depuis la page d'accueil."
+    team:
+      destroyed: "Équipe supprimée avec succès."
+      created: "Équipe créée avec succès."
+      updated: "Équipe modifiée avec succès."
     user:
       demo_not_authorized: "Vous n'êtes pas autorisé à effectuer cette action avec le compte démonstration. Veuillez créer un compte pour avoir toutes les fonctionnalités."
       not_authorized: "Vous n'êtes pas autorisé à effectuer cette action."
@@ -371,7 +375,7 @@ fr:
     youtube_error: "Pour afficher la vidéo directement, veuillez copier le lien d'intégration de la vidéo YouTube"
     youtube_hint: "Copier le lien YouTube (Partage/Intégration/src=LeLienÀCopier)"
   teams:
-    created: "Équipe créée avec succès."
+    delete_disabled_hint: "Il y a au moins un utilisateur dans cette équipe. La suppression n'est pas possible"
     new: "Nouvelle Équipe"
     filters: "Filtres appliqués à la connexion"
     filter_hint: "Permet de restreindre les données vues par cette équipe"

@@ -1,8 +1,4 @@
-<h1 class="text-dark my-4">
-  <%= t('teams.new') %>
-</h1>
-
-<%= form_with(model: @team, class: "contents", url: "create_team", html: { autocomplete: "off" }) do |f| %>
+<%= form_for(@team) do |f| %>
   <% if @team.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('errors.messages.not_saved', count: @team.errors.count) %></h2>

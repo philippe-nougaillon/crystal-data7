@@ -66,7 +66,7 @@ en:
   filters:
     applied_to: "Applied to"
     date_hint: "Enter a date or period (start date / end date)"
-    delete_disabled_hint: "There is a team that uses this filter. Deletion is not possible"
+    delete_disabled_hint: "There is at least one team that uses this filter. Deletion is not possible"
     criteria: "Criteria"
     filters: "Queries"
     name: "Name"
@@ -213,6 +213,10 @@ en:
       unavailable_role: "Unavailable role"
       updated: "Modified object."
       user_not_found: "Unknown user! Ask him to create an account from the home page."
+    team:
+      destroyed: "Team successfuly removed."
+      created: "Team successfully created."
+      updated: "Team successfully modified."
     user:
       demo_not_authorized: "You are not allowed to carry out this action with the demonstration account.Please create an account to get all features."
       not_authorized: "You are not allowed to perform this action."
@@ -371,7 +375,7 @@ en:
     youtube_hint: "Copy the YouTube link (Share/embed/src = linktocopy)"
     youtube_error: "To display the video directly, please copy the youtube video integration link"
   teams:
-    created: "Team successfully created."
+    delete_disabled_hint: "There is at least one user in this team. Deletion is not possible"
     filters: "Queries applied to connection"
     filter_hint: "Allows you to restrict the data visible by this team"
     new: "New Team"

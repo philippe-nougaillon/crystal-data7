@@ -2,4 +2,20 @@
   <td><b><%= team.name %></b></td>
   <td><%= team.users.pluck(:name).sort.join(', ') %></td>
   <td><%= team.filters.pluck(:name).sort.join(', ') %></td>
+  <td>
+    <div class="d-flex justify-content-end">
+      <% if policy(team).edit? %>
+        <%= link_to t('scaffold.update'), edit_team_path(team), class: 'btn btn-sm btn-outline-primary me-2' %>
+      <% end %>
+      <% if policy(team).destroy? %>
+        <% if team.users.any? %>
+          <p class="btn btn-sm btn-outline-secondary float-end mb-0" title="<%= t('teams.delete_disabled_hint') %>">
+            X
+          </p>
+        <% else %>
+          <%= button_to "X", team, method: :delete, 'data-turbo-confirm': t('scaffold.sure?'), class: 'btn btn-sm btn-outline-danger float-end' %>
+        <% end %>
+      <% end %>
+    </div>
+  </td>
 </tr>
