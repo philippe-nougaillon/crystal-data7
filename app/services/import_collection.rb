@@ -3,11 +3,12 @@ class ImportCollection < ApplicationService
 
   attr_reader :upload, :current_user, :col_sep
 
-  def initialize(upload, current_user, col_sep, table_id)
+  def initialize(upload, current_user, col_sep, table_id, description)
     @upload = upload
     @current_user = current_user
     @col_sep = col_sep
     @table_id = table_id
+    @description = description
   end
 
   def call
@@ -26,6 +27,8 @@ class ImportCollection < ApplicationService
       fields = nil
     end
 
+    description_row = false
+
     begin
       #Save file to local dir
       filename = @upload.original_filename
@@ -40,14 +43,27 @@ class ImportCollection < ApplicationService
             table.organisation_id = current_user.organisation_id
             table.name = filename.split('.csv').first
             if table.save
-              first_data_row = CSV.read(filename_with_path, headers: true, col_sep: @col_sep, encoding: 'UTF-8').first
+              if @description
+                description_row = true
+                descriptions = CSV.read(filename_with_path, headers: true, col_sep: @col_sep, encoding: 'UTF-8').first.first.last.split(@col_sep)
+                first_data_row = CSV.read(filename_with_path, headers: true, col_sep: @col_sep, encoding: 'UTF-8').first(2).last
+              else
+                first_data_row = CSV.read(filename_with_path, headers: true, col_sep: @col_sep, encoding: 'UTF-8').first
+              end
               row.each_with_index do |key, index|
                 sample_data = first_data_row ? first_data_row[index] : ""
-                table.fields.create(name: key.first, row_order: index, datatype: detect_string_type(sample_data))
+                if @description
+                  table.fields.create(name: key.first, row_order: index, datatype: detect_string_type(sample_data), description: descriptions[index])
+                else
+                  table.fields.create(name: key.first, row_order: index, datatype: detect_string_type(sample_data))
+                end
               end
               fields = table.fields
             end
           end
+        elsif description_row
+          description_row = false
+          next
         else
           record_index += 1
           row.each_with_index do | key, index |

@@ -267,6 +267,7 @@ fr:
     actual_position: "Position actuelle"
     add_field: "Ajouter cet attribut"
     add_new: "Ajouter un nouvel Objet à la collection '%{name}'"
+    attribute_description: "Description"
     attribute_name: "Nom de l'attribut"
     attribute_name_hint: "ex: Nom, Prénom, Date de naissance, etc."
     attributes: "Attributs"
@@ -279,7 +280,6 @@ fr:
     clear: "Effacer"
     collaborators: "Collaborateurs"
     collection_not_found: "Aucune relation trouvée"
-    
     copied: "Copié!"
     copy: "Copier"
     datatype: "Type de données"
@@ -304,6 +304,8 @@ fr:
     graph: "Diagramme en barres : visualiser la collection sous forme d'un graphique"
     import:
       column_separator: "Séparateur de colonnes"
+      description?: "Description ?"
+      description_title: "Description des attributs disponible sur la deuxième ligne du fichier ?"
       existing_table?: "Importer dans une collection existante ?"
       existing_table_instructions: "Si vous sélectionnez une collection, les données seront ajoutées à la collection existante (<b>l'ordre des colonnes entre le CSV et la collection existante doivent être identique</b>).<br>Si vous ne sélectionnez pas de collection, une nouvelle collection sera créée."
       instructions: "Le fichier à importer doit être de type <b>CSV</b>, au format <b>UTF-8</b>, et les <b>noms d'attributs sur la première ligne</b>."

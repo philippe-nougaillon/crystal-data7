@@ -1,15 +1,23 @@
 <% unless ['show_details', 'related_tables'].include?(action_name) && @relation.field == field %>
   <th>
-    <%= link_to url_for(params.permit!.merge(sort_by: field.id, order: (params[:order] == 'ASC' ? 'DESC' : 'ASC'))), class: 'text-decoration-none d-flex gap-2' do %>
-      <span class="material-symbols-outlined text-black-50">
-        <%= field.icon %>
-      </span>
-      <span class="text-nowrap text-black">
-        <%= field.name.humanize %>
-        <% if params[:sort_by] == field.id.to_s %>
-          <span class="text-decoration-none text-black-50"><%= (params[:order] == 'ASC') ? '△' : '▽' %></span>
-        <% end %>
-      </span>
-    <% end %>
+    <div class="d-flex flex-column justify-content-start h-100 gap-4">
+      <%= link_to url_for(params.permit!.merge(sort_by: field.id, order: (params[:order] == 'ASC' ? 'DESC' : 'ASC'))), class: 'text-decoration-none d-flex gap-2' do %>
+        <span class="material-symbols-outlined text-black-50">
+          <%= field.icon %>
+        </span>
+        <span class="text-nowrap text-black">
+          <%= field.name.humanize %>
+          <% if params[:sort_by] == field.id.to_s %>
+            <span class="text-decoration-none text-black-50"><%= (params[:order] == 'ASC') ? '△' : '▽' %></span>
+          <% end %>
+        </span>
+      <% end %>
+      
+      <% unless field.description.blank? %>
+        <small class="fw-normal overflow-y-auto" style="max-height: 63px;"><!-- 63px pour que ça fasse 3 lignes sans scroll --> 
+          <%= field.description %>
+        </small>
+      <% end %>
+    </div>
   </th>
 <% end %>

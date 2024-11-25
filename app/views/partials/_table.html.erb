@@ -1,12 +1,12 @@
 <div class="scroll-container">
   <table class="table table-hover border align-middle">
     <thead>
-      <tr class="table-light" style="vertical-align: middle">
+      <tr class="table-light" style="vertical-align: top;">
         <% table.fields.listable.ordered.each_with_index do | field, index | %>
           <%= render partial: 'partials/table_header_cell', locals: {table:, field:, index:} %>
         <% end %>
         <th>
-          <%= link_to url_for(params.permit!.merge(sort_by: 0)), class:'text-decoration-none d-flex gap-2' do %>
+          <%= link_to url_for(params.permit!.merge(sort_by: 0)), class:'text-decoration-none h-100 d-flex gap-2' do %>
             <span class="material-symbols-outlined text-black-50">
               update
             </span>

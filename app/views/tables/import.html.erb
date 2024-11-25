@@ -19,6 +19,11 @@
     <%= t('tables.import.existing_table_instructions').html_safe %>
   </p>
 
+  <div title="<%= t('tables.import.description_title') %>">
+    <%= check_box_tag :description? %>
+    <%= label_tag :description?, t('tables.import.description?') %>
+  </div>
+
 
   <%= submit_tag t('scaffold.import'), class: 'btn btn-outline-primary mt-4' %>
 <% end %>

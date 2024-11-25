@@ -399,7 +399,7 @@ class TablesController < ApplicationController
   end
 
   def import_do
-    result = ImportCollection.new(params[:upload], current_user, params[:col_sep], params[:table_id]).call
+    result = ImportCollection.new(params[:upload], current_user, params[:col_sep], params[:table_id], params[:description?]).call
 
     if result.first
       flash[:notice] = t('notice.table.imported', table: current_user.tables.last.name.humanize)
