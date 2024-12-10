@@ -2,7 +2,7 @@ class AdminController < ApplicationController
   before_action :user_authorized?
 
   def stats
-    @organisations = Organisation.joins(:users).order('users.current_sign_in_at DESC NULLS LAST')
+    @organisations = Organisation.all
   end
 
   def assistant_logs
