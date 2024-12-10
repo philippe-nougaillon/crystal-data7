@@ -11,8 +11,8 @@
           <th>Co</th>
           <th>Tables</th>
           <th>Fields</th>
-          <th>Filtres</th>
           <th>Values</th>
+          <th>Filtres</th>
           <th>Graphs</th>
           <th>Prompts</th>
           <th>Créé depuis</th>
@@ -20,17 +20,6 @@
       </thead>
       <tbody>
         <% @organisations.each do |organisation| %>
-          <tr>
-            <td><b><%= organisation.nom %></b></td>
-            <td colspan=4></td>
-            <td><%= organisation.tables.count %></td>
-            <td><%= organisation.fields.count %></td>
-            <td><%= organisation.filters.count %></td>
-            <td><%# organisation.users.count %></td>
-            <td><%= organisation.graphs.count %></td>
-            <td></td>
-            <td><%= l(organisation.created_at, format: :long) %></td>
-          </tr>
           <% organisation.users.each do |user| %>
             <% tables_count = user.admin? ? organisation.tables.count : Table.where(id: user.team.filters.pluck(:table_id)).includes(:fields).count %>
             <% nbr_values = Value.where(user_id: user.id).count %>
@@ -42,14 +31,26 @@
               <td></td>
               <td class=" <%= user.sign_in_count.positive? ? 'text-danger font-black' : ''  %>"><%= user.sign_in_count %></td>
               <td class=<%= 'text-danger' if tables_count.positive? %>><%= tables_count %></td>
-              <td colspan=2></td>
-              <td class=<%= 'text-danger' if nbr_values.positive? %>><%= nbr_values %></td>
               <td></td>
+              <td class=<%= 'text-danger' if nbr_values.positive? %>><%= nbr_values %></td>
+              <td colspan=2></td>
               <td class=<%= 'text-danger' if nbr_prompts.positive? %>><%= nbr_prompts %></td>
               <td><%= time_ago_in_words user.created_at %></td>
               <%# link_to "[X]", user_path(user), 'data-turbo-method': :delete, class:"btn btn-ghost btn-sm" %>
             </tr>
           <% end %>
+
+          <tr>
+            <td class="fw-bold"><i>Total: <%= organisation.nom %></i></td>
+            <td colspan=4></td>
+            <td class="fw-bold"><%= organisation.tables.count %></td>
+            <td class="fw-bold"><%= organisation.fields.count %></td>
+            <td><%# organisation.users.count %></td>
+            <td class="fw-bold"><%= organisation.filters.count %></td>
+            <td class="fw-bold"><%= organisation.graphs.count %></td>
+            <td></td>
+            <td><%= l(organisation.created_at, format: :long) %></td>
+          </tr>
         <% end %>
       </tbody>
     </table>
