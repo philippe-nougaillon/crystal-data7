@@ -36,6 +36,13 @@ class TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
+        params[:team][:filter_ids].shift
+        params[:team][:filter_ids].each do |filter_id|
+          unless FiltersTeam.find_by(filter_id: filter_id, team_id: @team.id)
+            @team.filters_teams << FiltersTeam.create(filter_id: filter_id, team_id: @team.id)
+          end
+        end
+        FiltersTeam.where(team_id: @team.id).where.not(filter_id: params[:team][:filter_ids]).destroy_all
         format.html { redirect_to users_url, notice: t('notice.team.updated') }
         format.json { render :show, status: :ok, location: @team }
       else
