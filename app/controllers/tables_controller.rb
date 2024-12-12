@@ -470,6 +470,7 @@ class TablesController < ApplicationController
             session[:sort_by] = params[:sort_by]
             session[:order_by] = order_by
           end
+          @pagy, @records = pagy_array(@records)
         end
         @sum = Hash.new(0)
       else
