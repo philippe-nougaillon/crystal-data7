@@ -486,6 +486,7 @@ class TablesController < ApplicationController
     @record_index = params[:record_index]
     @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
     @sum = Hash.new(0)
+    @pagy, @records = pagy_array(@records)
   end
 
   def icalendar
