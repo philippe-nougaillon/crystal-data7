@@ -21,8 +21,8 @@ jobs:
           POSTGRES_DB: test_db
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
-      ports:
-        5432:5432
+        ports:
+          - 5432:5432
       options: >-
         --health-cmd="pg_isready -U postgres"
         --health-interval=10s
