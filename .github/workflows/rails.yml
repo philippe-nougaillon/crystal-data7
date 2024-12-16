@@ -45,7 +45,6 @@ jobs:
 
       - name: Set up database
         run: |
-          cp config/database.yml.ci config/database.yml
           bundle exec rake db:create db:migrate
 
       - name: Run tests
