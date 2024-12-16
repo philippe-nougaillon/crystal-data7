@@ -53,3 +53,13 @@ jobs:
         run: |
           bin/rails db:test:prepare
           bin/rails test test/controllers/pages_controller_test.rb
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test # Attend que les tests réussissent avant d'exécuter ce job
+    if: success() # Ne s'exécute que si les tests réussissent
+
+    steps:
+      - name: Trigger deployment to Hatchbox
+        run: |
+          curl -X GET https://app.hatchbox.io/apps/8114/hooks
