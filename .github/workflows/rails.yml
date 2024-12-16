@@ -43,10 +43,13 @@ jobs:
           gem install bundler
           bundle install
 
-      - name: Set up database
+      - name: Set up database and run tests
+        env:
+          DATABASE_URL: postgres://postgres:password@localhost:5432/test
+          REDIS_URL: redis://localhost:6379/0
+          RAILS_ENV: test
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          PG_USER: postgres
         run: |
           bin/rails db:test:prepare
-
-      - name: Run tests
-        run: |
-          rails test test/system
+          bin/rails test test/system
