@@ -1,0 +1,53 @@
+name: Ruby on Rails CI
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+  pull_request:
+    branches:
+      - main
+      - staging
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:12
+        env:
+        POSTGRES_DB: test_db
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: password
+      ports:
+        - 5432:5432
+      options: >-
+        --health-cmd="pg_isready -U postgres"
+        --health-interval=10s
+        --health-timeout=5s
+        --health-retries=5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.5
+      
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Set up database
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bundle exec rake db:create db:migrate
+
+      - name: Run tests
+        run: |
+          rails test test/system
