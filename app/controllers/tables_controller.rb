@@ -312,7 +312,8 @@ class TablesController < ApplicationController
         redirect_to fill_path(table)
       end
     else
-      redirect_to table, alert: t('notice.value.no_save')
+      url = (params[:commit] == t('scaffold.submit')) ? table : fill_path(table)
+      redirect_to url, alert: t('notice.value.no_save')
     end
   end  
 
