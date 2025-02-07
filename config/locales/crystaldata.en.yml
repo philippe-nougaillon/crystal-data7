@@ -250,6 +250,7 @@ en:
     new: "New"
     save: "Save"
     submit: "Submit"
+    submit_and_refill: "Submit and refill"
     sure?: "Are you sure?"
     time_ago: "%{time} ago"
     update: "Update"

@@ -154,6 +154,9 @@
   <% end %>
   <div class="d-flex flex-wrap align-items-center gap-2 mt-4 <%= aperçu ? 'px-1' : '' %>">
     <%= submit_tag t('scaffold.submit'), id:'submit', class: 'btn btn-outline-primary' %>
+    <% if params[:record_index].blank? %>
+      <%= submit_tag t('scaffold.submit_and_refill'), name: 'submit_and_refill', class: 'btn btn-outline-primary' %>
+    <% end %>
     <%= link_to_unless aperçu, t('scaffold.cancel'), table_path(@table) %>
   </div>
 </div>

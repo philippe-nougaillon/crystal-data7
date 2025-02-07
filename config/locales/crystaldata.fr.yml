@@ -250,6 +250,7 @@ fr:
     new: "Nouveau"
     save: "Enregistrer"
     submit: "Enregistrer"
+    submit_and_refill: "Enregistrer et saisir à nouveau"
     sure?: "Êtes-vous certain.e ?"
     time_ago: "il y a %{time}"
     update: "Modifier"

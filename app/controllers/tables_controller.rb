@@ -301,14 +301,15 @@ class TablesController < ApplicationController
         UserMailer.notification(table, table.value_datas_listable(record_index)).deliver_now
       end
 
+      flash[:notice] = t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
+
       if params[:relation].present? && params[:value].present?
         table = Table.find(Relation.find(params[:relation]).relation_with_id)
-        url = details_path(table.slug, record_index: params[:value])
-        redirect_to url, notice: t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
-      elsif user_signed_in?
-        redirect_to table, notice: t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
+        redirect_to details_path(table.slug, record_index: params[:value])
+      elsif user_signed_in? && params[:commit] == t('scaffold.submit')
+        redirect_to table
       else
-        redirect_to fill_path(table), notice: t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
+        redirect_to fill_path(table)
       end
     else
       redirect_to table, alert: t('notice.value.no_save')
