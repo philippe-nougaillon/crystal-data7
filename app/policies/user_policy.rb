@@ -5,16 +5,32 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    user && user.admin?
+  end
+
   def show?
-    user && record == user
+    index? && record.organisation == user.organisation
+  end
+
+  def edit?
+    show? && (!(user.compte_démo?) || Rails.env.development?)
+  end
+
+  def update?
+    edit?
   end
 
   def destroy?
-    user && (record == user || ['pierreemmanuel.dacquet@gmail.com', 'philippe.nougaillon@gmail.com'].include?(user.email))
+    show? && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def icalendar?
     true
+  end
+
+  def profil?
+    user
   end
 
 end

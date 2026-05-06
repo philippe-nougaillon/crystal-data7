@@ -1,1 +1,1 @@
-Sitemap: https://crystal-data.philnoug.com/sitemap.xml
+Sitemap: https://access.aikku.eu/sitemap.xml

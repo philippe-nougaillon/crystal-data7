@@ -313,3 +313,7 @@ en:
   pagination:
     display_of: "Display of"
     total: "of %{records_count} total"
+  simple_calendar:
+    previous: "navigate_before"
+    next: "navigate_next"
+    week: Week

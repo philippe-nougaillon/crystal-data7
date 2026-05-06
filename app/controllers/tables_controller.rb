@@ -1,13 +1,17 @@
 class TablesController < ApplicationController
-  before_action :set_table, except: [:new, :create, :import, :import_do, :index, :securite]
-  before_action :is_user_authorized?
+  before_action :set_table, except: [:new, :create, :import, :import_do, :index, :securite, :icalendar]
+  before_action :is_user_authorized?, except: %i[ icalendar ]
   before_action :info_notice, only: %i[index show_attrs partages logs securite]
   skip_before_action :authenticate_user!, only: %i[ icalendar fill fill_do ]
 
   # GET /tables
   # GET /tables.json
   def index
-    @tables = current_user.tables.includes(:fields)
+    if current_user.admin?
+      @tables = current_user.tables.includes(:fields)
+    else
+      @tables = Table.where(id: current_user.team.filters.pluck(:table_id)).includes(:fields)
+    end
   end
 
   # GET /tables/1
@@ -21,11 +25,6 @@ class TablesController < ApplicationController
     @filters = {}
     @filter_results = {}
     @values = @table.values
-
-    # Limite les enregistrement aux collecteurs
-    if @table.collecteur?(current_user)
-      @values = @values.where(user_id: current_user.id)
-    end
 
     # recherche les lignes 
     unless params.permit(:search).blank?
@@ -74,8 +73,10 @@ class TablesController < ApplicationController
       end
     end
 
-    if params[:filtre].present?
+    if params[:filtre].present? && current_user.admin?
       @records = @table.filters.find_by(slug: params[:filtre]).get_filtered_records
+    elsif current_user.user?
+      @records = current_user.team.filters.where(table_id: @table.id).first.get_filtered_records
     else
       @records = @filter_results.values.reduce(:&)
     end
@@ -88,11 +89,21 @@ class TablesController < ApplicationController
     end     
 
     if params[:sort_by]
-      # ordre de tri ASC/DESC
-      order_by = (params[:sort_by] == session[:sort_by]) ? ((session[:order_by] == "DESC") ? "ASC" : "DESC") : "ASC"
+      if params[:sort_by] == session[:sort_by]
+        # Si le critère de tri est le même qu'avant, basculer l'ordre
+        order_by = params[:order] == 'ASC' ? 'ASC' : 'DESC'
+      else
+        # Si un nouveau critère de tri est choisi, trier en ordre croissant (ASC)
+        order_by = 'ASC'
+      end
       
       if params[:sort_by] == '0'
         @records = @table.values.records_at(@records).order("values.updated_at #{order_by}").pluck(:record_index).uniq
+      elsif ['Euros', 'Nombre', 'Formule'].include?(Field.find(params[:sort_by]).datatype)
+        @records = @table.values.records_at(@records)
+                        .where(field_id: params[:sort_by])
+                        .order(Arel.sql("CAST(data AS float8) #{order_by}"))
+                        .pluck(:record_index)
       else
         @records = @table.values.records_at(@records)
                                 .where(field_id: params[:sort_by])
@@ -100,8 +111,13 @@ class TablesController < ApplicationController
                                 .pluck(:record_index)
       end
       
+      # Mise à jour de la session pour garder la trace de l'état du tri
       session[:sort_by] = params[:sort_by]
-      session[:order_by] = order_by
+      session[:order_by] = order_by 
+    else
+      # Si pas de paramètre, utiliser les valeurs par défaut (facultatif)
+      session[:sort_by] ||= '0' # Par exemple, tri par '0' au début
+      session[:order_by] ||= 'ASC'
     end
 
     case params[:view]
@@ -121,10 +137,10 @@ class TablesController < ApplicationController
       end
 
     when 'map'
+      @lng = []
+      @lat = []
       if @table.fields.exists?(datatype: ['GPS'])
         @data = []
-        @lng = []
-        @lat = []
         fields_id = @table.fields.where.not(datatype: ['GPS']).first(7).pluck(:id)
         if fields_id.any?
           fields_id.each do |field|
@@ -143,7 +159,10 @@ class TablesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html
+      format.html do
+        @pagy, @records = pagy_array(@records)
+      end
+
       format.xls do
         book = CollectionToXls.new(@table, @records).call
         file_contents = StringIO.new
@@ -282,17 +301,19 @@ class TablesController < ApplicationController
         UserMailer.notification(table, table.value_datas_listable(record_index)).deliver_now
       end
 
+      flash[:notice] = t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
+
       if params[:relation].present? && params[:value].present?
         table = Table.find(Relation.find(params[:relation]).relation_with_id)
-        url = details_path(table.slug, record_index: params[:value])
-        redirect_to url, notice: t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
-      elsif user_signed_in?
-        redirect_to table, notice: t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
+        redirect_to details_path(table.slug, record_index: params[:value])
+      elsif user_signed_in? && params[:commit] == t('scaffold.submit')
+        redirect_to table
       else
-        redirect_to fill_path(table), notice: t('notice.value.updated_created', status: update ? t('notice.value.modifiées') : t('notice.value.ajoutées'))
+        redirect_to fill_path(table)
       end
     else
-      redirect_to table, alert: t('notice.value.no_save')
+      url = (params[:commit] == t('scaffold.submit')) ? table : fill_path(table)
+      redirect_to url, alert: t('notice.value.no_save')
     end
   end  
 
@@ -303,7 +324,7 @@ class TablesController < ApplicationController
         @table.values.where(record_index: record_index).delete_all
         flash[:notice] = t('notice.table.delete_record', record_index: record_index)
       else
-        flash[:alert] = t('notice.table.error_delete_record')
+        flash[:alert] = t('notice.table.error_delete_record_used')
       end
     end  
 
@@ -331,11 +352,10 @@ class TablesController < ApplicationController
   # POST /tables.json
   def create
     @table = Table.new(table_params)
+    @table.organisation = current_user.organisation
 
     respond_to do |format|
       if @table.save
-        @table.tables_users << TablesUser.create(table_id: @table.id, user_id: current_user.id, role: "Propriétaire")
-
         if params[:model_id].present?
           Table.find(params[:model_id]).fields.each do |f|
             field = f.dup
@@ -370,11 +390,7 @@ class TablesController < ApplicationController
   # DELETE /tables/1
   # DELETE /tables/1.json
   def destroy
-    # supprime les champs
-    @table.fields.delete_all
-
     @table.destroy
-
     respond_to do |format|
       format.html { redirect_to tables_url, notice: t('notice.table.destroyed')}
       format.json { head :no_content }
@@ -385,34 +401,14 @@ class TablesController < ApplicationController
   end
 
   def import_do
-    result = ImportCollection.new(params[:upload], current_user, params[:col_sep], params[:table_id]).call
+    result = ImportCollection.new(params[:upload], current_user, params[:col_sep], params[:table_id], params[:description?]).call
 
-    if result
+    if result.first
       flash[:notice] = t('notice.table.imported', table: current_user.tables.last.name.humanize)
     else
       flash[:alert] = t('notice.table.import_failed', error: result.last)
     end
     redirect_to tables_path
-  end
-
-  def add_user_do
-    session[:type_partage] = params[:type_partage]
-
-    if not TablesUser.roles.keys.reject { |e| e == "Propriétaire" }.include?(params[:role])
-      redirect_to add_user_path(@table), alert: t('notice.table.unavailable_role')
-    elsif @user = User.find_by(email: (params[:type_partage] == "text") ? params[:email_text] : params[:email_list])
-      unless @table.users.include?(@user)
-        # ajoute le nouvel utilisateur aux utilisateurs de la table
-        @table.tables_users << TablesUser.create(table_id: @table.id, user_id: @user.id, role: params[:role])
-        UserMailer.notification_nouveau_partage(@user, @table).deliver_now
-        flash[:notice] = t('notice.table.shared', table: @table.name, user: @user.name)
-      else
-        flash[:alert] = t('notice.table.already_shared', table: @table.name, user: @user.name)
-      end
-    else
-      flash[:alert] = t('notice.table.user_not_found')
-    end
-    redirect_to partages_path(@table)
   end
 
   def partages
@@ -455,12 +451,33 @@ class TablesController < ApplicationController
 
   def show_details
     unless params[:record_index].blank?
-      @record_index = params[:record_index]
-      @relation = Relation.where(relation_with_id: @table.id).first
-      if @relation
-        @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
+      if current_user.admin? || current_user.team.filters.where(table_id: @table.id).first.get_filtered_records.include?(params[:record_index].to_i)
+        @record_index = params[:record_index]
+        @relation = Relation.where(relation_with_id: @table.id).first
+        if @relation
+          @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
+
+          if params[:sort_by]
+            # ordre de tri ASC/DESC
+            order_by = (params[:sort_by] == session[:sort_by]) ? ((session[:order_by] == "DESC") ? "ASC" : "DESC") : "ASC"
+            
+            if params[:sort_by] == '0'
+              @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order("values.updated_at #{order_by}").pluck(:record_index)
+            elsif ['Euros', 'Nombre', 'Formule'].include?(Field.find(params[:sort_by]).datatype)
+              @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order(Arel.sql("CAST(data AS float8) #{order_by}")).pluck(:record_index)
+            else
+              @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order("data #{order_by}").pluck(:record_index)
+            end
+            
+            session[:sort_by] = params[:sort_by]
+            session[:order_by] = order_by
+          end
+          @pagy, @records = pagy_array(@records)
+        end
+        @sum = Hash.new(0)
+      else
+        redirect_to request.referrer || root_path, alert: t('notice.user.not_authorized')
       end
-      @sum = Hash.new(0)
     else
       redirect_to @table, alert: t('notice.table.no_value')
     end
@@ -471,27 +488,30 @@ class TablesController < ApplicationController
     @record_index = params[:record_index]
     @records = @relation.field.values.where(data: @record_index).pluck(:record_index)
     @sum = Hash.new(0)
+    @pagy, @records = pagy_array(@records)
   end
 
   def icalendar
     user = User.find_by(slug: params[:user])
+    @table = user.tables.find_by(slug: params[:id])
 
-    date_records = @table.values.joins(:field).where('field.datatype': 'Date').pluck(:record_index)
-    @values = @table.values.where(record_index: date_records)
-    if @table.collecteur?(user)
-      @values = @values.where(user_id: user.id)
+    if user.admin? || (user.team.filters.pluck(:table_id)).include?(@table.id)
+      date_records = @table.values.joins(:field).where('field.datatype': 'Date').pluck(:record_index)
+      @values = @table.values.where(record_index: date_records)
+
+      if params[:filtre].present? && user.admin?
+        records_index = @table.filters.find_by(slug: params[:filtre]).get_filtered_records
+      elsif user.user?
+        records_index = user.team.filters.where(table_id: @table.id).first.get_filtered_records
+      else
+        records_index = @values.pluck(:record_index).uniq
+      end
+
+      filename = "#{@sitename.gsub(' ', '_')}_Agenda_iCal"
+      response.headers['Content-Disposition'] = 'attachment; filename="' + filename + '.ics"'
+      headers['Content-Type'] = "text/calendar; charset=UTF-8"
+      render plain: AgendaToIcalendar.new(@table, records_index).call
     end
-
-    if params[:filtre].present?
-      records_index = @table.filters.find_by(slug: params[:filtre]).get_filtered_records
-    else
-      records_index = @values.pluck(:record_index).uniq
-    end
-
-    filename = "CrystalDATA_Agenda_iCal"
-    response.headers['Content-Disposition'] = 'attachment; filename="' + filename + '.ics"'
-    headers['Content-Type'] = "text/calendar; charset=UTF-8"
-    render plain: AgendaToIcalendar.new(@table, records_index).call
   end
 
   def securite

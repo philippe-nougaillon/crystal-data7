@@ -1,27 +1,27 @@
 require 'dotenv/load'
 
+Organisation.create!([
+  {nom: "Organisation_démo", slug: "a2603914-7707-4b8c-b439-fcb4dcaed70b"}
+])
+
+organisation = Organisation.find_by(slug: "a2603914-7707-4b8c-b439-fcb4dcaed70b")
+
+Team.create!([
+  {name: "Carrefour", organisation_id: organisation.id, slug: "b58071fe-c17b-4fe0-9b95-4f43dad70d2a"}
+])
+
 User.create!([
-  {name: "Démo",      email: "crystaldata.propriétaire@gmail.com", password: ENV['DEMO_PASSWORD'], password_confirmation: ENV['DEMO_PASSWORD']},
-  {name: "CDLecteur", email: "crystaldata.lecteur@gmail.com", password: ENV['LECTEUR_PASSWORD'], password_confirmation: ENV['LECTEUR_PASSWORD']},
-  {name: "CDCollecteur",email: "crystaldata.collecteur@gmail.com", password: ENV['COLLECTEUR_PASSWORD'], password_confirmation: ENV['COLLECTEUR_PASSWORD']},
-  {name: "CDÉditeur", email: "crystaldata.editeur@gmail.com", password: ENV['EDITEUR_PASSWORD'], password_confirmation: ENV['EDITEUR_PASSWORD']}
+  {name: "Démo",        email: "aikku-access.propriétaire@gmail.com", organisation_id: organisation.id, role: "admin", password: ENV['DEMO_PASSWORD'], password_confirmation: ENV['DEMO_PASSWORD']},
+  {name: "AikkuUser",   email: "aikku-access.user@gmail.com", organisation_id: organisation.id, role: "user", password: ENV['LECTEUR_PASSWORD'], password_confirmation: ENV['LECTEUR_PASSWORD'], team_id: 1},
+  # {name: "AikkuCollecteur",email: "aikku-access.collecteur@gmail.com", organisation_id: 1, role: "user", password: ENV['COLLECTEUR_PASSWORD'], password_confirmation: ENV['COLLECTEUR_PASSWORD']},
+  # {name: "AikkuÉditeur",   email: "aikku-access.editeur@gmail.com", organisation_id: 1, role: "user", password: ENV['EDITEUR_PASSWORD'], password_confirmation: ENV['EDITEUR_PASSWORD']}
 ])
 
 Table.create!([
-  {name: "Article",      notification: true, lifo: true, show_on_startup_screen: false, record_index: 2, slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"},
-  {name: "Intervention", notification: true, lifo: true, show_on_startup_screen: true, record_index: 3, slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"},
-  {name: "Technicien",   notification: true, lifo: true, show_on_startup_screen: false, record_index: 3, slug: "e108afdb-362a-4395-ad09-867e44f2a5b0"},
-  {name: 'Frais',        notification: true, lifo: true, show_on_startup_screen: false, record_index: 7, slug: '7d75f3ca-a4e4-4280-917f-0f43f63318e2'}
-])
-
-TablesUser.create!([
-  {table_id: 1, user_id: 1, role: "Propriétaire"},
-  {table_id: 2, user_id: 1, role: "Propriétaire"},
-  {table_id: 3, user_id: 1, role: "Propriétaire"},
-  {table_id: 4, user_id: 1, role: "Propriétaire"},
-  {table_id: 2, user_id: 2, role: "Lecteur"},
-  {table_id: 2, user_id: 3, role: "Collecteur"},
-  {table_id: 2, user_id: 4, role: "Éditeur"},
+  {name: "Article",      organisation_id: organisation.id, notification: true, lifo: true, show_on_startup_screen: false, record_index: 2, slug: "0f002a24-ef0b-4eec-8476-0392d6b21077"},
+  {name: "Intervention", organisation_id: organisation.id, notification: true, lifo: true, show_on_startup_screen: true, record_index: 3, slug: "b7ad6668-c5e9-4d2e-8eec-8ceb396d088a"},
+  {name: "Technicien",   organisation_id: organisation.id, notification: true, lifo: true, show_on_startup_screen: false, record_index: 3, slug: "e108afdb-362a-4395-ad09-867e44f2a5b0"},
+  {name: 'Frais',        organisation_id: organisation.id, notification: true, lifo: true, show_on_startup_screen: false, record_index: 7, slug: '7d75f3ca-a4e4-4280-917f-0f43f63318e2'}
 ])
 
 Field.create!([
@@ -181,4 +181,9 @@ Filter.create!([
   {name: "Nouvelles installations pour Carrefour", table_id: 2, user_id: 1, 
     query: {"9"=>{"start"=>"", "end"=>""},"10"=>"Carrefour","11"=>["Installation"],"12"=>"","15"=>"","16"=>"","17"=>"","18"=>["Nouveau"]}, 
     slug: "88ef1c15-87a6-44ad-9a81-5aa5ec1b6ebf"}
+])
+
+
+FiltersTeam.create!([
+  {filter_id: 2, team_id: 1}
 ])

@@ -1,5 +1,5 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "https://crystal-data.philnoug.com"
+SitemapGenerator::Sitemap.default_host = "https://access.aikku.eu"
 
 SitemapGenerator::Sitemap.create do
   # Put links creation logic here.

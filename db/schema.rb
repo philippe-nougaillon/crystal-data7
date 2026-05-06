@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_25_082603) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,6 +92,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
     t.integer "operation"
     t.string "slug"
     t.integer "visibility", default: 0
+    t.string "description"
     t.index ["name"], name: "index_fields_on_name"
     t.index ["slug"], name: "index_fields_on_slug", unique: true
     t.index ["table_id"], name: "index_fields_on_table_id"
@@ -109,6 +110,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
     t.index ["user_id"], name: "index_filters_on_user_id"
   end
 
+  create_table "filters_teams", force: :cascade do |t|
+    t.bigint "filter_id", null: false
+    t.bigint "team_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["filter_id"], name: "index_filters_teams_on_filter_id"
+    t.index ["team_id"], name: "index_filters_teams_on_team_id"
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -118,6 +128,25 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "graphs", force: :cascade do |t|
+    t.bigint "organisation_id", null: false
+    t.bigint "field_id", null: false
+    t.bigint "filter_id"
+    t.string "name"
+    t.string "chart_type"
+    t.boolean "sort", default: false
+    t.boolean "desc", default: false
+    t.boolean "group", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "poids", default: 0
+    t.boolean "visibility", default: true
+    t.string "slug"
+    t.index ["field_id"], name: "index_graphs_on_field_id"
+    t.index ["filter_id"], name: "index_graphs_on_filter_id"
+    t.index ["organisation_id"], name: "index_graphs_on_organisation_id"
   end
 
   create_table "logs", force: :cascade do |t|
@@ -152,9 +181,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.datetime "last_notif_sent_at"
+    t.string "slug"
     t.index ["field_id"], name: "index_notifications_on_field_id"
     t.index ["table_id"], name: "index_notifications_on_table_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "organisations", force: :cascade do |t|
+    t.string "nom"
+    t.string "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "prompts", force: :cascade do |t|
@@ -191,17 +228,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
     t.integer "record_index", default: 0, null: false
     t.boolean "show_on_startup_screen", default: false
     t.boolean "public"
+    t.bigint "organisation_id", null: false
+    t.index ["organisation_id"], name: "index_tables_on_organisation_id"
     t.index ["slug"], name: "index_tables_on_slug", unique: true
   end
 
-  create_table "tables_users", force: :cascade do |t|
-    t.integer "table_id"
-    t.integer "user_id"
+  create_table "teams", force: :cascade do |t|
+    t.string "name"
+    t.bigint "organisation_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "role", default: 0
-    t.index ["table_id"], name: "index_tables_users_on_table_id"
-    t.index ["user_id"], name: "index_tables_users_on_user_id"
+    t.string "slug"
+    t.index ["organisation_id"], name: "index_teams_on_organisation_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -219,8 +257,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
+    t.integer "role", default: 0
+    t.bigint "organisation_id"
+    t.bigint "team_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["organisation_id"], name: "index_users_on_organisation_id"
     t.index ["slug"], name: "index_users_on_slug", unique: true
+    t.index ["team_id"], name: "index_users_on_team_id"
   end
 
   create_table "values", force: :cascade do |t|
@@ -240,6 +283,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "filters", "tables"
   add_foreign_key "filters", "users"
+  add_foreign_key "filters_teams", "filters"
+  add_foreign_key "filters_teams", "teams"
+  add_foreign_key "graphs", "fields"
+  add_foreign_key "graphs", "filters"
+  add_foreign_key "graphs", "organisations"
   add_foreign_key "logs", "fields"
   add_foreign_key "logs", "users"
   add_foreign_key "mail_logs", "users"
@@ -249,7 +297,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_085632) do
   add_foreign_key "prompts", "tables"
   add_foreign_key "prompts", "users"
   add_foreign_key "relations", "fields"
-  add_foreign_key "tables_users", "tables"
-  add_foreign_key "tables_users", "users"
+  add_foreign_key "tables", "organisations"
+  add_foreign_key "teams", "organisations"
+  add_foreign_key "users", "organisations"
+  add_foreign_key "users", "teams"
   add_foreign_key "values", "users"
 end

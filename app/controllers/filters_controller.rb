@@ -15,6 +15,7 @@ class FiltersController < ApplicationController
   # GET /filters/new
   def new
     @filter = Filter.new
+    @teams = current_user.organisation.teams
   end
 
   # GET /filters/1/edit
@@ -62,12 +63,49 @@ class FiltersController < ApplicationController
 
   def query
     params["[query]"] ||= @filter.query
-    @filter.update(query: params["[query]"])
+    if current_user.compte_démo? && !Rails.env.development? 
+      flash[:alert] = t('notice.user.demo_not_authorized')
+    else
+      @filter.update(query: params["[query]"])
+    end
     @records = @filter.get_filtered_records
+
+    if params[:sort_by]
+      if params[:sort_by] == session[:sort_by]
+        # Si le critère de tri est le même qu'avant, basculer l'ordre
+        order_by = params[:order] == 'ASC' ? 'ASC' : 'DESC'
+      else
+        # Si un nouveau critère de tri est choisi, trier en ordre croissant (ASC)
+        order_by = 'ASC'
+      end
+      
+      if params[:sort_by] == '0'
+        @records = @filter.table.values.records_at(@records).order("values.updated_at #{order_by}").pluck(:record_index).uniq
+      elsif ['Euros', 'Nombre', 'Formule'].include?(Field.find(params[:sort_by]).datatype)
+        @records = @filter.table.values.records_at(@records)
+                        .where(field_id: params[:sort_by])
+                        .order(Arel.sql("CAST(data AS float8) #{order_by}"))
+                        .pluck(:record_index)
+      else
+        @records = @filter.table.values.records_at(@records)
+                                .where(field_id: params[:sort_by])
+                                .order("data #{order_by}")
+                                .pluck(:record_index)
+      end
+      
+      # Mise à jour de la session pour garder la trace de l'état du tri
+      session[:sort_by] = params[:sort_by]
+      session[:order_by] = order_by 
+    else
+      # Si pas de paramètre, utiliser les valeurs par défaut (facultatif)
+      session[:sort_by] ||= '0' # Par exemple, tri par '0' au début
+      session[:order_by] ||= 'ASC'
+    end
 
     respond_to do |format|
       format.html do
         @sum = Hash.new(0)
+        @pagy, @records = pagy_array(@records) if @records
       end
 
       format.xls do
@@ -114,7 +152,7 @@ class FiltersController < ApplicationController
         when 'index'
           t('notice.field.index')
         when 'query'
-          if params.keys.count == 3 # ne pas afficher l'aide quand on applique le filtre/report
+          if params.keys.count == 3 # ne pas afficher l'aide quand on applique la requête
             t('notice.filter.query')
           end
         end

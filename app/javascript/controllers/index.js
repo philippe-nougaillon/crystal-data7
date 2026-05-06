@@ -7,11 +7,17 @@ import { application } from "./application"
 import GeolocationController from "./geolocation_controller"
 application.register("geolocation", GeolocationController)
 
+import GraphController from "./graph_controller"
+application.register("graph", GraphController)
+
 import PartageController from "./partage_controller"
 application.register("partage", PartageController)
 
 import TypeController from "./type_controller"
 application.register("type", TypeController)
+
+import UserController from "./user_controller"
+application.register("user", UserController)
 
 import WeatherController from "./weather_controller"
 application.register("weather", WeatherController)

@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: '"CrystalDATA" <contact@philnoug.com>'
+  default from: '"AIKKU ACCESS" <no-reply@aikku.eu>'
   layout 'mailer'
 end

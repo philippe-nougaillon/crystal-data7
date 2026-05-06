@@ -6,7 +6,7 @@
   padding-left: 1rem;
   margin-top: 70px;
   @media (min-width: 992px) {
-    margin-left: 80px;
+    margin-left: 95px;
     padding-right: 2rem;
     padding-left: 2rem;
     margin-top: 0px;
@@ -20,7 +20,7 @@
     font-size: 1.5rem;
   }
   @media (min-width: 576px) {
-    width: 80px;
+    width: 95px;
     i{
       font-size: 2rem;
     }
@@ -111,6 +111,11 @@ div.d-flex{
 .w-sm-50{
   @media (min-width: 576px) {
     width: 50% !important;
+  }
+}
+.w-sm-33 {
+  @media (min-width: 576px) {
+    width: 33% !important;
   }
 }
 .w-sm-25{
@@ -366,4 +371,70 @@ div.d-flex{
   padding-bottom: 20px;
   overflow-y: auto;
   // box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+// Avatar
+
+.avatar {
+  position: relative;
+  display: inline-flex;
+  >div {
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+  &.avatar-placeholder>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  &.online:before {
+    content: "";
+    position: absolute;
+    z-index: 10;
+    display: block;
+    border-radius: 9999px;
+    --tw-bg-opacity: 1;
+    background-color: hsl(158 64% 52%);
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: white;
+    width: 15%;
+    height: 15%;
+    top: 7%;
+    right: 7%;
+  }
+}
+
+.hover-text-white:hover{
+  color: white !important;
+}
+
+.hover-text-danger:hover{
+  color: $danger !important;
+}
+
+.hover-text-secondary:hover {
+  color: $secondary !important;
+}
+
+.text-gray-300{
+  color: $gray-300 !important;
+}
+
+.flex-1{
+  flex: 1 1 0% !important;
+}
+
+.scroll-container{
+  overflow-x: auto;
+  cursor: grab;
+  &:active {
+    cursor: grabbing
+  }
 }

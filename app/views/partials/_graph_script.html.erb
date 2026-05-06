@@ -1,0 +1,53 @@
+<script>
+  var data<%= i %> = {
+    labels: <%= @results[i].keys.to_json.html_safe %>,
+    datasets: [
+      {
+        label: "<%= "#{['pie', 'doughnut'].include?(graph.chart_type) ? graph.name : graph.table.name.pluralize}" %>",
+        <% if ['pie','doughnut', 'bar', 'polarArea', 'radar'].include?(graph.chart_type) %>
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.4)',
+            'rgba(75, 192, 192, 0.4)',
+            'rgba(54, 162, 235, 0.4)',
+            'rgba(255, 205, 86, 0.4)',
+            'rgba(153, 101, 255, 0,4)',
+            'rgba(255,159,64, 0.4)',
+            'rgba(201, 203, 207, 0.4)',
+          ],
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+            'rgb(153, 102, 255)',
+            'rgb(255, 159, 64)',
+            'rgb(201, 203, 207)'
+          ],
+          borderWidth: 1,
+        <% else %>
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+            'rgb(153, 101, 255)',
+            'rgb(255,159,64)',
+            'rgb(201, 203, 207)'
+          ],
+        <% end %>
+        data: <%= @results[i].values.to_json.html_safe %>,
+      },
+    ],
+  };
+
+  var configChart<%= i %> = {
+    type: "<%= graph.chart_type %>",
+    data: data<%= i %>,
+    options: {},
+  };
+
+  var chartElement<%= i %> = document.getElementById("chart<%= i %>");
+  if (chartElement<%= i %>) {
+    new Chart(chartElement<%= i %>, configChart<%= i %>);
+  }
+</script>

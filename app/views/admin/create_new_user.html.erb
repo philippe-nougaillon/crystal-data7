@@ -1,0 +1,56 @@
+<h1 class="my-4">
+  <%= t('users.new') %>
+</h1>
+
+<%= form_with(model: @user, class: "contents", url: "create_new_user_do", html: { autocomplete: "off" }) do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(@user.errors.count, "erreur") %> empêche(nt) cet utilisateur d'être sauvegardé :</h2>
+
+      <ul>
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mt-4">
+    <%= form.label :name, t('users.name_pseudo'), style: "display: block" %>
+    <%= form.text_field :name, class: 'form-control w-50', required: true %>
+  </div>
+
+  <div class="mt-4">
+    <%= form.label :email, t('misc.email'), style: "display: block" %>
+    <%= form.email_field :email, class: 'form-control w-50', required: true %>
+  </div>
+
+  <div class="mt-4">
+    <%= form.label :password, style: "display: block" %>
+    <%= form.password_field :password, class: 'form-control w-50' %>
+  </div>
+  <div class="mt-4">
+    <%= form.label :password_confirmation, style: "display: block" %>
+    <%= form.password_field :password_confirmation, class: 'form-control w-50' %>
+  </div>
+
+  <div data-controller="user">
+    <div class="my-4">
+      <%= form.label :role, t('misc.role') %>
+      <%= form.select :role, options_for_select(User.roles.keys), {}, class: 'form-select', data: { 'user-target': 'source', action: "change->user#change" } %>
+    </div>
+
+    <div data-user-target='team' class="my-4">
+      <%= form.label :team_id, t('misc.team') %>
+      <%= form.select :team_id, options_from_collection_for_select(current_user.organisation.teams, :id, :name, @user.team_id), {include_blank: true, required: true}, class: 'form-select' %>
+    </div>
+  </div>
+
+  <div class="inline">
+    <%= form.submit t('users.create'), class: "btn btn-outline-primary" %>
+  </div>
+<% end %>
+
+<div class="mt-4">
+  <%= link_to t('scaffold.cancel'), users_path %>
+</div>

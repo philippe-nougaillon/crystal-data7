@@ -26,7 +26,7 @@
 </p>
 
 <div class="input-group mb-3">
-  <input type="text" class="form-control" value=<%= root_url + icalendar_table_path(@table, user: current_user.slug, filtre: params[:filtre]) %> id="calendar-clipboard">
+  <input type="text" class="form-control" value=<%= root_url.tr(I18n.locale.to_s.insert(0, "/"), "")  + icalendar_table_path(@table, user: current_user.slug, filtre: params[:filtre]) %> id="calendar-clipboard">
   <span id="myTooltip" onclick="copyLink()" class="btn btn-outline-secondary" style="cursor: pointer;">
     <%= t('tables.copy') %>
   </span>

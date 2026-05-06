@@ -1,0 +1,12 @@
+<h1 class="my-4">
+  <%= t('users.update_user') %>
+</h1>
+
+<%= render "form", user: @user %>
+
+<br>
+
+<div>
+  <%# link_to t('misc.show'), @user %>
+  <%= link_to t('scaffold.back'), users_path %>
+</div>

@@ -20,9 +20,9 @@
             <%= text_field_tag "[query][#{field.id}]", params["[query]"].try(:[], field.id.to_s), class: 'form-control w-100', autofocus: index.zero? %>
             <% hint = t('filters.numeric_hint') %>
           <% elsif field.Date? %>
-            <div class="d-flex gap-4 mb-0">
-              <%= date_field_tag "[query][#{field.id}][start]", params["[query]"].try(:[], field.id.to_s).try(:[], :start), class: 'form-control w-100', autofocus: index.zero? %>
-              <%= date_field_tag "[query][#{field.id}][end]", params["[query]"].try(:[], field.id.to_s).try(:[], :end), class: 'form-control w-100' %>
+            <div class="d-flex flex-column gap-2 mb-0">
+              <div><%= t('tables.navbar.from') %> <%= date_field_tag "[query][#{field.id}][start]", params["[query]"].try(:[], field.id.to_s).try(:[], :start), class: 'form-control w-100', autofocus: index.zero? %></div>
+              <div><%= t('tables.navbar.to') %> <%= date_field_tag "[query][#{field.id}][end]", params["[query]"].try(:[], field.id.to_s).try(:[], :end), class: 'form-control w-100' %></div>
             </div>
             <% hint = t('filters.date_hint') %>
           <% elsif field.Liste? %>

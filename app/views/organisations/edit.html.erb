@@ -1,0 +1,10 @@
+<% content_for :title, "Modifier organisation" %>
+
+<h1>Modifier organisation</h1>
+
+<%= render "form", organisation: @organisation %>
+
+<div>
+  <%= link_to "Voir", @organisation %> |
+  <%= link_to "Retour", organisation_path %>
+</div>

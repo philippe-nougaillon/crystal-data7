@@ -1,0 +1,41 @@
+<div class="my-4 d-flex align-items-center text-warning gap-2">
+  <h1 class="mb-0">
+    <%= t('graphs.title') %>
+  </h1>
+</div>
+
+<div class="overflow-x-auto">
+  <table class="table table-hover border align-middle">
+    <thead>
+      <tr class="table-light">
+        <th><%= t('scaffold.name') %></th>
+        <th><%= t('misc.type') %></th>
+        <th><%= t('graphs.source') %></th>
+        <th><%= t('tables.filter') %></th>
+        <th style="text-align: center; white-space: nowrap"><%= t('graphs.dashboard?') %></th>
+        <th colspan=2></th>
+      </tr>
+    </thead>
+
+    <tbody id="graphs">
+      <% if @graphs.any? %>
+        <% @graphs.each do |graph| %>
+          <%= render graph %>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan=7>
+            <i>
+              <%= t('notifications.no_notification') %>
+            </i>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+
+  </table>
+</div>
+
+<%= link_to new_graph_path, class: 'btn btn-outline-primary me-2' do %>
+  <%= t('graphs.new') %>
+<% end %>

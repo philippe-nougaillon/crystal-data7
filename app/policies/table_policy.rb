@@ -10,11 +10,11 @@ class TablePolicy < ApplicationPolicy
   end
 
   def show?
-    record.instance_of?(Table) && record.users.include?(user)
+    record.instance_of?(Table) && (user.admin? || (user.team.filters.pluck(:table_id)).include?(record.id))
   end
 
   def new?
-    index? && (!(user.compte_démo?) || Rails.env.development?)
+    index? && user.admin? && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def create?
@@ -38,7 +38,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def fill?
-    record.public? || (record.users.include?(user) && record.role_number(user) >= 1)
+    record.public? || (record.users.include?(user) && (user.admin? || (user.team.filters.pluck(:table_id)).include?(record.id)))
   end
 
   def fill_do?
@@ -50,7 +50,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def import?
-    user && (!(user.compte_démo?) || Rails.env.development?)
+    user && user.admin? && (!(user.compte_démo?) || Rails.env.development?)
   end
 
   def import_do?
@@ -78,19 +78,15 @@ class TablePolicy < ApplicationPolicy
   end
 
   def show_details?
-    record.users.include?(user)
+    record.users.include?(user) && (user.admin? || (user.team.filters.pluck(:table_id)).include?(record.id))
   end
 
   def related_tables?
     show_details?
   end
 
-  def icalendar?
-    true
-  end
-
   def securite?
-    user
+    user && user.admin?
   end
 
 end

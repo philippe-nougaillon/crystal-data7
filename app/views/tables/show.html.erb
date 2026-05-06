@@ -21,13 +21,6 @@
               <% end %>
             </li>
           <% end %>
-          <% if policy(@table).partages? %>
-            <li class="nav-item">
-              <%= link_to partages_path(@table), class: 'nav-link', title: t('tables.navbar.sharing_title', table_name: @table.name) do %>
-                <%= t('tables.navbar.sharing') %>
-              <% end %>
-            </li>
-          <% end %>
           <% if policy(@table).logs? %>
             <p class="mb-0">|</p>
             <li class="nav-item">
@@ -88,14 +81,14 @@
           </div>
         <% end %>
       <% end %>
-      <% if @table.filters.any? %>
+      <% if @table.filters.any? && current_user.admin? %>
         <div>
-          <%= label_tag :filtre, t('tables.navbar.filter') %>
+          <%= label_tag :filtre, t('tables.filter') %>
           <%= select_tag :filtre, options_from_collection_for_select(@table.filters, 'slug', 'name', params[:filtre]), include_blank: true, class: 'form-select', onchange: 'this.form.submit()' %>
         </div>
       <% end %>
       <% if policy(@table).fill? || current_user.compte_démo? %>
-        <%= link_to "(+) #{@table.name}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end', title: t('tables.navbar.add_new_object', table_name: @table.name) %>
+        <%= link_to "(+) #{@table.name}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end', title: t('tables.navbar.new_object', table_name: @table.name) %>
       <% end %>
     </div>
 
@@ -147,12 +140,20 @@
     <% if @records.any? %>
       <%= render partial: 'map', locals: { records: @records, table: @table } %>
     <% else %>
-      <p>Aucune donnée à afficher sur la carte.</p>
+      <p><%= t('tables.no_data_map') %></p>
     <% end %>
   <% when 'graph' %>
     <%= render partial: 'graph', locals: { records: @records, table: @table } %>
   <% else %>
     <%= render partial: 'calendar', locals: { records: @records, table: @table } %>
+  <% end %>
+
+  <!-- Déjà affiché dans _table.html.erb pour coller avec l'export -->
+  <% unless params[:view] == 'table' %>
+    <div class="flex-fill mb-0">
+      <%== pagy_info(@pagy, item_name: @table.name.pluralize.humanize) %>
+      <%== pagy_bootstrap_nav(@pagy) %>
+    </div>
   <% end %>
 <% else %>
   <p><%= t('tables.no_record') %></p>

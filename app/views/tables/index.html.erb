@@ -7,8 +7,12 @@
 <div class="overflow-x-auto">
   <table class="table table-hover w-100 border align-middle">
     <thead>
-      <tr class="table-secondary">
+      <tr class="table-light">
+        <% if current_user.admin? && @tables.where(show_on_startup_screen: true).or(@tables.where(public: true)).any? %>
+          <th></th>
+        <% end %>
         <th><%= t('scaffold.name') %></th>
+        <th><%= t('tables.number') %></th>
         <th><%= t('scaffold.updated_at') %></th>
         <th></th>
         <th></th>
@@ -19,22 +23,32 @@
       <% if @tables.any? %>
         <% @tables.each do | table | %>
           <tr>
-            <td>
-              <%= link_to table.name, table, class: ' text-primary' %>
-              <% if table.show_on_startup_screen? %>
-                <span class="material-symbols-outlined text-primary fs-6">
-                  diamond
-                </span>
-              <% end %>
-              <% if table.public? %>
-                <%= link_to fill_path(table), target: :_blank do %>
-                  <span class="material-symbols-outlined text-secondary" title="<%= t('tables.public_form_tooltip') %>">
-                    public
-                  </span>
+            <% if current_user.admin? && @tables.where(show_on_startup_screen: true).or(@tables.where(public: true)).any? %>
+              <td>
+                <% if table.show_on_startup_screen? %>
+                  <%= link_to table.name do %>
+                    <span class="material-symbols-outlined text-primary fs-6">
+                      home
+                    </span>
+                  <% end %>
                 <% end %>
-              <% end %>
+                <% if table.public? %>
+                  <%= link_to fill_path(table), target: :_blank do %>
+                    <span class="material-symbols-outlined text-primary fs-6" title="<%= t('tables.public_form_tooltip') %>">
+                      public
+                    </span>
+                  <% end %>
+                <% end %>
+              </td>
+            <% end%>
+            <td>
+              <%= link_to table.name, table, class: 'text-primary' %>
               <br>
-              <%= table.field_names %></td>
+              <%= table.field_names %>
+            </td>
+            <td>
+              <%= table.record_index %>
+            </td>
             <td>
               <%= t('scaffold.time_ago', time: time_ago_in_words(table.values.maximum(:updated_at))) unless table.size.zero? %>
             </td>
@@ -73,11 +87,15 @@
 </div>
 
 <div class="mt-3">
-  <%= link_to new_table_path, class: 'btn btn-outline-primary me-2' do %>
-    <%= t('tables.new') %>
+  <% if policy(Table).new? %>
+    <%= link_to new_table_path, class: 'btn btn-outline-primary me-2' do %>
+      <%= t('tables.new') %>
+    <% end %>
   <% end %>
 
-  <%= link_to import_path, class: 'btn btn-outline-info' do %>
-    <%= t('scaffold.import') %>
+  <% if policy(Table).import? %>
+    <%= link_to import_path, class: 'btn btn-outline-info' do %>
+      <%= t('scaffold.import') %>
+    <% end %>
   <% end %>
 </div>

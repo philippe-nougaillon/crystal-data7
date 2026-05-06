@@ -9,28 +9,13 @@
         <ul class="navbar-nav">
           <li class="nav-item ps-1">
             <%= link_to user_signed_in? ? (current_user.favorite_table ? table_path(current_user.favorite_table) : tables_path) : new_user_session_path, class: 'text-decoration-none link-black' do %>
-              <%= image_tag 'icons/crystaldata.png', style: "height: 2rem" %>
-              CrystalDATA
+            <%= image_tag 'icons/aikku.png', style: "height: 2rem" %>
+            ACCESS
             <% end %>
           </li>
         </ul>
       </h1>
     <% end %>
-    <div class="mt-2">
-      <% if I18n.locale == :fr %>
-        <%= link_to url_for(request.params.merge(locale: 'en')) do %>
-          <span class="material-symbols-outlined" style="letter-spacing: -12px;">
-            language language_french
-          </span>
-        <% end %>
-      <% else %>
-        <%= link_to url_for(request.params.merge(locale: 'fr')) do %>
-          <span class="material-symbols-outlined" style="letter-spacing: -12px;">
-            language language_us
-          </span>
-        <% end %>
-      <% end %>
-    </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -42,71 +27,75 @@
               <span class="material-symbols-outlined">
                 house
               </span>
-              Accueil
+              <%= t('misc.home') %>
             <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to tables_path, title: "Liste des Objets", class: 'nav-link link-dark d-flex align-items-center gap-1' do %>
+            <%= link_to tables_path, class: 'nav-link link-dark d-flex align-items-center gap-1' do %>
               <span class="material-symbols-outlined">
                 database
               </span>
-              Objets
+              <%= t('tables.title') %>
             <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to filters_path, title: "Liste des filtres", class: 'nav-link link-success d-flex align-items-center gap-1' do %>
+            <%= link_to filters_path, class: 'nav-link link-success d-flex align-items-center gap-1' do %>
               <span class="material-symbols-outlined">
                 Tune
               </span>
-              Filtres
+              <%= t('filters.filters') %>
             <% end %>
           </li>
+
           <li class="nav-item">
-            <%= link_to notifications_path, title: "Liste des Notifications", class: 'nav-link link-warning d-flex align-items-center gap-1' do %>
+            <%= link_to graphs_path, class: 'nav-link link-success d-flex align-items-center gap-1' do %>
+              <span class="material-symbols-outlined">
+                analytics
+              </span>
+              <%= t('misc.graphs') %>
+            <% end %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to dashboard_path, class: 'nav-link link-secondary d-flex align-items-center gap-1', 'data-turbo': false do %>
+              <span class="material-symbols-outlined">
+                dashboard
+              </span>
+              <%= t('misc.dashboard') %>
+            <% end %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to notifications_path, class: 'nav-link link-warning d-flex align-items-center gap-1' do %>
               <span class="material-symbols-outlined">
                 notifications_active
               </span>
-              Notifs
+              <%= t('misc.notifications_navbar') %>
             <% end %>
           </li>
-          <!--
+
           <li class="nav-item">
-            <%= link_to graphs_path, title: "Graphiques", class: 'nav-link link-secondary d-flex align-items-center gap-1' do %>
-              <span class="material-symbols-outlined">
-                Query_stats
-              </span>
-              Graphiques
-            <% end %>
-          </li>
-          -->
-          <li class="nav-item">
-            <%= link_to securite_tables_path, title: "Liste des accès", class: 'nav-link link-danger d-flex align-items-center gap-1' do %>
-              <span class="material-symbols-outlined">
-                lock
-              </span>
-              <%= t('security.title') %>
-            <% end %>
-          </li>
-          <li class="nav-item">
-            <%= link_to assistant_path, title: "Assistant", class: 'nav-link link-info d-flex align-items-center gap-1' do %>
+            <%= link_to assistant_path, class: 'nav-link link-info d-flex align-items-center gap-1' do %>
               <span class="material-symbols-outlined">
                 family_star
               </span>
               <%= t('misc.assistant') %>
             <% end %>
           </li>
+          <!--
           <li class="nav-item">
-            <%= link_to current_user, title: "Graphiques", class: 'nav-link link-secondary d-flex align-items-center gap-1' do %>
+            <%= link_to users_path, class: 'nav-link link-secondary d-flex align-items-center gap-1' do %>
               <span class="material-symbols-outlined">
                 badge
               </span>
               <%= t('misc.profile') %>
             <% end %>
           </li>
+          -->
         <% end %>
 
         <li class="nav-item">
-          <%= link_to a_propos_path, title: "À Propos de CrystalDATA", class: 'nav-link link-secondary d-flex align-items-center gap-1' do %>
+          <%= link_to a_propos_path, class: 'nav-link link-secondary d-flex align-items-center gap-1' do %>
             <span class="material-symbols-outlined">
               help
             </span>
@@ -114,37 +103,66 @@
           <% end %>
         </li>
 
-        <% if user_signed_in? %>
-          <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger btn-sm', 'data-turbo': false, title: 'Se déconnecter' do %>
-            <%= t('misc.sign_out') %>
+        <div class="mt-2">
+          <% if I18n.locale == :fr %>
+            <%= link_to url_for(request.params.merge(locale: 'en')), class: 'text-black-50', 'data-turbo': params[:action] != 'dashboard' do %>
+              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
+                language language_french
+              </span>
+            <% end %>
+          <% else %>
+            <%= link_to url_for(request.params.merge(locale: 'fr')), class: 'text-black-50', 'data-turbo': params[:action] != 'dashboard' do %>
+              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
+                language language_us
+              </span>
+            <% end %>
           <% end %>
+        </div>
+
+        <% if user_signed_in? %>
+          <li class="nav-item dropdown d-flex align-items-center">
+            <label tabindex="0" class="avatar online avatar-placeholder" style="cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
+              <% if current_user.avatar.attached? %>
+                <div style="width: 2rem; border-radius: 100%; background-color: rgb(100 116 139);">
+                  <%= image_tag(current_user.avatar, size:'25x25') %>
+                </div>
+              <% else %>
+                <div style="width: 2rem; border-radius: 100%; background-color: rgb(15 23 42);">
+                  <span class="fs-6 text-light"><%= current_user.name.first.humanize %></span>
+                </div>
+              <% end %>
+            </label>
+            <ul class="dropdown-menu py-0">
+              <li class="text-center text-black my-2" title= <%= t('navbar.profile_title') %>>
+                <%= current_user.name %> (<%= current_user.role.humanize %>)
+              </li>
+              <li>
+                <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-outline-danger text-black w-100 hover-text-white', 'data-turbo': false, title: t('auth.logout_title') do %>
+                  <%= t('auth.logout') %>
+                <% end %>
+              </li>
+            </ul>
+          </li>
         <% end %>
         
         <% if controller_name == "tables" && action_name == "show" %>
           <% if policy(@table).show_attrs? %>
             <li class="nav-item text-end">
-              <%= link_to show_attrs_path(id:@table), class:'nav-link', title:"Modifier les attributs de l'Objet '#{@table.name}'" do %> 
+              <%= link_to show_attrs_path(id:@table), class:'nav-link' do %> 
                 <%= t('tables.modify_attributes') %>
               <% end %>
             </li>
           <% end %>
           <% if policy(@table).edit? %>
             <li class="nav-item text-end">
-              <%= link_to edit_table_path(id:@table), class:'nav-link', title:"Modifier l'Objet '#{@table.name}'" do %> 
+              <%= link_to edit_table_path(id:@table), class:'nav-link' do %> 
                 <%= t('tables.modify_object') %>
-              <% end %>
-            </li>
-          <% end %>
-          <% if policy(@table).partages? %>
-            <li class="nav-item text-end">
-              <%= link_to partages_path(@table), class:'nav-link', title:"Voir les utilisateurs qui partagent l'Objet '#{@table.name}'" do %>
-                <%= t('navbar.sharing') %>
               <% end %>
             </li>
           <% end %>
           <% if policy(@table).logs? %>
             <li class="nav-item text-end">
-              <%= link_to logs_path(id:@table), class:'nav-link', title:"Historique des modifications de l'Objet '#{@table.name}'" do %>
+              <%= link_to logs_path(id:@table), class:'nav-link' do %>
                 <%= t('tables.activity') %>
               <% end %>
             </li>

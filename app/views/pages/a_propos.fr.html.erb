@@ -1,13 +1,13 @@
 <div class="mb-5">
 	<div class="d-flex justify-content-between align-items-center">
 		<div>
-			<h1 class="text-primary mb-2">CrystalDATA</h1>
+			<h1 class="text-primary mb-2"><%= @sitename %></h1>
 			<h2 class="fw-normal fs-4 mt-0">
 				Vos données métier 'In da Cloud' 
 				<span class="fw-lighter text-secondary fs-6">Go, go, go... It's your birthday!</span>
 			</h2>
 		</div>
-		<%= image_tag 'icons/crystaldata.png', class:'mt-3', style: "height: 8rem" %>
+		<%= image_tag 'icons/aikku.png', class:'mt-3', style: "height: 8rem" %>
 	</div>
 
 	<h3 class="fw-bold text-dark my-4">Pour qui et pour quel usage ?</h3>
@@ -18,7 +18,7 @@
 		Vous êtes une entreprise de service avec des équipes sur le terrain et
 		vous cherchez une méthode de gestion de vos interventions (ex: BTP, SAV, Installation, Maintenance) ?
 		<br><br>
-		CrystalData est un gestionnaire d'informations NO-CODE qui vous permet de créer  
+		<%= @sitename %> est un gestionnaire d'informations NO-CODE qui vous permet de créer  
 		des collections d'objets métiers (ex: Clients, Interventions, Technicien, Frais, Projets, etc.), 
 		de les lier (Clients <=> Interventions <=> Techniciens <=> Frais) 
 		et de les partager en ligne avec vos collaborateurs, en toute sécurité.
@@ -28,7 +28,7 @@
 	<p class="fs-5 fw-light w-sm-75">
 		Vous êtes responsable d'une équipe et du bon déroulement d'un programme de projets ?
 		<br><br>
-		CrystalData vous permet de créé rapidement, et sans faire une ligne de code, un outil de suivi de l'état de chaque projet,
+		<%= @sitename %> vous permet de créé rapidement, et sans faire une ligne de code, un outil de suivi de l'état de chaque projet,
 		d'être notifié quand un changement d'état important est enregistré, et de voir vos dates d'échéances 
 		dans une vue 'Calendrier' ou dans votre agenda personnel (Google Calendar/Outlook/etc.).     
 	</p>
@@ -37,7 +37,7 @@
 	<p class="fs-5 fw-light w-sm-75">
 		Vous êtes à la recherche d'un outil simple pour gérer vos dossiers, documents, rapport, et vos informations collectées sur le terrain ?
 		<br><br>
-		CrystalData a été conçu pour être utilisable sur un smartphone afin de collecter les données au plus près de leur origine et quelle que soit leur nature (Texte, Chiffre, Photo, PDF, etc.). 
+		<%= @sitename %> a été conçu pour être utilisable sur un smartphone afin de collecter les données au plus près de leur origine et quelle que soit leur nature (Texte, Chiffre, Photo, PDF, etc.). 
 		Des données de contexte, comme l'état de la météo, la position GPS, peuvent être acquises automatiquement.
 		Un outil de génération de Graphiques vous permet de visualiser les informations sous la forme d'une courbe ou d'un histogramme.
 	</p>
@@ -95,20 +95,20 @@
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Accédez à toutes vos collections en mobilité (Les écrans s'adaptent automatiquement aux smartphones/tablettes)
+			Access all your collections on the go (Screens automatically adapt to smartphones/tablets)
 		</li> 
 
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-    		Assistant (IA). 
+			Assistant (IA). 
 			Posez une question à l'Assistant, basée sur les données de vos collections d'objets
 		</li> 
 
 	</ul>
 
-	<h3 class="fw-bold text-dark my-4">L'objet CrystalDATA et ses Attributs</h3>
+	<h3 class="fw-bold text-dark my-4">L'objet <%= @sitename %> et ses Attributs</h3>
 
 	<p class="fs-5 fw-light w-sm-75">
 		Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et 
@@ -210,9 +210,9 @@
 			<li>
 				<b id="texte"><%= t('fields.datatype.Texte') %></b> :
 				<ul>
-					<li>Texte simple : peut contenir une chaine de 255 caractères maximum. L'option 'Filtre ?' permet de créer une liste déroulante contenant les valeurs distinctes. </li>
-					<li><%= t('fields.datatype.Texte_long') %> : permet de rédiger de longs textes</li>
-					<li><%= t('fields.datatype.Texte_riche') %> : permet de rédiger et formater un texte long (gras, souligné, titre, couleur, taille, liens, listes, etc.), à l'aide d'un petit éditeur de texte intégré (TRIX Editor)</li>
+					<li>Texte simple : peut contenir une chaine de 255 caractères maximum. L'option 'Filtre ?' permet de créer une liste déroulante contenant les valeurs distinctes.</li>
+					<li><%= t('fields.datatype.Texte_long') %> : permet de rédiger de longs textes.</li>
+					<li><%= t('fields.datatype.Texte_riche') %> : permet de rédiger et formater un texte long (gras, souligné, titre, couleur, taille, liens, listes, etc.), à l'aide d'un petit éditeur de texte intégré (TRIX Editor).</li>
 				</ul>
 			</i>
 			<li>
@@ -225,9 +225,8 @@
 			</li>
 			<li><b id="date"><%= t('fields.datatype.Date') %></b> : une date choisie dans un calendrier.</li>
 			<li><b id="oui_non"><%= t('fields.datatype.Oui_non?') %></b> : permet de choisir entre Oui ou Non ou aucun des deux.</li>
-			<li><b id="liste"><%= t('fields.datatype.Liste') %></b> : pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.
-			</li>
-			<li><b id="liste_objet">Liste d'objets (<%= t('fields.datatype.Collection') %>)</b> : pour choisir un objet parmi les objets d'une autre de vos collections.(Ex: <i>[Technicien."Nom,Prénom,Expérience"]</i>)</li>
+			<li><b id="liste"><%= t('fields.datatype.Liste') %></b> : pour contenir une liste de valeurs, comme 'Bleu,Blanc,Rouge' ou 'À faire,Fait,Annulé'. Les valeurs doivent être séparées par une virgule.</li>
+			<li><b id="liste_objet">Liste d'objets (<%= t('fields.datatype.Collection') %>)</b> : pour choisir un objet parmi les objets d'une autre de vos collections. (Ex: <i>[Technicien."Nom,Prénom,Expérience"]</i>)</li>
 			<li>
 				<b id="fichier"><%= t('fields.datatype.Fichier') %></b> :
 				<ul>
@@ -236,12 +235,10 @@
 					<li><%= t('fields.datatype.PDF') %> : idem 'Fichier' mais affiche un aperçu de la première page du document PDF.</li>
 				</ul>
 			</li>
-			<li><b id="utilisateur"><%= t('fields.datatype.Utilisateur') %></b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table</li>
+			<li><b id="utilisateur"><%= t('fields.datatype.Utilisateur') %></b> : permet de choisir un utilisateur parmi ceux qui ont accès à la table.</li>
 			<li><b id="url"><%= t('fields.datatype.URL') %></b> : permet d'ajouter un lien vers une ressource internet via une URL (interne ou externe).</li>
 			<li><b id="email"><%= t('fields.datatype.Email') %></b> : pour ajouter un lien vers une adresse email.</li>
-			<li>
-				<b id="video"><%= t('fields.datatype.Vidéo_YouTube') %></b> : permet d'ajouter un lien vers une vidéo YouTube et d'afficher l'aperçu de la vidéo dans une miniature.  
-			</li>
+			<li><b id="video"><%= t('fields.datatype.Vidéo_YouTube') %></b> : permet d'ajouter un lien vers une vidéo YouTube et d'afficher l'aperçu de la vidéo dans une miniature.</li>
 			<li><b id="couleur"><%= t('fields.datatype.Couleur') %></b> : une couleur choisie dans une palette.</li>
 			<li><b id="localisation">Localisation (<%= t('fields.datatype.GPS') %>)</b> :
 				<ul>
@@ -250,28 +247,15 @@
 					<li>Distance : Permet de calculer la distance (à vol d'oiseau) entre deux positions GPS. (Ex: <i>[Chantier(GPS)] - [Maison(GPS)]</i> OU <i>[Chantier(GPS)] - 48.85879287621989, 2.294761243572842</i>)</li>
 				</ul>
 			</li>
+			<li><b id="qrcode"><%= t('fields.datatype.QRCode') %></b> : pour générer un QR Code à partir du contenu d'un autre attribut de l'objet. (Ex: <i>[N°deSérie],[Reference],[URL site web]</i>)</li>
+			<li><b id="qrscan"><%= t('fields.datatype.QRScan') %></b> : permet de scanner un QR Code avec la caméra de votre smartphone, tablette ou ordinateur.</li>
+			<li><b id="signature"><%= t('fields.datatype.Signature') %></b> : permet de signer manuellement avec la souris ou sur un écran tactile.</li>
+			<li><b id="uuid"><%= t('fields.datatype.UUID') %></b> : génère automatiquement un identifiant unique. (UUID = Universally Unique IDentifier)</li>
+			<li><b id="tags"><%= t('fields.datatype.Tags') %></b> : permet de saisir des mots-clés séparés par des virgules. (Ex: <i>Paris, France, Europe</i>)</li>
+			<li><b id="stars"><%= t('fields.datatype.Stars') %></b> : permet de noter un objet avec des étoiles. (Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)</li>
+			<li><b id="meteo"><%= t('fields.datatype.Météo') %></b> : permet d'afficher la météo actuelle de votre localisation. (Ex: <i>22°C, Pluie légère, 73% d'humidité</i>)</li>
 			<li>
-				<b id="qrcode"><%= t('fields.datatype.QRCode') %></b> : pour générer un QR Code à partir du contenu d'un autre attribut de l'objet. (Ex: <i>[N°deSérie],[Reference],[URL site web]</i>)
-			</li>
-			<li>
-				<b id="qrscan"><%= t('fields.datatype.QRScan') %></b> : permet de scanner un QR Code avec la caméra de votre smartphone, tablette ou ordinateur.
-			</li>
-			<li>
-				<b id="signature"><%= t('fields.datatype.Signature') %></b> : permet de signer manuellement avec la souris ou sur un écran tactile.
-			</li>
-			<li>
-				<b id="uuid"><%= t('fields.datatype.UUID') %></b> : génère automatiquement un identifiant unique. (UDID = Universally Unique IDentifier)
-			</li>
-			<li>
-				<b id="tags"><%= t('fields.datatype.Tags') %></b> : permet de saisir des mots-clés séparés par des virgules. (Ex: <i>Paris, France, Europe</i>)
-			</li>
-			<li>
-				<b id="stars"><%= t('fields.datatype.Stars') %></b> : permet de noter un objet avec des étoiles. (Ex: <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>)
-			</li>
-			<li>
-				<b id="meteo"><%= t('fields.datatype.Météo') %></b> : permet d'afficher la météo actuelle de votre localisation. (Ex: <i>22°C, Pluie légère, 73% d'humidité</i>)
-			</li>
-			<li><b id="statut"><%= t('fields.datatype.Statut') %></b> : pour ajouter un état à un objet, associé à une couleur. (Ex: <i class="text-break">Nouveau:bleu,Confirmé:vert,Annulé:rouge,Archivé:gris</i>)
+				<b id="statut"><%= t('fields.datatype.Statut') %></b> : pour ajouter un état à un objet, associé à une couleur. (Ex: <i class="text-break">Nouveau:bleu,Confirmé:vert,Annulé:rouge,Archivé:gris</i>)
 				<ul>
 					<li>
 						Couleurs disponibles :
@@ -295,20 +279,20 @@
 		Exemple : un objet Intervention aura un attribut 'Technicien' qui permettra de choisir un technicien dans la collection du même nom.
 		Ces relations sont aussi visibles dans la vue détails d'un objet. 
 		Ainsi, quand un objet Technicien est lié à des Interventions, 
-		la vue de détails de chaque Technicien affiche automatiquement ses Interventions et permet d'en saisir une nouvelle pour ce Technicien.  
+		la vue de détails de chaque Technicien affiche automatiquement ses Interventions et permet d'en saisir une nouvelle pour ce Technicien.
 	</p>
 
-	<h3 class="fw-bold text-dark my-4">Filtres/Reports</h3>
+	<h3 class="fw-bold text-dark my-4">Requêtes</h3>
 	<p class="fs-5 fw-light w-sm-75">
-		Les Filtres/Reports permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères.
+		Les Requêtes permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères.
 		<br><br>
-		Ces filtres/reports acceptent des critères différents selon le type d'attribut :
+		Ces Requêtes acceptent des critères différents selon le type d'attribut :
 		<ul class="list-group mb-5 m-3 gap-2">
 			<li>
-				un attribut de type Texte est filtré avec %TXT% (Filtre tout ce qui contient les 3 lettres TXT) 
+				un attribut de type Texte est filtré avec %TXT% (Filtre tout ce qui contient les 3 lettres TXT)
 			</li>
 			<li>		
-				un attribut numérique est filtré avec un signe et une valeur (Qté en stock: > 5) 
+				un attribut numérique est filtré avec un signe et une valeur (Qté en stock: > 5)
 			</li>
 		</ul>
 	</p>
@@ -316,25 +300,20 @@
 	<h3 class="fw-bold text-dark my-4">Notifications</h3>
 	<p class="fs-5 fw-light w-sm-75">
 		Les Notifications permettent d'être alerté par email après chaque ajout et modification d'objet dans une collection. 
-		Elles sont paramétrables pour chaque collection et chaque attribut. 
+		Elles sont paramétrables pour chaque collection et chaque attribut.
 		<br><br>
 		Exemple : être alerté quand un objet dans la collection 'Interventions' a un attribut 'Statut' égal à 'Terminé'.
 	</p>
 
-	<h3 class="fw-bold text-dark my-4">Utilisateurs, partages et rôles</h3>
+	<h3 class="fw-bold text-dark my-4">Utilisateurs et Équipes</h3>
 	<p class="fs-5 fw-light w-sm-75">
-		Vous pouvez partager vos collections avec d'autres utilisateurs en leur donnant un rôle (Lecteur, Collecteur, Éditeur).
-		<ul class="list-group mb-5 m-3 gap-2">
-			<li>
-				<b>Lecteur</b> peut uniquement voir les objets de la collection partagée.
-			</li>
-			<li>
-				<b>Collecteur</b> peut ajouter des objets dans la collection partagée, et ne verra que ses objets. 
-			</li>
-			<li>
-				<b>Éditeur</b> peut voir et modifier tous les objets.
-			</li>
-		</ul>
+		Vous pouvez créer des utilisateurs et les inclure dans une équipe.
+		<br>
+		Une équipe a accès à certaines informations qui sont définis dans les filtres.
+		<br>
+		Pour chaque équipe, il est possible d'avoir un filtre par collection.
+		<br>
+		Si sur une collection, il n'y a pas de filtre attribué à une équipe, cette dernière ne verra pas la collection.
 	</p>
 
 
@@ -342,9 +321,9 @@
 	<p class="fs-5 fw-light w-sm-75">
 		Posez une question à l'Assistant, basée sur les données de vos collections d'objets
 		<br>
-		Exemples de question, en langage naturel, que l'on peut poser à l'Assistant : 
+		Exemples de question, en langage naturel, que l'on peut poser à l'Assistant :
 		<ul class="list-group m-3 mt-2 gap-2">
-			<li>Quel est le nom du client qui revient le plus souvent dans cette liste : [Client] ?
+			<li>Quel est le nom du client qui revient le plus souvent dans cette liste : [Client] ?</li>
 			<li>Génère-moi les 3 prochaines interventions à prévoir, en te basant sur cette liste : [Date, Client, Type] ?</li>
 			<li>Tu es statisticien. Calcule moi la moyenne des durées de cette liste : [Durée] ? (Celle-ci est à faire uniquement si vous doutez du sérieux de cet Assistant ;-)</li>
 		</ul>
@@ -437,7 +416,7 @@
 	C'est pourquoi j'ai commencé le développement de cet outil NO-CODE et open-source, il y a 10 ans,  
 	dans le but de couvrir les fonctions de base d'une plateforme d'information ouverte.
 	<br><br>
-	CrystalDATA a donc pour ambition d'offrir un petit concentré de mon expérience des bases de données, 
+	<%= @sitename %> a donc pour ambition d'offrir un petit concentré de mon expérience des bases de données, 
 	et, pourquoi pas, de poser les fondations d'une future application/plateforme sur mesure, la vôtre, 
 	intégrant toutes vos spécificités, règles métier, Statut, Services, etc.
 </p>
@@ -445,42 +424,20 @@
 <h3 class="fw-bold text-dark my-4">Développement, support et services</h3>
 
 <p class="mt-3">
-	<i>CrystalDATA a été développé en Ruby on Rails par Philippe et Pierre-Emmanuel</i>
+	<%= @sitename %> a été développé en Ruby on Rails par AIKKU SAS
 </p>
-
-<div class="row mt-3">
-	<div class="col-sm-2">
-		<%= image_tag "philippe.webp",
-		class: "img-thumbnail rounded"
-		%>
-	<h5 class="font-bold">
-		Philippe N.
-	</h5>
-	<h6 class="italic text-xl">
-		Product Manager/Dev senior
-	</h6>
-	</div>
-	<div class="col-sm-2">
-	<%= image_tag "pierre-emmanuel.webp",
-		class: "img-thumbnail rounded"
-	%>
-	<h5 class="font-bold">
-		Pierre-Emmanuel D.
-	</h5>
-	<h6 class="italic">
-		Développeur junior
-	</h6>
-</div>
 
 <p class="fs-5 fw-light text-secondary mt-4">
 	Besoin d'une fonctionnalité ou d'une nouvelle application sur mesure ? Nous vous la développons !
 	<br><br>
 	Vous êtes à la recherche d'une application pour la gestion de projets, d'interventions, de planning, d'émargement ou de facturation ?
 	<br>
-	Consultez notre <%= link_to "catalogue de logiciels Open-Source", 'https://www.philnoug.com/logiciels', target: '_blank', class: 'link' %>
+	Consultez notre <%= link_to "catalogue de logiciels Open-Source", 'https://www.aikku.eu/fr/logiciels', target: '_blank', class: 'link' %>
 	<br><br>
 	Nous pouvons aussi convertir vos anciennes applications PC/Windows (ex: VB/VBA/MS ACCESS/EXCEL/C#...) en une plateforme WEB.
 	<br><br>
 	Pour en savoir plus,
-	<%= link_to "contactez-nous", 'https://www.philnoug.com/contact', target: '_blank', class: 'link' %>
+	<%= link_to "contactez-nous", 'https://www.aikku.eu/fr/contact', target: '_blank', class: 'link' %>
+	<br><br>
+	<%= link_to "Mentions légales", mentions_legales_path, class: 'link' %>
 </p>

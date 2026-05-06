@@ -7,7 +7,7 @@
       <div>
         <%= f.label :datatype, t('tables.datatype') %>
         <span data-action="change->type#change" data-type-datatypes="<%= @fields.map { |field| [field, t("fields.datatype.#{field}")] }.to_h.to_json %>">
-          <%= f.select :datatype, options_for_select(@fields.map { |field| [t("fields.datatype.#{field}"), field] }, @field.datatype), {}, class: 'form-select', data: { 'type-target': 'source' }, disabled: !@field.new_record? %>
+          <%= f.select :datatype, options_for_select(@fields.map { |field| [t("fields.datatype.#{field}"), field] }, @field.datatype), {}, class: 'form-select', data: { 'type-target': 'source' } %>
         </span>
       </div>
 
