@@ -1,3 +1,4 @@
 web: unset PORT && bin/rails server
 js: yarn build --watch
 css: yarn watch:css
+js: bun run build --watch
