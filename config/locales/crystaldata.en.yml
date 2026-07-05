@@ -365,7 +365,7 @@ en:
     sync_calendar: "Calendar synchronization"
     sync_calendar_notice: "Add the link below to your personal calendar (Google Agenda, Apple Calendar, Outlook, ...) so that the %{tables} with date attributes appear automatically.You can filter the %{tables} by selecting a previously created filter."
     table: "See in the form of a collection"
-    title: "Objets"
+    title: "Collections"
     update_attribute: "Change the attribute"
     update_attribute_testid: "Edit the attribute of Field n°%{field_slug}"
     user_have_to_exist: "The user must already exist"

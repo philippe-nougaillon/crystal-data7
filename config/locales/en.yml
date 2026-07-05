@@ -246,7 +246,7 @@ en:
       short: "%d %b %I:%M %p"
     pm: pm
   tables:
-    title: "Objects"
+    title: "Collections"
     name: "Name"
     updated_at: "Updated"
     public_form_tooltip: "Public form (click to view the shareable URL)"
