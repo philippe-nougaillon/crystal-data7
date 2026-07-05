@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_25_082603) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_05_193307) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -233,6 +233,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_082603) do
     t.index ["slug"], name: "index_tables_on_slug", unique: true
   end
 
+  create_table "tables_users", force: :cascade do |t|
+    t.integer "table_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "role", default: 0
+    t.index ["table_id"], name: "index_tables_users_on_table_id"
+    t.index ["user_id"], name: "index_tables_users_on_user_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.bigint "organisation_id", null: false
@@ -274,6 +284,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_082603) do
     t.integer "record_index"
     t.string "old_value"
     t.bigint "user_id", null: false
+    t.index ["field_id", "record_index"], name: "index_values_on_field_id_and_record_index"
     t.index ["field_id"], name: "index_values_on_field_id"
     t.index ["record_index"], name: "index_values_on_record_index"
     t.index ["user_id"], name: "index_values_on_user_id"
