@@ -76,7 +76,12 @@ class Field < ApplicationRecord
 			end
 		end
 		begin
-			results = eval(formule_to_evaluate.delete('[]'))
+			expr = formule_to_evaluate.delete('[]').strip
+			if expr =~ /\A[0-9\.\+\-\*\/\(\)\s]+\z/
+				results = eval(expr)
+			else
+				results = 'Formule non sécurisée'
+			end
 		rescue
 			results = 'Formule erronée'
 		end

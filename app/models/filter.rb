@@ -53,8 +53,14 @@ class Filter < ApplicationRecord
             if field.is_numeric
               # Détermine s'il y a des symboles (ex:)
               if search_value.to_i.zero?
-                # TODO : Beware of SQL Injection
-                sql = "CAST(nullif(data, '') AS float8) #{search_value}"
+                match = search_value.strip.match(/\A(<=|>=|<|>|!=)\s*(-?\d+(?:\.\d+)?)\z/)
+                if match
+                  operator = match[1]
+                  number = match[2].to_f
+                  sql = "CAST(nullif(data, '') AS float8) #{operator} #{number}"
+                else
+                  sql = "1=0"
+                end
               else
                 sql = "data = ?", search_value
               end
