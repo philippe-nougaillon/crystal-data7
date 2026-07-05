@@ -161,9 +161,11 @@ class TablesController < ApplicationController
     respond_to do |format|
       format.html do
         @pagy, @records = pagy_array(@records)
+        @table.preload_page_values(@records)
       end
 
       format.xls do
+        @table.preload_page_values(@records)
         book = CollectionToXls.new(@table, @records).call
         file_contents = StringIO.new
         book.write file_contents # => Now file_contents contains the rendered file output
@@ -171,11 +173,13 @@ class TablesController < ApplicationController
         send_data file_contents.string.force_encoding('binary'), filename: filename 
       end
       format.csv do
+        @table.preload_page_values(@records)
         csv_string = CollectionToCsv.new(@table, @records).call
         filename = "Export_#{@table.name.pluralize}.csv"
         send_data csv_string, filename: filename
       end
       format.pdf do
+        @table.preload_page_values(@records)
         pdf = ExportPdf.new
         pdf.export_collection(@table, @records)
         filename = "Export_#{@table.name.pluralize}.pdf"
