@@ -65,10 +65,16 @@ class Field < ApplicationRecord
 		# Pour chaque opérande, remplacer le nom par la valeur, ex: [2] * [10]
 		operands.each do |operand|
 			operand.strip! # suppression des espaces inutiles
-			field = self.table.fields.find_by(name: operand) # trouver le field qui a le nom de l'opérande à remplacer
+			field = self.table.fields.find { |f| f.name == operand } # trouver le field qui a le nom de l'opérande à remplacer
 			next if not field
-			value = field.values.find_by(record_index: record_index) # trouver la valeur du record
-			unless value.data.blank?
+			
+			if table.instance_variable_defined?(:@page_values_cache) && (cache = table.instance_variable_get(:@page_values_cache))
+				value = (cache[record_index.to_i] || cache[record_index.to_s] || []).find { |v| v.field_id == field.id }
+			else
+				value = field.values.find_by(record_index: record_index)
+			end
+
+			if value && !value.data.blank?
 				# Substituer le nom du champ par sa valeur, ex: [2] * [prix Heure]
 				formule_to_evaluate = formule_to_evaluate.gsub(operand, value.data)
 			else
@@ -76,7 +82,12 @@ class Field < ApplicationRecord
 			end
 		end
 		begin
-			results = eval(formule_to_evaluate.delete('[]'))
+			expr = formule_to_evaluate.delete('[]').strip
+			if expr =~ /\A[0-9\.\+\-\*\/\(\)\s]+\z/
+				results = eval(expr)
+			else
+				results = 'Formule non sécurisée'
+			end
 		rescue
 			results = 'Formule erronée'
 		end
@@ -117,9 +128,15 @@ class Field < ApplicationRecord
 	end
 
 	def get_linked_table_record(index)
-		relation = self.relation
+		@cached_relation ||= self.relation
+		relation = @cached_relation
 
-		if relation && table = Table.find_by(id: relation.relation_with_id)
+		if relation
+			@cached_linked_table ||= Table.find_by(id: relation.relation_with_id)
+			table = @cached_linked_table
+		end
+
+		if relation && table
 			table_data = []
 			source_fields = relation.items
 		
