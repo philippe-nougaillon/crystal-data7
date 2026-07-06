@@ -1,17 +1,19 @@
-# Vos données métier 'In da Cloud' 
+## Le but principal de cette application est de permettre à des collaborateurs au sein d'une organisation de :
+  
+1. Créer des Collections d'Objets sur mesure : Modéliser des tables (table.rb) et définir des attributs personnalisés (field.rb)
+de types variés (Texte, Nombre, Date, Oui/Non, Liste, Fichier, Signature numérique, Code QR, coordonnées GPS, Météo ou liaisons             
+relationnelles entre tables).
 
-## Application NO-CODE de base de données en ligne, qui vous permet de créer et de partager des collections d'Objets et formulaires variés avec vos collaborateurs
-	
-### Principales fonctionnalités
+2. Saisir et Modifier les Données : Renseigner et éditer les objets via des formulaires générés dynamiquement (_fill_form.html.erb), avec un
+historique de modification (audit) pour chaque valeur.
 
-* Créez des Objets constitués d'attributs variés <br>(Texte, Nombre, Euros, Date, Oui/Non, Liste de choix, Fichier, Image, PDF, Position GPS, Lien vers un Objet dans une autre Collection, ETC...)
-* Ajoutez, éditez vos objets dans un formulaire
-* Activité: chaque modification d'un objet est consignée dans un historique (quand, qui, quoi, valeur avant, valeur après)
-* Recherchez, filtrez et triez vos objets
-* Partagez vos collections d'objet avec d'autres utilisateurs
-* Exportez vos collections vers un tableur
-* Soyez notifié après chaque ajout d'objet dans une collection'
-* Accédez à toutes vos collections en mobilité (Les écrans s'adaptent automatiquement aux écrans de smartphones/tablettes)<
+3. Rechercher et Filtrer : Effectuer des recherches textuelles ou appliquer des filtres complexes enregistrés (filter.rb).             
+
+4. Visualiser les Informations : Consulter les collections sous forme de tableau classique, d'agenda (calendrier), de carte géographique    
+(GPS via Mapbox) ou de graphiques analytiques (via Chart.js).
+
+5. Partager et Exporter : Collaborer à plusieurs sur les mêmes données, envoyer des e-mails de notification automatique en cas de           
+modification et exporter les données vers Excel, CSV ou PDF.
 
 ### Développement, support et services
 

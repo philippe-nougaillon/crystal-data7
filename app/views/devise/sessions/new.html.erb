@@ -17,6 +17,8 @@
       <div class='d-flex gap-4 my-4'>
         <%= f.submit t('auth.login'), class: 'btn btn-outline-primary' %>
         <%= link_to t('auth.register'), new_registration_path(resource_name), class: 'btn btn-outline-secondary' %> 
+        <%= link_to t('auth.demo'), user_connect_guest_user_path(1), class: 'btn btn-outline-success flex-fill' %>
+
       </div>
     <% end %>
 
