@@ -266,7 +266,7 @@ en:
     activity: "Activity"
     activity_title: "History of changes in the object '%{name}'"
     actual_position: "Current position"
-    add_field: "Add this attribute"
+    add_field: "Save this attribute"
     add_new: "Add a new object to the '%{name}' collection"
     attribute_description: "Description"
     attribute_name: "Attribute name"

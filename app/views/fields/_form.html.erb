@@ -58,10 +58,8 @@
     <div class="d-flex flex-row flex-wrap align-items-center gap-2">
       <% if @field.new_record? %>
         <%= f.submit t('tables.add_field'), class: 'btn btn-outline-primary' %>
-        <%= link_to t('misc.done'), @field.table, title: "Retour à Collection d'Objets" %>
       <% else %>
         <%= f.submit t('scaffold.update'), class: 'btn btn-outline-primary' %>
-        <%= link_to t('scaffold.back'), show_attrs_path(id: @field.table) %>
       <% end %>
     </div>
   </div>
