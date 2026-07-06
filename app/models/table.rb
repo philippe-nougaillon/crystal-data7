@@ -24,12 +24,30 @@ class Table < ApplicationRecord
 		self.values.where.not(data: nil).pluck(:record_index).uniq.count
 	end
 
+	def preload_page_values(record_indices)
+		@page_values_cache = self.values.includes(:field).where(record_index: record_indices).group_by(&:record_index)
+	end
+
 	def value_datas_listable(record_index)
-		self.values.includes(:field).where("fields.visibility = 0 OR fields.visibility = 1").records_at(record_index).order("fields.row_order").pluck(:data)
+		if @page_values_cache
+			record_values = @page_values_cache[record_index.to_i] || @page_values_cache[record_index.to_s] || []
+			record_values.select { |v| v.field.visibility == "Liste_et_Détails" || v.field.visibility == "Vue_Liste" }
+						 .sort_by { |v| v.field.row_order.to_i }
+						 .map(&:data)
+		else
+			self.values.includes(:field).where("fields.visibility = 0 OR fields.visibility = 1").records_at(record_index).order("fields.row_order").pluck(:data)
+		end
 	end
 
 	def value_datas_détaillable(record_index)
-		self.values.includes(:field).where("fields.visibility = 0 OR fields.visibility = 2").records_at(record_index).order("fields.row_order").pluck(:data)
+		if @page_values_cache
+			record_values = @page_values_cache[record_index.to_i] || @page_values_cache[record_index.to_s] || []
+			record_values.select { |v| v.field.visibility == "Liste_et_Détails" || v.field.visibility == "Vue_Détails" }
+						 .sort_by { |v| v.field.row_order.to_i }
+						 .map(&:data)
+		else
+			self.values.includes(:field).where("fields.visibility = 0 OR fields.visibility = 2").records_at(record_index).order("fields.row_order").pluck(:data)
+		end
 	end
 
 	# Trouve toutes les valeurs des attributs nommés. 
@@ -66,7 +84,12 @@ class Table < ApplicationRecord
 	end
 
 	def last_update_at(record_index)
-		self.values.where(record_index: record_index).maximum(:updated_at)
+		if @page_values_cache
+			record_values = @page_values_cache[record_index.to_i] || @page_values_cache[record_index.to_s] || []
+			record_values.map(&:updated_at).max
+		else
+			self.values.where(record_index: record_index).maximum(:updated_at)
+		end
 	end
 
 	def field_names

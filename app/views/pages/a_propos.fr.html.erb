@@ -1,50 +1,156 @@
 <div class="mb-5">
 	<div class="d-flex justify-content-between align-items-center">
 		<div>
-			<h1 class="text-primary mb-2"><%= @sitename %></h1>
-			<h2 class="fw-normal fs-4 mt-0">
-				Vos données métier 'In da Cloud' 
-				<span class="fw-lighter text-secondary fs-6">Go, go, go... It's your birthday!</span>
-			</h2>
+			<h1 class="text-primary my-4"><%= @sitename %></h1>
 		</div>
-		<%= image_tag 'icons/aikku.png', class:'mt-3', style: "height: 8rem" %>
 	</div>
 
-	<h3 class="fw-bold text-dark my-4">Pour qui et pour quel usage ?</h3>
-
-	<h4 class="mb-2">Field Service Management (FSM)</h4>
-
-	<p class="fs-5 fw-light w-sm-75">
-		Vous êtes une entreprise de service avec des équipes sur le terrain et
-		vous cherchez une méthode de gestion de vos interventions (ex: BTP, SAV, Installation, Maintenance) ?
-		<br><br>
-		<%= @sitename %> est un gestionnaire d'informations NO-CODE qui vous permet de créer  
-		des collections d'objets métiers (ex: Clients, Interventions, Technicien, Frais, Projets, etc.), 
-		de les lier (Clients <=> Interventions <=> Techniciens <=> Frais) 
-		et de les partager en ligne avec vos collaborateurs, en toute sécurité.
+	<p>
+		<h4>
+			Aikku ACCESS est une application de base de données en ligne "no-code" 
+			et multi-utilisateurs (similaire à Airtable).
+		</h4> 
+		<h5 class="py-4">
+			Le but principal de cette application est de permettre à des collaborateurs au sein d'une organisation de :
+		</h5>
+		<p class="fs-5 fw-light w-90">
+			<b>1. Créer des Collections d'Objets sur mesure</b> : 
+			Modéliser des tables (table.rb) et définir des attributs personnalisés (field.rb)
+			de types variés (Texte, Nombre, Date, Oui/Non, Liste, Fichier, Signature numérique, Code QR, coordonnées GPS, Météo ou liaisons             
+			relationnelles entre tables).
+		</p>
+		<p class="fs-5 fw-light w-90">
+			<b>2. Saisir et Modifier les Données : </b> 
+			Renseigner et éditer les objets via des formulaires générés dynamiquement (_fill_form.html.erb), avec un
+			historique de modification (audit) pour chaque valeur.
+		</p>
+		<p class="fs-5 fw-light w-90">
+			<b>3. Rechercher et Filtrer : </b> 
+			Effectuer des recherches textuelles ou appliquer des filtres complexes enregistrés (filter.rb).             
+		</p>
+		<p class="fs-5 fw-light w-90">
+			<b>4. Visualiser les Informations : </b> 
+			Consulter les collections sous forme de tableau classique, d'agenda (calendrier), de carte géographique    
+			(GPS via Mapbox) ou de graphiques analytiques (via Chart.js).
+		</p>
+		<p class="fs-5 fw-light w-90">
+			<b>5. Partager et Exporter : </b> 
+			Collaborer à plusieurs sur les mêmes données, envoyer des e-mails de notification automatique en cas de           
+			modification et exporter les données vers Excel, CSV ou PDF.
+		</p>
+		<p class="fs-5 fw-light w-90">
+			<b>6. Intégration d'un Assistant IA : </b> 
+			Poser des questions en langage naturel sur les données d'une table grâce à l'intégration d'un LLM via    
+			OpenAI/LangChain (pages_controller.rb).
+		</p>
 	</p>
 
-	<h4 class="mb-2">Project Management</h4>
-	<p class="fs-5 fw-light w-sm-75">
-		Vous êtes responsable d'une équipe et du bon déroulement d'un programme de projets ?
-		<br><br>
-		<%= @sitename %> vous permet de créé rapidement, et sans faire une ligne de code, un outil de suivi de l'état de chaque projet,
-		d'être notifié quand un changement d'état important est enregistré, et de voir vos dates d'échéances 
-		dans une vue 'Calendrier' ou dans votre agenda personnel (Google Calendar/Outlook/etc.).     
+	<h3 class="fw-bold text-dark my-4">Historique et motivation</h3>
+
+	<p class="fs-5 fw-light w-sm-90">
+		Développeur d'applications métiers en entreprise, j'ai souvent aidé mes clients à passer 
+		d'un système d'information en silos, où les données métier de l'entreprise sont enfermées 
+		dans des feuilles Excel, à un système de type plateforme où les données sont centralisées et 
+		partagées entre les services depuis une source unique de confiance (<b>Single Source Of Truth</b>). 
 	</p>
 
-	<h4 class="mb-2">DATA Management</h4>
-	<p class="fs-5 fw-light w-sm-75">
-		Vous êtes à la recherche d'un outil simple pour gérer vos dossiers, documents, rapport, et vos informations collectées sur le terrain ?
+	<p class="fs-5 fw-light w-sm-90">	
+		Fort d'une expérience de plus de 30 ans sur les base de données et outils de développement les plus intéressants de leurs époques 
+		(SuperBase 64, Yes You Can, SuperDB, FoxPro, dBase 3/4, Paradox 3/4, Delphi, MS Access/VB4/5/6/SQL Server,
+		C#/SQLite/MySQL/PG, stack LAMP, Ruby on Rails, et j'en passe...), ma vocation a toujours été d'aider mes clients à franchir 
+		le pas vers le décloisonnement de leurs données avec pour objectif une informatique de gestion plus efficace, 
+		collaborative et centrée sur les objectifs. 
 		<br><br>
-		<%= @sitename %> a été conçu pour être utilisable sur un smartphone afin de collecter les données au plus près de leur origine et quelle que soit leur nature (Texte, Chiffre, Photo, PDF, etc.). 
-		Des données de contexte, comme l'état de la météo, la position GPS, peuvent être acquises automatiquement.
-		Un outil de génération de Graphiques vous permet de visualiser les informations sous la forme d'une courbe ou d'un histogramme.
+		Même si les domaines d'activités des clients ne se ressemblaient pas 
+		(Loueur auto, Social, Télécom, Pharma, Industrie, TPE/PME), des motifs se répétaient et chaque nouveau projet 
+		se déroulait d'une façon à peu près identique :
+	</p>
+
+	<div class="row my-5 w-sm-90">
+	<div class="col">
+		<ul class="list-group">
+			<li class="list-group-item d-flex align-items-center gap-2">
+				<span class="material-symbols-outlined text-primary">
+					priority
+				</span>
+				Importer les données d'Excel
+			</li>
+			<li class="list-group-item d-flex align-items-center gap-2">
+				<span class="material-symbols-outlined text-primary">
+					priority
+				</span>
+				Accéder aux données de n'importe où
+			</li>
+			<li class="list-group-item d-flex align-items-center gap-2">
+				<span class="material-symbols-outlined text-primary">
+					priority
+				</span>
+				Rechercher, trier, filtrer et exporter les données
+			</li>
+			<li class="list-group-item d-flex align-items-center gap-2">
+				<span class="material-symbols-outlined text-primary">
+					priority
+				</span>
+				Partager les données en toute sécurité
+			</li>
+		</ul>
+	</div>
+	<div class="col">
+		<ul class="list-group">
+			<li class="list-group-item d-flex align-items-center gap-2">
+				<span class="material-symbols-outlined text-primary">
+					priority
+				</span>
+				Lier les données entre elles
+			</li>
+			<li class="list-group-item d-flex align-items-center gap-2">
+				<span class="material-symbols-outlined text-primary">
+					priority
+				</span>
+				Ajouter des règles métiers
+			</li>
+			<li class="list-group-item d-flex align-items-center gap-2">
+				<span class="material-symbols-outlined text-primary">
+					priority
+				</span>
+				Créer des vues personnalisées
+			</li>
+			<li class="list-group-item d-flex align-items-center gap-2">
+				<span class="material-symbols-outlined text-primary">
+					priority
+				</span>
+				Gérer des utilisateurs et des rôles
+			</li>
+		</ul>
+	</div>
+
+	<p class="fs-5 fw-light w-sm-90 my-4">
+		C'est pourquoi j'ai commencé le développement de cet outil NO-CODE et open-source, il y a 10 ans,  
+		dans le but de couvrir les fonctions de base d'une plateforme d'information ouverte.
+		<br><br>
+		<%= @sitename %> a donc pour ambition d'offrir un petit concentré de mon expérience des bases de données, 
+		et, pourquoi pas, de poser les fondations d'une future application/plateforme sur mesure, la vôtre, 
+		intégrant toutes vos spécificités, règles métier, Statut, Services, etc.
+	</p>
+
+	<h3 class="fw-bold text-dark my-4">Développement, support technique et services de personnalisation</h3>
+
+	<p class="fs-5 fw-light text-secondary mt-4">
+		Besoin d'une fonctionnalité ou d'une nouvelle application sur mesure ? Nous vous la développons !
+		<br><br>
+		Vous êtes à la recherche d'une application pour la gestion de projets, d'interventions, de planning, d'émargement ou de facturation ?
+		<br>
+		Consultez notre <%= link_to "catalogue de logiciels Open-Source", 'https://www.aikku.eu/', target: '_blank', class: 'link' %>
+		<br><br>
+		Nous pouvons aussi convertir vos anciennes applications PC/Windows (ex: VB/VBA/MS ACCESS/EXCEL/C#...) en une plateforme WEB.
+		<br><br>
+		Pour en savoir plus,
+		<%= link_to "contactez-nous", 'https://www.aikku.eu/fr/contact', target: '_blank', class: 'link' %>
 	</p>
 
 	<h3 class="fw-bold text-dark my-4">Principales fonctionnalités</h3>
 
-	<ul class="list-group list-group-flush mb-5 w-sm-75">
+	<ul class="list-group list-group-flush mb-5 w-sm-90">
 		<li class="list-group-item d-flex align-items-center gap-2">
 			<span class="material-symbols-outlined text-success">
 				new_releases
@@ -102,15 +208,15 @@
 			<span class="material-symbols-outlined text-success">
 				new_releases
 			</span>
-			Assistant (IA). 
-			Posez une question à l'Assistant, basée sur les données de vos collections d'objets
+			Assistant. 
+			Posez une question à l'Assistant (IA), basée sur les données de vos collections d'objets
 		</li> 
 
 	</ul>
 
-	<h3 class="fw-bold text-dark my-4">L'objet <%= @sitename %> et ses Attributs</h3>
+	<h3 class="fw-bold text-dark my-4">L'objet sur-mesure</h3>
 
-	<p class="fs-5 fw-light w-sm-75">
+	<p class="fs-5 fw-light w-sm-90">
 		Un objet est constitué d'attributs (ex: Nom, Marque, Couleur, Age, Prix, Qté en stock, etc.) et 
 		chaque attribut a un type spécifique afin de s'adapter au mieux aux données qu'il contiendra (Texte, Nombre, Date, Liste, Oui/Non, Fichier, etc.)
 		<br><br>
@@ -206,7 +312,7 @@
 			<% end %>
 		</div>
 		
-		<ul class="list-group list-group-flush my-4 m-3 gap-2 w-sm-75">
+		<ul class="list-group list-group-flush my-4 m-3 gap-2 w-sm-90">
 			<li>
 				<b id="texte"><%= t('fields.datatype.Texte') %></b> :
 				<ul>
@@ -274,7 +380,7 @@
 	</p>
 
 	<h3 class="fw-bold text-dark my-4">Relations entre objets</h3>
-	<p class="fs-5 fw-light w-sm-75">
+	<p class="fs-5 fw-light w-sm-90">
 		Les relations entre objets sont créées avec l'attribut 'Collection'. 
 		Exemple : un objet Intervention aura un attribut 'Technicien' qui permettra de choisir un technicien dans la collection du même nom.
 		Ces relations sont aussi visibles dans la vue détails d'un objet. 
@@ -283,7 +389,7 @@
 	</p>
 
 	<h3 class="fw-bold text-dark my-4">Requêtes</h3>
-	<p class="fs-5 fw-light w-sm-75">
+	<p class="fs-5 fw-light w-sm-90">
 		Les Requêtes permettent de mémoriser des critères de sélection afin d'obtenir une collection filtrée d'objets, répondant à ses critères.
 		<br><br>
 		Ces Requêtes acceptent des critères différents selon le type d'attribut :
@@ -298,7 +404,7 @@
 	</p>
 
 	<h3 class="fw-bold text-dark my-4">Notifications</h3>
-	<p class="fs-5 fw-light w-sm-75">
+	<p class="fs-5 fw-light w-sm-90">
 		Les Notifications permettent d'être alerté par email après chaque ajout et modification d'objet dans une collection. 
 		Elles sont paramétrables pour chaque collection et chaque attribut.
 		<br><br>
@@ -306,7 +412,7 @@
 	</p>
 
 	<h3 class="fw-bold text-dark my-4">Utilisateurs et Équipes</h3>
-	<p class="fs-5 fw-light w-sm-75">
+	<p class="fs-5 fw-light w-sm-90">
 		Vous pouvez créer des utilisateurs et les inclure dans une équipe.
 		<br>
 		Une équipe a accès à certaines informations qui sont définis dans les filtres.
@@ -316,10 +422,9 @@
 		Si sur une collection, il n'y a pas de filtre attribué à une équipe, cette dernière ne verra pas la collection.
 	</p>
 
-
-	<h3 class="fw-bold text-dark my-4">Assistant (IA)</h3>
-	<p class="fs-5 fw-light w-sm-75">
-		Posez une question à l'Assistant, basée sur les données de vos collections d'objets
+	<h3 class="fw-bold text-dark my-4">Assistant</h3>
+	<p class="fs-5 fw-light w-sm-90">
+		Posez une question à l'Assistant (IA), basée sur les données de vos collections d'objets
 		<br>
 		Exemples de question, en langage naturel, que l'on peut poser à l'Assistant :
 		<ul class="list-group m-3 mt-2 gap-2">
@@ -329,115 +434,40 @@
 		</ul>
 	</p>
 
+	<h3 class="fw-bold text-dark my-4">
+		Cas d'usage
+	</h3>
+
+	<h4 class="mb-2">Project Management</h4>
+	<p class="fs-5 fw-light w-sm-90">
+		Vous êtes responsable d'une équipe et du bon déroulement d'un programme de projets ?
+		<br><br>
+		<%= @sitename %> vous permet de créé rapidement, et sans faire une ligne de code, un outil de suivi de l'état de chaque projet,
+		d'être notifié quand un changement d'état important est enregistré, et de voir vos dates d'échéances 
+		dans une vue 'Calendrier' ou dans votre agenda personnel (Google Calendar/Outlook/etc.).     
+	</p>
+
+	<h4 class="mb-2">DATA Management</h4>
+	<p class="fs-5 fw-light w-sm-90">
+		Vous êtes à la recherche d'un outil simple pour gérer vos dossiers, documents, rapport, et vos informations collectées sur le terrain ?
+		<br><br>
+		<%= @sitename %> a été conçu pour être utilisable sur un smartphone afin de collecter les données au plus près de leur origine et quelle que soit leur nature (Texte, Chiffre, Photo, PDF, etc.). 
+		Des données de contexte, comme l'état de la météo, la position GPS, peuvent être acquises automatiquement.
+		Un outil de génération de Graphiques vous permet de visualiser les informations sous la forme d'une courbe ou d'un histogramme.
+	</p>
+
+	<h4 class="mb-2">Field Service Management (FSM)</h4>
+
+	<p class="fs-5 fw-light w-sm-90">
+		Vous êtes une entreprise de service avec des équipes sur le terrain et
+		vous cherchez une méthode de gestion de vos interventions (ex: BTP, SAV, Installation, Maintenance) ?
+		<br><br>
+		<%= @sitename %> est un gestionnaire d'informations NO-CODE qui vous permet de créer  
+		des collections d'objets métiers (ex: Clients, Interventions, Technicien, Frais, Projets, etc.), 
+		de les lier (Clients <=> Interventions <=> Techniciens <=> Frais) 
+		et de les partager en ligne avec vos collaborateurs, en toute sécurité.
+	</p>
 
 </div>
 
-<h3 class="fw-bold text-dark my-4">Historique et motivation</h3>
 
-<p class="fs-5 fw-light w-sm-75">
-	Développeur d'applications métiers en entreprise depuis plus de 30 ans, j'ai souvent aidé mes clients à passer 
-	d'un système d'information en silos, où les données métier de l'entreprise sont enfermées 
-	dans des feuilles Excel, à un système de type plateforme où les données sont centralisées et 
-	partagées entre les services depuis une source unique de confiance (<b>Single Source Of Truth</b>). 
-</p>
-
-<p class="fs-5 fw-light w-sm-75">	
-	Fort d'une expérience de plus de 30 ans sur les base de données et outils de développement les plus intéressants de leurs époques 
-	(SuperBase 64, Yes You Can, SuperDB, FoxPro, dBase 3/4, Paradox 3/4, Access, Delphi, VB4/5/6/SQL Server,
-	C#/SQLite/MySQL, stack LAMP, Ruby on Rails, et j'en passe...), ma vocation a toujours été d'aider mes clients à franchir 
-	le pas vers le décloisonnement de leurs données avec pour objectif une informatique de gestion plus efficace, 
-	collaborative et centrée sur les objectifs. 
-	<br><br>
-	Même si les domaines d'activités des clients ne se ressemblaient pas 
-	(Loueur auto, Social, Télécom, Pharma, Industrie, TPE/PME), des motifs se répétaient et chaque nouveau projet 
-	se déroulait d'une façon à peu près identique :
-</p>
-
-<div class="row my-5 w-sm-75">
-	<div class="col">
-		<ul class="list-group">
-			<li class="list-group-item d-flex align-items-center gap-2">
-				<span class="material-symbols-outlined text-primary">
-					priority
-				</span>
-				Importer les données d'Excel
-			</li>
-			<li class="list-group-item d-flex align-items-center gap-2">
-				<span class="material-symbols-outlined text-primary">
-					priority
-				</span>
-				Accéder aux données de n'importe où
-			</li>
-			<li class="list-group-item d-flex align-items-center gap-2">
-				<span class="material-symbols-outlined text-primary">
-					priority
-				</span>
-				Rechercher, trier, filtrer et exporter les données
-			</li>
-			<li class="list-group-item d-flex align-items-center gap-2">
-				<span class="material-symbols-outlined text-primary">
-					priority
-				</span>
-				Partager les données en toute sécurité
-			</li>
-		</ul>
-	</div>
-	<div class="col">
-		<ul class="list-group">
-			<li class="list-group-item d-flex align-items-center gap-2">
-				<span class="material-symbols-outlined text-primary">
-					priority
-				</span>
-				Lier les données entre elles
-			</li>
-			<li class="list-group-item d-flex align-items-center gap-2">
-				<span class="material-symbols-outlined text-primary">
-					priority
-				</span>
-				Ajouter des règles métiers
-			</li>
-			<li class="list-group-item d-flex align-items-center gap-2">
-				<span class="material-symbols-outlined text-primary">
-					priority
-				</span>
-				Créer des vues personnalisées
-			</li>
-			<li class="list-group-item d-flex align-items-center gap-2">
-				<span class="material-symbols-outlined text-primary">
-					priority
-				</span>
-				Gérer des utilisateurs et des rôles
-			</li>
-		</ul>
-	</div>
-</div>
-
-<p class="fs-5 fw-light w-sm-75">
-	C'est pourquoi j'ai commencé le développement de cet outil NO-CODE et open-source, il y a 10 ans,  
-	dans le but de couvrir les fonctions de base d'une plateforme d'information ouverte.
-	<br><br>
-	<%= @sitename %> a donc pour ambition d'offrir un petit concentré de mon expérience des bases de données, 
-	et, pourquoi pas, de poser les fondations d'une future application/plateforme sur mesure, la vôtre, 
-	intégrant toutes vos spécificités, règles métier, Statut, Services, etc.
-</p>
-
-<h3 class="fw-bold text-dark my-4">Développement, support et services</h3>
-
-<p class="mt-3">
-	<%= @sitename %> a été développé en Ruby on Rails par AIKKU SAS
-</p>
-
-<p class="fs-5 fw-light text-secondary mt-4">
-	Besoin d'une fonctionnalité ou d'une nouvelle application sur mesure ? Nous vous la développons !
-	<br><br>
-	Vous êtes à la recherche d'une application pour la gestion de projets, d'interventions, de planning, d'émargement ou de facturation ?
-	<br>
-	Consultez notre <%= link_to "catalogue de logiciels Open-Source", 'https://www.aikku.eu/fr/logiciels', target: '_blank', class: 'link' %>
-	<br><br>
-	Nous pouvons aussi convertir vos anciennes applications PC/Windows (ex: VB/VBA/MS ACCESS/EXCEL/C#...) en une plateforme WEB.
-	<br><br>
-	Pour en savoir plus,
-	<%= link_to "contactez-nous", 'https://www.aikku.eu/fr/contact', target: '_blank', class: 'link' %>
-	<br><br>
-	<%= link_to "Mentions légales", mentions_legales_path, class: 'link' %>
-</p>

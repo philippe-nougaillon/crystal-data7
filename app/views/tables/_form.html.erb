@@ -35,13 +35,15 @@
     </div>
     -->
 
-    <div class="form-check mb-4">
-      <%= f.check_box :show_on_startup_screen, class: 'form-check-input' %>
-      <%= f.label :show_on_startup_screen, t('tables.favorite_table?'), class: 'form-check-label' %>
-      <p class="form-text">
-        <%= t('tables.favorite_table_hint') %>
-      </p>
-    </div>
+    <% if false %>
+      <div class="form-check mb-4">
+        <%= f.check_box :show_on_startup_screen, class: 'form-check-input' %>
+        <%= f.label :show_on_startup_screen, t('tables.favorite_table?'), class: 'form-check-label' %>
+        <p class="form-text">
+          <%= t('tables.favorite_table_hint') %>
+        </p>
+      </div>
+    <% end %>
 
     <div class="form-check mb-4">
       <%= f.check_box :public, class: 'form-check-input' %>

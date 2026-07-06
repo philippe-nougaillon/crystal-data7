@@ -161,9 +161,11 @@ class TablesController < ApplicationController
     respond_to do |format|
       format.html do
         @pagy, @records = pagy_array(@records)
+        @table.preload_page_values(@records)
       end
 
       format.xls do
+        @table.preload_page_values(@records)
         book = CollectionToXls.new(@table, @records).call
         file_contents = StringIO.new
         book.write file_contents # => Now file_contents contains the rendered file output
@@ -171,11 +173,13 @@ class TablesController < ApplicationController
         send_data file_contents.string.force_encoding('binary'), filename: filename 
       end
       format.csv do
+        @table.preload_page_values(@records)
         csv_string = CollectionToCsv.new(@table, @records).call
         filename = "Export_#{@table.name.pluralize}.csv"
         send_data csv_string, filename: filename
       end
       format.pdf do
+        @table.preload_page_values(@records)
         pdf = ExportPdf.new
         pdf.export_collection(@table, @records)
         filename = "Export_#{@table.name.pluralize}.pdf"
@@ -423,28 +427,18 @@ class TablesController < ApplicationController
   end 
 
   def logs
+    field_ids = @table.fields.pluck(:id).map(&:to_s)
 
-    # Afficher les changements pour la ligne #record_index
-    if params[:record_index]
-      sql = "audited_changes ->> 'record_index' = '#{params[:record_index].to_s}'"
-      sql += " AND ("
-    elsif not params[:user_id].blank?
-      sql = "(user_id = '#{params[:user_id]}')"
-      sql += " AND ("
-    else
-      sql = " ("
-    end
-
-    # et ayant comme champs ceux de la table en référence 
-    @table.fields.each_with_index do |field, index|
-       sql = sql + "(audited_changes ->> 'field_id' = '#{field.id.to_s}')"
-       sql = sql + " OR " unless index == @table.fields.size - 1
-    end
-    sql = sql + ")"
-    if sql == " ()"
+    if field_ids.empty?
       @audits = Audited::Audit.none
     else
-      @audits = Audited::Audit.where(sql)
+      @audits = Audited::Audit.where("audited_changes ->> 'field_id' IN (?)", field_ids)
+
+      if params[:record_index].present?
+        @audits = @audits.where("audited_changes ->> 'record_index' = ?", params[:record_index].to_s)
+      elsif params[:user_id].present?
+        @audits = @audits.where(user_id: params[:user_id])
+      end
     end
     @audits = @audits.reorder('created_at DESC').page(params[:page])
   end

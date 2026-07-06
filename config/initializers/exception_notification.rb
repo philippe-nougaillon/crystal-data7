@@ -22,11 +22,11 @@ ExceptionNotification.configure do |config|
   # Notifiers =================================================================
 
   # Email notifier sends notifications by email.
-  config.add_notifier :email, {
-    email_prefix: '[AIKKU ACCESS ERROR] ',
-    sender_address: %{"AIKKU ACCESS Notifier" <no-reply@aikku.eu>},
-    exception_recipients: %w{philippe.nougaillon@aikku.eu, pierreemmanuel.dacquet@aikku.eu}
-  }
+  # config.add_notifier :email, {
+  #   email_prefix: '[AIKKU ACCESS ERROR] ',
+  #   sender_address: %{"AIKKU ACCESS Notifier" <no-reply@aikku.eu>},
+  #   exception_recipients: %w{philippe.nougaillon@aikku.eu, pierreemmanuel.dacquet@aikku.eu lucas.blanquet@aikku.eu}
+  # }
 
   # Campfire notifier sends notifications to your Campfire room. Requires 'tinder' gem.
   # config.add_notifier :campfire, {
