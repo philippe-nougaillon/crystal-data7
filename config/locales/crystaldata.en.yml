@@ -7,7 +7,7 @@ en:
     subtitle: "Ask the assistant, based on data from a collection"
     title: "Assistant (AI)"
   auth:
-    connection: "Connection"
+    connection: "Sign In"
     continue_with_google: "Connect with Google a Account"
     create: "Create the account"
     demo: "Guest mode (connect to a demonstration)"
