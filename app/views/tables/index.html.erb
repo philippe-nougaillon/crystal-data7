@@ -25,13 +25,6 @@
           <tr>
             <% if current_user.admin? && @tables.where(show_on_startup_screen: true).or(@tables.where(public: true)).any? %>
               <td>
-                <% if table.show_on_startup_screen? %>
-                  <%= link_to table.name do %>
-                    <span class="material-symbols-outlined text-primary fs-6">
-                      home
-                    </span>
-                  <% end %>
-                <% end %>
                 <% if table.public? %>
                   <%= link_to fill_path(table), target: :_blank do %>
                     <span class="material-symbols-outlined text-primary fs-6" title="<%= t('tables.public_form_tooltip') %>">

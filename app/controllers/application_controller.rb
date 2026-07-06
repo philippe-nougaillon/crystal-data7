@@ -15,11 +15,11 @@ class ApplicationController < ActionController::Base
   before_action :set_tables
 
   def after_sign_in_path_for(user)
-    if user.favorite_table.present?
-      table_path(user.favorite_table)
-    else
+    # if user.favorite_table.present?
+    #   table_path(user.favorite_table)
+    # else
       tables_path
-    end
+    # end
   end
 
 private

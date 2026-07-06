@@ -247,7 +247,7 @@ en:
     pm: pm
   tables:
     title: "Collections"
-    name: "Name"
+    name: "Name/Attributes"
     updated_at: "Updated"
     public_form_tooltip: "Public form (click to view the shareable URL)"
     time_ago: "%{time} ago"
