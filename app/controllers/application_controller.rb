@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   
   before_action :authenticate_user!
   before_action :set_layout_variables
-  before_action :prepare_exception_notifier
+  #before_action :prepare_exception_notifier
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
   before_action :set_tables
