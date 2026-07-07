@@ -10,7 +10,7 @@ fr:
     connection: "Connexion"
     continue_with_google: "Se connecter avec un compte Google"
     create: "Créer le compte"
-    demo: "Mode invité (Se connecter à une démonstration)"
+    demo: "Se connecter en mode invité (démo)"
     email: "Adresse email"
     login: "Se connecter"
     logout: "Déconnexion"
