@@ -1,4 +1,4 @@
-<%= link_to details_path(@table.slug, record_index: record_index), title: t('tables.details'), class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
+<%= link_to details_table_path(@table record_index: record_index), title: t('tables.details'), class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
   <div class="shadow p-4 bg-white flex-fill">
     <p class="fw-bold">
       <% first_field = @table.fields.first %>
@@ -56,7 +56,7 @@
           <% linked_value = field.get_linked_table_record(value.to_i) %>
           <% linked_table = Table.find_by(id: field.relation.try(:relation_with_id)) %>
           <% if linked_table %>
-            <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2', 'data-testid': "Voir les détails de #{field.items.tr('[]','').split('.').first} à la ligne n°#{value}" %>
+            <%= link_to_if policy(linked_table).details?, linked_value, details_table_path(linked_table, record_index: value), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2', 'data-testid': "Voir les détails de #{field.items.tr('[]','').split('.').first} à la ligne n°#{value}" %>
           <% else %>
             <%= t('tables.collection_not_found') %>
           <% end %>

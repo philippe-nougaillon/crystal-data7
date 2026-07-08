@@ -77,12 +77,12 @@ class TablePolicy < ApplicationPolicy
     record.propriétaire?(user)
   end
 
-  def show_details?
+  def details?
     record.users.include?(user) && (user.admin? || (user.team.filters.pluck(:table_id)).include?(record.id))
   end
 
   def related_tables?
-    show_details?
+    details?
   end
 
   def securite?

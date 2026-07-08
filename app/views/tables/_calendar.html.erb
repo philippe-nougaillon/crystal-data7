@@ -5,7 +5,7 @@
   <% records_index = @date_values.where(data: date).pluck(:record_index) %>
   <% if records_index.any? %>
     <% records_index.each do |record_index| %>
-      <%= link_to details_path(@table.slug, record_index:), title: t('tables.details'), class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
+      <%= link_to details_table_path(@table, record_index:), title: t('tables.details'), class: 'text-reset text-decoration-none', 'data-testid': "Voir ligne n°#{record_index}", data: { turbo_frame: "_top" } do %>
         <div class="shadow-sm pb-3 px-2 bg-light">
           <% @table.values.joins(:field).where(record_index: record_index).where.not('field.datatype': ['Date', 'Signature', 'QRCode', 'Image', 'Fichier', 'PDF']).first(5).pluck(:data).each_with_index do |value, index| %>
             <br>

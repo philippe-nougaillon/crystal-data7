@@ -14,7 +14,7 @@
       var marker = new mapboxgl.Marker({ color: "#FF0000"})
         .setLngLat([lng, lat])
         .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-        .setHTML("<a id='pin' href=<%= details_path(@table.slug, record_index: record.record_index) %> class='text-decoration-none text-reset'><h1 class='text-center mb-4'><%= @data[index].first %></h1><p class=''><%= @data[index].drop(1).join(', ') %></p></a>"))
+        .setHTML("<a id='pin' href=<%= details_table_path(@table, record_index: record.record_index) %> class='text-decoration-none text-reset'><h1 class='text-center mb-4'><%= @data[index].first %></h1><p class=''><%= @data[index].drop(1).join(', ') %></p></a>"))
         .addTo(map);
     <% end %>
   <% end %>

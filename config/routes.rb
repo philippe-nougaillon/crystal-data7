@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 
         get :logs
         get :activity
+        get :details
         get :icalendar
 
       end
@@ -41,7 +42,7 @@ Rails.application.routes.draw do
 
     # get 'tables/:id/logs', to: 'tables#logs', as: :logs
     # get 'tables/:id/activity', to: 'tables#activity', as: :activity
-    get 'tables/:id/details', to: 'tables#show_details', as: :details
+    # get 'tables/:id/details', to: 'tables#show_details', as: :details
     get 'tables/:id/related_tables', to: 'tables#related_tables', as: :related_tables
 
     # get 'tables/:id/fill', to: 'tables#fill', as: :fill

@@ -309,7 +309,7 @@ class TablesController < ApplicationController
 
       if params[:relation].present? && params[:value].present?
         table = Table.find(Relation.find(params[:relation]).relation_with_id)
-        redirect_to details_path(table.slug, record_index: params[:value])
+        redirect_to details_table_path(table.slug, record_index: params[:value])
       elsif user_signed_in? && params[:commit] == t('scaffold.submit')
         redirect_to table
       else
@@ -443,7 +443,7 @@ class TablesController < ApplicationController
     @audits = @audits.reorder('created_at DESC').page(params[:page])
   end
 
-  def show_details
+  def details
     unless params[:record_index].blank?
       if current_user.admin? || current_user.team.filters.where(table_id: @table.id).first.get_filtered_records.include?(params[:record_index].to_i)
         @record_index = params[:record_index]

@@ -1,4 +1,4 @@
-<% unless ['show_details', 'related_tables'].include?(action_name) && field.Collection? && @relation.field == field %>
+<% unless ['details', 'related_tables'].include?(action_name) && field.Collection? && @relation.field == field %>
   <% if value %>
     <td style="vertical-align: middle; <%= 'text-align: right;' if field.is_numeric %>">
       <% case field.datatype when 'Fichier' %>
@@ -13,7 +13,7 @@
       <% when 'Date' %>
         <% unless value.blank? %>
           <% if Value.is_valid_date?(value) %>
-            <%= link_to_if is_link, l(value.to_date), details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2' %>
+            <%= link_to_if is_link, l(value.to_date), details_table_path(table, record_index: record_index), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2' %>
           <% else %>
             <%= t('tables.error') %>
           <% end %>
@@ -40,7 +40,7 @@
         <% linked_value = field.get_linked_table_record(value.to_i) %>
         <% linked_table = Table.find_by(id: field.relation.try(:relation_with_id)) %>
         <% if linked_table %>
-          <%= link_to_if policy(linked_table).show_details?, linked_value, details_path(linked_table.slug, record_index: value), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2', 'data-testid': "Voir les détails de #{field.items.tr('[]','').split('.').first} à la ligne n°#{value}" %>
+          <%= link_to_if policy(linked_table).details?, linked_value, details_table_path(linked_table, record_index: value), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2', 'data-testid': "Voir les détails de #{field.items.tr('[]','').split('.').first} à la ligne n°#{value}" %>
         <% else %>
           <%= t('tables.collection_not_found') %>
         <% end %>
@@ -77,9 +77,9 @@
           <% end %>
         </div>
       <% when 'Oui_non?' %>
-        <%= link_to_if is_link, t("misc.#{value}"), details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2' %>
+        <%= link_to_if is_link, t("misc.#{value}"), details_table_path(table, record_index: record_index), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2' %>
       <% else %>
-        <%= link_to_if is_link, value, details_path(table.slug, record_index: record_index), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2' %>
+        <%= link_to_if is_link, value, details_table_path(table, record_index: record_index), data: { turbo_frame: "_top" }, class: 'font-bold link-offset-2' %>
       <% end %>
 
       <% if field.operation %>

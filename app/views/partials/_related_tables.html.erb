@@ -6,7 +6,7 @@
       <div class="text-center text-black-50">
         Aucun enregistrement
       </div>
-      <% if %w[show_details related_tables].include?(action_name) %>
+      <% if %w[details related_tables].include?(action_name) %>
         <% if policy(table).fill? %>
           <%= link_to "(+) #{table.name}", fill_table_path(table, relation: @relation, value: @record_index), class: 'btn btn-outline-primary my-4', data: { turbo_frame: "_top" }  %>
         <% end %>
