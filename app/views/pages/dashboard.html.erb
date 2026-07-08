@@ -1,12 +1,16 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div class="ml-2 mt-4 lg:mt-0">
-  <div class="d-flex flex-wrap">
-    <% if @graphs.any? %>
+<h1 class="text-2xl mt-4 text-secondary">
+    <%= t('misc.dashboard') %>
+</h1>
+
+<div class="ml-2 mt-5 lg:mt-0">
+  <% if @graphs.any? %>
+    <div class="d-flex flex-wrap">
       <% @graphs.each_with_index do |graph, i| %>
-        <div class="w-sm-33 shadow-sm pt-3 px-2 d-flex flex-column justify-content-between">
+        <div class="w-sm-33 shadow p-3 d-flex flex-column justify-content-between">
           <div>
-            <%= link_to graph.name.humanize, graph_path(graph, from_url: "/dashboard"), class:"text-center fs-5 text-decoration-none text-black mb-2"%>
+            <%= link_to graph.name.humanize, graph_path(graph, from_url: "/dashboard"), class:"text-center fs-5 text-decoration-none btn btn-link mb-2"%>
             <canvas data-turbo="false" id="chart<%= i %>"></canvas>
           </div>
           <div class="d-flex flex-row justify-content-end">
@@ -17,24 +21,17 @@
                 </span>
               <% end %>
             <% end %>
-            <% if policy(graph).destroy? %>
-              <%= button_to graph, method: :delete, data: {turbo_confirm: t('scaffold.sure?') }, class:'text-gray-300 hover-text-danger btn btn-sm p-0', title: t('graphs.delete_title') do %>
-                <span class="material-symbols-outlined">
-                  delete
-                </span>
-              <% end %>
-            <% end %>
           </div>
         </div>
         <%= render partial: 'partials/graph_script', locals: {graph:, i:} %>
       <% end %>
+    </div>
     <% else %>
-      <div class="d-flex flex-row align-items-center flex-wrap gap-2">
-        <i>
-          <%= t('graphs.no_graph') %>
-        </i>
+      <p>
+        <%= t('graphs.no_graph') %>
+      </p>
+      <p>
         <%= link_to t('graphs.add_graph'), new_graph_path, class: 'btn btn-outline-primary hover:text-white' %>
-      </div>
+      </p>
     <% end %>
-  </div>
-</div>
+ </div>
