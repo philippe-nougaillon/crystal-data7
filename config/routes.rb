@@ -27,15 +27,20 @@ Rails.application.routes.draw do
         get :import
         post :import_do
 
+        get :logs
+        get :activity
         get :icalendar
+
       end
-      # collection do
-      #   get :securite
-      # end
+      collection do
+        get :import
+        post :import_do
+        # get :securite
+      end
     end
 
-    get 'tables/:id/logs', to: 'tables#logs', as: :logs
-    get 'tables/:id/activity', to: 'tables#activity', as: :activity
+    # get 'tables/:id/logs', to: 'tables#logs', as: :logs
+    # get 'tables/:id/activity', to: 'tables#activity', as: :activity
     get 'tables/:id/details', to: 'tables#show_details', as: :details
     get 'tables/:id/related_tables', to: 'tables#related_tables', as: :related_tables
 
