@@ -477,7 +477,7 @@ class TablesController < ApplicationController
     end
   end
   
-  def related_tables
+  def related_table
     @relation = Relation.find(params[:relation])
     @record_index = params[:record_index]
     @records = @relation.field.values.where(data: @record_index).pluck(:record_index)

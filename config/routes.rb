@@ -31,7 +31,8 @@ Rails.application.routes.draw do
         get :activity
         get :details
         get :icalendar
-
+        get :related
+        
       end
       collection do
         get :import
@@ -39,20 +40,6 @@ Rails.application.routes.draw do
         # get :securite
       end
     end
-
-    # get 'tables/:id/logs', to: 'tables#logs', as: :logs
-    # get 'tables/:id/activity', to: 'tables#activity', as: :activity
-    # get 'tables/:id/details', to: 'tables#show_details', as: :details
-    get 'tables/:id/related_tables', to: 'tables#related_tables', as: :related_tables
-
-    # get 'tables/:id/fill', to: 'tables#fill', as: :fill
-    # get 'tables/:id/partages', to:'tables#partages', as: :partages
-    # get 'tables/:id/partages_delete', to:'tables#partages_delete', as: :annuler_partage
-    # get '/import', to: 'tables#import'
-
-    # post 'tables/:id/fill', to: 'tables#fill_do', as: :fill_do
-    # post '/add_user_do', to:'tables#add_user_do'
-    # post '/import_do', to: 'tables#import_do'
 
     resources :users, except: %i[show] do
       collection do
@@ -95,7 +82,6 @@ Rails.application.routes.draw do
       get :create_new_user
       post :create_new_user_do
     end
-    
     
     delete 'tables/:id/delete_record' => 'tables#delete_record', as: :delete_record
     

@@ -28,7 +28,7 @@
   <ul class="nav nav-tabs w-100 mt-4">
     <% Relation.where(relation_with_id: @table.id).each do |relation| %>
       <li class="nav-item shadow-sm">
-        <%= link_to relation.table.name, related_tables_path(relation:, record_index: @record_index), class:"nav-link fw-bold #{relation == Relation.where(relation_with_id: @table.id).first ? 'active' : ''}", data: { turbo_frame: "related_tables_frame" }, onclick:'activeLink();' %>
+        <%= link_to relation.table.name, related_table_path(relation:, record_index: @record_index), class:"nav-link fw-bold #{relation == Relation.where(relation_with_id: @table.id).first ? 'active' : ''}", data: { turbo_frame: "related_tables_frame" }, onclick:'activeLink();' %>
       </li>
     <% end %>
   </ul>
