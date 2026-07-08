@@ -313,10 +313,10 @@ class TablesController < ApplicationController
       elsif user_signed_in? && params[:commit] == t('scaffold.submit')
         redirect_to table
       else
-        redirect_to fill_path(table)
+        redirect_to fill_table_path(table)
       end
     else
-      url = (params[:commit] == t('scaffold.submit')) ? table : fill_path(table)
+      url = (params[:commit] == t('scaffold.submit')) ? table : fill_table_path(table)
       redirect_to url, alert: t('notice.value.no_save')
     end
   end  

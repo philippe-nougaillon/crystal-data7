@@ -18,29 +18,35 @@ Rails.application.routes.draw do
     root 'devise/sessions#new'
     
     resources :tables do
+      member do
+        get :show_attrs
+
+        get :fill
+        post :fill_do
+
+        get :import
+        post :import_do
+
+        get :icalendar
+      end
       # collection do
       #   get :securite
       # end
-      member do
-        get :icalendar
-        get :show_attrs
-      end
     end
 
-    #get 'show_attrs', to: 'tables#show_attrs' 
-    get 'tables/:id/fill', to: 'tables#fill', as: :fill
-    # get 'tables/:id/partages', to:'tables#partages', as: :partages
-    # get 'tables/:id/partages_delete', to:'tables#partages_delete', as: :annuler_partage
     get 'tables/:id/logs', to: 'tables#logs', as: :logs
     get 'tables/:id/activity', to: 'tables#activity', as: :activity
     get 'tables/:id/details', to: 'tables#show_details', as: :details
     get 'tables/:id/related_tables', to: 'tables#related_tables', as: :related_tables
-    get '/import', to: 'tables#import'
 
-    post 'tables/:id/fill', to: 'tables#fill_do', as: :fill_do
+    # get 'tables/:id/fill', to: 'tables#fill', as: :fill
+    # get 'tables/:id/partages', to:'tables#partages', as: :partages
+    # get 'tables/:id/partages_delete', to:'tables#partages_delete', as: :annuler_partage
+    # get '/import', to: 'tables#import'
+
+    # post 'tables/:id/fill', to: 'tables#fill_do', as: :fill_do
     # post '/add_user_do', to:'tables#add_user_do'
-    post '/import_do', to: 'tables#import_do'
-
+    # post '/import_do', to: 'tables#import_do'
 
     resources :users, except: %i[show] do
       collection do

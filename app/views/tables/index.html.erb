@@ -25,7 +25,7 @@
             <% if current_user.admin? && @tables.where(show_on_startup_screen: true).or(@tables.where(public: true)).any? %>
               <td>
                 <% if table.public? %>
-                  <%= link_to fill_path(table), target: :_blank do %>
+                  <%= link_to fill_table_path(table), target: :_blank do %>
                     <span class="material-symbols-outlined text-primary fs-6" title="<%= t('tables.public_form_tooltip') %>">
                       public
                     </span>
@@ -48,7 +48,7 @@
             </td>
             <td>
               <% if policy(table).fill? || current_user.compte_démo? %>
-                <%= link_to "(+) #{table.name}", fill_path(table.slug), title: t('tables.add_new', name: table.name), class: 'btn btn-outline-primary btn-sm me-2 w-100' %>
+                <%= link_to "(+) #{table.name}", fill_table_path(table.slug), title: t('tables.add_new', name: table.name), class: 'btn btn-outline-primary btn-sm me-2 w-100' %>
               <% end %>
             </td>
             <% if false %>
