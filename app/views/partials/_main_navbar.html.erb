@@ -13,24 +13,6 @@
       </ul>
       <ul class="navbar-nav">
         <% if user_signed_in? %>
-          <% if policy(User).index? %>
-            <li class="nav-item <%= 'active' if params[:controller] == 'users' %>">
-              <%= link_to users_path, title: t('navbar.users_title'), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 link-secondary me-3" do %>
-                <span class="material-symbols-outlined fs-5">
-                  group
-                </span>
-                Utilisateurs
-              <% end %>
-            </li>
-          <% end %>
-          <li class="nav-item <%= 'active' if params[:action] == 'a_propos' %>">
-            <%= link_to a_propos_path, title: t('navbar.about_title', sitename: @sitename), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 link-secondary me-3" do %>
-              <span class="material-symbols-outlined fs-5">
-                help
-              </span>
-              <%= t('misc.help') %>
-            <% end %>
-          </li>
         <% end %>
         <li class="mt-2 <%= "px-4" unless user_signed_in? %>">
           <% if I18n.locale == :fr %>
@@ -64,8 +46,17 @@
           <li class="text-center text-black m-2" title= <%= t('navbar.profile_title') %>>
             <%= current_user.name %> (<%= current_user.role.humanize %>)
           </li>
+          <li class="nav-item <%= 'active' if params[:action] == 'a_propos' %>">
+            <%= link_to a_propos_path, title: t('navbar.about_title', sitename: @sitename), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 link-secondary me-3" do %>
+              <span class="material-symbols-outlined fs-5">
+                help
+              </span>
+              <%= t('misc.help') %>
+            <% end %>
+          </li>
+
           <li>
-            <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-sm btn-outline-primary text-black hover-text-white m-1', 'data-turbo': false, title: t('auth.logout_title') do %>
+            <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-sm btn-outline-secondary text-black hover-text-white m-1', 'data-turbo': false, title: t('auth.logout_title') do %>
               <%= t('auth.logout') %>
             <% end %>
           </li>
