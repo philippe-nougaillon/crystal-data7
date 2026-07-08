@@ -266,6 +266,7 @@ en:
     partages: "Shares"
     edit: "Object"
     error: "Error"
+    view: "View"
     collection_not_found: "No relationships found"
     youtube_error: "To view the video directly, please copy the YouTube video embed link"
     youtube_hint: "Copier le lien YouTube (Partage/Intégration/src=LeLienÀCopier)"

@@ -5,11 +5,13 @@
         <%= render partial: 'partials/navbar_table_show' %>
         <div class="d-flex align-items-center">
           <% if policy(@table).show_attrs? || (policy(@table).edit? || current_user.compte_démo?) || policy(@table).partages? %>
-            <p class="mb-0"><%= t('tables.navbar.update') %></p>
+            <p class="mb-0">
+              <%= t('tables.navbar.update') %>
+            </p>
           <% end %>
           <% if policy(@table).show_attrs? %>
             <li class="nav-item">
-              <%= link_to show_attrs_path(id: @table), class: 'nav-link', title: t('tables.navbar.attributes_title', table_name: @table.name) do %> 
+              <%= link_to show_attrs_path(id: @table), class: 'btn btn-link', title: t('tables.navbar.attributes_title', table_name: @table.name) do %> 
                 <%= t('tables.attributes') %>
               <% end %>
             </li>

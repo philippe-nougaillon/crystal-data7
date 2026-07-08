@@ -1,25 +1,26 @@
 <h1 class="text-primary my-4">
-  <%= @table.name %>
+  <%= t('tables.view') %>
+  <%= "'#{@table.name}' (##{@record_index})" %>
 </h1>
 
 <div class="border rounded shadow-sm p-3 p-sm-4 p-lg-5">
   <%= render partial: 'partials/détails', locals: {table: @table, record_index: @record_index} %>
 
-  <div class="mt-3 d-flex justify-content-end gap-2">
+  <div class="mt-3 d-flex gap-2">
     <% if policy(@table).fill? %>
       <%= link_to t('scaffold.update'), fill_url(@table.slug, record_index: @record_index), 'data-turbo': 'false', class:'btn btn-sm btn-outline-primary', 'data-testid': "Modifier ligne n°#{ @record_index }" %>
     <% end %>
     <% if policy(@table).delete_record? %>
       <%= link_to t('scaffold.destroy'), delete_record_url(@table.slug, record_index: @record_index), title: t('tables.delete_record'), 'data-turbo-method': :delete, class:'btn btn-sm btn-outline-danger', 'data-turbo-confirm': 'Confirmez-vous la suppression ?', 'data-testid': "Supprimer ligne n°#{@record_index}" %>
     <% end %>
+  </div>
+
+  <div class="d-flex justify-content-end text-black-50 gap-2">
+    <%= t('tables.values_updated_at', time_ago: time_ago_in_words(@table.last_update_at(@record_index)), date: (l @table.last_update_at(@record_index))) %>
+    |
     <% if policy(@table).logs? %>
       <%= link_to t('tables.activity'), logs_path(record_index: @record_index), title: t('tables.record_activity_title', table: @table.name), data: { turbo_frame: "audit_frame" } %>
     <% end %>
-    <%= link_to t('scaffold.back'), table_path(@table) %>
-  </div>
-
-  <div class="text-black-50">
-    <%= t('tables.values_updated_at', time_ago: time_ago_in_words(@table.last_update_at(@record_index)), date: (l @table.last_update_at(@record_index))) %>
   </div>
 </div>
 
