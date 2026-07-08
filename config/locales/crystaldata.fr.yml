@@ -234,7 +234,7 @@ fr:
     no_notification: "Aucune notification pour l'instant..."
     object: "Objet"
     send_to: "Notification envoyée à"
-    send_to_label: "Envoyer notification à (emails séparés par des virgules)"
+    send_to_label: "Envoyer une notification à : (adresses emails séparées par une virgule)"
     trigger_value: "Valeur de déclenchement"
     trigger_value_hint: "ex: Terminé"
     trigger_value_label: "Valeur qui déclenchera la notification"
