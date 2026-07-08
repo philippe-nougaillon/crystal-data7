@@ -1,7 +1,7 @@
 class TablesController < ApplicationController
   before_action :set_table, except: [:new, :create, :import, :import_do, :index, :securite, :icalendar]
   before_action :is_user_authorized?, except: %i[ icalendar ]
-  before_action :info_notice, only: %i[index show_attrs partages logs securite]
+  #before_action :info_notice, only: %i[index show_attrs partages logs securite]
   skip_before_action :authenticate_user!, only: %i[ icalendar fill fill_do ]
 
   # GET /tables

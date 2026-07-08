@@ -2,10 +2,15 @@
   <div class="container-fluid px-0">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav w-100 justify-content-between align-items-center">
-        <%= render partial: 'partials/navbar_table_show' %>
+        <li class="my-2">
+          <h1 class="mb-0 text-primary"><%= @table.name_pluralized %></h1>
+        </li>
+
         <div class="d-flex align-items-center">
           <% if policy(@table).show_attrs? || (policy(@table).edit? || current_user.compte_démo?) || policy(@table).partages? %>
-            <p class="mb-0"><%= t('tables.navbar.update') %></p>
+            <p class="mb-0">
+              <%= t('tables.navbar.update') %>
+            </p>
           <% end %>
           <% if policy(@table).show_attrs? %>
             <li class="nav-item">
@@ -13,6 +18,7 @@
                 <%= t('tables.attributes') %>
               <% end %>
             </li>
+            /
           <% end %>
           <% if policy(@table).edit? || current_user.compte_démo? %>
             <li class="nav-item">
@@ -42,6 +48,7 @@
         <%= label_tag :search, t('tables.navbar.search') %>
         <%= text_field_tag :search, params[:search], onchange: 'this.form.submit()', class: 'form-control' %>
       </div>
+      
       <% @table.fields.filtres.each do |field| %>
         <% if field.Date? %>
           <% default_start_date = params.permit![:date].try(:[], field.id.to_s).try(:[], :start) ? params[:date][field.id.to_s][:start] : 'nil' %>
@@ -81,55 +88,21 @@
           </div>
         <% end %>
       <% end %>
+      
       <% if @table.filters.any? && current_user.admin? %>
         <div>
           <%= label_tag :filtre, t('tables.filter') %>
           <%= select_tag :filtre, options_from_collection_for_select(@table.filters, 'slug', 'name', params[:filtre]), include_blank: true, class: 'form-select', onchange: 'this.form.submit()' %>
         </div>
       <% end %>
+
       <% if policy(@table).fill? || current_user.compte_démo? %>
         <%= link_to "(+) #{@table.name}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end', title: t('tables.navbar.new_object', table_name: @table.name) %>
       <% end %>
     </div>
 
-    <div class='flex-fill mt-4 text-end'>
-      <div class="btn-group flex-no-wrap" role="group" aria-label="Basic radio toggle button group">
-        <%= radio_button_tag :view, "table", (params[:view] == 'table'), name: 'view', id: 'btnradio1', autocomplete: 'off', onchange: 'this.form.submit()', class: "btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio1" title="<%= t('tables.table') %>">
-          <span class="material-symbols-outlined">
-            view_list
-          </span>
-        </label>
-
-        <%= radio_button_tag :view, "card", (params[:view] == 'card'), name: 'view', id: 'btnradio2', autocomplete: 'off', onchange: 'this.form.submit()', class: "btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio2" title="<%= t('tables.card') %>">
-          <span class="material-symbols-outlined">
-            cards
-          </span>
-        </label>
-
-        <%= radio_button_tag :view, "calendar", (params[:view] == 'calendar'), name: 'view', id: 'btnradio3', autocomplete: 'off', onchange: 'this.form.submit()', class: "btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio3" title="<%= t('tables.calendar') %>">
-          <span class="material-symbols-outlined">
-            calendar_month
-          </span>
-        </label>
-
-        <%= radio_button_tag :view, "map", (params[:view] == 'map'), name: 'view', id: 'btnradio4', autocomplete: 'off', onchange: 'this.form.submit()', class: "btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio4" title="<%= t('tables.map') %>">
-          <span class="material-symbols-outlined">
-            map
-          </span>
-        </label>
-
-        <%= radio_button_tag :view, "graph", (params[:view] == 'graph'), name: 'view', id: 'btnradio5', autocomplete: 'off', onchange: 'this.form.submit()', class: "btn-check" %>
-        <label class="btn btn-outline-primary pb-1 lh-1" for="btnradio5" title="<%= t('tables.graph') %>">
-          <span class="material-symbols-outlined">
-            bar_chart_4_bars
-          </span>
-        </label>
-      </div>
-    </div>
+    <%= render partial: 'view_selector' %>
+    
   <% end %>
 
   <% case params[:view] when 'table' %>

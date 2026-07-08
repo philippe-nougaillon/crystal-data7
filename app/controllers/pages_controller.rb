@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :info_notice, only: %i[graphs]
+  #before_action :info_notice, only: %i[graphs]
   before_action :user_authorized?
   skip_before_action :authenticate_user!, only: %i[a_propos mentions_legales]
 

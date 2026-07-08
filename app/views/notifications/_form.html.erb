@@ -26,5 +26,5 @@
     <%= f.text_area :send_to, value: @notification.send_to || current_user.email, rows: 5, class: "form-control w-sm-50", required: true %>
   </div>
 
-  <%= f.submit class: "btn btn-outline-primary mt-4" %>
+  <%= f.submit class: "btn btn-outline-danger mt-4" %>
 <% end %>

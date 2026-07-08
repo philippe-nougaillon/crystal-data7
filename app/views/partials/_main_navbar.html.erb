@@ -13,41 +13,6 @@
       </ul>
       <ul class="navbar-nav">
         <% if user_signed_in? %>
-          <% if policy(User).index? %>
-            <li class="nav-item <%= 'active' if params[:controller] == 'users' %>">
-              <%= link_to users_path, title: t('navbar.users_title'), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 link-secondary me-3" do %>
-                <span class="material-symbols-outlined fs-5">
-                  group
-                </span>
-                Utilisateurs
-              <% end %>
-            </li>
-          <% end %>
-          <li class="nav-item <%= 'active' if params[:action] == 'a_propos' %>">
-            <%= link_to a_propos_path, title: t('navbar.about_title', sitename: @sitename), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 link-secondary me-3" do %>
-              <span class="material-symbols-outlined fs-5">
-                help
-              </span>
-              <%= t('misc.help') %>
-            <% end %>
-          </li>
-        <% end %>
-        <li class="mt-2 <%= "px-4" unless user_signed_in? %>">
-          <% if I18n.locale == :fr %>
-            <%= link_to url_for(request.params.merge(locale: 'en')), title: t('navbar.switch_language_title'), class: 'text-black-50', 'data-turbo': params[:action] != 'dashboard' do %>
-              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
-                language language_french
-              </span>
-            <% end %>
-          <% else %>
-            <%= link_to url_for(request.params.merge(locale: 'fr')), title: t('navbar.switch_language_title'), class: 'text-black-50', 'data-turbo': params[:action] != 'dashboard' do %>
-              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
-                language language_us
-              </span>
-            <% end %>
-          <% end %>
-        </li>
-        <% if user_signed_in? %>
           <li class="nav-item d-flex align-items-center ms-4">
             <label tabindex="0" class="avatar online avatar-placeholder" style="cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
               <% if current_user.avatar.attached? %>
@@ -64,12 +29,38 @@
           <li class="text-center text-black m-2" title= <%= t('navbar.profile_title') %>>
             <%= current_user.name %> (<%= current_user.role.humanize %>)
           </li>
+          <li class="px-2 nav-item <%= 'active' if params[:action] == 'a_propos' %>">
+            <%= link_to a_propos_path, title: t('navbar.about_title', sitename: @sitename), class: "d-flex justify-content-center gap-2 text-decoration-none py-2 link-secondary me-3" do %>
+              <span class="material-symbols-outlined fs-5">
+                help
+              </span>
+              <%= t('misc.help') %>
+            <% end %>
+          </li>
+
           <li>
-            <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-sm btn-outline-primary text-black hover-text-white m-1', 'data-turbo': false, title: t('auth.logout_title') do %>
+            <%= button_to destroy_user_session_path, method: :delete, class:'btn btn-sm btn-outline-secondary text-black hover-text-white m-1', 'data-turbo': false, title: t('auth.logout_title') do %>
               <%= t('auth.logout') %>
             <% end %>
           </li>
         <% end %>
+        
+        <li class="mt-2 px-4">
+          <% if I18n.locale == :fr %>
+            <%= link_to url_for(request.params.merge(locale: 'en')), title: t('navbar.switch_language_title'), class: 'text-black-50', 'data-turbo': params[:action] != 'dashboard' do %>
+              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
+                language language_french
+              </span>
+            <% end %>
+          <% else %>
+            <%= link_to url_for(request.params.merge(locale: 'fr')), title: t('navbar.switch_language_title'), class: 'text-black-50', 'data-turbo': params[:action] != 'dashboard' do %>
+              <span class="material-symbols-outlined" style="letter-spacing: -12px;">
+                language language_us
+              </span>
+            <% end %>
+          <% end %>
+        </li>
+
       </ul>
     </div>
   </div>

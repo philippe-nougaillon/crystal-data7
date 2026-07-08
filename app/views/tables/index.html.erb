@@ -1,4 +1,4 @@
-<div class="my-4 d-flex align-items-center text-dark gap-2">
+<div class="my-4 d-flex align-items-center gap-2">
   <h1 class="mb-0">
     <%= t('tables.title') %>
   </h1>
@@ -34,15 +34,17 @@
               </td>
             <% end%>
             <td>
-              <%= link_to table.name, table, class: 'text-primary' %>
+              <%= link_to table.name.pluralize, table, class: 'text-primary' %>
               <br>
-              <%= table.field_names %>
+              <small>
+                <%= table.field_names %>
+              </small>
             </td>
             <td>
               <%= table.record_index %>
             </td>
             <td>
-              <%= t('scaffold.time_ago', time: time_ago_in_words(table.values.maximum(:updated_at))) unless table.size.zero? %>
+              <small><%= t('scaffold.time_ago', time: time_ago_in_words(table.values.maximum(:updated_at))) unless table.size.zero? %></small>
             </td>
             <td>
               <% if policy(table).fill? || current_user.compte_démo? %>
@@ -88,7 +90,7 @@
   <% end %>
 
   <% if policy(Table).import? %>
-    <%= link_to import_path, class: 'btn btn-outline-info' do %>
+    <%= link_to import_path, class: 'btn btn-link' do %>
       <%= t('scaffold.import') %>
     <% end %>
   <% end %>

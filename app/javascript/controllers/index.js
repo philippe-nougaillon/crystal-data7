@@ -10,6 +10,9 @@ application.register("geolocation", GeolocationController)
 import GraphController from "./graph_controller"
 application.register("graph", GraphController)
 
+import NotificationController from "./notification_controller"
+application.register("notification", NotificationController)
+
 import PartageController from "./partage_controller"
 application.register("partage", PartageController)
 
