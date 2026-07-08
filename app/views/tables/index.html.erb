@@ -54,7 +54,7 @@
             <% if false %>
               <td style="text-align: right; white-space: nowrap;">
                 <% if policy(table).show_attrs? %>
-                  <%= link_to t('tables.modify_attributes'), show_attrs_path(id: table.slug), title: t('tables.modify_attributes_title', name: table.name), class: 'btn btn-outline-success btn-sm me-2' %>
+                  <%= link_to t('tables.modify_attributes'), show_attrs_table_path(table), title: t('tables.modify_attributes_title', name: table.name), class: 'btn btn-outline-success btn-sm me-2' %>
                 <% end %>
                 <% if policy(table).edit? || current_user.compte_démo? %>
                   <%= link_to t('tables.modify_object'), edit_table_path(id: table), title: t('tables.modify_object_title', name: table.name), class: 'btn btn-outline-warning btn-sm me-2' %> 

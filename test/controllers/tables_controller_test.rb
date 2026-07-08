@@ -19,7 +19,7 @@ class TablesControllerTest < ActionDispatch::IntegrationTest
       post tables_url, params: { table: { name: "Interventions" } }
     end
 
-    assert_redirected_to show_attrs_path(id: Table.last.slug)
+    assert_redirected_to show_attrs_table_path(Table.last)
     follow_redirect!
     assert_match "Objet créé", response.body
   end

@@ -23,51 +23,11 @@ Rails.application.routes.draw do
       # end
       member do
         get :icalendar
-      end
-    end
-    resources :values
-    resources :blobs, only: [:new, :create]
-
-    resources :users, except: %i[show] do
-      collection do
-        get :profil
-      end
-      get :connect_guest_user
-    end
-    
-    resources :fields, only: %i[create edit update destroy] do
-      post :update_row_order, on: :collection
-    end
-    
-    controller :pages do
-      get :a_propos, to: 'pages#a_propos'
-      get :assistant, to: "pages#assistant"
-      get :dashboard, to: 'pages#dashboard'
-      get :mentions_legales, to: "pages#mentions_legales"
-    end
-    
-    resources :filters do
-      member do
-        get :query
+        get :show_attrs
       end
     end
 
-    resources :notifications, except: %i[show]
-    resources :mail_logs, only: %i[index show]
-    resources :organisations, only: %i[show edit update]
-    resources :graphs do
-      get :update_filters, on: :collection
-    end
-    resources :teams, except: %i[index show]
-
-    namespace :admin do
-      get :stats
-      get :assistant_logs
-      get :create_new_user
-      post :create_new_user_do
-    end
-    
-    get 'show_attrs', to: 'tables#show_attrs' 
+    #get 'show_attrs', to: 'tables#show_attrs' 
     get 'tables/:id/fill', to: 'tables#fill', as: :fill
     # get 'tables/:id/partages', to:'tables#partages', as: :partages
     # get 'tables/:id/partages_delete', to:'tables#partages_delete', as: :annuler_partage
@@ -81,9 +41,52 @@ Rails.application.routes.draw do
     # post '/add_user_do', to:'tables#add_user_do'
     post '/import_do', to: 'tables#import_do'
 
+
+    resources :users, except: %i[show] do
+      collection do
+        get :profil
+      end
+      get :connect_guest_user
+    end
+    
+    resources :fields, only: %i[create edit update destroy] do
+      post :update_row_order, on: :collection
+    end
+        
+    resources :filters do
+      member do
+        get :query
+      end
+    end
+
+    resources :graphs do
+      get :update_filters, on: :collection
+    end
+
+    resources :notifications, except: %i[show]
+    resources :mail_logs, only: %i[index show]
+    resources :organisations, only: %i[show edit update]
+    resources :teams, except: %i[index show]
+    resources :values
+    resources :blobs, only: [:new, :create]
+
+    controller :pages do
+      get :a_propos, to: 'pages#a_propos'
+      get :assistant, to: "pages#assistant"
+      get :dashboard, to: 'pages#dashboard'
+      get :mentions_legales, to: "pages#mentions_legales"
+    end
+
+    namespace :admin do
+      get :stats
+      get :assistant_logs
+      get :create_new_user
+      post :create_new_user_do
+    end
+    
+    
     delete 'tables/:id/delete_record' => 'tables#delete_record', as: :delete_record
     
-
     # namespace :api, defaults: {format: :json}  do
     #   namespace :v1 do
     #     get 'timestamps', to: 'users#timestamps'

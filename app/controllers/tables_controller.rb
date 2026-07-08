@@ -368,7 +368,7 @@ class TablesController < ApplicationController
             field.save
           end
         end
-        format.html { redirect_to show_attrs_path(id: @table), notice: t('notice.table.new') }
+        format.html { redirect_to show_attrs_table_path(@table), notice: t('notice.table.new') }
         format.json { render :show, status: :created, location: @table }
       else
         format.html { render :new }

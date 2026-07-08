@@ -14,7 +14,7 @@
           <% end %>
           <% if policy(@table).show_attrs? %>
             <li class="nav-item">
-              <%= link_to show_attrs_path(id: @table), class: 'nav-link', title: t('tables.navbar.attributes_title', table_name: @table.name) do %> 
+              <%= link_to show_attrs_table_path(@table), class: 'nav-link', title: t('tables.navbar.attributes_title', table_name: @table.name) do %> 
                 <%= t('tables.attributes') %>
               <% end %>
             </li>
