@@ -1,10 +1,10 @@
 fr:
   assistant:
-    question?: "Quelle est votre question ?"
-    question_hint: "Quel client revient le plus souvent ? \r\nGénère-moi les 3 prochaines interventions à prévoir ? \r\nTu es statisticien. Calcule-moi la moyenne des durées."
+    question?: "Posez votre question"
+    question_hint: "Ex: Quel est le client qui revient le plus souvent ? "
     source_field: "Attributs sources"
     submit: "Envoyer"
-    subtitle: "Posez une question à l'Assistant (IA), basée sur les données d'une collection"
+    subtitle: "Posez une question (à l'IA) basée sur les données d'une de vos collection"
     title: "Assistant"
   auth:
     connection: "Connexion"
