@@ -10,7 +10,7 @@
             <span class="material-symbols-outlined text-black-50">
               update
             </span>
-            <span class="text-nowrap text-black">
+            <span class="text-nowrap text-secondary">
               <%= t('scaffold.updated_at') %>
               <% if params[:sort_by] == '0' %>
                 <span class="text-decoration-none text-black-50"><%= (session[:order_by] == 'ASC') ? '△' : '▽' %></span>
@@ -43,9 +43,9 @@
     <% end %>
   </table>
 </div>
-<% if %w[show_details related_tables].include?(action_name) %>
+<% if %w[details related_tables].include?(action_name) %>
   <% if policy(table).fill? || current_user.compte_démo? %>
-    <%= link_to "(+) #{table.name}", fill_path(table, relation: @relation, value: @record_index), class: 'btn btn-outline-primary mb-4', data: { turbo_frame: "_top" }  %>
+    <%= link_to "(+) #{table.name}", fill_table_path(table, relation: @relation, value: @record_index), class: 'btn btn-outline-primary mb-4', data: { turbo_frame: "_top" }  %>
   <% end %>
 <% end %>
 <div class="d-flex flex-wrap gap-2">
@@ -53,7 +53,7 @@
     <%== pagy_info(@pagy, item_name: table.name.pluralize.humanize) %>
     <%== pagy_bootstrap_nav(@pagy) %>
   </div>
-  <% if action_name != 'show_details' %>
+  <% if action_name != 'details' %>
     <div class="d-block">
       <!-- TODO : faire une boucle pour avoir moins de code répétitif -->
       <%= link_to url_for(params.merge(format: :xls)), class: 'btn btn-outline-success btn-sm', title: "#{t('tables.export', table_name: table.name, export_format: "XLS" )}", onclick: "return confirm('#{j t('tables.export_confirm', table_name: table.name, export_format: "XLS")}');" do %>

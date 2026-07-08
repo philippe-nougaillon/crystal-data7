@@ -148,7 +148,7 @@
         <% if controller_name == "tables" && action_name == "show" %>
           <% if policy(@table).show_attrs? %>
             <li class="nav-item text-end">
-              <%= link_to show_attrs_path(id:@table), class:'nav-link' do %> 
+              <%= link_to show_attrs_table_path(@table), class:'nav-link' do %> 
                 <%= t('tables.modify_attributes') %>
               <% end %>
             </li>
@@ -162,7 +162,7 @@
           <% end %>
           <% if policy(@table).logs? %>
             <li class="nav-item text-end">
-              <%= link_to logs_path(id:@table), class:'nav-link' do %>
+              <%= link_to logs_table_path(@table), class:'nav-link' do %>
                 <%= t('tables.activity') %>
               <% end %>
             </li>

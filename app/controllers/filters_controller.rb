@@ -1,7 +1,7 @@
 class FiltersController < ApplicationController
   before_action :set_filter, only: %i[ show edit update destroy query]
   before_action :is_user_authorized?
-  before_action :info_notice, only: %i[index query]
+  #before_action :info_notice, only: %i[index query]
 
   # GET /filters or /filters.json
   def index
