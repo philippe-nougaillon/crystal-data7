@@ -364,7 +364,7 @@ fr:
     sort_hint: "Trier la collection par date de modification (le dernier objet modifié apparaît en haut de la collection)"
     sync_calendar: "Synchronisation du calendrier"
     sync_calendar_notice: "Ajouter le lien ci-dessous à votre calendrier personnel (Google Agenda, Apple Calendar, Outlook, ...) pour que les %{tables} avec des attributs de type Date apparaissent automatiquement. Vous pouvez filtrer les %{tables} en sélectionnant un filtre préalablement créé."
-    table: "Voir sous forme de tableau"
+    table: "Table : Voir la collection sous la forme d'un tableau d'objets"
     title: "Collections"
     update_attribute: "Modifier l'attribut"
     update_attribute_testid: "Modifier l'attribut du field n°%{field_slug}"
