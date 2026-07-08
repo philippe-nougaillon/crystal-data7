@@ -246,7 +246,7 @@ fr:
     destroy: "X"
     import: "Importer"
     modification: "Modification"
-    name: "Nom/Attributs"
+    name: "Nom / Attributs"
     new: "Nouveau"
     save: "Enregistrer"
     submit: "Enregistrer"
