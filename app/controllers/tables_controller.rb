@@ -309,14 +309,14 @@ class TablesController < ApplicationController
 
       if params[:relation].present? && params[:value].present?
         table = Table.find(Relation.find(params[:relation]).relation_with_id)
-        redirect_to details_path(table.slug, record_index: params[:value])
+        redirect_to details_table_path(table.slug, record_index: params[:value])
       elsif user_signed_in? && params[:commit] == t('scaffold.submit')
         redirect_to table
       else
-        redirect_to fill_path(table)
+        redirect_to fill_table_path(table)
       end
     else
-      url = (params[:commit] == t('scaffold.submit')) ? table : fill_path(table)
+      url = (params[:commit] == t('scaffold.submit')) ? table : fill_table_path(table)
       redirect_to url, alert: t('notice.value.no_save')
     end
   end  
@@ -368,7 +368,7 @@ class TablesController < ApplicationController
             field.save
           end
         end
-        format.html { redirect_to show_attrs_path(id: @table), notice: t('notice.table.new') }
+        format.html { redirect_to show_attrs_table_path(@table), notice: t('notice.table.new') }
         format.json { render :show, status: :created, location: @table }
       else
         format.html { render :new }
@@ -443,7 +443,7 @@ class TablesController < ApplicationController
     @audits = @audits.reorder('created_at DESC').page(params[:page])
   end
 
-  def show_details
+  def details
     unless params[:record_index].blank?
       if current_user.admin? || current_user.team.filters.where(table_id: @table.id).first.get_filtered_records.include?(params[:record_index].to_i)
         @record_index = params[:record_index]
@@ -477,7 +477,7 @@ class TablesController < ApplicationController
     end
   end
   
-  def related_tables
+  def related_table
     @relation = Relation.find(params[:relation])
     @record_index = params[:record_index]
     @records = @relation.field.values.where(data: @record_index).pluck(:record_index)

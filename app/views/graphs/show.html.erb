@@ -1,5 +1,5 @@
-<div class="mx-auto mt-2 <%= 'w-50' if ['pie','d'].include? @graph.chart_type %>">
-  <div class="shadow-sm pt-4 pb-5 px-5">
+<div class="mt-4 w-50">
+  <div class="shadow p-4">
     <h1 class="mb-4"><%= @graph.name.humanize %></h1>
     <canvas data-turbo="false" id="chart0"></canvas>
   </div>

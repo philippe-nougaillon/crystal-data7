@@ -25,7 +25,7 @@
             <% if current_user.admin? && @tables.where(show_on_startup_screen: true).or(@tables.where(public: true)).any? %>
               <td>
                 <% if table.public? %>
-                  <%= link_to fill_path(table), target: :_blank do %>
+                  <%= link_to fill_table_path(table), target: :_blank do %>
                     <span class="material-symbols-outlined text-primary fs-6" title="<%= t('tables.public_form_tooltip') %>">
                       public
                     </span>
@@ -48,19 +48,19 @@
             </td>
             <td>
               <% if policy(table).fill? || current_user.compte_démo? %>
-                <%= link_to "(+) #{table.name}", fill_path(table.slug), title: t('tables.add_new', name: table.name), class: 'btn btn-outline-primary btn-sm me-2 w-100' %>
+                <%= link_to "(+) #{table.name}", fill_table_path(table.slug), title: t('tables.add_new', name: table.name), class: 'btn btn-outline-primary btn-sm me-2 w-100' %>
               <% end %>
             </td>
             <% if false %>
               <td style="text-align: right; white-space: nowrap;">
                 <% if policy(table).show_attrs? %>
-                  <%= link_to t('tables.modify_attributes'), show_attrs_path(id: table.slug), title: t('tables.modify_attributes_title', name: table.name), class: 'btn btn-outline-success btn-sm me-2' %>
+                  <%= link_to t('tables.modify_attributes'), show_attrs_table_path(table), title: t('tables.modify_attributes_title', name: table.name), class: 'btn btn-outline-success btn-sm me-2' %>
                 <% end %>
                 <% if policy(table).edit? || current_user.compte_démo? %>
                   <%= link_to t('tables.modify_object'), edit_table_path(id: table), title: t('tables.modify_object_title', name: table.name), class: 'btn btn-outline-warning btn-sm me-2' %> 
                 <% end %>
                 <% if policy(table).logs? %>
-                  <%= link_to t('tables.activity'), logs_path(id: table.slug), title: t('tables.activity_title', name: table.name), class: 'btn btn-outline-secondary btn-sm me-2' %>
+                  <%= link_to t('tables.activity'), logs_table_path(table), title: t('tables.activity_title', name: table.name), class: 'btn btn-outline-secondary btn-sm me-2' %>
                 <% end %>
                 <% if policy(table).destroy? || current_user.compte_démo? %>
                   <%= link_to 'X', table, title: t('tables.delete_table', name: table.name), 'data-turbo-method': :delete, 'data-turbo-confirm': t('tables.delete_confirm', name: table.name), class: 'btn btn-outline-danger btn-sm' %>
@@ -90,7 +90,7 @@
   <% end %>
 
   <% if policy(Table).import? %>
-    <%= link_to import_path, class: 'btn btn-link' do %>
+    <%= link_to import_tables_path, class: 'btn btn-link' do %>
       <%= t('scaffold.import') %>
     <% end %>
   <% end %>

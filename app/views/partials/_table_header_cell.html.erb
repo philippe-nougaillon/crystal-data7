@@ -1,4 +1,4 @@
-<% unless ['show_details', 'related_tables'].include?(action_name) && @relation.field == field %>
+<% unless ['details', 'related_tables'].include?(action_name) && @relation.field == field %>
   <th>
     <div class="d-flex flex-column justify-content-start h-100 gap-4">
       <%= link_to url_for(params.permit!.merge(sort_by: field.id, order: (params[:order] == 'ASC' ? 'DESC' : 'ASC'))), class: 'text-decoration-none d-flex gap-2' do %>

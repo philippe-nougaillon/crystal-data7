@@ -14,7 +14,7 @@
           <% end %>
           <% if policy(@table).show_attrs? %>
             <li class="nav-item">
-              <%= link_to show_attrs_path(id: @table), class: 'nav-link', title: t('tables.navbar.attributes_title', table_name: @table.name) do %> 
+              <%= link_to show_attrs_table_path(@table), class: 'nav-link', title: t('tables.navbar.attributes_title', table_name: @table.name) do %> 
                 <%= t('tables.attributes') %>
               <% end %>
             </li>
@@ -30,7 +30,7 @@
           <% if policy(@table).logs? %>
             <p class="mb-0">|</p>
             <li class="nav-item">
-              <%= link_to logs_path(id: @table), class: 'nav-link', title: t('tables.navbar.activity_title', table_name: @table.name) do %>
+              <%= link_to logs_table_path(@table), class: 'nav-link', title: t('tables.navbar.activity_title', table_name: @table.name) do %>
                 <%= t('tables.activity') %>
               <% end %>
             </li>
@@ -97,7 +97,7 @@
       <% end %>
 
       <% if policy(@table).fill? || current_user.compte_démo? %>
-        <%= link_to "(+) #{@table.name}", fill_url(@table.slug), class: 'btn btn-outline-primary align-self-end', title: t('tables.navbar.new_object', table_name: @table.name) %>
+        <%= link_to "(+) #{@table.name}", fill_table_url(@table), class: 'btn btn-outline-primary align-self-end', title: t('tables.navbar.new_object', table_name: @table.name) %>
       <% end %>
     </div>
 
