@@ -1,6 +1,8 @@
-<div class="d-flex justify-content-center w-100 mt-5">
+<div class="d-flex justify-content-center w-100 mt-3">
   <div class="card p-5">
-    <h1 class="text-primary mb-4"><%= t('auth.register') %></h1>
+    <h1 class="text-primary mb-4">
+      <%= t('auth.register') %>
+    </h1>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <% if @user.errors.any? %>
@@ -34,7 +36,7 @@
         </div>
         <div class="col-sm-offset-1 col-sm-3 mt-4 w-100" style="gap: 1rem">
           <%= f.submit t('auth.create'), class: 'btn btn-outline-primary' %>
-          <%= link_to t('scaffold.back'), unauthenticated_root_path, class:'btn btn-outline-dark' %>
+          <%= link_to t('scaffold.back'), unauthenticated_root_path, class:'btn btn-link' %>
         </div>
       </div>
     <% end %>
