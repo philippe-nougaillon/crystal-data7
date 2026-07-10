@@ -10,6 +10,7 @@ class Field < ApplicationRecord
 	has_many :logs, dependent: :destroy
 	has_one :relation, dependent: :destroy
 	has_many :graphs, dependent: :destroy
+	has_many :notifications, dependent: :destroy
 
 	validates_presence_of :name
 	validates_presence_of :datatype

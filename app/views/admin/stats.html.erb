@@ -21,7 +21,7 @@
       <tbody>
         <% @organisations.each do |organisation| %>
           <% organisation.users.each do |user| %>
-            <% tables_count = user.admin? ? organisation.tables.count : Table.where(id: user.team.filters.pluck(:table_id)).includes(:fields).count %>
+            <% tables_count = user.admin? ? organisation.tables.count : (user.team ? Table.where(id: user.team.filters.pluck(:table_id)).includes(:fields).count : 0) %>
             <% nbr_values = Value.where(user_id: user.id).count %>
             <% nbr_prompts = user.prompts.count %>
             <tr>
