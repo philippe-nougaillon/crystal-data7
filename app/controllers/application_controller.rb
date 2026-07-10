@@ -54,7 +54,11 @@ private
 
   def set_tables
     if user_signed_in? && current_user.user?
-      @tables = Table.where(id: current_user.team.filters.pluck(:table_id))
+      if current_user.team
+        @tables = Table.where(id: current_user.team.filters.pluck(:table_id))
+      else
+        @tables = Table.none
+      end
     end
   end
 

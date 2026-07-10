@@ -3,6 +3,7 @@ class Filter < ApplicationRecord
 
   has_many :filters_teams, dependent: :destroy
   has_many :teams, through: :filters_teams
+  has_many :graphs, dependent: :nullify
 
   extend FriendlyId
 	friendly_id :slug_candidates, use: :slugged

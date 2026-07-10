@@ -1,8 +1,11 @@
 require "test_helper"
 
 class NotificationsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
     @notification = notifications(:one)
+    sign_in users(:paul_hudson)
   end
 
   test "should get index" do
@@ -20,27 +23,22 @@ class NotificationsControllerTest < ActionDispatch::IntegrationTest
       post notifications_url, params: { notification: { field_id: @notification.field_id, send_to: @notification.send_to, table_id: @notification.table_id, value: @notification.value } }
     end
 
-    assert_redirected_to notification_url(Notification.last)
-  end
-
-  test "should show notification" do
-    get notification_url(@notification)
-    assert_response :success
+    assert_redirected_to notifications_url
   end
 
   test "should get edit" do
-    get edit_notification_url(@notification)
+    get edit_notification_url(id: @notification.slug)
     assert_response :success
   end
 
   test "should update notification" do
-    patch notification_url(@notification), params: { notification: { field_id: @notification.field_id, send_to: @notification.send_to, table_id: @notification.table_id, value: @notification.value } }
-    assert_redirected_to notification_url(@notification)
+    patch notification_url(id: @notification.slug), params: { notification: { field_id: @notification.field_id, send_to: @notification.send_to, table_id: @notification.table_id, value: @notification.value } }
+    assert_redirected_to notifications_url
   end
 
   test "should destroy notification" do
     assert_difference("Notification.count", -1) do
-      delete notification_url(@notification)
+      delete notification_url(id: @notification.slug)
     end
 
     assert_redirected_to notifications_url

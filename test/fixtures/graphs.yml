@@ -1,0 +1,7 @@
+one:
+  organisation: sanofi
+  field: produit_nom
+  filter: doliprane
+  name: Graph One
+  chart_type: bar
+  slug: <%= SecureRandom.uuid %>

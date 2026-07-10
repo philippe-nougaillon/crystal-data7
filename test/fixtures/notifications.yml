@@ -1,0 +1,7 @@
+one:
+  table: produits
+  field: produit_nom
+  user: paul_hudson
+  value: Doliprane
+  send_to: paul@gmail.com
+  slug: <%= SecureRandom.uuid %>

@@ -1,0 +1,5 @@
+one:
+  to: user@example.com
+  subject: Test Subject
+  message_id: "msg-1234"
+  user: paul_hudson

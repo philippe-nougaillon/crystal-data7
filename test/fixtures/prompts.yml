@@ -1,0 +1,5 @@
+one:
+  user: paul_hudson
+  table: produits
+  query: "test query"
+  response: "test response"

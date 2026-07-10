@@ -13,6 +13,10 @@ class FilterPolicy < ApplicationPolicy
     index?
   end
 
+  def show?
+    user && record.table.organisation.users.pluck(:id).include?(user.id)
+  end
+
   def create?
     new?
   end
