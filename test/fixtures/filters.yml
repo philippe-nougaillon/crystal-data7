@@ -5,3 +5,4 @@ doliprane:
   table: produits
   query: {"<%= ActiveRecord::FixtureSet.identify(:produit_nom) %>": "Doliprane"}
   user_id: <%= ActiveRecord::FixtureSet.identify(:paul_hudson) %>
+  slug: <%= SecureRandom.uuid %>

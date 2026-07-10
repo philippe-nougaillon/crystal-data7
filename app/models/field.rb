@@ -10,6 +10,7 @@ class Field < ApplicationRecord
 	has_many :logs, dependent: :destroy
 	has_one :relation, dependent: :destroy
 	has_many :graphs, dependent: :destroy
+	has_many :notifications, dependent: :destroy
 
 	validates_presence_of :name
 	validates_presence_of :datatype
@@ -17,9 +18,9 @@ class Field < ApplicationRecord
 
 	after_save :add_or_update_relation, if: Proc.new { |field| field.Collection? }
 
-	enum datatype: 	[:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Statut, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID, :Signature, :Tags, :Email, :QRScan, :Stars, :Météo]
-	enum operation: [:Somme, :Moyenne]
-	enum visibility:[:Liste_et_Détails, :Vue_Liste, :Vue_Détails]
+	enum :datatype, [:Texte, :Nombre, :Euros, :Date, :Oui_non?, :Liste, :Formule, :Fichier, :Texte_long, :Image, :Statut, :URL, :Couleur, :GPS, :PDF, :Collection, :Texte_riche, :Utilisateur, :Vidéo_YouTube, :QRCode, :Distance, :UUID, :Signature, :Tags, :Email, :QRScan, :Stars, :Météo]
+	enum :operation, [:Somme, :Moyenne]
+	enum :visibility, [:Liste_et_Détails, :Vue_Liste, :Vue_Détails]
 
 	scope :filtres, 	-> { where(filtre: true) }
 	scope :sommes,  	-> { where(sum: true) }

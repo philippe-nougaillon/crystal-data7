@@ -4,6 +4,7 @@ class Notification < ApplicationRecord
 
   belongs_to :table
   belongs_to :field
+  belongs_to :user
 
   has_one :organisation, through: :table
 

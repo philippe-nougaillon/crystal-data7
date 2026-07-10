@@ -1,8 +1,11 @@
 require "test_helper"
 
 class FiltersControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
-    @filter = filters(:one)
+    @filter = filters(:doliprane)
+    sign_in users(:paul_hudson)
   end
 
   test "should get index" do
@@ -20,27 +23,27 @@ class FiltersControllerTest < ActionDispatch::IntegrationTest
       post filters_url, params: { filter: { name: @filter.name, query: @filter.query, table_id: @filter.table_id } }
     end
 
-    assert_redirected_to filter_url(Filter.last)
+    assert_redirected_to query_filter_url(id: Filter.last.slug)
   end
 
   test "should show filter" do
-    get filter_url(@filter)
+    get filter_url(id: @filter.slug)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_filter_url(@filter)
+    get edit_filter_url(id: @filter.slug)
     assert_response :success
   end
 
   test "should update filter" do
-    patch filter_url(@filter), params: { filter: { name: @filter.name, query: @filter.query, table_id: @filter.table_id } }
-    assert_redirected_to filter_url(@filter)
+    patch filter_url(id: @filter.slug), params: { filter: { name: @filter.name, query: @filter.query, table_id: @filter.table_id } }
+    assert_redirected_to filter_url(id: @filter.slug)
   end
 
   test "should destroy filter" do
     assert_difference("Filter.count", -1) do
-      delete filter_url(@filter)
+      delete filter_url(id: @filter.slug)
     end
 
     assert_redirected_to filters_url
