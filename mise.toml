@@ -1,0 +1,7 @@
+[tools]
+ruby = "latest"
+node = "latest"
+bun = "latest"
+yarn = "latest"
+
+
