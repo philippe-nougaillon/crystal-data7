@@ -26,7 +26,7 @@ class User < ApplicationRecord
   validates :name, :email, :role, presence:true
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create	
 
-  enum role: {user: 0,
+  enum :role, {user: 0,
               admin: 1}
 
   after_create :new_user_notification
