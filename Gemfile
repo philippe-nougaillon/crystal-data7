@@ -54,9 +54,9 @@ gem "image_processing", "~> 1.2"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
-  gem 'factory_bot_rails'
-  gem 'faker'
-  gem "minitest", "~> 5.0"
+  gem "factory_bot_rails"
+  gem "faker"
+  gem "minitest"
 end
 
 group :development do
@@ -69,7 +69,7 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 
-  gem 'sitemap_generator'
+  gem "sitemap_generator"
 
   gem "seed_dump", "~> 3.3"
 end
@@ -82,9 +82,9 @@ group :test do
 end
 
 gem "simple_form", ">= 5.0.0"
-gem 'friendly_id', '~> 5.2.4'
+gem "friendly_id", "~> 5.2.4"
 gem "audited"
-gem 'exception_notification'
+gem "exception_notification"
 gem "devise", "~> 4.9"
 gem "pundit", "~> 2.3"
 gem "dotenv-rails", "~> 2.8"
