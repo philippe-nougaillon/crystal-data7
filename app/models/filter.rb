@@ -58,7 +58,7 @@ class Filter < ApplicationRecord
                 if match
                   operator = match[1]
                   number = match[2].to_f
-                  sql = "CAST(nullif(data, '') AS float8) #{operator} #{number}"
+                   sql = "CAST(nullif(data, '') AS float) #{operator} #{number}"
                 else
                   sql = "1=0"
                 end
@@ -97,9 +97,9 @@ class Filter < ApplicationRecord
               end
             else
               if search_value.class == Array
-                sql = "data IN(?) ", search_value
+                sql = ["data IN(?)", search_value]
               else
-                sql = "data ILIKE ? ", search_value
+                sql = Value.arel_table[:data].matches(search_value)
               end
             end
             filters[key] = self.table.values.where(field_id: key.to_i).where(sql).pluck(:record_index)

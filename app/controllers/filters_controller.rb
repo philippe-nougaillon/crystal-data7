@@ -80,11 +80,11 @@ class FiltersController < ApplicationController
       end
       
       if params[:sort_by] == '0'
-        @records = @filter.table.values.records_at(@records).order("values.updated_at #{order_by}").pluck(:record_index).uniq
+        @records = @filter.table.values.records_at(@records).order("\"values\".updated_at #{order_by}").pluck(:record_index).uniq
       elsif ['Euros', 'Nombre', 'Formule'].include?(Field.find(params[:sort_by]).datatype)
         @records = @filter.table.values.records_at(@records)
                         .where(field_id: params[:sort_by])
-                        .order(Arel.sql("CAST(data AS float8) #{order_by}"))
+                        .order(Arel.sql("CAST(data AS float) #{order_by}"))
                         .pluck(:record_index)
       else
         @records = @filter.table.values.records_at(@records)

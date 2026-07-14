@@ -29,7 +29,7 @@ class TablesController < ApplicationController
     # recherche les lignes 
     unless params.permit(:search).blank?
       search = "%#{ params[:search].strip }%"
-      @values = @values.where("data ILIKE ?", search)
+      @values = @values.where(Value.arel_table[:data].matches(search))
       # Est-ce qu'il y a des Tables liées ?
       @table.fields.Collection.each do | field_table |
         # Rchercher dans les values de ce champ lié si valeurs recherchées
@@ -49,7 +49,7 @@ class TablesController < ApplicationController
         unless option.last.blank? 
           field = Field.find(option.first)
           if field.Tags?
-            filter_records = @table.values.where(field: field).where("values.data ILIKE ?", "%#{option.last}%").pluck(:record_index) 
+            filter_records = @table.values.where(field: field).where(Value.arel_table[:data].matches("%#{option.last}%")).pluck(:record_index) 
           else
             filter_records = @table.values.where(field: field, data: option.last).pluck(:record_index) 
           end
@@ -83,7 +83,7 @@ class TablesController < ApplicationController
 
     if @table.lifo 
      # calcule la date maximum de chaque ligne d'enregistrement 
-     h = @table.values.select("values.record_index").group("fields.row_order, values.record_index").maximum(:updated_at)
+     h = @table.values.select("\"values\".record_index").group("fields.row_order, \"values\".record_index").maximum(:updated_at)
      # inverse le hash (keys <=> values) pour faire un tri par date et retourne les record_index
      @records = Hash[h.sort_by{|k, v| v}.reverse].keys & @records
     end     
@@ -98,11 +98,11 @@ class TablesController < ApplicationController
       end
       
       if params[:sort_by] == '0'
-        @records = @table.values.records_at(@records).order("values.updated_at #{order_by}").pluck(:record_index).uniq
+        @records = @table.values.records_at(@records).order("\"values\".updated_at #{order_by}").pluck(:record_index).uniq
       elsif ['Euros', 'Nombre', 'Formule'].include?(Field.find(params[:sort_by]).datatype)
         @records = @table.values.records_at(@records)
                         .where(field_id: params[:sort_by])
-                        .order(Arel.sql("CAST(data AS float8) #{order_by}"))
+                        .order(Arel.sql("CAST(data AS float) #{order_by}"))
                         .pluck(:record_index)
       else
         @records = @table.values.records_at(@records)
@@ -456,9 +456,9 @@ class TablesController < ApplicationController
             order_by = (params[:sort_by] == session[:sort_by]) ? ((session[:order_by] == "DESC") ? "ASC" : "DESC") : "ASC"
             
             if params[:sort_by] == '0'
-              @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order("values.updated_at #{order_by}").pluck(:record_index)
+              @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order("\"values\".updated_at #{order_by}").pluck(:record_index)
             elsif ['Euros', 'Nombre', 'Formule'].include?(Field.find(params[:sort_by]).datatype)
-              @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order(Arel.sql("CAST(data AS float8) #{order_by}")).pluck(:record_index)
+              @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order(Arel.sql("CAST(data AS float) #{order_by}")).pluck(:record_index)
             else
               @records = @relation.table.values.where(field_id: params[:sort_by], record_index: @records).order("data #{order_by}").pluck(:record_index)
             end
