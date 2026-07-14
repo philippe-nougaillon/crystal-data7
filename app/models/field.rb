@@ -29,24 +29,24 @@ class Field < ApplicationRecord
 	scope :ordered, -> { order(:row_order) }
 
 	COLOR_MAPPINGS =  {
-    "bleu" => "primary",
-    "blue" => "primary",
-    "gris" => "secondary",
-    "gray" => "secondary",
+		"bleu" => "primary",
+		"blue" => "primary",
+		"gris" => "secondary",
+		"gray" => "secondary",
 		"grey" => "secondary",
-    "vert" => "success",
-    "green" => "success",
-    "jaune" => "warning text-dark",
-    "yellow" => "warning text-dark",
-    "rouge" => "danger",
-    "red" => "danger",
+		"vert" => "success",
+		"green" => "success",
+		"jaune" => "warning text-dark",
+		"yellow" => "warning text-dark",
+		"rouge" => "danger",
+		"red" => "danger",
 		"bleuclair" => "info text-dark",
-    "lightblue" => "info text-dark",
-    "blanc" => "light text-dark",
-    "white" => "light text-dark",
-    "noir" => "dark",
-    "black" => "dark"
-  }
+		"lightblue" => "info text-dark",
+		"blanc" => "light text-dark",
+		"white" => "light text-dark",
+		"noir" => "dark",
+		"black" => "dark"
+	}
 
 	def self.bootstrap_class(color_name)
 		if color_name
@@ -54,7 +54,7 @@ class Field < ApplicationRecord
 		else
 			"secondary"
 		end
-  end
+  	end
 
 	# evaluer [1] + [2] ou [1] * [2]
 	def evaluate(table, record_index)
