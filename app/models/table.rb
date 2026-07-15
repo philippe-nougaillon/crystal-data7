@@ -108,7 +108,7 @@ class Table < ApplicationRecord
 	def record_can_be_destroy?(record_index)
       # Est-ce que des types référencent cette table ?
       allow_destroy = true
-      fields = Field.where("items ILIKE '[#{self.name}.%'")
+      fields = Field.where(Field.arel_table[:items].matches("[#{self.name}.%"))
       if fields.any?
         fields.each do | field |
           allow_destroy = !field.values.pluck(:record_index).include?(record_index)
