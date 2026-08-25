@@ -1,3 +1,11 @@
+require 'simplecov'
+SimpleCov.start 'rails' do
+  skip '/bin/'
+  skip '/db/'
+  skip '/spec/'
+  skip '/test/'
+end
+
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"

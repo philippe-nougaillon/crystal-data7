@@ -1,5 +1,5 @@
 class OrganisationsController < ApplicationController
-  before_action :set_organisation, only: %i[ show edit update destroy ]
+  before_action :set_organisation, only: %i[ show edit update ]
   before_action :is_user_authorized
 
   # GET /organisations/1 or /organisations/1.json
