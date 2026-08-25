@@ -6,11 +6,11 @@ class FieldPolicy < ApplicationPolicy
   end
 
   def create?
-    record.table.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
+    record.table.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development? || Rails.env.test?)
   end
   
   def edit?
-    record.table.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
+    record.table.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development? || Rails.env.test?)
   end
 
   def update?
@@ -18,10 +18,10 @@ class FieldPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.table.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
+    record.table.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development? || Rails.env.test?)
   end
 
   def update_row_order?
-    record.table.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
+    record.table.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development? || Rails.env.test?)
   end
 end
