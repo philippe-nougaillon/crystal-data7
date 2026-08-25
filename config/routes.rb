@@ -85,18 +85,16 @@ Rails.application.routes.draw do
     
     delete 'tables/:id/delete_record' => 'tables#delete_record', as: :delete_record
     
-    # namespace :api, defaults: {format: :json}  do
-    #   namespace :v1 do
-    #     get 'timestamps', to: 'users#timestamps'
-    #     post 'values/post_value'
-    #     resources :users 
-    #     resources :tables
-    #     resources :fields
-    #     resources :values
-    #   end
-    #   namespace :v2 do
-    #   end
-    # end
+    namespace :api, defaults: {format: :json}  do
+      namespace :v1 do
+        get 'timestamps', to: 'users#timestamps'
+        post 'values/post_value', to: 'values#post_value'
+        resources :users, only: [:index]
+        resources :tables, only: [:index]
+        resources :fields, only: [:index]
+        resources :values, only: [:index]
+      end
+    end
 
     # The priority is based upon order of creation: first created -> highest priority.
     # See how all your routes lay out with "rake routes".

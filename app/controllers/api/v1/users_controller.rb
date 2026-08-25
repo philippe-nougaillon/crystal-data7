@@ -2,7 +2,7 @@
 
 module Api
 	module V1
-		class Api::V1::UsersController < ActionController::Base
+		class UsersController < ActionController::Base
 
 			def index
 				@users = User.all

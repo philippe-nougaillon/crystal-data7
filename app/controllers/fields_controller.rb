@@ -1,5 +1,5 @@
 class FieldsController < ApplicationController
-  before_action :set_field, only: [:edit, :update, :destroy]
+  before_action :set_field, only: [:edit, :update, :destroy, :update_row_order]
   before_action :is_user_authorized?
 
   # GET /fields/1/edit
@@ -58,18 +58,14 @@ class FieldsController < ApplicationController
   end
 
   def update_row_order
-    @field = Field.find(field_params[:field_id])
-    @field.row_order_position = field_params[:row_order_position]
-    @field.save
-
-    #redirect_to show_attrs_path(id:@field.table)
-    render nothing: true # this is a POST action, updates sent via AJAX, no view rendered
+    @field.update(row_order: field_params[:row_order_position]) if @field
+    head :ok
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_field
-      @field = Field.find_by(slug: params[:id])
+      @field = Field.find_by(slug: params[:id]) || Field.find_by(id: params[:id]) || (params[:field] && Field.find_by(id: params[:field][:field_id]))
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

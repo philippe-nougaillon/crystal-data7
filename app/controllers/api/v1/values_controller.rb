@@ -2,28 +2,29 @@
 
 module Api
 	module V1
-		class Api::V1::ValuesController < ActionController::Base
+		class ValuesController < ActionController::Base
 	
 			protect_from_forgery with: :null_session
 
 			def index
-				render json: Table.find_by(slug: params[:slug]).values.reorder(:record_index)
+				table = Table.find_by(slug: params[:slug])
+				render json: table ? table.values.reorder(:record_index) : []
 			end
 
 			def post_value
 				@value = Value.new(value_params)
-				@table = @value.table
-				record_index = @table.size + 1
+				@table = @value.field&.table
+				record_index = @table ? @table.size + 1 : 1
 
 				@value.record_index = record_index
 
-				if @value.field_id == @table.fields.last.id
-					@table.update_attributes(record_index: record_index)
+				if @table && @value.field_id == @table.fields.last&.id
+					@table.update(record_index: record_index)
 				end
 
 				respond_to do |format|
 					if @value.save
-						format.json { render json: @value, status: :created, location: @value }
+						format.json { render json: @value, status: :created }
 					else
 						format.json { render json: @value.errors, status: :unprocessable_entity }
 					end

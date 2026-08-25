@@ -78,8 +78,8 @@ class ImportCollection < ApplicationService
         end
       end
 
-      # execure requête d'insertion dans VALUES
-      sql = "INSERT INTO values (user_id, field_id, data, record_index, created_at, updated_at) "
+      # execute requête d'insertion dans VALUES
+      sql = "INSERT INTO \"values\" (user_id, field_id, data, record_index, created_at, updated_at) "
       sql = sql + "VALUES #{inserts_value.join(', ')}"
 
       results = ActiveRecord::Base.connection.exec_query(sql)

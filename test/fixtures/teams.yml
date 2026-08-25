@@ -3,3 +3,4 @@
 doliprane:
   organisation: sanofi 
   name: Doliprane
+  slug: <%= SecureRandom.uuid %>

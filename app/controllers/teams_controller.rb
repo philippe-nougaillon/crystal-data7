@@ -15,20 +15,21 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.save
-        
-        params[:team][:filter_ids].shift
-        params[:team][:filter_ids].each do |filter_id|
-          unless FiltersTeam.find_by(filter_id: filter_id, team_id: @team.id)
-            @team.filters_teams << FiltersTeam.create(filter_id: filter_id, team_id: @team.id)
+        if params.dig(:team, :filter_ids).present?
+          filter_ids = Array(params[:team][:filter_ids]).compact_blank
+          filter_ids.each do |filter_id|
+            unless FiltersTeam.find_by(filter_id: filter_id, team_id: @team.id)
+              @team.filters_teams << FiltersTeam.create(filter_id: filter_id, team_id: @team.id)
+            end
           end
+          FiltersTeam.where(team_id: @team.id).where.not(filter_id: filter_ids).destroy_all
         end
-        FiltersTeam.where(team_id: @team.id).where.not(filter_id: params[:team][:filter_ids]).destroy_all
 
         format.html { redirect_to users_url, notice: t('notice.team.created') }
         format.json { render :show, status: :created, location: @user }
       else
-        format.html { render :create_new_user, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -36,17 +37,19 @@ class TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
-        params[:team][:filter_ids].shift
-        params[:team][:filter_ids].each do |filter_id|
-          unless FiltersTeam.find_by(filter_id: filter_id, team_id: @team.id)
-            @team.filters_teams << FiltersTeam.create(filter_id: filter_id, team_id: @team.id)
+        if params.dig(:team, :filter_ids).present?
+          filter_ids = Array(params[:team][:filter_ids]).compact_blank
+          filter_ids.each do |filter_id|
+            unless FiltersTeam.find_by(filter_id: filter_id, team_id: @team.id)
+              @team.filters_teams << FiltersTeam.create(filter_id: filter_id, team_id: @team.id)
+            end
           end
+          FiltersTeam.where(team_id: @team.id).where.not(filter_id: filter_ids).destroy_all
         end
-        FiltersTeam.where(team_id: @team.id).where.not(filter_id: params[:team][:filter_ids]).destroy_all
         format.html { redirect_to users_url, notice: t('notice.team.updated') }
         format.json { render :show, status: :ok, location: @team }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end

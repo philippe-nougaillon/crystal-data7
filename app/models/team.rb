@@ -5,7 +5,7 @@ class Team < ApplicationRecord
   belongs_to :organisation
   has_many :filters_teams, dependent: :destroy
   has_many :filters, through: :filters_teams
-  has_many :users
+  has_many :users, dependent: :nullify
 
 private
 	# only one candidate for an nice id; one random UDID

@@ -2,12 +2,12 @@
 
 module Api
 	module V1
-		class Api::V1::TablesController < ActionController::Base
+		class TablesController < ActionController::Base
 
 			def index
-				render json: User.find(params[:user_id]).tables
+				user = User.find_by(id: params[:user_id])
+				render json: user ? user.tables : []
 			end
 		end
 	end
-
 end
