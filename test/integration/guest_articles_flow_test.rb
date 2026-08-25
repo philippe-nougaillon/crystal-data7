@@ -44,12 +44,9 @@ class GuestArticlesFlowTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     follow_redirect!
     assert_response :success
-    puts "DEBUG REDIRECT PATH: #{path}"
-    puts "DEBUG FLASH NOTICE: #{flash[:notice]}"
-    puts "DEBUG FLASH ALERT: #{flash[:alert]}"
 
     # 5. Check if all the new data are shown
     assert_includes response.body, fake_titre
-    assert_includes response.body, fake_desc
+    assert_includes response.body, CGI.escapeHTML(fake_desc)
   end
 end
