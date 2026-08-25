@@ -21,3 +21,9 @@ produits:
   name: Études
   slug: <%= SecureRandom.uuid %>
   record_index: 1
+
+articles:
+  organisation: demo
+  name: Articles
+  slug: "a1b2c3d4-e5f6-7890-abcd-1234567890ab"
+  record_index: 2

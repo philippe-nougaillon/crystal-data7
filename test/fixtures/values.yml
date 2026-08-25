@@ -24,6 +24,31 @@ produit_description_doliprane:
   data: 1
   record_index: 1
 
+# ARTICLES
+article_1_titre:
+  field: article_titre
+  user_id: 1
+  data: Premier Article
+  record_index: 1
+
+article_1_description:
+  field: article_description
+  user_id: 1
+  data: Description du premier article
+  record_index: 1
+
+article_2_titre:
+  field: article_titre
+  user_id: 1
+  data: Second Article
+  record_index: 2
+
+article_2_description:
+  field: article_description
+  user_id: 1
+  data: Description du second article
+  record_index: 2
+
 
 # STOCKS
 # stock_marque_rj45:

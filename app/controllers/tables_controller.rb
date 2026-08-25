@@ -9,8 +9,10 @@ class TablesController < ApplicationController
   def index
     if current_user.admin?
       @tables = current_user.tables.includes(:fields)
-    else
+    elsif current_user.team
       @tables = Table.where(id: current_user.team.filters.pluck(:table_id)).includes(:fields)
+    else
+      @tables = Table.none
     end
   end
 
@@ -208,7 +210,7 @@ class TablesController < ApplicationController
   # formulaire d'ajout / modification posté
   def fill_do
     table = Table.find(params[:table_id])
-    data = params["[data]"]
+    data = params["[data]"] || params[:data]
     if data.keys.first.to_i.positive? && user_signed_in?
       # update
       record_index = data.keys.first

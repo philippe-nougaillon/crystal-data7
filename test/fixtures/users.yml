@@ -3,6 +3,7 @@ user_proriétaire:
   organisation: demo
   email: aikku-access.proprietaire@gmail.com
   name: Aikku_ACCESS_Demo
+  role: admin
 
 user_lecteur:
   id: 2

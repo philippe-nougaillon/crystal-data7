@@ -27,6 +27,20 @@ produit_description:
   row_order: 2
   slug: <%= SecureRandom.uuid %>
 
+article_titre:
+  table: articles
+  name: Titre
+  datatype: Texte
+  row_order: 1
+  slug: <%= SecureRandom.uuid %>
+
+article_description:
+  table: articles
+  name: Description
+  datatype: Texte
+  row_order: 2
+  slug: <%= SecureRandom.uuid %>
+
 # stock_marque:
 #   table_id: <%= ActiveRecord::FixtureSet.identify(:stocks) %>
 #   name: Marque

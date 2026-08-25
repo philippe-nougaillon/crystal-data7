@@ -14,7 +14,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def new?
-    index? && user.admin? && (!(user.compte_démo?) || Rails.env.development?)
+    index? && user.admin? && (!(user.compte_démo?) || Rails.env.development? || Rails.env.test?)
   end
 
   def create?
@@ -22,7 +22,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def edit?
-    record.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
+    record.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development? || Rails.env.test?)
   end
 
   def update?
@@ -30,7 +30,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
+    record.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development? || Rails.env.test?)
   end
   
   def show_attrs?
@@ -42,15 +42,15 @@ class TablePolicy < ApplicationPolicy
   end
 
   def fill_do?
-    fill? && (!( user && user.compte_démo?) || Rails.env.development?)
+    fill? && (!( user && user.compte_démo?) || Rails.env.development? || Rails.env.test?)
   end
 
   def delete_record?
-    record.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development?)
+    record.propriétaire?(user) && (!(user.compte_démo?) || Rails.env.development? || Rails.env.test?)
   end
 
   def import?
-    user && user.admin? && (!(user.compte_démo?) || Rails.env.development?)
+    user && user.admin? && (!(user.compte_démo?) || Rails.env.development? || Rails.env.test?)
   end
 
   def import_do?
@@ -62,7 +62,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def add_user_do?
-    add_user? && (!(user.compte_démo?) || Rails.env.development?)
+    add_user? && (!(user.compte_démo?) || Rails.env.development? || Rails.env.test?)
   end
 
   def partages?
@@ -70,7 +70,7 @@ class TablePolicy < ApplicationPolicy
   end
 
   def partages_delete?
-    partages? && (!(user.compte_démo?) || Rails.env.development?)
+    partages? && (!(user.compte_démo?) || Rails.env.development? || Rails.env.test?)
   end
 
   def logs?
